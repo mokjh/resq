@@ -99,6 +99,7 @@ namespace Resq.Sim
 
         // winch duty cycle / brake (per vehicle slot)
         public int[] VDuty, VRest, VBrake;
+        public int[] VBerthFrom, VBerthTo;    // skiff berths held while moving: origin until arrival, destination from departure
         public bool[] VEmergency;
 
         // tides: ramp per controller, ledger per boundary
@@ -181,6 +182,7 @@ namespace Resq.Sim
             RunStarted = new bool[d.RunoutIds.Length];
             SegStart = new long[d.SegmentIds.Length];
             VDuty = new int[v]; VRest = new int[v]; VBrake = new int[v]; VEmergency = new bool[v];
+            VBerthFrom = new int[v]; VBerthTo = new int[v];
             int td = d.TideIds.Length;
             TideStartTick = new long[td]; TideStartLevel = new long[td]; TideEndTick = new long[td]; TideEndLevel = new long[td];
             TideLevel = new long[td]; SeaIn = new long[td]; SeaOut = new long[td];

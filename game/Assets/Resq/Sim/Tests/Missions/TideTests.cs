@@ -235,5 +235,32 @@ namespace Resq.Sim.Tests
             Check.Equal(d.NodeIndex["dock_b"], sim.S.VNode[1], "second skiff waits at its dock");
             Check.True(sim.S.NodeMaxQueue[dockC] >= 70, $"queue ticks recorded ({sim.S.NodeMaxQueue[dockC]})");
         }
+
+        // Berth reservation: two skiffs ordered to a one-berth dock on the same tick — only one may set off; the other queues.
+        [SimTest("tide")]
+        public static void Berth_Is_Reserved_At_Departure()
+        {
+            var d = Fixture();
+            var sim = new Simulator(d, RuleProfile.Standard);
+            sim.Submit(Command.Place(d.SocketIndex["skiff:01"], ToolKind.Skiff));
+            sim.Submit(Command.Place(d.SocketIndex["skiff:02"], ToolKind.Skiff));
+            sim.Step();
+            int dockC = d.NodeIndex["dock_c"];
+            sim.Submit(Command.VehicleRoute(0, -1, -1, dockC, false));
+            sim.Submit(Command.VehicleRoute(1, -1, -1, dockC, false));
+            int maxAtC = 0;
+            for (int i = 0; i < 400; i++)
+            {
+                sim.Step();
+                int arrived = 0;
+                for (int v = 0; v < 2; v++) if (sim.S.VNode[v] == dockC && sim.S.VState[v] != (byte)VehicleState.Moving) arrived++;
+                maxAtC = System.Math.Max(maxAtC, arrived);
+                Check.True(sim.S.NodeBerthUsed[dockC] <= 1, $"berth count never exceeds the single berth ({sim.S.NodeBerthUsed[dockC]})");
+            }
+            Check.Equal(1, maxAtC, "exactly one skiff lands at the one-berth dock");
+            Check.Equal(d.NodeIndex["dock_b"], sim.S.VNode[1], "the second skiff never left its own berth");
+            Check.Equal(1, sim.S.NodeBerthUsed[d.NodeIndex["dock_a"]] + sim.S.NodeBerthUsed[d.NodeIndex["dock_b"]],
+                        "the first skiff released its origin berth on arrival; the waiting one still holds its own");
+        }
     }
 }

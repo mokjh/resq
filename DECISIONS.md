@@ -45,7 +45,7 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | Relay | A power link object `{from, to, relay}` binds a relay socket. The link carries power while the relay is placed, enabled, intact and connected. It drops above 50 mm and reconnects by itself at ≤ 40 mm. Relays start enabled on placement. Every relay socket must bind a link. |
 | `warn_support` in World 4 | When its role binds infrastructure rather than a support, the operation is advisory only. |
 | Dock queue metric | Longest run of consecutive operation ticks a vehicle waits because its target dock's only berth is taken. |
-| Known gap | Berths are checked at departure, not reserved, so two skiffs leaving together for a one-berth dock can both arrive. Mission content and strategies must avoid relying on this until berth reservation lands. |
+| Berths (fixed 23 Oct) | A skiff reserves its destination berth at departure and keeps its origin berth until arrival. A normal arrival frees the origin; a turned-back skiff frees the destination. Two skiffs can no longer share a one-berth dock. |
 
 ## 23 Oct 2026 — rule readings for the World 5 module (spec 02 §5, §10)
 

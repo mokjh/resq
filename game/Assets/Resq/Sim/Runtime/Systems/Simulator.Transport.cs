@@ -16,6 +16,7 @@ namespace Resq.Sim
             S.VPickupGroup[v] = -1; S.VPickupNode[v] = -1; S.VDestination[v] = -1;
             S.VTransferResident[v] = -1; S.VTransferProgress[v] = 0; S.VOccupantCount[v] = 0;
             S.VPhase[v] = (byte)VehiclePhase.None; S.VState[v] = (byte)VehicleState.Idle;
+            S.VBerthFrom[v] = -1; S.VBerthTo[v] = -1;
         }
 
         int SpawnVehicle(VehicleKind kind, int node, int seats, int slots, int instance)
@@ -344,10 +345,13 @@ namespace Resq.Sim
             S.EdgeOccupancy[e] -= S.VSlots[v];
             int at = S.VNode[v];
             if (!S.VReversing[v]) S.EdgeTransfers[e] += S.VOccupantCount[v];
+            // berths: a normal arrival frees the origin berth; a reversal frees the destination reservation instead
+            int release = S.VReversing[v] ? S.VBerthTo[v] : S.VBerthFrom[v];
+            if (release >= 0) S.NodeBerthUsed[release]--;
+            S.VBerthFrom[v] = -1; S.VBerthTo[v] = -1;
             S.VEmergency[v] = false; S.VBrake[v] = 0;
             S.VState[v] = (byte)VehicleState.Idle;
             S.VEdge[v] = -1; S.VReversing[v] = false; S.VFrom[v] = -1;
-            if (UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0) S.NodeBerthUsed[at]++;
             for (int k = 0; k < S.VOccupantCount[v]; k++) S.RNode[S.VOccupants[v * S.SeatsMax + k]] = at;
             Emit(SimEventKind.VehicleArrived, v, at);
         }
@@ -372,7 +376,11 @@ namespace Resq.Sim
                 return false;
             }
             S.EdgeOccupancy[e] += S.VSlots[v];
-            if (UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0) S.NodeBerthUsed[at]--;
+            // reserve the destination berth now, so two skiffs can never both land at a one-berth dock;
+            // keep the origin berth until arrival, so a turned-back skiff always has its berth to return to
+            S.VBerthFrom[v] = UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0 ? at : -1;
+            S.VBerthTo[v] = -1;
+            if (UsesBerths(v) && (D.NodeFlags[to] & NodeFlags.Dock) != 0) { S.NodeBerthUsed[to]++; S.VBerthTo[v] = to; }
             S.VState[v] = (byte)VehicleState.Moving;
             S.VEdge[v] = e; S.VFrom[v] = at; S.VNode[v] = to;
             S.VProgress[v] = 0; S.VDuration[v] = EdgeDuration(e);
