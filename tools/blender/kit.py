@@ -6,9 +6,10 @@ Conventions (see tools/blender/README.md):
   * Blender scene units are metres, unit scale 1.0, Z up, asset forward = -Y.
   * Geometry helpers take MILLIMETRES (asset drawings are in mm) and the
     Builder converts to metres when parts are merged.
-  * One shared material "RESQ_Shared": palette atlas (UV -> role colour,
-    alpha = smoothness) multiplied by a linear vertex colour "Col" that holds
-    baked fake AO and per-part tone variation.
+  * One shared material "RESQ_Shared". Vertex colour "Col": RGB = albedo
+    (role palette colour x per-part tone, exported sRGB), A = baked ambient
+    occlusion 0..1 (linear). UVs point at the role's cell of the 256x16
+    palette atlas, whose alpha carries smoothness (1 - roughness).
 """
 
 import array
@@ -142,7 +143,7 @@ def write_palette_atlas(png_path, json_path):
                          "mipmaps": False, "wrapMode": "Clamp", "compression": "None",
                          "note": "point/no-mip keeps neighbouring roles from bleeding"},
         "metallic_note": "All atlas roles are authored for metallic 0 in Unity; metal_dark's 0.10 is within the painted-metal 0-0.15 band and is not encoded.",
-        "vertex_colour": "Mesh colour attribute 'Col' (linear float, exported LINEAR) = tone * baked AO; shader multiplies albedo by it.",
+        "vertex_colour": "Mesh colour attribute 'Col': RGB = albedo (palette colour x tone), exported as sRGB; A = baked AO 0..1 (linear). Do not multiply the atlas RGB again; sample the atlas only for smoothness (alpha) or as a fallback albedo.",
         "roles": roles,
         "png_sha256": sha256_file(png_path),
     }
@@ -196,8 +197,8 @@ def shared_material(atlas_path):
     inv = nt.nodes.new("ShaderNodeMath")
     inv.operation = "SUBTRACT"
     inv.inputs[0].default_value = 1.0
-    nt.links.new(tex.outputs["Color"], mul.inputs[0])
-    nt.links.new(vc.outputs["Color"], mul.inputs[1])
+    nt.links.new(vc.outputs["Color"], mul.inputs[0])
+    nt.links.new(vc.outputs["Alpha"], mul.inputs[1])
     nt.links.new(mul.outputs["Vector"], bsdf.inputs["Base Color"])
     nt.links.new(tex.outputs["Alpha"], inv.inputs[1])
     nt.links.new(inv.outputs["Value"], bsdf.inputs["Roughness"])
@@ -238,7 +239,8 @@ def tmp_hull(points):
     vs = [bm.verts.new(p) for p in seen]
     res = bmesh.ops.convex_hull(bm, input=vs)
     kill = [g for g in res["geom_interior"] + res["geom_unused"]
-            if isinstance(g, bmesh.types.BMVert)]
+            if isinstance(g, bmesh.types.BMVert) and g.is_valid]
+    kill = list(dict.fromkeys(kill))
     if kill:
         bmesh.ops.delete(bm, geom=kill, context="VERTS")
     bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(0.5),
@@ -397,10 +399,11 @@ class Builder:
         self.l_role = fl.int.new("role")
         self.l_tone = fl.float.new("tone")
         self.l_bone = fl.int.new("bone")
+        self.l_keep = fl.int.new("keep")
         self.parts = 0
 
     def add(self, tmp, role, tone=1.0, bone=0, smooth=False, bev=0.0, bev_seg=1,
-            xform=None):
+            xform=None, keep=False):
         """role / tone may be callables taking (face_center_mm, face_normal)."""
         if bev > 0:
             bevel(tmp, bev, bev_seg)
@@ -419,6 +422,7 @@ class Builder:
             nf[self.l_role] = ROLE_INDEX[r]
             nf[self.l_tone] = t
             nf[self.l_bone] = bone
+            nf[self.l_keep] = 1 if keep else 0
             nf.smooth = smooth
         tmp.free()
         self.parts += 1
@@ -429,9 +433,11 @@ class Builder:
     def hull(self, pts, role, **kw):
         self.add(tmp_hull(pts), role, **kw)
 
-    def finalize(self, name, material, ao=None, sharp_angle=48.0):
-        """Triangulate, bake AO + tone into 'Col', write UVs, return object."""
+    def finalize(self, name, material, ao=None, sharp_angle=48.0, cull=None):
+        """Cull hidden faces, triangulate, write 'Col' (RGB albedo x tone,
+        A = geometric AO) and palette UVs; return the new object."""
         bm = self.bm
+        self.culled = cull_hidden(bm, self.l_keep, **(cull or {})) if cull is not False else 0
         bmesh.ops.triangulate(bm, faces=bm.faces[:], quad_method="BEAUTY", ngon_method="BEAUTY")
         # remove degenerate faces
         bad = [f for f in bm.faces if f.calc_area() < 1e-14]
@@ -452,14 +458,17 @@ class Builder:
         uv = bm.loops.layers.uv.new("UVMap")
         col = bm.loops.layers.float_color.new("Col")
         aoval = corner_ao(bm, **(ao or {}))
+        lin = [[srgb_to_linear(c) for c in hex_to_srgb(r[1])] for r in PALETTE]
         for f in bm.faces:
-            u, v = role_uv(PALETTE[f[self.l_role]][0])
+            ri = f[self.l_role]
+            u, v = role_uv(PALETTE[ri][0])
             tone = f[self.l_tone]
+            srgb = hex_to_srgb(PALETTE[ri][1])
+            rgb = [srgb_to_linear(max(0.0, min(1.0, c * tone))) for c in srgb]
             for k, lp in enumerate(f.loops):
                 lp[uv].uv = (u, v)
                 a = aoval.get((f.index, k), 1.0)
-                c = max(0.0, min(1.0, tone * a))
-                lp[col] = (c, c, c, 1.0)
+                lp[col] = (rgb[0], rgb[1], rgb[2], a)
         me = bpy.data.meshes.new(name)
         bm.to_mesh(me)
         me.color_attributes.active_color_name = "Col"
@@ -467,7 +476,8 @@ class Builder:
             me.color_attributes.render_color_index = me.color_attributes.find("Col")
         except Exception:
             pass
-        me.materials.append(material)
+        if material is not None:
+            me.materials.append(material)
         ob = bpy.data.objects.new(name, me)
         bpy.context.scene.collection.objects.link(ob)
         roles = {}
@@ -478,6 +488,56 @@ class Builder:
         bm.free()
         self.bm = None
         return ob
+
+
+def cull_hidden(bm, keep_layer, gap_mm=0.6, ground_z_mm=0.0, use_ground=True):
+    """Delete faces that can never be seen: every sample point on the face is
+    covered within gap_mm along its normal by another surface (siding backs,
+    wedge tops under the next course, ends against frames, bottoms on the
+    ground). Parts added with keep=True are never deleted. Returns count."""
+    bm.normal_update()
+    bm.faces.index_update()
+    bvh = BVHTree.FromBMesh(bm)
+    G = gap_mm * MM
+    gz = ground_z_mm * MM
+    kill = []
+    for f in bm.faces:
+        if f[keep_layer]:
+            continue
+        n = f.normal
+        if n.length < 0.5:
+            continue
+        c = f.calc_center_median()
+        pts = [c] + [c + (lp.vert.co - c) * t for lp in f.loops for t in (0.5, 0.9)]
+        covered = True
+        for p in pts:
+            o = p + n * (0.01 * MM)
+            if use_ground and n.z < -0.99 and abs(p.z - gz) < 0.02 * MM:
+                continue
+            hit = bvh.ray_cast(o, n, G)
+            if hit[0] is None or hit[2] == f.index:
+                covered = False
+                break
+        if covered:
+            kill.append(f)
+    if kill:
+        bmesh.ops.delete(bm, geom=kill, context="FACES_ONLY")
+        loose = [v for v in bm.verts if not v.link_faces]
+        if loose:
+            bmesh.ops.delete(bm, geom=loose, context="VERTS")
+    bm.faces.index_update()
+    return len(kill)
+
+
+def slice_bm(bm, normal, positions, origin=(0, 0, 0)):
+    """Insert edge loops: bisect every face crossing the planes
+    origin + normal * t (mm) for t in positions."""
+    n = V(normal).normalized()
+    o = V(origin)
+    for t in positions:
+        geom = bm.verts[:] + bm.edges[:] + bm.faces[:]
+        bmesh.ops.bisect_plane(bm, geom=geom, dist=1e-5, plane_co=o + n * t, plane_no=n)
+    return bm
 
 
 # --------------------------------------------------------------------------
@@ -594,10 +654,25 @@ def decimate_copy(ob, ratio, name):
     cp.name = name
     cp.data.name = name
     bpy.context.scene.collection.objects.link(cp)
+    # protect colour boundaries: vertices shared by faces of different role/tone
+    me = cp.data
+    role = me.attributes.get("role")
+    tone = me.attributes.get("tone")
+    vf = {}
+    for poly in me.polygons:
+        key = (role.data[poly.index].value if role else 0,
+               round(tone.data[poly.index].value, 2) if tone else 0)
+        for vi in poly.vertices:
+            vf.setdefault(vi, set()).add(key)
+    vg = cp.vertex_groups.new(name="lod_protect")
+    free = [vi for vi, ks in vf.items() if len(ks) == 1]
+    vg.add(free, 1.0, "REPLACE")
     mod = cp.modifiers.new("lod", "DECIMATE")
     mod.decimate_type = "COLLAPSE"
     mod.ratio = ratio
     mod.use_collapse_triangulate = True
+    mod.vertex_group = "lod_protect"
+    mod.vertex_group_factor = 1.0
     dg = bpy.context.evaluated_depsgraph_get()
     ev = cp.evaluated_get(dg)
     me = bpy.data.meshes.new_from_object(ev, preserve_all_data_layers=True, depsgraph=dg)
@@ -606,7 +681,112 @@ def decimate_copy(ob, ratio, name):
     cp.data = me
     me.name = name
     bpy.data.meshes.remove(old)
+    cp.vertex_groups.clear()
     return cp
+
+
+def bake_ao_cycles(ob, distance_mm=8.0, samples=16, ground_z_mm=None):
+    """Bake Cycles AO into the alpha of 'Col' (per face corner). An optional
+    temporary ground plane gives contact occlusion. Returns True on success."""
+    sc = bpy.context.scene
+    prev_engine = sc.render.engine
+    tmp_objs = []
+    try:
+        sc.render.engine = "CYCLES"
+        sc.cycles.samples = samples
+        sc.cycles.device = "CPU"
+        if sc.world is None:
+            sc.world = bpy.data.worlds.new("bake_world")
+        sc.world.light_settings.distance = distance_mm * MM
+        if ground_z_mm is not None:
+            gm = bpy.data.meshes.new("bake_ground")
+            s = 1.0
+            z = ground_z_mm * MM
+            gm.from_pydata([(-s, -s, z), (s, -s, z), (s, s, z), (-s, s, z)], [], [(0, 1, 2, 3)])
+            g = bpy.data.objects.new("bake_ground", gm)
+            sc.collection.objects.link(g)
+            tmp_objs.append(g)
+        me = ob.data
+        tmp = me.color_attributes.new("AO_bake", "FLOAT_COLOR", "CORNER")
+        me.color_attributes.active_color = tmp
+        for o in sc.objects:
+            o.select_set(False)
+        was_hidden = ob.hide_get()
+        ob.hide_set(False)
+        ob.hide_render = False
+        ob.select_set(True)
+        bpy.context.view_layer.objects.active = ob
+        st = bpy.ops.object.bake(type="AO", target="VERTEX_COLORS", use_selected_to_active=False)
+        ok = st == {"FINISHED"}
+        if ok:
+            col = me.color_attributes["Col"]
+            ao = me.color_attributes["AO_bake"]
+            n = len(col.data)
+            cbuf = array.array("f", [0.0]) * (n * 4)
+            abuf = array.array("f", [0.0]) * (n * 4)
+            col.data.foreach_get("color", cbuf)
+            ao.data.foreach_get("color", abuf)
+            for i in range(n):
+                # baked AO is stored as a linear colour value; keep it linear in alpha
+                cbuf[i * 4 + 3] = max(0.0, min(1.0, abuf[i * 4]))
+            col.data.foreach_set("color", cbuf)
+        me.color_attributes.remove(me.color_attributes["AO_bake"])
+        me.color_attributes.active_color = me.color_attributes["Col"]
+        ob.hide_set(was_hidden)
+        ob.select_set(False)
+        return ok
+    finally:
+        for g in tmp_objs:
+            bpy.data.objects.remove(g, do_unlink=True)
+        sc.render.engine = prev_engine
+
+
+def collider_from(obs, name, max_tris=250, parent=None):
+    """Convex hull collider (no material) from the vertices of obs."""
+    bm = bmesh.new()
+    for ob in obs:
+        mw = ob.matrix_world
+        for v in ob.data.vertices:
+            bm.verts.new(mw @ v.co)
+    res = bmesh.ops.convex_hull(bm, input=bm.verts[:])
+    kill = [g for g in res["geom_interior"] + res["geom_unused"] if isinstance(g, bmesh.types.BMVert) and g.is_valid]
+    kill = list(dict.fromkeys(kill))
+    if kill:
+        bmesh.ops.delete(bm, geom=kill, context="VERTS")
+    bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(4.0), verts=bm.verts[:], edges=bm.edges[:])
+    bmesh.ops.triangulate(bm, faces=bm.faces[:])
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    ob = bpy.data.objects.new(name, me)
+    bpy.context.scene.collection.objects.link(ob)
+    if len(me.polygons) > max_tris:
+        mod = ob.modifiers.new("lim", "DECIMATE")
+        mod.ratio = max_tris / len(me.polygons) * 0.95
+        dg = bpy.context.evaluated_depsgraph_get()
+        nm = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), depsgraph=dg)
+        ob.modifiers.clear()
+        old = ob.data
+        ob.data = nm
+        nm.name = name
+        bpy.data.meshes.remove(old)
+        # re-hull to guarantee convexity after decimation
+        bm = bmesh.new()
+        bm.from_mesh(ob.data)
+        res = bmesh.ops.convex_hull(bm, input=bm.verts[:])
+        kill = [g for g in res["geom_interior"] + res["geom_unused"] if isinstance(g, bmesh.types.BMVert) and g.is_valid]
+        kill = list(dict.fromkeys(kill))
+        if kill:
+            bmesh.ops.delete(bm, geom=kill, context="VERTS")
+        dup = [f for f in bm.faces if False]
+        bmesh.ops.triangulate(bm, faces=bm.faces[:])
+        bm.to_mesh(ob.data)
+        bm.free()
+    ob.display_type = "WIRE"
+    if parent:
+        ob.parent = parent
+        ob.matrix_parent_inverse = parent.matrix_world.inverted()
+    return ob
 
 
 def make_armature(name, bones, parent=None):
@@ -655,14 +835,14 @@ def rigid_skin(mesh_ob, arm_ob, bone_names):
 # --------------------------------------------------------------------------
 # FBX export + inspection
 # --------------------------------------------------------------------------
-# Same axis/unit preset as the project calibration (art/calibration, attempt 03),
-# plus mesh/colour options. See README for the verification record.
+# Coordinator-directed preset (22 Oct 2026): -Z forward, Y up, FBX_SCALE_UNITS,
+# bake_space_transform=True, sRGB colours. See README for the verification record.
 FBX_PRESET = dict(
     global_scale=1.0, apply_unit_scale=True, apply_scale_options="FBX_SCALE_UNITS",
-    axis_forward="-Z", axis_up="Y", use_space_transform=True, bake_space_transform=False,
+    axis_forward="-Z", axis_up="Y", use_space_transform=True, bake_space_transform=True,
     object_types={"MESH", "EMPTY", "ARMATURE"}, use_selection=True,
     use_mesh_modifiers=False, mesh_smooth_type="OFF", use_triangles=True,
-    use_tspace=False, colors_type="LINEAR", prioritize_active_color=True,
+    use_tspace=False, colors_type="SRGB", prioritize_active_color=True,
     add_leaf_bones=False, primary_bone_axis="Y", secondary_bone_axis="X",
     armature_nodetype="NULL", bake_anim=False, use_custom_props=True,
     path_mode="STRIP", embed_textures=False,
@@ -803,7 +983,7 @@ def _subtract_spans(lo, hi, holes):
 
 
 def lap_siding(b, wall, u0, u1, v0, v1, courses, openings, role="cedar",
-               thick_bottom=1.3, thick_top=0.35, tone_seed=0):
+               thick_bottom=1.3, thick_top=0.35, tone_seed=0, cut_mm=16.0):
     """Horizontal lap-siding courses (wedge profile gives real shadow lines).
     openings: [(u0, u1, v0, v1)] outer extents of frames to skip."""
     h = (v1 - v0) / courses
@@ -815,7 +995,15 @@ def lap_siding(b, wall, u0, u1, v0, v1, courses, openings, role="cedar",
                    wall.p(s0, c0, thick_bottom), wall.p(s1, c0, thick_bottom),
                    wall.p(s0, c1, thick_top), wall.p(s1, c1, thick_top)]
             t = 0.90 + 0.10 * ((k * 7 + j * 3 + tone_seed * 5) % 5) / 4.0
-            b.hull(pts, role, tone=t)
+            # edge loops: a ring 3 mm in from every opening/corner, and
+            # interior cuts at <= cut_mm so vertex AO has gradient room
+            cuts = []
+            if s1 - s0 > 7.0:
+                cuts += [s0 + 3.0, s1 - 3.0]
+                inner = s1 - s0 - 6.0
+                nmid = int(inner // cut_mm)
+                cuts += [s0 + 3.0 + inner * (i + 1) / (nmid + 1) for i in range(nmid)]
+            b.add(slice_bm(tmp_hull(pts), wall.u, cuts, origin=wall.o), role, tone=t)
 
 
 def window(b, wall, uc, vc, w, h, frame=1.6, proud=1.8, muntins=True, sill=True,
@@ -866,11 +1054,15 @@ def door(b, wall, uc, w, h, v0=0.0, frame=1.6, proud=1.8, boards=3,
 
 
 def stepped_roof_slope(b, x0, x1, y_eave, y_ridge, z_of_y, thickness_v, courses,
-                       step=0.9, role="roof_tile", bev=0.0, tone_seed=0):
+                       step=0.9, role="roof_tile", bev=0.0, tone_seed=0, first_course=None):
     """One roof plane split into shingle courses with a saw-tooth step.
     z_of_y gives the roof underside height. All end faces are vertical, so the
     eave line is exactly at y_eave (bounds stay exact)."""
-    ys = [y_eave + (y_ridge - y_eave) * k / courses for k in range(courses + 1)]
+    if first_course is None:
+        ys = [y_eave + (y_ridge - y_eave) * k / courses for k in range(courses + 1)]
+    else:  # eave course ends at the wall line so the soffit gets its own vertices
+        ys = [y_eave] + [first_course + (y_ridge - first_course) * k / (courses - 1)
+                         for k in range(courses)] if courses > 1 else [y_eave, y_ridge]
     for k in range(courses):
         ya, yb = ys[k], ys[k + 1]
         za, zb = z_of_y(ya), z_of_y(yb)
@@ -980,3 +1172,113 @@ def cutaway_terrain(b, x0, x1, y0, y1, nx, ny, height_fn, base_z=0.0,
     if sm.faces[0].normal.z > 0:
         sm.faces[0].normal_flip()
     b.add(sm, "stone", tone=0.6)
+
+
+def mean_alpha(ob):
+    col = ob.data.color_attributes.get("Col")
+    if col is None or not len(col.data):
+        return None
+    n = len(col.data)
+    buf = array.array("f", [0.0]) * (n * 4)
+    col.data.foreach_get("color", buf)
+    return round(sum(buf[3::4]) / n, 4)
+
+
+def setup_eevee(sc, samples=32):
+    sc.render.engine = "BLENDER_EEVEE"
+    for k, v in (("taa_render_samples", samples), ("use_shadows", True), ("use_raytracing", False),
+                 ("use_fast_gi", False), ("shadow_ray_count", 2), ("shadow_step_count", 8)):
+        try:
+            setattr(sc.eevee, k, v)
+        except Exception:
+            pass
+    sc.view_settings.view_transform = "Standard"
+    sc.view_settings.look = "None"
+    sc.render.image_settings.file_format = "PNG"
+    sc.render.image_settings.color_mode = "RGB"
+    sc.render.resolution_percentage = 100
+
+
+def add_lookdev_lights(sc, energy=2.6, world_strength=0.62):
+    world = bpy.data.worlds.get("lookdev_world") or bpy.data.worlds.new("lookdev_world")
+    world.use_nodes = True
+    bg = world.node_tree.nodes.get("Background")
+    bg.inputs[0].default_value = (0.66, 0.69, 0.72, 1.0)
+    bg.inputs[1].default_value = world_strength
+    sc.world = world
+    sun_d = bpy.data.lights.new("key_sun", "SUN")
+    sun_d.energy = energy
+    sun_d.color = (1.0, 0.89, 0.76)
+    sun_d.angle = math.radians(5.0)
+    sun = bpy.data.objects.new("key_sun", sun_d)
+    sc.collection.objects.link(sun)
+    to_light = V((-0.48, -0.62, 0.62)).normalized()
+    sun.rotation_euler = (-to_light).to_track_quat("-Z", "Y").to_euler()
+    return sun
+
+
+def render_preview(objs, path, w=960, h=400, az=24.0, el=26.0, gap_mm=12.0):
+    """Side-by-side ortho 3/4 preview of objs (e.g. LOD0, LOD1, LOD2) on a
+    paper ground plane. Temporarily moves/unhides objs; restores afterwards."""
+    sc = bpy.context.scene
+    saved_loc = {o: o.location.copy() for o in objs}
+    saved_hide = {o: (o.hide_get(), o.hide_render) for o in sc.objects}
+    temp = []
+    try:
+        for o in sc.objects:
+            o.hide_render = o not in objs
+        x = 0.0
+        widths = []
+        for o in objs:
+            o.hide_set(False)
+            o.hide_render = False
+            bpy.context.view_layer.update()
+            bb = bounds_mm([o])
+            widths.append(bb)
+        total = sum(b["size"][0] for b in widths) + gap_mm * (len(objs) - 1)
+        x = -total / 2
+        for o, bb in zip(objs, widths):
+            o.location.x += (x - bb["min"][0]) * MM
+            x += bb["size"][0] + gap_mm
+        bpy.context.view_layer.update()
+        allb = bounds_mm(objs)
+        gm = bpy.data.meshes.new("pv_ground")
+        z = allb["min"][2] * MM - 0.0002
+        s = 2.0
+        gm.from_pydata([(-s, -s, z), (s, -s, z), (s, s, z), (-s, s, z)], [], [(0, 1, 2, 3)])
+        mat = bpy.data.materials.get("pv_paper") or bpy.data.materials.new("pv_paper")
+        mat.diffuse_color = (0.86, 0.82, 0.75, 1.0)
+        gm.materials.append(mat)
+        g = bpy.data.objects.new("pv_ground", gm)
+        sc.collection.objects.link(g)
+        temp.append(g)
+        sun = add_lookdev_lights(sc)
+        temp.append(sun)
+        cd = bpy.data.cameras.new("pv_cam")
+        cd.type = "ORTHO"
+        cam = bpy.data.objects.new("pv_cam", cd)
+        sc.collection.objects.link(cam)
+        temp.append(cam)
+        c = V([(a + b) / 2 for a, b in zip(allb["min"], allb["max"])]) * MM
+        a, e = math.radians(az), math.radians(el)
+        d = V((-math.sin(a) * math.cos(e), -math.cos(a) * math.cos(e), math.sin(e)))
+        cam.location = c + d * 1.0
+        cam.rotation_euler = (-d).to_track_quat("-Z", "Y").to_euler()
+        cd.clip_start, cd.clip_end = 0.01, 5.0
+        cd.ortho_scale = max(total * 1.12, allb["size"][2] * 1.5 * w / h) * MM
+        sc.camera = cam
+        setup_eevee(sc)
+        sc.render.resolution_x, sc.render.resolution_y = w, h
+        sc.render.filepath = path
+        bpy.ops.render.render(write_still=True)
+    finally:
+        for o, l in saved_loc.items():
+            o.location = l
+        for o in temp:
+            data = o.data
+            bpy.data.objects.remove(o, do_unlink=True)
+        for o, (hv, hr) in saved_hide.items():
+            if o.name in bpy.data.objects:
+                o.hide_set(hv)
+                o.hide_render = hr
+    return os.path.isfile(path)

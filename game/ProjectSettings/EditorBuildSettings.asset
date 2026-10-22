@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Resq/Scenes/Smoke_MR.unity
-    guid: 2e4c92fcc17b749beacccd06488f2e31
+    path: Assets/Resq/Scenes/Operation_XR.unity
+    guid: 8fe891ca26e0548b3991e73087ad41b8
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8a5254afad35e4638bcbb16360589a74, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: e08808c77114346049c35a9bf250b051, type: 2}

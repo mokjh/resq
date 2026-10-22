@@ -73,11 +73,15 @@ def build_cottage(lod, mat):
     left = kit.Wall((-CX, 0, 0), (0, -1, 0), (-1, 0, 0))
 
     # core: cedar box (dark, reads as shadow in siding gaps) + cream gable prism
-    b.box(-CX, -CY, Z0, CX, CY, EAVE, "cedar", tone=0.62 if lod < 2 else 0.95)
+    b.box(-CX, -CY, Z0, CX, CY, EAVE, "cedar", tone=0.62 if lod < 2 else 0.95, keep=True)
     gable = []
-    for x in (-CX, CX):
-        gable += [V(x, -CY, EAVE), V(x, CY, EAVE), V(x, RY, RZ)]
-    b.hull(gable, "trim_paint", tone=0.97)
+    for x in (-CX, CX):   # apex 0.6 mm under the roof: no zero-gap AO contact
+        gable += [V(x, -CY, EAVE), V(x, CY, EAVE), V(x, RY, RZ - 0.6)]
+    g = kit.tmp_hull(gable)
+    if lod < 2:
+        kit.slice_bm(g, (0, 0, 1), (46.5, 52.0, 57.5))
+        kit.slice_bm(g, (0, 1, 0), (-12.0, -2.0, 9.0))
+    b.add(g, "trim_paint", tone=0.97)
 
     wall_specs = []  # (wall, span, openings)
     if lod < 2:
@@ -123,7 +127,7 @@ def build_cottage(lod, mat):
 
     # plinth
     if full:
-        b.box(-CX - 0.6, -CY - 0.6, 0, CX + 0.6, CY + 0.6, Z0, "stone", tone=0.5)  # mortar core
+        b.box(-CX - 0.6, -CY - 0.6, 0, CX + 0.6, CY + 0.6, Z0, "stone", tone=0.5, keep=True)  # mortar
         rows = [((-CX - 1.0, CX + 1.0), "x", -1, [13, 15, 12, 16, 12]),
                 ((-CX - 1.0, CX + 1.0), "x", 1, [14, 12, 15, 13, 14]),
                 ((-CY + 3.0, CY - 3.0), "y", 1, [12, 13, 11]),
@@ -157,8 +161,10 @@ def build_cottage(lod, mat):
     tb = 2.6 / math.cos(math.atan(BACK_T))
     nc = {0: 4, 1: 2, 2: 1}[lod]
     rb = 0.45 if full else 0.0
-    kit.stepped_roof_slope(b, -40.0, 40.0, -30.0, RY, front_z, tf, nc, bev=rb)
-    kit.stepped_roof_slope(b, -40.0, 40.0, 30.0, RY, back_z, tb, nc, bev=rb, tone_seed=2)
+    kit.stepped_roof_slope(b, -40.0, 40.0, -30.0, RY, front_z, tf, nc, bev=rb,
+                           first_course=-CY - 1.6 if nc > 1 else None)
+    kit.stepped_roof_slope(b, -40.0, 40.0, 30.0, RY, back_z, tb, nc, bev=rb, tone_seed=2,
+                           first_course=CY + 1.6 if nc > 1 else None)
     ridge = []
     for x in (-40.0, 40.0):
         ridge += [V(x, RY - 3.0, front_z(RY - 3.0) + tf + 0.25),
@@ -383,189 +389,215 @@ def build_skiff(lod, mat):
 # ==========================================================================
 # Residents: peg-figure miniatures with a rigid-weight armature
 # ==========================================================================
-def tmp_capsule(p0, p1, r, seg=8, rings=2, r_end=None):
+MX = "mixamorig:"
+BODY_BONES = ["Hips", "Spine", "Spine1", "Spine2", "Neck", "Head",
+              "LeftShoulder", "LeftArm", "LeftForeArm", "LeftHand",
+              "RightShoulder", "RightArm", "RightForeArm", "RightHand",
+              "LeftUpLeg", "LeftLeg", "LeftFoot", "LeftToeBase",
+              "RightUpLeg", "RightLeg", "RightFoot", "RightToeBase"]
+CHAIR_EXTRA = ["resq_Chair", "resq_WheelL", "resq_WheelR"]
+
+# Heads are deliberately enlarged (~29 % of standing height) for miniature
+# charm and legibility at 0.6 m. H is the standing height to the hair top.
+VARIANTS = {
+    "adult": dict(H=34.0, top="cloth_blue", legs="cloth_slate", skin="skin_a", hair="hair_dark",
+                  head_r=4.9, hair_r=5.1, half_w=4.6, half_d=3.0, sh_x=4.65, arm_r=1.35,
+                  hand_r=1.45, hip_z=13.6, torso_z0=12.4, leg_x=1.9, leg_r=1.75, shoe=(3.3, 5.0, 2.3)),
+    "child": dict(H=24.0, top="cloth_mustard", legs="cloth_sage", skin="skin_c", hair="hair_dark",
+                  head_r=4.2, hair_r=4.4, half_w=3.5, half_d=2.4, sh_x=3.45, arm_r=1.05,
+                  hand_r=1.15, hip_z=8.9, torso_z0=8.2, leg_x=1.45, leg_r=1.35, shoe=(2.6, 4.0, 1.8)),
+    "elder": dict(H=34.0, top="cloth_plum", legs="cloth_slate", skin="skin_b", hair="hair_grey",
+                  head_r=4.8, hair_r=5.0, half_w=4.7, half_d=3.1, sh_x=4.65, arm_r=1.35,
+                  hand_r=1.45, hip_z=13.6, torso_z0=12.4, leg_x=1.9, leg_r=1.75, shoe=(3.3, 4.8, 2.3),
+                  stoop=11.0, cane=True),
+    "wheelchair": dict(H=34.0, top="cloth_sage", legs="cloth_blue", skin="skin_b", hair="hair_auburn",
+                       head_r=4.9, hair_r=5.1, half_w=4.6, half_d=3.0, sh_x=4.65, arm_r=1.35,
+                       hand_r=1.45, hip_z=13.6, torso_z0=12.4, leg_x=2.0, leg_r=1.75,
+                       shoe=(3.3, 4.6, 2.1), seated=True),
+}
+TORSO_T = [0.0, 0.18, 0.42, 0.70, 0.84, 0.92, 0.96, 1.0]
+TORSO_RX = [0.95, 0.97, 0.90, 1.0, 0.96, 0.65, 0.33, 0.30]
+TORSO_RY = [0.97, 1.0, 0.93, 1.0, 0.97, 0.73, 0.43, 0.40]
+
+
+def tmp_capsule(p0, p1, r, seg=8, rings=1, r_end=None):
     p0, p1 = V(p0), V(p1)
     L = (p1 - p0).length
     r1 = r if r_end is None else r_end
-    prof = []
     angs = [i * (math.pi / 2) / rings for i in range(rings + 1)]
-    for a in angs:
-        prof.append(((r - r * math.cos(a)) / L, r * math.sin(a), r * math.sin(a)))
-    for a in reversed(angs):
-        prof.append(((L - r1 + r1 * math.cos(a)) / L, r1 * math.sin(a), r1 * math.sin(a)))
+    prof = [((r - r * math.cos(a)) / L, r * math.sin(a), r * math.sin(a)) for a in angs]
+    prof += [((L - r1 + r1 * math.cos(a)) / L, r1 * math.sin(a), r1 * math.sin(a))
+             for a in reversed(angs)]
     return kit.tmp_lathe(p0, p1, prof, seg)
 
 
-RES_BONES = ["root", "hips", "spine", "head", "arm_L", "arm_R", "leg_L", "leg_R"]
-CHAIR_BONES = ["root", "hips", "spine", "head", "arm_L", "arm_R", "thigh_L", "thigh_R",
-               "shin_L", "shin_R", "chair", "wheel_L", "wheel_R"]
-
-VARIANTS = {
-    "adult": dict(H=34.0, top="cloth_blue", legs="cloth_slate", skin="skin_a", hair="hair_dark",
-                  head_r=4.3, hair_r=4.5, sh_x=4.6, arm_r=1.4, hand_r=1.5, hip_z=14.6,
-                  leg_x=1.9, leg_r=1.8, sh_z=23.8, hand_z=13.2, torso=[
-                      (13.0, 4.4, 2.9), (15.5, 4.5, 3.0), (18.5, 4.2, 2.8), (22.0, 4.6, 3.0),
-                      (24.2, 4.5, 2.9), (25.4, 3.0, 2.2), (26.0, 1.5, 1.3), (26.8, 1.4, 1.2)],
-                  shoe=(3.3, 5.2, 2.4)),
-    "child": dict(H=24.0, top="cloth_mustard", legs="cloth_sage", skin="skin_c", hair="hair_dark",
-                  head_r=3.7, hair_r=3.9, sh_x=3.4, arm_r=1.1, hand_r=1.2, hip_z=9.8,
-                  leg_x=1.45, leg_r=1.4, sh_z=16.2, hand_z=9.2, torso=[
-                      (8.6, 3.3, 2.4), (10.4, 3.4, 2.5), (12.6, 3.2, 2.3), (15.0, 3.5, 2.5),
-                      (16.6, 3.3, 2.3), (17.4, 2.2, 1.7), (17.9, 1.2, 1.0), (18.5, 1.1, 0.9)],
-                  shoe=(2.6, 4.2, 1.9)),
-    "elder": dict(H=34.0, top="cloth_plum", legs="cloth_slate", skin="skin_b", hair="hair_grey",
-                  head_r=4.2, hair_r=4.4, sh_x=4.6, arm_r=1.4, hand_r=1.5, hip_z=14.6,
-                  leg_x=1.9, leg_r=1.8, sh_z=23.8, hand_z=13.2, stoop=11.0, cane=True, torso=[
-                      (13.0, 4.5, 3.0), (15.5, 4.6, 3.1), (18.5, 4.4, 3.0), (22.0, 4.6, 3.1),
-                      (24.2, 4.4, 3.0), (25.4, 3.0, 2.2), (26.0, 1.5, 1.3), (26.8, 1.4, 1.2)],
-                  shoe=(3.3, 5.0, 2.4)),
-    "wheelchair": dict(H=34.0, top="cloth_sage", legs="cloth_blue", skin="skin_b",
-                       hair="hair_auburn", head_r=4.3, hair_r=4.5, sh_x=4.6, arm_r=1.4,
-                       hand_r=1.5, leg_x=2.0, leg_r=1.8, seated=True, shoe=(3.3, 4.8, 2.2)),
-}
+def resident_layout(P):
+    """Joint positions (mm, Blender rest pose, facing -Y; Left = +X)."""
+    H = P["H"]
+    seated = P.get("seated", False)
+    dz = -2.6 if seated else 0.0
+    hair_c = V(0, 0.8, H - P["hair_r"] * 0.78 + dz)
+    head_c = V(0, 0, hair_c.z - 1.1)
+    neck_top = head_c.z - P["head_r"] * 0.55
+    t0 = P["torso_z0"] + dz
+    sh_z = t0 + 0.80 * (neck_top - t0)
+    J = {"hair_c": hair_c, "head_c": head_c, "neck_top": neck_top, "torso_z0": t0, "sh_z": sh_z,
+         "hip": V(0, 0, P["hip_z"] + dz)}
+    for side, s in (("Left", 1), ("Right", -1)):
+        sh = V(s * P["sh_x"], 0, sh_z)
+        if seated:
+            hand = V(s * 6.4, -2.2, 12.4)
+            elbow = V(s * 6.0, 1.2, 16.4)
+        elif P.get("cane") and s < 0:
+            hand = V(s * 5.3, -4.4, 14.6)
+            elbow = V(s * 5.6, -1.6, (sh_z + 14.6) / 2)
+        else:
+            hand = V(s * 5.0, -0.3, 12.8 * (H / 34.0) ** 1.0 if H >= 30 else 8.8)
+            elbow = V(s * 5.0, 0.4, (sh_z + hand.z) / 2)
+        J[side + "Shoulder"] = V(s * 0.9, 0, sh_z)
+        J[side + "Arm"] = sh
+        J[side + "ForeArm"] = elbow
+        J[side + "Hand"] = hand
+        lx = s * P["leg_x"]
+        if seated:
+            J[side + "UpLeg"] = V(lx, 0.6, 12.0)
+            J[side + "Leg"] = V(lx, -7.0, 12.0)
+            J[side + "Foot"] = V(lx, -8.2, 3.6)
+            J[side + "ToeBase"] = V(lx, -11.0, 3.0)
+        else:
+            hip = P["hip_z"]
+            J[side + "UpLeg"] = V(lx, 0, hip)
+            J[side + "Leg"] = V(lx, -0.25, (hip + P["shoe"][2]) * 0.52)
+            J[side + "Foot"] = V(lx, 0, P["shoe"][2] - 0.3)
+            J[side + "ToeBase"] = V(lx, -2.6, 0.7)
+    return J
 
 
 def build_resident(variant, lod, mat):
     P = VARIANTS[variant]
     b = kit.Builder("resident")
     seated = P.get("seated", False)
-    bones = CHAIR_BONES if seated else RES_BONES
+    bones = [MX + n for n in BODY_BONES] + (CHAIR_EXTRA if seated else [])
     BI = {n: i for i, n in enumerate(bones)}
+
+    def bi(n):
+        return BI[n if n.startswith("resq_") else MX + n]
+
+    J = resident_layout(P)
     lseg = {0: 8, 1: 6, 2: 5}[lod]
     tseg = {0: 10, 1: 8, 2: 6}[lod]
-    hseg = {0: (12, 8), 1: (9, 6), 2: (7, 5)}[lod]
-    rings = 2 if lod == 0 else 1
-    dz = -2.5 if seated else 0.0               # seated torso sits lower
-    torso_prof = VARIANTS["adult"]["torso"] if seated else P["torso"]
-    torso_prof = [(z + dz, rx, ry) for z, rx, ry in torso_prof]
-    sh_z = (VARIANTS["adult"]["sh_z"] if seated else P["sh_z"]) + dz
-    hip_z = (VARIANTS["adult"]["hip_z"] if seated else P["hip_z"]) + dz
-    neck_top = torso_prof[-1][0]
-    head_c = neck_top + P["head_r"] * 0.62
-    hair_c = V(0, 0.8, head_c + 1.1)
-    hair_sz = 0.78
-    # stoop pivot (elder): rotate upper body about the hip about +X (top leans to -Y)
+    hseg = {0: (12, 8), 1: (10, 6), 2: (8, 5)}[lod]
     stoop = math.radians(P.get("stoop", 0.0))
-    piv = V(0, 0, hip_z)
-    up_x = (Matrix.Translation(piv) @ Matrix.Rotation(stoop, 4, "X") @ Matrix.Translation(-piv)
-            if stoop else None)
+    piv = J["hip"]
+    up = (Matrix.Translation(piv) @ Matrix.Rotation(stoop, 4, "X") @ Matrix.Translation(-piv)
+          if stoop else Matrix.Identity(4))
 
-    # torso
-    z0, z1 = torso_prof[0][0], torso_prof[-1][0]
-    prof = [((z - z0) / (z1 - z0), rx, ry) for z, rx, ry in torso_prof]
-    prof = [(0.0, 0.0, 0.0)] + prof + [(1.0, 0.0, 0.0)]
-    prof[1] = (0.0001, prof[1][1] * 0.8, prof[1][2] * 0.8)
-    b.add(kit.tmp_lathe((0, 0, z0), (0, 0, z1), prof, tseg), P["top"], bone=BI["spine"],
-          smooth=True, xform=up_x)
-    # head, hair, nose
-    b.add(kit.tmp_sphere((0, 0, head_c), P["head_r"], *hseg, scale=(1, 1, 1.02)), P["skin"],
-          bone=BI["head"], smooth=True, xform=up_x)
-    b.add(kit.tmp_sphere(hair_c, P["hair_r"], *hseg, scale=(1.0, 1.0, hair_sz)), P["hair"],
-          bone=BI["head"], smooth=True, xform=up_x)
+    # torso (rigid on Spine1)
+    z0, z1 = J["torso_z0"], J["neck_top"]
+    prof = [(0.0, 0.0, 0.0)] + [(max(1e-4, t), P["half_w"] * rx, P["half_d"] * ry)
+                                for t, rx, ry in zip(TORSO_T, TORSO_RX, TORSO_RY)] + [(1.0, 0.0, 0.0)]
+    prof[1] = (1e-4, prof[1][1] * 0.8, prof[1][2] * 0.8)
+    prof[-2] = (0.9999, prof[-2][1], prof[-2][2])
+    b.add(kit.tmp_lathe((0, 0, z0), (0, 0, z1), prof, tseg), P["top"], bone=bi("Spine1"),
+          smooth=True, xform=up)
+    # head, hair, nose (Head)
+    b.add(kit.tmp_sphere(J["head_c"], P["head_r"], *hseg, scale=(1, 1, 1.02)), P["skin"],
+          bone=bi("Head"), smooth=True, xform=up)
+    b.add(kit.tmp_sphere(J["hair_c"], P["hair_r"], *hseg, scale=(1.0, 1.0, 0.78)), P["hair"],
+          bone=bi("Head"), smooth=True, xform=up)
     if lod < 2:
-        b.add(kit.tmp_sphere((0, -P["head_r"] + 0.15, head_c - 0.6), 0.75, 6, 4), P["skin"],
-              tone=0.95, bone=BI["head"], smooth=True, xform=up_x)
-    # arms + hands
-    for side, bn in ((1, "arm_L"), (-1, "arm_R")):
-        sx = side * P["sh_x"]
-        if seated:
-            hand = V(side * 6.2, -2.0, 12.6)          # hands resting on the push rims
-        elif P.get("cane") and side < 0:
-            hand = V(side * 5.2, -3.6, P["hand_z"] + 1.0)
-        else:
-            hand = V(side * 5.0, -0.2, P["hand_z"])
-        sh = V(sx, 0, sh_z)
-        b.add(tmp_capsule(sh, hand, P["arm_r"], lseg, rings), P["top"], bone=BI[bn], smooth=True,
-              xform=up_x)
-        hp = hand + (hand - sh).normalized() * 0.4
-        b.add(kit.tmp_sphere(hp, P["hand_r"], lseg, max(4, lseg - 2)), P["skin"], bone=BI[bn],
-              smooth=True, xform=up_x)
-    # legs
+        hc = J["head_c"]
+        b.add(kit.tmp_sphere((0, -P["head_r"] + 0.2, hc.z - 0.9), 0.8, 6, 4), P["skin"], tone=0.93,
+              bone=bi("Head"), smooth=True, xform=up)
+    # arms: upper (Arm), fore (ForeArm), mitten hand (Hand)
+    for side in ("Left", "Right"):
+        sh, el, ha = J[side + "Arm"], J[side + "ForeArm"], J[side + "Hand"]
+        b.add(tmp_capsule(sh, el, P["arm_r"], lseg), P["top"], bone=bi(side + "Arm"), smooth=True,
+              xform=up)
+        b.add(tmp_capsule(el, ha, P["arm_r"] * 0.92, lseg), P["top"], tone=0.95,
+              bone=bi(side + "ForeArm"), smooth=True, xform=up)
+        hp = ha + (ha - el).normalized() * 0.5
+        b.add(kit.tmp_sphere(hp, P["hand_r"], lseg, max(4, lseg - 3)), P["skin"],
+              bone=bi(side + "Hand"), smooth=True, xform=up)
+    # legs: thigh (UpLeg), shin (Leg), shoe (Foot)
     sw, sl, shh = P["shoe"]
-    if not seated:
-        for side, bn in ((1, "leg_L"), (-1, "leg_R")):
-            lx = side * P["leg_x"]
-            b.add(tmp_capsule((lx, 0, hip_z + 0.6), (lx, 0, shh - 0.6), P["leg_r"], lseg, rings),
-                  P["legs"], bone=BI[bn], smooth=True)
-            b.box(lx - sw / 2, -sl + 1.6, 0.0, lx + sw / 2, 1.6, shh, "rubber", bone=BI[bn],
-                  bev=0.7 if lod < 2 else 0.0)
-        if P.get("cane"):
-            hand = up_x @ V(-5.2, -3.6, P["hand_z"] + 1.0)
-            foot = V(-6.0, -6.4, 0.0)
-            b.add(kit.tmp_cyl(foot + V(0, 0, 0.0), hand + V(0, 0, 0.3), 0.6, 6), "wood_deck",
-                  tone=0.7, bone=BI["arm_R"])
-            b.add(kit.tmp_cyl(hand + V(0, 0, 0.3), hand + V(0, 2.2, 1.0), 0.6, 6), "wood_deck",
-                  tone=0.7, bone=BI["arm_R"])
-    else:
+    for side, s in (("Left", 1), ("Right", -1)):
+        hp, kn, an = J[side + "UpLeg"], J[side + "Leg"], J[side + "Foot"]
+        b.add(tmp_capsule(hp + V(0, 0, 0.6 if not seated else 0.0), kn, P["leg_r"], lseg),
+              P["legs"], bone=bi(side + "UpLeg"), smooth=True)
+        b.add(tmp_capsule(kn, an + V(0, 0, 0.3), P["leg_r"] * 0.93, lseg), P["legs"], tone=0.95,
+              bone=bi(side + "Leg"), smooth=True)
+        fz = 0.0 if not seated else 2.4
+        fy = an.y
+        b.box(an.x - sw / 2, fy - sl + 1.6, fz, an.x + sw / 2, fy + 1.6, fz + shh, "rubber",
+              bone=bi(side + "Foot"), bev=0.7 if lod < 2 else 0.0)
+    if P.get("cane"):
+        hand = up @ J["RightHand"]
+        foot = V(-6.2, -7.4, 0.0)
+        b.add(kit.tmp_cyl(foot, hand + V(0, 0, 0.4), 0.6, 6), "wood_deck", tone=0.7,
+              bone=bi("RightHand"))
+        b.add(kit.tmp_cyl(hand + V(0, 0, 0.4), hand + V(0, 2.4, 1.1), 0.6, 6), "wood_deck",
+              tone=0.7, bone=bi("RightHand"))
+    if seated:
+        C = bi("resq_Chair")
         seat_z = 10.6
-        for side, (tb, sb) in ((1, ("thigh_L", "shin_L")), (-1, ("thigh_R", "shin_R"))):
-            lx = side * P["leg_x"]
-            knee = V(lx, -7.2, seat_z + 1.8)
-            b.add(tmp_capsule((lx, 0.6, seat_z + 1.8), knee, P["leg_r"], lseg, rings), P["legs"],
-                  bone=BI[tb], smooth=True)
-            ankle = V(lx, -8.4, 3.4)
-            b.add(tmp_capsule(knee, ankle, P["leg_r"] * 0.95, lseg, rings), P["legs"],
-                  bone=BI[sb], smooth=True)
-            b.box(lx - sw / 2, -8.4 - sl + 1.6, 2.4, lx + sw / 2, -8.4 + 1.6, 2.4 + shh, "rubber",
-                  bone=BI[sb], bev=0.6 if lod < 2 else 0.0)
-        # wheelchair (rigid on 'chair'; wheels on their own bones)
-        C = BI["chair"]
-        b.box(-5.0, -6.4, seat_z - 1.0, 5.0, 2.4, seat_z, "cloth_slate", bone=C,
-              bev=0.4 if lod < 2 else 0.0)
-        b.box(-4.8, 2.4, seat_z - 0.6, 4.8, 3.3, seat_z + 9.5, "cloth_slate", tone=0.9, bone=C,
-              bev=0.4 if lod < 2 else 0.0)
-        b.box(-4.0, -11.6, 1.6, 4.0, -8.0, 2.4, "metal_dark", bone=C)            # footplate
+        bv = 0.4 if lod < 2 else 0.0
+        b.box(-5.0, -6.4, seat_z - 1.0, 5.0, 2.4, seat_z, "cloth_slate", bone=C, bev=bv)
+        b.box(-4.8, 2.9, seat_z - 0.6, 4.8, 3.8, seat_z + 9.5, "cloth_slate", tone=0.9, bone=C, bev=bv)
+        b.box(-4.0, -12.0, 1.6, 4.0, -8.6, 2.4, "metal_dark", bone=C)          # footplate
         wseg = {0: 16, 1: 12, 2: 10}[lod]
-        for side, wb in ((1, "wheel_L"), (-1, "wheel_R")):
-            wx = side * 6.9
-            for x0, x1, r, role in ((wx - side * 0.7, wx + side * 0.7, 7.4, "rubber"),
-                                    (wx - side * 0.85, wx + side * 0.85, 6.2, "mineral")):
-                b.add(kit.tmp_cyl((x0, 1.2, 7.4), (x1, 1.2, 7.4), r, wseg), role, bone=BI[wb],
-                      smooth=False)
-            b.add(kit.tmp_cyl((wx - side * 1.1, 1.2, 7.4), (wx + side * 1.1, 1.2, 7.4), 1.2, 8),
-                  "metal_dark", bone=BI[wb])
-            fx = side * 5.3
-            kit.rail(b, (fx, 3.0, seat_z + 9.0), (fx, 3.0, 5.0), 0.9, 0.9, "metal_dark", bone=C)
-            kit.rail(b, (fx, 3.0, 5.0), (fx, -7.4, 4.6), 0.9, 0.9, "metal_dark", bone=C)
-            kit.rail(b, (fx, -6.0, seat_z - 0.6), (fx, -9.0, 2.0), 0.9, 0.9, "metal_dark", bone=C)
-            kit.rail(b, (fx, 3.0, seat_z + 9.0), (fx, 5.0, seat_z + 9.4), 0.9, 0.9, "metal_dark",
-                     bone=C)
-            b.add(kit.tmp_cyl((fx, 4.6, seat_z + 9.3), (fx, 6.6, seat_z + 9.7), 0.75, 6), "rubber",
+        for side, wb, s in (("L", "resq_WheelL", 1), ("R", "resq_WheelR", -1)):
+            wx = s * 7.0
+            b.add(kit.tmp_cyl((wx - s * 0.7, 1.2, 7.4), (wx + s * 0.7, 1.2, 7.4), 7.4, wseg),
+                  "rubber", bone=bi(wb))
+            b.add(kit.tmp_cyl((wx - s * 0.9, 1.2, 7.4), (wx + s * 0.9, 1.2, 7.4), 6.1, wseg),
+                  "mineral", bone=bi(wb))
+            b.add(kit.tmp_cyl((wx - s * 1.3, 1.2, 7.4), (wx + s * 1.3, 1.2, 7.4), 1.2, 8),
+                  "metal_dark", bone=bi(wb))
+            fx = s * 5.4
+            for p0, p1 in (((fx, 3.4, seat_z + 9.0), (fx, 3.4, 5.0)),
+                           ((fx, 3.4, 5.0), (fx, -7.4, 4.6)),
+                           ((fx, -6.0, seat_z - 0.6), (fx, -9.4, 2.0)),
+                           ((fx, 3.4, seat_z + 9.0), (fx, 5.4, seat_z + 9.4))):
+                kit.rail(b, p0, p1, 0.9, 0.9, "metal_dark", bone=C)
+            b.add(kit.tmp_cyl((fx, 5.0, seat_z + 9.3), (fx, 7.0, seat_z + 9.7), 0.75, 6), "rubber",
                   bone=C)
-            # caster
             b.add(kit.tmp_cyl((fx - 0.5, -7.4, 2.0), (fx + 0.5, -7.4, 2.0), 2.0, 10), "rubber",
                   bone=C)
             kit.rail(b, (fx, -7.4, 2.0), (fx, -7.4, 4.8), 0.7, 0.7, "metal_dark", bone=C)
     ob = b.finalize("resident_%s_LOD%d" % (variant, lod), mat,
-                    ao=dict(rays=16, dist_mm=5.0, strength=0.8, height_mm=14.0, height_dark=0.15))
-    # bone layout (Blender rest pose)
-    top = P["H"]
+                    ao=dict(rays=16, dist_mm=5.0, strength=0.8, height_mm=14.0, height_dark=0.15),
+                    cull=dict(gap_mm=0.3))
+
+    # Mixamo-style bone chain (rest pose = authored pose; stoop baked in)
+    def S(p):
+        return tuple(up @ V(p))
+    hip = J["hip"]
+    top = J["hair_c"].z + P["hair_r"] * 0.78
+    bl = [(MX + "Hips", tuple(hip), tuple(hip + V(0, 0, 1.6)), None),
+          (MX + "Spine", tuple(hip + V(0, 0, 1.6)), S(hip + V(0, 0, 4.0)), MX + "Hips"),
+          (MX + "Spine1", S(hip + V(0, 0, 4.0)), S(V(0, 0, (hip.z + 4.0 + J["sh_z"]) / 2 + 1.0)), MX + "Spine"),
+          (MX + "Spine2", S(V(0, 0, (hip.z + 4.0 + J["sh_z"]) / 2 + 1.0)), S(V(0, 0, J["sh_z"])), MX + "Spine1"),
+          (MX + "Neck", S(V(0, 0, J["sh_z"])), S(V(0, 0, J["neck_top"])), MX + "Spine2"),
+          (MX + "Head", S(V(0, 0, J["neck_top"])), S(V(0, 0, top)), MX + "Neck")]
+    for side in ("Left", "Right"):
+        bl += [(MX + side + "Shoulder", S(J[side + "Shoulder"]), S(J[side + "Arm"]), MX + "Spine2"),
+               (MX + side + "Arm", S(J[side + "Arm"]), S(J[side + "ForeArm"]), MX + side + "Shoulder"),
+               (MX + side + "ForeArm", S(J[side + "ForeArm"]), S(J[side + "Hand"]), MX + side + "Arm"),
+               (MX + side + "Hand", S(J[side + "Hand"]),
+                S(J[side + "Hand"] + (J[side + "Hand"] - J[side + "ForeArm"]).normalized() * 2.0),
+                MX + side + "ForeArm"),
+               (MX + side + "UpLeg", tuple(J[side + "UpLeg"]), tuple(J[side + "Leg"]), MX + "Hips"),
+               (MX + side + "Leg", tuple(J[side + "Leg"]), tuple(J[side + "Foot"]), MX + side + "UpLeg"),
+               (MX + side + "Foot", tuple(J[side + "Foot"]), tuple(J[side + "ToeBase"]), MX + side + "Leg"),
+               (MX + side + "ToeBase", tuple(J[side + "ToeBase"]),
+                tuple(J[side + "ToeBase"] + V(0, -1.4, 0)), MX + side + "Foot")]
     if seated:
-        bl = [("root", (0, 0, 0), (0, 0, 3), None),
-              ("hips", (0, 0, 10.6), (0, 0, 13.0), "root"),
-              ("spine", (0, 0, 13.0), (0, 0, neck_top), "hips"),
-              ("head", (0, 0, neck_top), (0, 0, neck_top + 7.0), "spine"),
-              ("arm_L", (P["sh_x"], 0, sh_z), (6.2, -2.0, 12.6), "spine"),
-              ("arm_R", (-P["sh_x"], 0, sh_z), (-6.2, -2.0, 12.6), "spine"),
-              ("thigh_L", (2.0, 0.6, 12.4), (2.0, -7.2, 12.4), "hips"),
-              ("thigh_R", (-2.0, 0.6, 12.4), (-2.0, -7.2, 12.4), "hips"),
-              ("shin_L", (2.0, -7.2, 12.4), (2.0, -8.4, 3.4), "thigh_L"),
-              ("shin_R", (-2.0, -7.2, 12.4), (-2.0, -8.4, 3.4), "thigh_R"),
-              ("chair", (0, 0, 0.5), (0, 0, 6.0), "root"),
-              ("wheel_L", (6.9, 1.2, 7.4), (9.0, 1.2, 7.4), "chair"),
-              ("wheel_R", (-6.9, 1.2, 7.4), (-9.0, 1.2, 7.4), "chair")]
-    else:
-        def S(p):
-            p = V(p)
-            return tuple(up_x @ p) if up_x else tuple(p)
-        bl = [("root", (0, 0, 0), (0, 0, 3), None),
-              ("hips", (0, 0, hip_z), (0, 0, hip_z + 3.0), "root"),
-              ("spine", S((0, 0, hip_z + 3.0)), S((0, 0, neck_top)), "hips"),
-              ("head", S((0, 0, neck_top)), S((0, 0, top - 0.5)), "spine"),
-              ("arm_L", S((P["sh_x"], 0, sh_z)), S((5.0, -0.2, P["hand_z"])), "spine"),
-              ("arm_R", S((-P["sh_x"], 0, sh_z)), S((-5.0, -0.2, P["hand_z"])), "spine"),
-              ("leg_L", (P["leg_x"], 0, hip_z), (P["leg_x"], 0, 0.6), "hips"),
-              ("leg_R", (-P["leg_x"], 0, hip_z), (-P["leg_x"], 0, 0.6), "hips")]
+        bl += [("resq_Chair", (0, 0, 0.5), (0, 0, 6.0), None),
+               ("resq_WheelL", (7.0, 1.2, 7.4), (9.0, 1.2, 7.4), "resq_Chair"),
+               ("resq_WheelR", (-7.0, 1.2, 7.4), (-9.0, 1.2, 7.4), "resq_Chair")]
+    order = {n: i for i, n in enumerate(bones)}
+    bl.sort(key=lambda r: order[r[0]])
     return ob, bl, bones
 
 
@@ -631,7 +663,7 @@ def roundtrip(fbx_path, names):
     for ob in list(bpy.data.objects):
         bpy.data.objects.remove(ob, do_unlink=True)
     st = bpy.ops.import_scene.fbx(filepath=fbx_path, use_manual_orientation=False,
-                                  global_scale=1.0, use_anim=False, colors_type="LINEAR")
+                                  global_scale=1.0, use_anim=False, colors_type="SRGB")
     if st != {"FINISHED"}:
         raise RuntimeError("re-import failed " + fbx_path)
     got = {}
@@ -644,9 +676,23 @@ def roundtrip(fbx_path, names):
         got[n] = kit.bounds_mm([ob])
     roots = {ob.name: [round(x, 5) for x in ob.rotation_euler] for ob in bpy.data.objects
              if ob.parent is None}
-    return {"lod_bounds_mm": got, "root_rotations_rad": roots,
+    alphas = {n: kit.mean_alpha(bpy.data.objects[n]) for n in names if n in bpy.data.objects}
+    return {"lod_bounds_mm": got, "root_rotations_rad": roots, "mean_ao_alpha": alphas,
             "colour_attrs": {ob.name: [a.name for a in ob.data.color_attributes]
                              for ob in bpy.data.objects if ob.type == "MESH"}}
+
+
+def bake_lods(lods, ground_z_mm, dist_mm):
+    """Cycles AO (16 samples) into vertex alpha; geometric AO is the fallback."""
+    method = {}
+    for o in lods:
+        try:
+            ok = kit.bake_ao_cycles(o, distance_mm=dist_mm, samples=16, ground_z_mm=ground_z_mm)
+        except Exception as ex:  # keep the geometric bake already in alpha
+            print("CYCLES BAKE FAILED", o.name, ex)
+            ok = False
+        method[o.name] = "cycles_ao_16spp" if ok else "geometric_raycast_fallback"
+    return method
 
 
 def publish(asset, root, lods, markers, extra, meta, target=None, folder=None, fbx_name=None,
@@ -666,7 +712,10 @@ def publish(asset, root, lods, markers, extra, meta, target=None, folder=None, f
         "bounds_lod0_blender_mm": bnd,
         "bounds_lod0_unity_mm_size": [bnd["size"][0], bnd["size"][2], bnd["size"][1]],
         "triangles": {o.name: t for o, t in zip(lods, tris)},
-        "material": "RESQ_Shared (one material; palette atlas UV + vertex colour 'Col')",
+        "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), "
+                    "A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+        "mean_ao_alpha": {o.name: kit.mean_alpha(o) for o in lods},
+        "colliders": {o.name: kit.tri_count(o) for o in extra if o.name.endswith("_COL")},
         "material_roles_faces_lod0": kit.role_counts(lods[0]),
         "markers": markers_doc(markers),
     }
@@ -691,6 +740,10 @@ def publish(asset, root, lods, markers, extra, meta, target=None, folder=None, f
         doc["files"].update({"blend": os.path.relpath(blend, REPO),
                              "blend_sha256": kit.sha256_file(blend),
                              "blend_bytes": os.path.getsize(blend)})
+    pv = os.path.join(folder, fbx_name + "_preview.png")
+    kit.render_preview(list(lods), pv)
+    doc["files"]["preview"] = os.path.relpath(pv, REPO)
+    doc["preview_note"] = "EEVEE, left to right LOD0/LOD1/LOD2, ortho 3/4 view, same light as the contact sheet"
     doc["generator_sha256"] = {"lookdev.py": kit.sha256_file(__file__),
                                "kit.py": kit.sha256_file(kit.__file__)}
     return doc, fbx
@@ -733,7 +786,9 @@ def make_cottage():
             "design": "cedar lap-siding wedge courses over a dark core (real shadow lines), cream gables, "
                       "asymmetric roof (ridge 5 mm toward +Y, ~40/54 deg slopes) with 9 mm front/back and 8 mm "
                       "gable eaves, stone plinth blocks, chimney rooted inside the gable body"}
-    doc, fbx = publish("cottage", root, lods, m, [], meta, TARGETS["cottage"])
+    meta["ao_bake"] = bake_lods(lods, 0.0, 8.0)
+    col = kit.collider_from([lods[0]], "cottage_COL", parent=root)
+    doc, fbx = publish("cottage", root, lods, m, [col], meta, TARGETS["cottage"])
     finish_doc(doc, fbx, [o.name for o in lods], os.path.join(LOOK, "cottage", "cottage.json"))
 
 
@@ -766,7 +821,9 @@ def make_bridge():
             "state": "deployed", "lod_notes": notes,
             "design": "two orange halves folding about a central Y-axis hinge (three knuckles per side, leaf plates, "
                       "rail hinge links), deck planks, rubber grips, reflective end bands, under-deck cross members"}
-    doc, fbx = publish("bridge", root, lods, m, [], meta, TARGETS["bridge"])
+    meta["ao_bake"] = bake_lods(lods, None, 6.0)
+    col = kit.collider_from([lods[0]], "bridge_COL", parent=root)
+    doc, fbx = publish("bridge", root, lods, m, [col], meta, TARGETS["bridge"])
     finish_doc(doc, fbx, [o.name for o in lods], os.path.join(LOOK, "bridge", "bridge.json"))
 
 
@@ -797,7 +854,9 @@ def make_skiff():
             "design": "rescue RIB: cream hull with dark bottom paint below the waterline, rescue-orange collar "
                       "band around the gunwale, two thwarts carrying four dark-green seat pads, foredeck locker, "
                       "stowed paddles, outboard motor with tiller"}
-    doc, fbx = publish("skiff", root, lods, m, [], meta, TARGETS["skiff"])
+    meta["ao_bake"] = bake_lods(lods, None, 6.0)
+    col = kit.collider_from([lods[0]], "skiff_COL", parent=root)
+    doc, fbx = publish("skiff", root, lods, m, [col], meta, TARGETS["skiff"])
     finish_doc(doc, fbx, [o.name for o in lods], os.path.join(LOOK, "skiff", "skiff.json"))
 
 
@@ -813,9 +872,11 @@ def make_residents():
             ob, bl, bones = build_resident(variant, lod, mat)
             lods.append(ob)
         notes = ensure_lod_ratio(lods, mat.name)
+        ao_method = bake_lods(lods, 0.0, 4.0)
         rig = kit.make_armature("resident_" + variant, bl)
         for o in lods:
             kit.rigid_skin(o, rig, bones)
+        col = kit.collider_from([lods[2]], "resident_%s_COL" % variant, parent=rig, max_tris=120)
         mk = []
         top = max(v.co.z for v in lods[0].data.vertices) / MM
         for nm, p, meaning in (("ground", (0, 0, 0), "ground contact root (feet / wheels at z=0)"),
@@ -823,23 +884,23 @@ def make_residents():
             e = kit.empty("resident_%s_mk_%s" % (variant, nm), p, rig)
             e["meaning"] = meaning
             mk.append(e)
-        for o in [rig] + lods + mk:
+        for o in [rig] + lods + mk + [col]:
             for c in o.users_collection:
                 c.objects.unlink(o)
             coll.objects.link(o)
         for o in lods[1:]:
             o.hide_set(True)
-        built[variant] = (rig, lods, mk, notes, bones)
+        built[variant] = (rig, lods, mk, notes, bones, col, ao_method)
     os.makedirs(os.path.join(LOOK, "resident"), exist_ok=True)
     kit.save_blend(os.path.join(LOOK, "resident", "resident.blend"))
     summary = {}
     docs = {}
-    for variant, (rig, lods, mk, notes, bones) in built.items():
+    for variant, (rig, lods, mk, notes, bones, col, ao_method) in built.items():
         bpy.context.view_layer.update()
         b0 = kit.bounds_mm([lods[0]])
         # shoulder width: X extent of vertices in the shoulder band
         P = VARIANTS[variant]
-        sh_z = (VARIANTS["adult"]["sh_z"] - 2.5) if P.get("seated") else P["sh_z"]
+        sh_z = resident_layout(P)["sh_z"]
         xs = [v.co.x / MM for v in lods[0].data.vertices if abs(v.co.z / MM - sh_z) <= 1.5]
         shoulder = round(max(xs) - min(xs), 3) if xs else None
         meta = {"variant": variant,
@@ -848,14 +909,15 @@ def make_residents():
                 "rig": {"bones": bones, "bone_count": len(bones), "weights": "rigid, 1 bone per vertex",
                         "note": "parts are separate rigid pieces skinned 100% to one bone each, so idle/walk/"
                                 "wave/celebrate are transform-only clips"},
-                "lod_notes": notes, "palette": {k: P[k] for k in ("top", "legs", "skin", "hair")}}
+                "lod_notes": notes, "ao_bake": ao_method,
+                "palette": {k: P[k] for k in ("top", "legs", "skin", "hair")}}
         checks_extra = {}
         if variant == "adult":
             checks_extra["height_34mm_pm1pct"] = abs(b0["size"][2] - 34.0) <= 0.34
             checks_extra["shoulder_12mm_pm1pct"] = shoulder is not None and abs(shoulder - 12.0) <= 0.12
         checks_extra["feet_not_below_ground"] = b0["min"][2] >= -0.001
         fbx_name = "resident" if variant == "adult" else "resident_" + variant
-        doc, fbx = publish("resident_" + variant, rig, lods, mk, [], meta, None, folder="resident",
+        doc, fbx = publish("resident_" + variant, rig, lods, mk, [col], meta, None, folder="resident",
                            fbx_name=fbx_name, save=False, budget_key="resident")
         doc["checks"].update(checks_extra)
         doc["files"].update({"blend": "art/lookdev/resident/resident.blend",

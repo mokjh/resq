@@ -48,6 +48,26 @@ namespace Resq.Game
         {
             SetupPointers();
             Driver.LoadRun(MissionId, LayoutClass, Profile, Guided);
+            if (XRSettings.isDeviceActive) StartCoroutine(PlaceInFrontOfHead());
+        }
+
+        /// <summary>
+        /// Default seated placement (spec 05: board height = eye − 300 mm, 550 mm in front, facing the player).
+        /// MRUK table placement replaces this when a real surface is chosen.
+        /// </summary>
+        System.Collections.IEnumerator PlaceInFrontOfHead()
+        {
+            var rig = FindFirstObjectByType<OVRCameraRig>();
+            for (int i = 0; i < 30 && (rig == null || rig.centerEyeAnchor.position.sqrMagnitude < 1e-6f); i++) yield return null;
+            if (rig == null) yield break;
+            yield return null;
+            var head = rig.centerEyeAnchor;
+            var fwd = head.forward; fwd.y = 0;
+            if (fwd.sqrMagnitude < 1e-4f) fwd = Vector3.forward;
+            fwd.Normalize();
+            var board = Driver.transform;
+            board.position = head.position + fwd * 0.55f + Vector3.down * 0.30f;
+            board.rotation = Quaternion.LookRotation(fwd, Vector3.up);
         }
 
         void SetupPointers()
