@@ -1,0 +1,9 @@
+{
+  "id": "A",
+  "description": "Walk the nearest group early and ferry the late group: the low market crosses the low causeway at once; one skiff waits for the flats to flood, then ferries the outer island from its high pier to the depot.",
+  "steps": [
+    {"t": 5, "group": "low_market", "to": "depot"},
+    {"t": 6, "place": "skiff:01"},
+    {"t": 7, "vehicle": "skiff:01", "group": "outer_island", "pickup": "outer_island_pickup", "to": "depot"}
+  ]
+}

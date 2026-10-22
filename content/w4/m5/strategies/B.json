@@ -1,0 +1,58 @@
+{
+  "id": "B",
+  "description": "Open the high causeway and use boats only for isolated islands while protecting the network: the bridge opens the high causeway and the low market (over the low causeway before the tide rises) and the middle island walk home; the harbor generator is protected by two barriers and lights the lamp through the breakwater relay; skiffs go only to the lighthouse rock and, by the outer loop, the outer island.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "bridge:01"
+    },
+    {
+      "t": 6,
+      "group": "low_market",
+      "to": "depot"
+    },
+    {
+      "t": 7,
+      "group": "middle_island",
+      "to": "depot"
+    },
+    {
+      "t": 8,
+      "place": "generator:01"
+    },
+    {
+      "t": 9,
+      "place": "barrier:01"
+    },
+    {
+      "t": 10,
+      "place": "barrier:02"
+    },
+    {
+      "t": 11,
+      "place": "relay:01"
+    },
+    {
+      "t": 12,
+      "place": "skiff:01"
+    },
+    {
+      "t": 13,
+      "vehicle": "skiff:01",
+      "group": "lighthouse",
+      "pickup": "lighthouse_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 14,
+      "place": "skiff:02"
+    },
+    {
+      "t": 15,
+      "vehicle": "skiff:02",
+      "group": "outer_island",
+      "pickup": "outer_island_pickup",
+      "to": "high_landing"
+    }
+  ]
+}

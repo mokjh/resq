@@ -1,0 +1,41 @@
+{
+  "id": "A",
+  "description": "Store inflow behind a barrier, then pump during low tide: all three groups walk out early; barrier:01 seals the tide sill before the peak and the rain is stored behind it (which also keeps the barrier's head difference under 800 mm); in the low-tide window the generator, the cheap low relay and two pumps on the sea outlets (now clear of the tide) take the stored rain and the final downpour.",
+  "steps": [
+    {
+      "t": 5,
+      "group": "medical_landing",
+      "to": "depot"
+    },
+    {
+      "t": 6,
+      "group": "inland",
+      "to": "depot"
+    },
+    {
+      "t": 7,
+      "group": "market",
+      "to": "depot"
+    },
+    {
+      "t": 1800,
+      "place": "barrier:01"
+    },
+    {
+      "t": 3300,
+      "place": "generator:01"
+    },
+    {
+      "t": 3301,
+      "place": "relay:01"
+    },
+    {
+      "t": 3302,
+      "place": "pump:02"
+    },
+    {
+      "t": 3303,
+      "place": "pump:03"
+    }
+  ]
+}

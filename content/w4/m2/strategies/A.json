@@ -1,0 +1,45 @@
+{
+  "id": "A",
+  "description": "Build the longer elevated network immediately (yard relay:03 and sea-stack relay:04, dry at every tide). The market walks its low causeway to the high landing; the high-landing skiff ferries the west island across the flats to the high landing, and the depot skiff waits at its berth for the peak, then lifts the keepers off the rock shelf to the depot.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "generator:01"
+    },
+    {
+      "t": 6,
+      "place": "relay:03"
+    },
+    {
+      "t": 7,
+      "place": "relay:04"
+    },
+    {
+      "t": 8,
+      "group": "market",
+      "to": "high_landing"
+    },
+    {
+      "t": 9,
+      "place": "skiff:02"
+    },
+    {
+      "t": 10,
+      "vehicle": "skiff:02",
+      "group": "west_island",
+      "pickup": "west_island_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 11,
+      "place": "skiff:01"
+    },
+    {
+      "t": 12,
+      "vehicle": "skiff:01",
+      "group": "lighthouse",
+      "pickup": "lighthouse_pickup",
+      "to": "depot"
+    }
+  ]
+}

@@ -13,6 +13,7 @@
 - **World 5 module:** authored lava DAG with published arrivals, cooler cycle (50/200/50), finite coolant works, temporary shelters with exact protection accounting. 8 tests (RL01–RL06 and more); All five worlds' rules now run headlessly.
 - **Dock berths:** reserved at departure (origin held until arrival). 61/61 sim tests pass.
 - **Frostline (W3) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; real compact layouts via `class_overrides`; mistake runs fail (W3-M3 Relaxed excepted).
+- **Tidemark (W4) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistakes fail in all profiles.
 - **Cinder Reach (W5) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistake runs fail (W5-M1 Relaxed excepted).
 - **Emberwood (W2):** M1, M2, M5 18/18 each; M3/M4 unblocked by engine fixes (pumps to stores, fires burning at S=0) and in progress.
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
@@ -29,7 +30,10 @@
 - Vehicle relay hand-off: a second vehicle drops its order if the remaining group is aboard the first; unloading at a non-refuge node clears the group's walking target (W3-M2 B is time-tuned around it).
 - Cable edges sample ground water along their path by default; they should check only their end stations.
 - Spec §6 "known hard closure" admission check not implemented.
-- Mistake scripts use operation ticks, so Relaxed can change the decision (W1-M3, W3-M3).
+- Mistake scripts use operation ticks, so Relaxed can change the decision (W1-M3, W2-M2, W3-M3, W5-M1).
+- `loaded_closed_dock_wait` counts only blocked departures, not a loaded boat waiting at a closed destination dock (spec 03 l.254); it also counts berth waits.
+- A skiff that has finished stays in its berth for good (`vehicle_parking` unused); W4 content routes finished boats away by hand.
+- Contract note: W4-M3 has no tide or water events, so its critical harbor objective can't be threatened.
 
 ## Known W1 gaps
 - Compact layouts are still the wide graph; the recipe's compact dock swap needs `class_overrides`.

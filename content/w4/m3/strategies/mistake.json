@@ -1,0 +1,46 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): plan A's boats, but every boat is sent to the receiving dock and none is held back or stood off. The three boats line up for its single berth in a readable queue (no overlapping hulls: a boat reserves the berth before it sets off). The south skiff finishes first and stays moored in the berth, so the loaded east and west skiffs wait behind it for the rest of the operation and the north market is never collected.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "skiff:03"
+    },
+    {
+      "t": 6,
+      "vehicle": "skiff:03",
+      "group": "south_market",
+      "pickup": "south_market_pickup",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 7,
+      "place": "skiff:02"
+    },
+    {
+      "t": 8,
+      "vehicle": "skiff:02",
+      "group": "east_market",
+      "pickup": "east_market_pickup",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 360,
+      "place": "skiff:01"
+    },
+    {
+      "t": 361,
+      "vehicle": "skiff:01",
+      "group": "west_market",
+      "pickup": "west_market_pickup",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 1400,
+      "vehicle": "skiff:01",
+      "group": "north_market",
+      "pickup": "north_market_pickup",
+      "to": "receiving_dock"
+    }
+  ]
+}
