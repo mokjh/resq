@@ -48,6 +48,8 @@ namespace Resq.Sim
             if (!SocketSafe(socket, tool)) return Reject.UnsafeTarget;
             if (tool == ToolKind.Firebreak) { var fb = ValidateFirebreak(socket); if (fb != Reject.OK) return fb; }
             if (tool == ToolKind.Brace) { var br = ValidateBrace(socket); if (br != Reject.OK) return br; }
+            if (CellLavaHeat(D.SocketCell[socket]) >= LavaReheatHeat && !(tool == ToolKind.Cooler && D.SocketLavaSeg[socket] == D.CellLavaSeg[D.SocketCell[socket]]))
+                return Reject.UnsafeTarget;
             if (tool == ToolKind.Winch)
             {
                 if (S.C.VehicleCount >= D.MaxVehicles) return Reject.CapacityFull;
@@ -120,6 +122,8 @@ namespace Resq.Sim
                 SpawnVehicle(kind, D.SocketNode[socket], tool == ToolKind.Skiff ? 4 : 6, tool == ToolKind.Skiff ? 1 : 2, inst);
             }
             if (tool == ToolKind.Winch) SpawnVehicle(VehicleKind.Winch, D.SocketNode[socket], WinchSeats, 1, inst);
+            S.EqCharges[inst] = tool == ToolKind.Cooler ? 1 : 0;               // one initial charge, capacity one
+            S.ShelterRemaining[inst] = tool == ToolKind.Shelter ? ShelterRules.InitialProtection : 0;
             Emit(SimEventKind.EquipmentPlaced, inst, socket, (int)tool);
             return Reject.OK;
         }
@@ -171,6 +175,12 @@ namespace Resq.Sim
                 case ToolKind.Relay:
                     if (S.EqActive[inst]) return Reject.NotIdle;
                     break;
+                case ToolKind.Shelter:
+                {
+                    var sh = ValidateShelterMove(inst);
+                    if (sh != Reject.OK) return sh;
+                    break;
+                }
                 case ToolKind.Winch:
                 {
                     var w = ValidateWinchMove(inst, dest);
@@ -288,7 +298,10 @@ namespace Resq.Sim
                         long depth = D.SocketCell[sock] >= 0 ? Depth(D.SocketCell[sock]) : 0;
                         if (tool == ToolKind.Generator || tool == ToolKind.Relay) depth = PlatformDepth(sock);
                         bool hot = D.FireEnabled && D.SocketCell[sock] >= 0 && S.FHeat[D.SocketCell[sock]] >= EquipmentRules.ElectronicDamageHeat;
+                        int cell = D.SocketCell[sock];
+                        if (CellLavaHeat(cell) >= EquipmentRules.ElectronicDamageHeat && !(tool == ToolKind.Cooler && D.SocketLavaSeg[sock] == D.CellLavaSeg[cell])) hot = true;
                         if (tool == ToolKind.Firebreak || tool == ToolKind.Beacon) hot = false;
+                        if (tool == ToolKind.Shelter && _shelterProtected[inst]) { hot = false; depth = 0; } // protected this interval
                         if (depth > EquipmentRules.ElectronicDamageDepthMm || hot)
                         {
                             S.EqDurability[inst]--;

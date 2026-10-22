@@ -45,6 +45,8 @@ namespace Resq.Sim
         public static Command Disable(int instance) => new Command { Kind = CommandKind.DisableTool, A = instance };
         public static Command Move(int instance, int socket, int orientation = 0) =>
             new Command { Kind = CommandKind.MoveIdleEquipment, A = instance, B = socket, C = orientation };
+        public static Command Cool(int instance) => new Command { Kind = CommandKind.CoolSegment, A = instance };
+        public static Command Refill(int instance, int coolantStore) => new Command { Kind = CommandKind.RefillTool, A = instance, B = coolantStore };
         public static Command End(bool confirmFailure) => new Command { Kind = CommandKind.EndOperation, A = confirmFailure ? 1 : 0 };
         public static Command Priority(int consumer, int priority) =>
             new Command { Kind = CommandKind.SetPowerPriority, A = consumer, B = priority };

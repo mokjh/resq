@@ -46,3 +46,14 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | `warn_support` in World 4 | When its role binds infrastructure rather than a support, the operation is advisory only. |
 | Dock queue metric | Longest run of consecutive operation ticks a vehicle waits because its target dock's only berth is taken. |
 | Known gap | Berths are checked at departure, not reserved, so two skiffs leaving together for a one-berth dock can both arrive. Mission content and strategies must avoid relying on this until berth reservation lands. |
+
+## 23 Oct 2026 — rule readings for the World 5 module (spec 02 §5, §10)
+
+| Decision | Result |
+|---|---|
+| Lava schedule | The `advance_lava` warning publishes every downstream arrival (earliest path, `LPlanned`). Activation schedules the same arrivals; each segment receives its first arrival once. The compiler rejects lava events with under 100 ticks of warning, and successor delays under 50. |
+| Lava hazard | A crossing edge is open only while its segments are Dormant or Crusted. A node bound to a segment (or standing on its cells) is unsafe while that segment's heat is ≥ 600: Hot, Cooling or Reheating. |
+| Coolers | Activation is the existing `CoolSegment` command on a placed cooler. It needs an enabled socket, a Hot segment and a charge. A refused activation keeps the charge. `RefillTool` moves one charge from the socket's bound coolant store only when the cooler is empty. |
+| Coolant works | An infrastructure entry with `producer {store, feedstock, ticks}`. It runs while that infrastructure is operational (power and safety from stage 4). Feedstock is reserved at job start; a job starts only below store capacity. `resource_remaining` on a coolant store counts charges. |
+| Shelters | A placed shelter on a `shelter` node (capacity 1–6, never a refuge). Each hazard pulse it consumes protection when occupied and its node is unsafe or its hazard region is hot. That interval's protection masks resident exposure and shelter damage. `enable_shelter_hazard` makes the shelter node itself unsafe. |
+| Arrival damage | A Hot arrival (or a return to Hot) breaks equipment on the segment's cells, except coolers bound to that segment and shelters with protection left. Spent coolant is never a loss. |

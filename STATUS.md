@@ -9,7 +9,8 @@
 - **Sim v2 engine:** water, power, equipment, transport, objectives, outcome. All 18 spec golden cases pass.
 - **World 2 fire module:** heat, fuel, wetness, wind, ignition warnings, firebreak, sprinkler from a finite tank, roads closed by heat. 9 tests.
 - **World 3 module:** structure stability (loss carry, braces, warning-gated collapse, cancel), avalanche runout DAG with debris reopening, powered winch (duty cycle, brake, emergency return), dwell and edge-transfer metrics. 11 tests.
-- **World 4 module:** tide controllers (event ramps, fixed tracks, High Tide Start), sea in/out exchange with an exact ledger, current-multiplier validation, relay power links with flood hysteresis, dock-queue metric. 9 tests; 52/52 sim tests pass.
+- **World 4 module:** tide controllers (event ramps, fixed tracks, High Tide Start), sea in/out exchange with an exact ledger, current-multiplier validation, relay power links with flood hysteresis, dock-queue metric. 9 tests.
+- **World 5 module:** authored lava DAG with published arrivals, cooler cycle (50/200/50), finite coolant works, temporary shelters with exact protection accounting. 8 tests (RL01–RL06 and more); 60/60 sim tests pass. All five worlds' rules now run headlessly.
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
@@ -26,7 +27,7 @@
 - Thin margins: W1-M5 plan B channel about 1080 of 1200 mm; W1-M4 clinic pad 56 mm against the 100 mm limit.
 
 ## Next
-0. Last world module (headless): lava/cooler/coolant/shelter (W5). Then berth reservation for docks.
+0. Berth reservation for docks; then W2–W5 mission content through SimLab (helpers per world).
 1. XR wiring: OVR rig, hands, passthrough and MRUK placement in the operation scene.
 2. Forecast preview overlay.
 3. Guided tutorial.

@@ -105,6 +105,15 @@ namespace Resq.Sim
         public long[] TideStartTick, TideStartLevel, TideEndTick, TideEndLevel, TideLevel;
         public long[] SeaIn, SeaOut;
 
+        // lava / coolant / shelters (World 5)
+        public byte[] LState;                 // LavaState per segment
+        public int[] LHeat;
+        public long[] LArrival, LPlanned, LCoolStart;   // scheduled first arrival, warned arrival, cooler activation (-1 none)
+        public bool[] LArrived, LReheated, LavaSourceActive;
+        public bool[] CoolerEnabled, ShelterFront;      // per socket
+        public int[] EqCharges, ShelterRemaining;       // per equipment instance
+        public int[] CoolantStore, WorksFeedstock, WorksWip, WorksProgress, CoolantSpent;
+
         // metrics
         public int[] VQueue;                  // consecutive operation ticks a vehicle waited on a full dock berth
         public long[] NodeMaxQueue;
@@ -176,6 +185,14 @@ namespace Resq.Sim
             TideStartTick = new long[td]; TideStartLevel = new long[td]; TideEndTick = new long[td]; TideEndLevel = new long[td];
             TideLevel = new long[td]; SeaIn = new long[td]; SeaOut = new long[td];
             VQueue = new int[v]; NodeMaxQueue = new long[n];
+            int ls = d.LavaSegIds.Length, sk = d.SocketIds.Length;
+            LState = new byte[ls]; LHeat = new int[ls]; LArrival = new long[ls]; LPlanned = new long[ls]; LCoolStart = new long[ls];
+            LArrived = new bool[ls]; LReheated = new bool[ls]; LavaSourceActive = new bool[d.LavaSourceIds.Length];
+            CoolerEnabled = new bool[sk]; ShelterFront = new bool[sk];
+            EqCharges = new int[eq]; ShelterRemaining = new int[eq];
+            CoolantStore = new int[d.CoolantIds.Length];
+            WorksFeedstock = new int[inf]; WorksWip = new int[inf]; WorksProgress = new int[inf];
+            CoolantSpent = new int[1];
             EdgeTransfers = new int[e];
             NodeMaxDwell = new long[n];
 

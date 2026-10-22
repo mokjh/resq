@@ -9,7 +9,7 @@ namespace Resq.Sim
         CommandResolved, EquipmentPlaced, EquipmentMoved, EquipmentBroken, Warning, EventApplied, RouteBlocked,
         TransferStarted, TransferCompleted, TransferCancelled, ResidentEvacuated, ResidentBackup, MilestoneReached,
         ObjectiveUpdated, OperationStarted, OperationEnded, PowerChanged, GeneratorShutdown, VehicleArrived,
-        SupportWarning, SupportCollapsed, RunoutStarted
+        SupportWarning, SupportCollapsed, RunoutStarted, LavaArrived, LavaReheating, SegmentCooling, ShelterExhausted
     }
 
     public struct SimEvent
@@ -83,6 +83,7 @@ namespace Resq.Sim
             InitFire();
             InitStability();
             InitTides();
+            InitLava();
             for (int i = 0; i < D.GateIds.Length; i++) S.GateOpen[i] = D.GateInitialOpen[i];
             for (int i = 0; i < S.SocketInstance.Length; i++) S.SocketInstance[i] = -1;
             for (int i = 0; i < D.InfraIds.Length; i++)

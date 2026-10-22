@@ -73,7 +73,7 @@ namespace Resq.Sim
                 case ConditionKind.ExposureBelow: return HazardLevel(c.A, c.Hazard) < c.Value;
                 case ConditionKind.EquipmentLossesAtMost: return S.C.Losses <= c.Value;
                 case ConditionKind.SupplyRemainingAtLeast: return RemainingSupplies >= c.Value;
-                case ConditionKind.ResourceRemaining: return WorldResource(c.A) >= c.Value;
+                case ConditionKind.ResourceRemaining: return (c.Flag ? S.CoolantStore[c.A] : WorldResource(c.A)) >= c.Value;
                 case ConditionKind.AllVehiclesUnloaded: return AllVehiclesUnloaded();
                 case ConditionKind.TemporaryShelterEmpty: return CountAtFlag(NodeFlags.Shelter) == 0;
                 case ConditionKind.TemporaryStagingEmpty: return CountAtFlag(NodeFlags.Staging) == 0;

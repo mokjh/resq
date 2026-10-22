@@ -83,6 +83,7 @@ namespace Resq.Sim
         public string Id;
         public MilestoneKind Kind;
         public int Target = -1;
+        public int[] Segments = Array.Empty<int>(); // first_cooled_crossing_closed: lava segments of the bound role
     }
 
     public struct EventOp
@@ -247,6 +248,24 @@ namespace Resq.Sim
         public int[] SeaCell = Array.Empty<int>(), SeaTide = Array.Empty<int>(); // boundary links: grid cell ↔ controller
         public long[] SeaSill = Array.Empty<long>(), SeaCond = Array.Empty<long>(), SeaMax = Array.Empty<long>();
         public int TideStartIndex = -1;                        // High Tide Start challenge: initial segment index, or -1
+
+        // ---- lava, coolant and shelters (World 5, spec 02 §10) ----
+        public string[] LavaSegIds = Array.Empty<string>();
+        public Dictionary<string, int> LavaSegIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        public int[][] LavaSegCells = Array.Empty<int[]>(), LavaSegEdges = Array.Empty<int[]>(), LavaSegNodes = Array.Empty<int[]>();
+        public int[][] LavaSegNext = Array.Empty<int[]>(), LavaSegNextDelay = Array.Empty<int[]>(); // successor arrival delays
+        public string[] LavaSourceIds = Array.Empty<string>();
+        public Dictionary<string, int> LavaSourceIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        public int[] LavaSourceFirst = Array.Empty<int>();
+        public int[][] LavaSourceSegments = Array.Empty<int[]>(); // every segment reachable from the source
+        public int[] CellLavaSeg;                                  // segment owning a grid cell, or -1
+        public int[][] EdgeLavaSegs, NodeLavaSegs;
+        public int[] SocketLavaSeg, SocketCoolantStore, SocketShelterRegion; // cooler segment / refill store; shelter hazard region
+        public bool[] SocketInitiallyEnabled;                      // cooler sockets can start disabled (enable_cooler_socket)
+        public string[] CoolantIds = Array.Empty<string>();
+        public Dictionary<string, int> CoolantIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        public int[] CoolantCharges0 = Array.Empty<int>(), CoolantCapacity = Array.Empty<int>();
+        public int[] InfraProducerStore = Array.Empty<int>(), InfraFeedstock0 = Array.Empty<int>(), InfraProduceTicks = Array.Empty<int>();
 
         // ---- events / objectives ----
         public EventDef[] Events = Array.Empty<EventDef>();      // sorted by (AtTick, Id)

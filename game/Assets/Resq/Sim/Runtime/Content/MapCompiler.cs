@@ -61,6 +61,7 @@ namespace Resq.Sim
             ctx.CompileNodes();
             ctx.CompileEdges();
             ctx.CompileStability();
+            ctx.CompileLava();
             ctx.CompilePower();
             ctx.CompileSockets();
             ctx.CheckBraceCap();
@@ -544,6 +545,110 @@ namespace Resq.Sim
                 d.NodeSegments = ns.Select(l => l.ToArray()).ToArray();
             }
 
+            /// <summary>World 5 lava DAG (named sources, successor delays >= 50) and finite coolant stores (spec 02 §10).</summary>
+            public void CompileLava()
+            {
+                int n = d.GridW * d.GridH;
+                d.CellLavaSeg = Enumerable.Repeat(-1, n).ToArray();
+                var lava = m["lava"];
+                var segs = lava?["segments"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                int k = segs.Count;
+                d.LavaSegIds = new string[k]; d.LavaSegCells = new int[k][]; d.LavaSegEdges = new int[k][]; d.LavaSegNodes = new int[k][];
+                d.LavaSegNext = new int[k][]; d.LavaSegNextDelay = new int[k][];
+                for (int i = 0; i < k; i++) { d.LavaSegIds[i] = segs[i].Str("id"); d.LavaSegIndex[d.LavaSegIds[i]] = i; }
+                for (int i = 0; i < k; i++)
+                {
+                    var x = segs[i];
+                    d.LavaSegCells[i] = x["cells"] != null ? ResolveCells(x["cells"]) : Array.Empty<int>();
+                    foreach (int c in d.LavaSegCells[i])
+                    {
+                        if (d.CellLavaSeg[c] >= 0) throw new ContentException($"cell {c} belongs to two lava segments");
+                        d.CellLavaSeg[c] = i;
+                    }
+                    d.LavaSegEdges[i] = EdgeList(x["edges"]);
+                    d.LavaSegNodes[i] = NodeList(x["nodes"]);
+                    int defDelay = x.Int("delay", 100);
+                    var next = new List<(int seg, int delay)>();
+                    if (x["next"] != null)
+                        foreach (var nx in x["next"].Elements())
+                        {
+                            string id = nx.Kind == JsonKind.String ? nx.AsString() : nx.Str("to");
+                            int delay = nx.Kind == JsonKind.String ? defDelay : nx.Int("delay", defDelay);
+                            if (!d.LavaSegIndex.TryGetValue(id, out int j)) throw new ContentException($"lava segment {d.LavaSegIds[i]}: unknown successor '{id}'");
+                            if (delay < 50) throw new ContentException($"lava segment {d.LavaSegIds[i]}: successor delay {delay} < 50");
+                            next.Add((j, delay));
+                        }
+                    next.Sort((a, b) => a.seg.CompareTo(b.seg));
+                    d.LavaSegNext[i] = next.Select(t => t.seg).ToArray();
+                    d.LavaSegNextDelay[i] = next.Select(t => t.delay).ToArray();
+                }
+                CheckAcyclic(d.LavaSegNext, d.LavaSegIds, "lava");
+                var sources = lava?["sources"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                d.LavaSourceIds = new string[sources.Count]; d.LavaSourceFirst = new int[sources.Count]; d.LavaSourceSegments = new int[sources.Count][];
+                for (int i = 0; i < sources.Count; i++)
+                {
+                    d.LavaSourceIds[i] = sources[i].Str("id");
+                    d.LavaSourceIndex[d.LavaSourceIds[i]] = i;
+                    if (!d.LavaSegIndex.TryGetValue(sources[i].Str("segment") ?? "", out int first))
+                        throw new ContentException($"lava source {d.LavaSourceIds[i]} needs a segment");
+                    d.LavaSourceFirst[i] = first;
+                    var reach = new SortedSet<int>(); var stack = new Stack<int>(); stack.Push(first);
+                    while (stack.Count > 0) { int u = stack.Pop(); if (reach.Add(u)) foreach (int w in d.LavaSegNext[u]) stack.Push(w); }
+                    d.LavaSourceSegments[i] = reach.ToArray();
+                }
+                var es = new List<int>[d.EdgeIds.Length]; var ns = new List<int>[d.NodeIds.Length];
+                for (int e = 0; e < es.Length; e++) es[e] = new List<int>();
+                for (int v = 0; v < ns.Length; v++) ns[v] = new List<int>();
+                for (int i = 0; i < k; i++)
+                {
+                    foreach (int e in d.LavaSegEdges[i]) es[e].Add(i);
+                    foreach (int v in d.LavaSegNodes[i]) ns[v].Add(i);
+                }
+                d.EdgeLavaSegs = es.Select(l => l.ToArray()).ToArray();
+                d.NodeLavaSegs = ns.Select(l => l.ToArray()).ToArray();
+
+                var stores = m["coolant_stores"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                d.CoolantIds = new string[stores.Count]; d.CoolantCharges0 = new int[stores.Count]; d.CoolantCapacity = new int[stores.Count];
+                for (int i = 0; i < stores.Count; i++)
+                {
+                    d.CoolantIds[i] = stores[i].Str("id");
+                    d.CoolantIndex[d.CoolantIds[i]] = i;
+                    d.CoolantCharges0[i] = stores[i].Int("charges", 2);
+                    d.CoolantCapacity[i] = stores[i].Int("capacity", 8);
+                    if (d.CoolantCharges0[i] < 0 || d.CoolantCharges0[i] > d.CoolantCapacity[i])
+                        throw new ContentException($"coolant store {d.CoolantIds[i]}: charges outside 0..capacity");
+                }
+            }
+
+            static void CheckAcyclic(int[][] next, string[] ids, string what)
+            {
+                var colour = new byte[next.Length];
+                for (int root = 0; root < next.Length; root++)
+                {
+                    if (colour[root] != 0) continue;
+                    var stack = new Stack<(int node, int child)>();
+                    stack.Push((root, 0)); colour[root] = 1;
+                    while (stack.Count > 0)
+                    {
+                        var (u, ci) = stack.Pop();
+                        if (ci < next[u].Length)
+                        {
+                            stack.Push((u, ci + 1));
+                            int w = next[u][ci];
+                            if (colour[w] == 1) throw new ContentException($"{what} graph has a cycle through {ids[w]}");
+                            if (colour[w] == 0) { colour[w] = 1; stack.Push((w, 0)); }
+                        }
+                        else colour[u] = 2;
+                    }
+                }
+            }
+
+            int CoolantRef(string id)
+            {
+                if (!d.CoolantIndex.TryGetValue(id, out int i)) throw new ContentException($"unknown coolant store '{id}'");
+                return i;
+            }
+
             int SupportRef(string id)
             {
                 if (!d.SupportIndex.TryGetValue(id, out int i)) throw new ContentException($"unknown support '{id}'");
@@ -601,6 +706,7 @@ namespace Resq.Sim
                 d.SocketPowerNode = new int[k]; d.SocketDestination = new int[k]; d.SocketLinks = new int[k][];
                 d.SocketPlatformCells = new int[k][]; d.SocketOrientations = new byte[k];
                 d.SocketCells = new int[k][]; d.SocketStore = new int[k]; d.SocketSupport = new int[k];
+                d.SocketLavaSeg = new int[k]; d.SocketCoolantStore = new int[k]; d.SocketShelterRegion = new int[k]; d.SocketInitiallyEnabled = new bool[k];
                 var zones = new List<string>();
                 for (int i = 0; i < k; i++)
                 {
@@ -624,6 +730,25 @@ namespace Resq.Sim
                     d.SocketCells[i] = s["cells"] != null ? ResolveCells(s["cells"]) : Array.Empty<int>();
                     d.SocketStore[i] = s.Str("store") != null ? StoreRef(s.Str("store")) : -1;
                     d.SocketSupport[i] = s.Str("support") != null ? SupportRef(s.Str("support")) : -1;
+                    d.SocketLavaSeg[i] = -1; d.SocketCoolantStore[i] = -1; d.SocketShelterRegion[i] = -1;
+                    d.SocketInitiallyEnabled[i] = s.Flag("enabled", true);
+                    if (tool == ToolKind.Cooler)
+                    {
+                        if (s.Str("segment") == null || !d.LavaSegIndex.TryGetValue(s.Str("segment"), out int seg))
+                            throw new ContentException($"cooler socket {d.SocketIds[i]} needs a lava segment");
+                        d.SocketLavaSeg[i] = seg;
+                        if (s.Str("coolant_store") != null) d.SocketCoolantStore[i] = CoolantRef(s.Str("coolant_store"));
+                    }
+                    if (tool == ToolKind.Shelter)
+                    {
+                        if (d.SocketNode[i] < 0 || (d.NodeFlags[d.SocketNode[i]] & NodeFlags.Shelter) == 0)
+                            throw new ContentException($"shelter socket {d.SocketIds[i]} needs a node flagged shelter");
+                        if ((d.NodeFlags[d.SocketNode[i]] & NodeFlags.Evacuation) != 0)
+                            throw new ContentException($"shelter node {d.NodeIds[d.SocketNode[i]]} cannot be a final refuge");
+                        if (d.NodeCapacity[d.SocketNode[i]] <= 0 || d.NodeCapacity[d.SocketNode[i]] > 6)
+                            throw new ContentException($"shelter node {d.NodeIds[d.SocketNode[i]]} needs capacity 1..6");
+                        if (s.Str("region") != null) d.SocketShelterRegion[i] = d.RegionIndex[s.Str("region")];
+                    }
                     if (tool == ToolKind.Brace && d.SocketSupport[i] < 0)
                         throw new ContentException($"brace socket {d.SocketIds[i]} needs a structural support (slopes take no braces)");
                     if (tool == ToolKind.Winch)
@@ -699,6 +824,7 @@ namespace Resq.Sim
                 d.InfraPriority0 = new int[k]; d.InfraRegion = new int[k]; d.InfraMaxDepth = new long[k];
                 d.InfraRequiredNodes = new int[k][];
                 d.InfraMaxHeat = new int[k]; d.InfraSupport = new int[k];
+                d.InfraProducerStore = new int[k]; d.InfraFeedstock0 = new int[k]; d.InfraProduceTicks = new int[k];
                 for (int i = 0; i < k; i++)
                 {
                     var x = list[i];
@@ -711,6 +837,11 @@ namespace Resq.Sim
                     d.InfraMaxDepth[i] = x.Long("max_depth", 100);
                     d.InfraMaxHeat[i] = x.Int("max_heat", 300);
                     d.InfraSupport[i] = x.Str("support") != null ? SupportRef(x.Str("support")) : -1;
+                    var prod = x["producer"];
+                    d.InfraProducerStore[i] = prod != null ? CoolantRef(prod.Str("store")) : -1;
+                    d.InfraFeedstock0[i] = prod?.Int("feedstock", 6) ?? 0;
+                    d.InfraProduceTicks[i] = prod?.Int("ticks", 100) ?? 100;
+                    if (prod != null && d.InfraDemand0[i] <= 0) throw new ContentException($"producer {d.InfraIds[i]} needs power demand (default 1)");
                     var nodes = new List<int>();
                     if (x["nodes"] != null) foreach (var n in x["nodes"].Elements()) nodes.Add(NodeRef(n.AsString()));
                     d.InfraRequiredNodes[i] = nodes.ToArray();
@@ -825,6 +956,26 @@ namespace Resq.Sim
                         if (r["supports"] != null) foreach (var g in r["supports"].Elements()) list.Add(SupportRef(g.AsString()));
                         else if (r["infrastructure"] != null) foreach (var g in r["infrastructure"].Elements()) list.Add(InfraRef(g.AsString()));
                         break;
+                    case EventOpKind.AdvanceLava:
+                    case EventOpKind.WarnReheat:
+                        if (r["lava_sources"] != null)
+                            foreach (var g in r["lava_sources"].Elements())
+                                list.Add(d.LavaSourceIndex.TryGetValue(g.AsString(), out int li) ? li : throw new ContentException($"unknown lava source '{g.AsString()}'"));
+                        break;
+                    case EventOpKind.EnableCoolerSocket:
+                    case EventOpKind.EnableShelterHazard:
+                    {
+                        var key = kind == EventOpKind.EnableCoolerSocket ? "cooler_sockets" : "shelters";
+                        var want = kind == EventOpKind.EnableCoolerSocket ? ToolKind.Cooler : ToolKind.Shelter;
+                        if (r[key] != null)
+                            foreach (var g in r[key].Elements())
+                            {
+                                if (!d.SocketIndex.TryGetValue(g.AsString(), out int si) || d.SocketKind[si] != want)
+                                    throw new ContentException($"role {role}: '{g.AsString()}' is not a {want} socket");
+                                list.Add(si);
+                            }
+                        break;
+                    }
                     case EventOpKind.SetTideSegment:
                         if (r["tides"] != null)
                             foreach (var g in r["tides"].Elements())
@@ -865,6 +1016,8 @@ namespace Resq.Sim
                         long value = op.Long("value");
                         if (kind == EventOpKind.SetCurrentMultiplier && (value < 500 || value > 2000))
                             throw new ContentException($"event {e.Str("id")}: current multiplier {value} outside 500..2000");
+                        if (kind == EventOpKind.AdvanceLava && at - warn < 100)
+                            throw new ContentException($"event {e.Str("id")}: lava needs at least 100 scenario ticks of warning");
                         if (kind == EventOpKind.SetTideSegment && (value < 0 || value >= TideRules.SegmentTargets.Length))
                             throw new ContentException($"event {e.Str("id")}: tide segment {value} unknown");
                         bool infra = kind == EventOpKind.WarnSupport && _roles.TryGetValue(op.Str("target_role"), out var rr) && rr["supports"] == null;
@@ -898,7 +1051,17 @@ namespace Resq.Sim
                         case "group_boarded": md.Kind = MilestoneKind.GroupBoarded; md.Target = d.GroupIndex[x.Str("target")]; break;
                         case "final_unload_started": md.Kind = MilestoneKind.FinalUnloadStarted; break;
                         case "all_evacuated": md.Kind = MilestoneKind.AllEvacuated; break;
-                        case "first_cooled_crossing_closed": md.Kind = MilestoneKind.FirstCooledCrossingClosed; break;
+                        case "first_cooled_crossing_closed":
+                        {
+                            md.Kind = MilestoneKind.FirstCooledCrossingClosed;
+                            string role = x.Str("target");
+                            if (role == null || !_roles.TryGetValue(role, out var rr) || rr["lava_sources"] == null)
+                                throw new ContentException($"milestone {md.Id}: target role needs lava_sources");
+                            var segs = new SortedSet<int>();
+                            foreach (var g in rr["lava_sources"].Elements()) foreach (int sg in d.LavaSourceSegments[d.LavaSourceIndex[g.AsString()]]) segs.Add(sg);
+                            md.Segments = segs.ToArray();
+                            break;
+                        }
                         default: throw new ContentException($"unknown milestone kind {kind}");
                     }
                     d.Milestones[i] = md;
@@ -959,7 +1122,11 @@ namespace Resq.Sim
                         c.Hazard = Array.IndexOf(new[] { "water", "fire", "lava", "runout" }, p.Str("hazard")); c.Value = p.Long("threshold"); break;
                     case "equipment_losses_at_most": c.Kind = ConditionKind.EquipmentLossesAtMost; c.Value = p.Long("maximum"); break;
                     case "supply_remaining_at_least": c.Kind = ConditionKind.SupplyRemainingAtLeast; c.Value = p.Long("minimum"); break;
-                    case "resource_remaining": c.Kind = ConditionKind.ResourceRemaining; c.A = StoreRef(p.Str("store_id")); c.Value = p.Long("minimum"); break;
+                    case "resource_remaining":
+                        c.Kind = ConditionKind.ResourceRemaining; c.Value = p.Long("minimum");
+                        c.Flag = d.CoolantIndex.ContainsKey(p.Str("store_id")); // coolant charges, else finite water volume
+                        c.A = c.Flag ? CoolantRef(p.Str("store_id")) : StoreRef(p.Str("store_id"));
+                        break;
                     case "all_vehicles_unloaded": c.Kind = ConditionKind.AllVehiclesUnloaded; break;
                     case "temporary_shelters_empty": c.Kind = ConditionKind.TemporaryShelterEmpty; break;
                     case "temporary_staging_empty": c.Kind = ConditionKind.TemporaryStagingEmpty; break;

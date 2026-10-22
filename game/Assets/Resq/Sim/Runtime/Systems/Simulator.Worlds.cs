@@ -1,7 +1,7 @@
 namespace Resq.Sim
 {
     /// <summary>
-    /// Dispatch to World 2–5 hazard modules (fire/wind and stability/runout/winch and tides/relays now; lava/coolant/shelters next).
+    /// Dispatch to World 2–5 hazard modules (fire/wind and stability/runout/winch and tides/relays, lava/coolant/shelters).
     /// Alder Valley content leaves them inert, so W1 behaviour is unchanged.
     /// </summary>
     public sealed partial class Simulator
@@ -11,12 +11,14 @@ namespace Resq.Sim
             FirePulse();
             StabilityPulse();   // a collapse here may start its bound runout this pulse
             RunoutPulse();
+            LavaPulse();        // arrivals/cooling, coolant production, then shelter protection from the resulting hazards
         }
 
         void WorldOnWarning(EventDef ev)
         {
             FireOnWarning(ev);
             StabilityOnWarning(ev);
+            LavaOnWarning(ev);
         }
 
         void ApplyWorldEventOp(EventOp op)
@@ -39,14 +41,27 @@ namespace Resq.Sim
                 case EventOpKind.SetTideSegment:
                     ApplyTideOp(op);
                     break;
+                case EventOpKind.AdvanceLava:
+                case EventOpKind.EnableCoolerSocket:
+                case EventOpKind.EnableShelterHazard:
+                    ApplyLavaOp(op);
+                    break;
             }
         }
 
-        Reject ExecuteWorldCommand(Command c) => Reject.UnknownKind;
+        Reject ExecuteWorldCommand(Command c)
+        {
+            switch (c.Kind)
+            {
+                case CommandKind.CoolSegment: return CoolSegment(c.A);
+                case CommandKind.RefillTool: return RefillCooler(c.A, c.B);
+                default: return Reject.UnknownKind;
+            }
+        }
 
-        bool WorldEdgeOpen(int edge) => FireEdgeOpen(edge) && StabilityEdgeOpen(edge);
+        bool WorldEdgeOpen(int edge) => FireEdgeOpen(edge) && StabilityEdgeOpen(edge) && LavaEdgeOpen(edge);
 
-        bool WorldNodeSafe(int node) => FireNodeSafe(node) && StabilityNodeSafe(node);
+        bool WorldNodeSafe(int node) => FireNodeSafe(node) && StabilityNodeSafe(node) && LavaNodeSafe(node);
 
         bool FireEdgeOpen(int edge)
         {
@@ -64,9 +79,10 @@ namespace Resq.Sim
             return (Rules.FireState)S.FState[c] != Rules.FireState.Burning && S.FHeat[c] < FireDangerHeat;
         }
 
-        bool WorldMilestone(MilestoneDef m) => false;
+        bool WorldMilestone(MilestoneDef m) => m.Kind == MilestoneKind.FirstCooledCrossingClosed && LavaMilestone(m);
 
-        long WorldHazardLevel(int region, int hazard) => hazard == 1 ? MaxRegionHeat(region) : 0;
+        long WorldHazardLevel(int region, int hazard) =>
+            hazard == 1 ? MaxRegionHeat(region) : hazard == 2 ? LavaRegionHeat(region) : 0;
 
         long WorldResource(int store) => store >= 0 && store < D.StoreNode.Length ? S.Volume[D.StoreNode[store]] : 0;
 

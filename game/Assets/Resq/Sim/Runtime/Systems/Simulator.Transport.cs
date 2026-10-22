@@ -581,7 +581,7 @@ namespace Resq.Sim
                 {
                     case ResidentState.AtNode:
                     case ResidentState.Boarding:
-                        hazardous = !NodeSafe(S.RNode[r]);
+                        hazardous = !NodeSafe(S.RNode[r]) && !ShelterProtects(S.RNode[r]);
                         break;
                     case ResidentState.Aboard:
                     case ResidentState.Unboarding:

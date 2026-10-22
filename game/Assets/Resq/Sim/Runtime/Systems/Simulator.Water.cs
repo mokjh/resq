@@ -33,6 +33,7 @@ namespace Resq.Sim
             _pathDist = new int[n]; _pathPrevEdge = new int[n]; _pathEdgeCount = new int[n]; _pathDone = new bool[n];
             AllocateTransportScratch();
             AllocateFireScratch();
+            AllocateLavaScratch();
         }
 
         bool BarrierIntact(int link)
