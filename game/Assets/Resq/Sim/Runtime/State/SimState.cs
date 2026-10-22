@@ -70,6 +70,7 @@ namespace Resq.Sim
         public int[] RNode, RFrom, REdge, RProgress, RDuration, RVehicle, RExposure, RFinalMode, RTransfer;
         public long[] RDwellStart;
         public bool[] RReversing, RBoarded;
+        public bool[] RStay;                  // dropped at an intermediate node: waits there until the group gets a new order
 
         // groups
         public int[] GroupTarget;             // node the group walks to, or -1
@@ -99,7 +100,8 @@ namespace Resq.Sim
 
         // winch duty cycle / brake (per vehicle slot)
         public int[] VDuty, VRest, VBrake;
-        public int[] VBerthFrom, VBerthTo;    // skiff berths held while moving: origin until arrival, destination from departure
+        public int[] VBerthFrom, VBerthTo;
+        public bool[] VStandOff;              // finished skiff moored aside at a dock without holding its berth    // skiff berths held while moving: origin until arrival, destination from departure
         public bool[] VEmergency;
 
         // tides: ramp per controller, ledger per boundary
@@ -156,7 +158,7 @@ namespace Resq.Sim
             int r = d.ResidentIds.Length;
             RState = new byte[r]; RNode = new int[r]; RFrom = new int[r]; REdge = new int[r]; RProgress = new int[r];
             RDuration = new int[r]; RVehicle = new int[r]; RExposure = new int[r]; RFinalMode = new int[r];
-            RTransfer = new int[r]; RDwellStart = new long[r]; RReversing = new bool[r]; RBoarded = new bool[r];
+            RTransfer = new int[r]; RDwellStart = new long[r]; RReversing = new bool[r]; RBoarded = new bool[r]; RStay = new bool[r];
 
             int g = d.GroupIds.Length;
             GroupTarget = new int[g]; GroupEvacuate = new bool[g]; GroupHeld = new bool[g]; GroupBoarded = new bool[g];
@@ -182,7 +184,7 @@ namespace Resq.Sim
             RunStarted = new bool[d.RunoutIds.Length];
             SegStart = new long[d.SegmentIds.Length];
             VDuty = new int[v]; VRest = new int[v]; VBrake = new int[v]; VEmergency = new bool[v];
-            VBerthFrom = new int[v]; VBerthTo = new int[v];
+            VBerthFrom = new int[v]; VBerthTo = new int[v]; VStandOff = new bool[v];
             int td = d.TideIds.Length;
             TideStartTick = new long[td]; TideStartLevel = new long[td]; TideEndTick = new long[td]; TideEndLevel = new long[td];
             TideLevel = new long[td]; SeaIn = new long[td]; SeaOut = new long[td];

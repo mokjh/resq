@@ -341,5 +341,44 @@ namespace Resq.Sim.Tests
             Check.True(tag >= 0, "tag compiled");
             Check.True(sim.S.NodeMaxDwell[d.NodeIndex["upper_station_start"]] >= 790, "the unrouted upper group has waited the whole run");
         }
+
+        // A cable spans the ground between its stations: by default only the two end stations are sampled for water.
+        [SimTest("stability")]
+        public static void Cable_Samples_Only_Its_End_Stations()
+        {
+            var d = Fixture(new string[0]);
+            var cells = d.EdgeSampleCells[d.EdgeIndex["c_cable"]];
+            Check.Equal(2, cells.Length, "two end stations");
+            Check.True(System.Array.IndexOf(cells, d.NodeCell[d.NodeIndex["cable_top"]]) >= 0 &&
+                       System.Array.IndexOf(cells, d.NodeCell[d.NodeIndex["valley"]]) >= 0, "the stations themselves");
+            Check.True(d.EdgeSampleCells[d.EdgeIndex["g_up1"]].Length >= 2, "ground edges still sample their whole path");
+        }
+
+        // Spec 02 §6: no admission onto an edge with a known hard closure before the predicted arrival.
+        [SimTest("stability")]
+        public static void Admission_Waits_For_A_Warned_Closure()
+        {
+            foreach (int closeAt in new[] { 300, 1000 })
+            {
+                var d = Fixture(new[] { Ev("cut", closeAt, 100, "set_edge_enabled", "upper_path", 0) });
+                var sim = new Simulator(d, RuleProfile.Standard);
+                int path = d.EdgeIndex["g_up3"], pickup = d.NodeIndex["upper_station_pickup"];
+                RunTo(sim, 240);
+                sim.Submit(Command.GroupRoute(d.GroupIndex["upper_station"], d.NodeIndex["cable_top"], false));
+                bool reversed = false;
+                RunTo(sim, closeAt + 40, () =>
+                {
+                    foreach (int r in d.GroupResidents[d.GroupIndex["upper_station"]])
+                    {
+                        if (sim.S.RState[r] != (byte)ResidentState.Walking || sim.S.REdge[r] != path) continue;
+                        if (sim.S.RReversing[r]) reversed = true;
+                        Check.True(sim.S.C.S < closeAt, $"nobody is on the path once it closes at {closeAt}");
+                    }
+                });
+                Check.False(reversed, "no traveller had to be turned back: the closure was known");
+                if (closeAt == 300) Check.True(sim.S.NodeOccupancy[pickup] > 0, "late walkers wait at the pickup instead of entering");
+                else Check.Equal(6, sim.S.NodeOccupancy[d.NodeIndex["cable_top"]], "with the closure far away, everyone crosses");
+            }
+        }
     }
 }

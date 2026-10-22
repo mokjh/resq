@@ -237,6 +237,8 @@ namespace Resq.Sim
         public int[] SegmentDelay = Array.Empty<int>(), SegmentSettle = Array.Empty<int>();
         public int[][] SegmentEdges = Array.Empty<int[]>(), SegmentNodes = Array.Empty<int[]>(), SegmentCells = Array.Empty<int[]>();
         public int[][] SegmentNext = Array.Empty<int[]>();       // successors (DAG, checked by the compiler)
+        public int[] SegmentRunout = Array.Empty<int>();
+        public long[] SegmentOffset = Array.Empty<long>();        // earliest start after its runout starts (known schedule)
         public bool[] EdgeDebrisReopenable;
         public int[][] EdgeSegments, NodeSegments;               // reverse lookups
 

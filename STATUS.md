@@ -16,7 +16,7 @@
 - **Tidemark (W4) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistakes fail in all profiles.
 - **Cinder Reach (W5) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistake runs fail (W5-M1 Relaxed excepted).
 - **Emberwood (W2) greybox complete:** M1–M5 each 18/18 (90/90); M3/M4 use the new store pumps and fires burning at S=0. W2-M3 plan A has one Relaxed-only step (t=6000, after the Standard end).
-- **All 25 missions validated headlessly: 450/450 runs.**
+- **All 25 missions validated headlessly: 450/450 runs** (stars and mistakes being retuned in four missions after the engine fixes).
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
@@ -27,14 +27,8 @@
 ## In progress (helpers)
 - Blender look-dev quartet: cottage, bridge, skiff, resident.
 
-## Engine gaps found by mission helpers (fix after W2–W5 report, then revalidate all)
-- Vehicle relay hand-off: a second vehicle drops its order if the remaining group is aboard the first; unloading at a non-refuge node clears the group's walking target (W3-M2 B is time-tuned around it).
-- Cable edges sample ground water along their path by default; they should check only their end stations.
-- Spec §6 "known hard closure" admission check not implemented.
-- Mistake scripts use operation ticks, so Relaxed can change the decision (W1-M3, W2-M2, W3-M3, W5-M1).
-- `loaded_closed_dock_wait` counts only blocked departures, not a loaded boat waiting at a closed destination dock (spec 03 l.254); it also counts berth waits.
-- A skiff that has finished stays in its berth for good (`vehicle_parking` unused); W4 content routes finished boats away by hand.
-- Contract note: W4-M3 has no tide or water events, so its critical harbor objective can't be threatened.
+## Engine gaps fixed 23 Oct (see DECISIONS)
+Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission. All 25 still pass 18/18. Retune in progress for W4-M3 (B 2★, mistake now wins), W5-M2 (A 1★, B 2★), W5-M3 (1–2★) and W5-M4 (mistake now wins). Open: Relaxed-only mistake recoveries in W1-M3, W2-M2, W3-M3 and W5-M1 (strategy times are operation ticks); W4-M3 contract has no water events.
 
 ## Known W1 gaps
 - Compact layouts are still the wide graph; the recipe's compact dock swap needs `class_overrides`.

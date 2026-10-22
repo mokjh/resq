@@ -36,7 +36,7 @@ namespace Resq.Sim.Tests
                 "\"nodes\":[" +
                 "{\"id\":\"dock_a\",\"at\":[3,11],\"flags\":[\"dock\"],\"water_at\":[3,10],\"capacity\":4}," +
                 "{\"id\":\"dock_b\",\"at\":[5,11],\"flags\":[\"dock\"],\"water_at\":[5,10],\"capacity\":4}," +
-                "{\"id\":\"dock_c\",\"at\":[18,11],\"flags\":[\"dock\",\"evacuation\"],\"water_at\":[18,10],\"capacity\":4}," +
+                "{\"id\":\"dock_c\",\"at\":[18,11],\"flags\":[\"dock\",\"evacuation\"],\"water_at\":[18,10],\"capacity\":4,\"dock_max_depth\":320}," +
                 "{\"id\":\"land_w\",\"at\":[9,11]},{\"id\":\"land_e\",\"at\":[11,11]}," +
                 "{\"id\":\"harbor_start\",\"at\":[14,14],\"capacity\":4},{\"id\":\"harbor_assembly\",\"at\":[15,14],\"capacity\":4}," +
                 "{\"id\":\"harbor_pickup\",\"at\":[16,14],\"capacity\":4}]," +
@@ -45,7 +45,8 @@ namespace Resq.Sim.Tests
                 "{\"id\":\"w_bc\",\"from\":\"dock_b\",\"to\":\"dock_c\",\"ticks\":100,\"class\":\"water\",\"sample\":{\"x0\":5,\"y0\":10,\"x1\":18,\"y1\":10}}," +
                 "{\"id\":\"g_causeway\",\"from\":\"land_w\",\"to\":\"land_e\",\"ticks\":40,\"sample\":[[10,11]]}," +
                 "{\"id\":\"g_h1\",\"from\":\"harbor_start\",\"to\":\"harbor_assembly\",\"ticks\":20}," +
-                "{\"id\":\"g_h2\",\"from\":\"harbor_assembly\",\"to\":\"harbor_pickup\",\"ticks\":20}]," +
+                "{\"id\":\"g_h2\",\"from\":\"harbor_assembly\",\"to\":\"harbor_pickup\",\"ticks\":20}," +
+                "{\"id\":\"g_h3\",\"from\":\"harbor_pickup\",\"to\":\"dock_a\",\"ticks\":100,\"sample\":[[16,14]]}]," +
                 "\"sockets\":[" +
                 "{\"id\":\"skiff:01\",\"tool\":\"skiff\",\"node\":\"dock_a\",\"at\":[3,12]}," +
                 "{\"id\":\"skiff:02\",\"tool\":\"skiff\",\"node\":\"dock_b\",\"at\":[5,12]}," +
@@ -217,28 +218,10 @@ namespace Resq.Sim.Tests
             Check.True(threw, "current multiplier outside 500..2000 is rejected");
         }
 
-        // A skiff that cannot take the single berth at its destination dock queues; the metric records the longest wait.
+        // Berth reservation: two skiffs ordered to a one-berth dock on the same tick. Only one may set off; the other
+        // queues at its own dock until the first has finished and moored aside, then it lands. The berth is never shared.
         [SimTest("tide")]
-        public static void Dock_Queue_Metric()
-        {
-            var d = Fixture();
-            var sim = new Simulator(d, RuleProfile.Standard);
-            sim.Submit(Command.Place(d.SocketIndex["skiff:01"], ToolKind.Skiff));
-            sim.Submit(Command.Place(d.SocketIndex["skiff:02"], ToolKind.Skiff));
-            sim.Step();
-            int dockC = d.NodeIndex["dock_c"];
-            sim.Submit(Command.VehicleRoute(0, -1, -1, dockC, false));
-            for (int i = 0; i < 200 && sim.S.VNode[0] != dockC || sim.S.VState[0] == (byte)VehicleState.Moving; i++) sim.Step();
-            Check.Equal(dockC, sim.S.VNode[0], "first skiff holds the berth");
-            sim.Submit(Command.VehicleRoute(1, -1, -1, dockC, false));
-            for (int i = 0; i < 80; i++) sim.Step();
-            Check.Equal(d.NodeIndex["dock_b"], sim.S.VNode[1], "second skiff waits at its dock");
-            Check.True(sim.S.NodeMaxQueue[dockC] >= 70, $"queue ticks recorded ({sim.S.NodeMaxQueue[dockC]})");
-        }
-
-        // Berth reservation: two skiffs ordered to a one-berth dock on the same tick — only one may set off; the other queues.
-        [SimTest("tide")]
-        public static void Berth_Is_Reserved_At_Departure()
+        public static void Berth_Is_Reserved_At_Departure_And_Freed_When_Done()
         {
             var d = Fixture();
             var sim = new Simulator(d, RuleProfile.Standard);
@@ -248,19 +231,50 @@ namespace Resq.Sim.Tests
             int dockC = d.NodeIndex["dock_c"];
             sim.Submit(Command.VehicleRoute(0, -1, -1, dockC, false));
             sim.Submit(Command.VehicleRoute(1, -1, -1, dockC, false));
-            int maxAtC = 0;
-            for (int i = 0; i < 400; i++)
+            long firstAway = -1, secondDeparts = -1;
+            int first = -1;
+            for (int i = 0; i < 600; i++)
             {
                 sim.Step();
-                int arrived = 0;
-                for (int v = 0; v < 2; v++) if (sim.S.VNode[v] == dockC && sim.S.VState[v] != (byte)VehicleState.Moving) arrived++;
-                maxAtC = System.Math.Max(maxAtC, arrived);
-                Check.True(sim.S.NodeBerthUsed[dockC] <= 1, $"berth count never exceeds the single berth ({sim.S.NodeBerthUsed[dockC]})");
+                Check.True(sim.S.NodeBerthUsed[dockC] <= 1, $"the single berth is never double-booked ({sim.S.NodeBerthUsed[dockC]})");
+                for (int v = 0; v < 2; v++)
+                {
+                    if (first < 0 && sim.S.VState[v] == (byte)VehicleState.Moving) first = v;
+                    if (first >= 0 && v != first && secondDeparts < 0 && sim.S.VState[v] == (byte)VehicleState.Moving) secondDeparts = sim.S.C.O;
+                }
+                if (first >= 0 && firstAway < 0 && sim.S.VStandOff[first]) firstAway = sim.S.C.O;
             }
-            Check.Equal(1, maxAtC, "exactly one skiff lands at the one-berth dock");
-            Check.Equal(d.NodeIndex["dock_b"], sim.S.VNode[1], "the second skiff never left its own berth");
-            Check.Equal(1, sim.S.NodeBerthUsed[d.NodeIndex["dock_a"]] + sim.S.NodeBerthUsed[d.NodeIndex["dock_b"]],
-                        "the first skiff released its origin berth on arrival; the waiting one still holds its own");
+            Check.True(first >= 0 && firstAway > 0, "the first skiff landed, finished and moored aside");
+            Check.True(secondDeparts > 0 && secondDeparts >= firstAway, $"the second set off only once the berth was free ({secondDeparts} vs {firstAway})");
+            Check.Equal(dockC, sim.S.VNode[0], "first skiff at the dock");
+            Check.Equal(dockC, sim.S.VNode[1], "second skiff at the dock");
+            Check.True(sim.S.NodeMaxQueue[dockC] >= 90, $"the queue metric recorded the wait during the first crossing ({sim.S.NodeMaxQueue[dockC]})");
+            Check.Equal(0, sim.S.NodeBerthUsed[dockC], "both finished boats moored aside");
+        }
+
+        // Spec 03 metric: cumulative ticks a loaded vehicle waits while its chosen unload dock is closed.
+        [SimTest("tide")]
+        public static void Loaded_Closed_Dock_Wait_Counts_A_Closed_Destination()
+        {
+            foreach (bool tide in new[] { false, true })
+            {
+                var d = Fixture(tide ? Tide("rise", 200, 1) : "");
+                var sim = new Simulator(d, RuleProfile.Standard);
+                sim.Submit(Command.Place(d.SocketIndex["skiff:01"], ToolKind.Skiff));
+                RunTo(sim, 600);
+                sim.Submit(Command.VehicleRoute(0, d.GroupIndex["harbor"], d.NodeIndex["dock_a"], d.NodeIndex["dock_c"], true));
+                RunTo(sim, 1500);
+                if (!tide)
+                {
+                    Check.Equal(0L, sim.S.C.LoadedClosedDockWait, "open destination: no closed-dock wait");
+                    Check.Equal(2, sim.S.C.Evacuated, "both landed at the refuge dock");
+                }
+                else
+                {
+                    Check.True(sim.S.C.LoadedClosedDockWait > 100, $"the flooded dock_c keeps the loaded skiff waiting ({sim.S.C.LoadedClosedDockWait})");
+                    Check.Equal(0, sim.S.C.Evacuated, "nobody can unload at a closed dock");
+                }
+            }
         }
     }
 }

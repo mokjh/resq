@@ -16,7 +16,7 @@ namespace Resq.Sim
             S.VPickupGroup[v] = -1; S.VPickupNode[v] = -1; S.VDestination[v] = -1;
             S.VTransferResident[v] = -1; S.VTransferProgress[v] = 0; S.VOccupantCount[v] = 0;
             S.VPhase[v] = (byte)VehiclePhase.None; S.VState[v] = (byte)VehicleState.Idle;
-            S.VBerthFrom[v] = -1; S.VBerthTo[v] = -1;
+            S.VBerthFrom[v] = -1; S.VBerthTo[v] = -1; S.VStandOff[v] = false;
         }
 
         int SpawnVehicle(VehicleKind kind, int node, int seats, int slots, int instance)
@@ -74,6 +74,7 @@ namespace Resq.Sim
             if (evacuate && (D.NodeFlags[node] & NodeFlags.Evacuation) == 0) return Reject.UnknownTarget;
             S.GroupTarget[g] = node;
             S.GroupEvacuate[g] = evacuate;
+            foreach (int r in D.GroupResidents[g]) S.RStay[r] = false; // a new group order moves everyone again
             return Reject.OK;
         }
 
@@ -200,6 +201,64 @@ namespace Resq.Sim
 
         static int Other(MissionDef d, int e, int node) => d.EdgeTo[e] == node ? d.EdgeFrom[e] : d.EdgeTo[e];
 
+        // ----------------------------------------------------------------- admission (spec 02 §6)
+        /// <summary>Scenario tick at which a traveller entering edge <paramref name="e"/> now would arrive.</summary>
+        long PredictedArrivalS(int e)
+        {
+            if (!S.C.ScenarioEnabled) return S.C.S;
+            int numerator = S.C.Profile == RuleProfile.Relaxed ? 1 : 2;
+            return S.C.S + (S.C.Accumulator + (long)EdgeDuration(e) * numerator) / 2;
+        }
+
+        /// <summary>
+        /// A hard closure already known to the player that lands on this edge before the traveller would arrive:
+        /// a warned administrative closure, a published lava arrival, a known crust expiry, or a warned/started runout.
+        /// Predicted depth/heat changes are not "known" closures; transit recovery handles them.
+        /// </summary>
+        bool KnownClosureBeforeArrival(int e)
+        {
+            long now = S.C.S, arrive = PredictedArrivalS(e);
+            if (arrive <= now) return false;
+            for (int i = 0; i < D.Events.Length; i++)
+            {
+                if (!S.Warned[i] || S.Applied[i]) continue;
+                var ev = D.Events[i];
+                if (ev.AtTick > arrive) continue;
+                foreach (var op in ev.Ops)
+                {
+                    if (op.Kind == EventOpKind.SetEdgeEnabled && op.Value == 0 && Has(op.Targets, e)) return true;
+                    if (op.Kind == EventOpKind.ReleaseAvalanche)
+                        foreach (int run in op.Targets)
+                            if (RunoutHitsEdgeBy(run, ev.AtTick, e, now, arrive)) return true;
+                }
+            }
+            for (int run = 0; run < D.RunoutIds.Length; run++)
+                if (S.RunStarted[run] && RunoutHitsEdgeBy(run, S.SegStart[D.RunoutFirstSegment[run]], e, now, arrive)) return true;
+            if (D.EdgeLavaSegs != null)
+                foreach (int seg in D.EdgeLavaSegs[e])
+                {
+                    var st = (Rules.LavaState)S.LState[seg];
+                    if (st == Rules.LavaState.Dormant && S.LPlanned[seg] > now && S.LPlanned[seg] <= arrive) return true;
+                    if ((st == Rules.LavaState.Cooling || st == Rules.LavaState.Crusted) && S.LCoolStart[seg] >= 0)
+                    {
+                        long reheat = S.LCoolStart[seg] + Rules.LavaRules.CoolingTicks + Rules.LavaRules.CrustTicks;
+                        if (reheat > now && reheat <= arrive) return true;
+                    }
+                }
+            return false;
+        }
+
+        bool RunoutHitsEdgeBy(int run, long runStart, int e, long now, long arrive)
+        {
+            foreach (int seg in D.EdgeSegments[e])
+            {
+                if (D.SegmentRunout[seg] != run || D.SegmentOffset[seg] < 0) continue;
+                long t = runStart + D.SegmentOffset[seg];
+                if (t > now && t <= arrive) return true;
+            }
+            return false;
+        }
+
         bool NodeHasRoom(int node)
         {
             int cap = D.NodeCapacity[node];
@@ -279,8 +338,10 @@ namespace Resq.Sim
                     Evacuate(r, at, (int)Traversal.Ground);
                 return;
             }
+            if (S.RStay[r]) return; // carried part-way: wait for the next vehicle or a new group order
             int e = NextEdge(at, target, Traversal.Ground, D.ResidentStepFree[r]);
             if (e < 0) return;
+            if (KnownClosureBeforeArrival(e)) return; // spec 02 §6: wait rather than walk into a published closure
             int to = Other(D, e, at);
             if (S.EdgeOccupancy[e] + 1 > D.EdgeSlots[e]) return;
             if (!NodeHasRoom(to)) return;
@@ -348,6 +409,7 @@ namespace Resq.Sim
             // berths: a normal arrival frees the origin berth; a reversal frees the destination reservation instead
             int release = S.VReversing[v] ? S.VBerthTo[v] : S.VBerthFrom[v];
             if (release >= 0) S.NodeBerthUsed[release]--;
+            S.VStandOff[v] = UsesBerths(v) && S.VReversing[v] && S.VBerthFrom[v] < 0 && (D.NodeFlags[at] & NodeFlags.Dock) != 0;
             S.VBerthFrom[v] = -1; S.VBerthTo[v] = -1;
             S.VEmergency[v] = false; S.VBrake[v] = 0;
             S.VState[v] = (byte)VehicleState.Idle;
@@ -366,6 +428,7 @@ namespace Resq.Sim
             _berthBlocked = false;
             int e = NextEdge(at, target, cls, false);
             if (e < 0) return false;
+            if (KnownClosureBeforeArrival(e)) return false;
             if (S.EdgeOccupancy[e] + S.VSlots[v] > D.EdgeSlots[e]) return false;
             bool winch = (VehicleKind)S.VKind[v] == VehicleKind.Winch;
             if (winch && !WinchCanDepart(v)) return false;
@@ -378,8 +441,9 @@ namespace Resq.Sim
             S.EdgeOccupancy[e] += S.VSlots[v];
             // reserve the destination berth now, so two skiffs can never both land at a one-berth dock;
             // keep the origin berth until arrival, so a turned-back skiff always has its berth to return to
-            S.VBerthFrom[v] = UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0 ? at : -1;
+            S.VBerthFrom[v] = UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0 && !S.VStandOff[v] ? at : -1;
             S.VBerthTo[v] = -1;
+            S.VStandOff[v] = false;
             if (UsesBerths(v) && (D.NodeFlags[to] & NodeFlags.Dock) != 0) { S.NodeBerthUsed[to]++; S.VBerthTo[v] = to; }
             S.VState[v] = (byte)VehicleState.Moving;
             S.VEdge[v] = e; S.VFrom[v] = at; S.VNode[v] = to;
@@ -395,9 +459,18 @@ namespace Resq.Sim
             if ((VehicleKind)S.VKind[v] == VehicleKind.Winch) WinchRest(v);
             var phase = (VehiclePhase)S.VPhase[v];
             int at = S.VNode[v];
+            // a finished skiff moors aside: it no longer blocks the berth for loaded boats behind it
+            if (phase == VehiclePhase.Done && UsesBerths(v) && !S.VStandOff[v] && (D.NodeFlags[at] & NodeFlags.Dock) != 0)
+            {
+                S.NodeBerthUsed[at]--;
+                S.VStandOff[v] = true;
+            }
+            // spec 03: cumulative ticks a loaded vehicle waits while its chosen unload dock is closed
+            if (S.VOccupantCount[v] > 0 && S.VDestination[v] >= 0 && !DockUsable(S.VDestination[v])) S.C.LoadedClosedDockWait++;
             switch (phase)
             {
                 case VehiclePhase.ToPickup:
+                    if (at == S.VPickupNode[v] && !ReclaimBerth(v, at)) { S.VState[v] = (byte)VehicleState.Waiting; break; }
                     if (at == S.VPickupNode[v]) { S.VPhase[v] = (byte)VehiclePhase.Loading; goto case VehiclePhase.Loading; }
                     if (!TryMoveVehicle(v, S.VPickupNode[v])) { S.VState[v] = (byte)VehicleState.Waiting; QueueTick(v, S.VPickupNode[v]); }
                     else S.VQueue[v] = 0;
@@ -406,12 +479,12 @@ namespace Resq.Sim
                     LoadingTick(v);
                     break;
                 case VehiclePhase.ToDestination:
+                    if (at == S.VDestination[v] && !ReclaimBerth(v, at)) { S.VState[v] = (byte)VehicleState.Waiting; break; }
                     if (at == S.VDestination[v]) { S.VPhase[v] = (byte)VehiclePhase.Unloading; goto case VehiclePhase.Unloading; }
                     if (!TryMoveVehicle(v, S.VDestination[v]))
                     {
                         QueueTick(v, S.VDestination[v]);
                         S.VState[v] = (byte)VehicleState.Waiting;
-                        if (S.VOccupantCount[v] > 0) S.C.LoadedClosedDockWait++;
                     }
                     else S.VQueue[v] = 0;
                     break;
@@ -423,12 +496,47 @@ namespace Resq.Sim
 
         bool _berthBlocked;
 
+        /// <summary>A moored-aside skiff must take the berth back before it can load or unload at this dock.</summary>
+        bool ReclaimBerth(int v, int at)
+        {
+            if (!S.VStandOff[v]) return true;
+            if (S.NodeBerthUsed[at] >= Math.Max(1, D.NodeBerths[at]))
+            {
+                _berthBlocked = true;
+                QueueTick(v, at);
+                return false;
+            }
+            S.NodeBerthUsed[at]++;
+            S.VStandOff[v] = false;
+            S.VQueue[v] = 0;
+            return true;
+        }
+
         /// <summary>Dock queue metric: consecutive operation ticks a vehicle waits because its target dock's berth is taken.</summary>
         void QueueTick(int v, int target)
         {
             if (!_berthBlocked) { S.VQueue[v] = 0; return; }
             S.VQueue[v]++;
             if (S.VQueue[v] > S.NodeMaxQueue[target]) S.NodeMaxQueue[target] = S.VQueue[v];
+        }
+
+        /// <summary>
+        /// Members this vehicle should still wait for: anyone not yet aboard or terminal, plus members riding another
+        /// vehicle towards this vehicle's pickup (the hand-off leg of a relay).
+        /// </summary>
+        bool GroupHasPendingMembers(int g, int v)
+        {
+            if (GroupHasUnboardedMembers(g)) return true;
+            int pickup = S.VPickupNode[v];
+            if (pickup < 0) return false;
+            foreach (int r in D.GroupResidents[g])
+            {
+                var st = (ResidentState)S.RState[r];
+                if (st != ResidentState.Aboard && st != ResidentState.Unboarding) continue;
+                int u = S.RVehicle[r];
+                if (u >= 0 && u != v && S.VDestination[u] == pickup) return true;
+            }
+            return false;
         }
 
         bool GroupHasUnboardedMembers(int g)
@@ -486,6 +594,7 @@ namespace Resq.Sim
                     S.RVehicle[tr] = v;
                     S.VOccupants[v * S.SeatsMax + S.VOccupantCount[v]++] = tr;
                     S.RBoarded[tr] = true;
+                    S.RStay[tr] = false;
                     S.VTransferResident[v] = -1; S.VTransferProgress[v] = 0;
                     Emit(SimEventKind.TransferCompleted, tr, v, at);
                 }
@@ -508,7 +617,7 @@ namespace Resq.Sim
                 VehicleLogic(v);
                 return;
             }
-            if (S.VOccupantCount[v] == 0 && g >= 0 && !GroupHasUnboardedMembers(g))
+            if (S.VOccupantCount[v] == 0 && g >= 0 && !GroupHasPendingMembers(g, v))
                 S.VPhase[v] = (byte)VehiclePhase.Done;
         }
 
@@ -545,7 +654,7 @@ namespace Resq.Sim
                         S.RNode[tr] = at;
                         S.RDwellStart[tr] = S.C.S;
                         S.NodeOccupancy[at]++;
-                        S.GroupTarget[D.ResidentGroup[tr]] = -1;
+                        S.RStay[tr] = true; // only this resident stops; group members still walking keep their order
                     }
                     Emit(SimEventKind.TransferCompleted, tr, v, at);
                 }
@@ -553,7 +662,15 @@ namespace Resq.Sim
             }
             if (S.VOccupantCount[v] > 0)
             {
-                if (!DockUsable(at) || !NodeHasRoom(at)) return;
+                if (!DockUsable(at)) return;
+                if (!NodeHasRoom(at))
+                {
+                    // waiting at the dock for receiving capacity counts towards the dock queue metric
+                    S.VQueue[v]++;
+                    if (S.VQueue[v] > S.NodeMaxQueue[at]) S.NodeMaxQueue[at] = S.VQueue[v];
+                    return;
+                }
+                S.VQueue[v] = 0;
                 int next = S.VOccupants[v * S.SeatsMax];
                 S.RState[next] = (byte)ResidentState.Unboarding;
                 S.VTransferResident[v] = next; S.VTransferProgress[v] = 0;
@@ -561,7 +678,7 @@ namespace Resq.Sim
                 return;
             }
             int g = S.VPickupGroup[v];
-            S.VPhase[v] = (byte)(g >= 0 && GroupHasUnboardedMembers(g) ? VehiclePhase.ToPickup : VehiclePhase.Done);
+            S.VPhase[v] = (byte)(g >= 0 && GroupHasPendingMembers(g, v) ? VehiclePhase.ToPickup : VehiclePhase.Done);
             S.VState[v] = (byte)VehicleState.Idle;
         }
 

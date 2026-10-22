@@ -64,3 +64,14 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 |---|---|
 | Pumps and stores | A pump `intake`/`outlet` may name a finite store, so tank ↔ pond ↔ cell pumping works (spec 02 §4). This previously crashed the compiler. |
 | Initial fire | `fire.burning` cells start Burning at S=0, and a legend `heat` sets initial heat. These are compiled initial state, not tick-zero events (spec 02 §2). W2-M4's contract has only wind events, so its fire must already be burning. |
+
+## 23 Oct 2026 — engine gaps from the mission helpers, fixed
+
+| Decision | Result |
+|---|---|
+| Relay hand-off | A vehicle keeps waiting at its pickup while group members ride another vehicle towards that pickup. A resident dropped at a non-refuge node waits there (`RStay`) until boarded or given a new group order. Members still walking keep the group's order (previously the whole group's order was cleared). |
+| Cable sampling | A cable edge without an explicit `sample` checks only its two end stations, not the ground beneath it. |
+| Closed-dock wait | Spec 03: cumulative ticks a loaded, stationary vehicle waits while its chosen unload destination is closed. Berth waits no longer count. |
+| Dock queue | Also counts waiting at the dock for receiving capacity. |
+| Finished skiffs | A skiff whose order is done moors aside: it frees its berth but stays at the node. It must reclaim a free berth before loading or unloading there again. A loaded boat is never blocked by an idle one. |
+| Hard-closure admission | Spec 02 §6: no traveller enters an edge if a known hard closure lands on it before the predicted arrival. Known closures are a warned `set_edge_enabled(0)`, a published lava arrival, a running crust's expiry, and a warned or started runout segment. Predicted depth/heat changes are not "known"; transit recovery handles them. |

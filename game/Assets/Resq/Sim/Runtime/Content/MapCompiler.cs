@@ -339,8 +339,11 @@ namespace Resq.Sim
                     d.EdgeMaxDepth[i] = e.Long("max_depth", water ? 2000 : 100);
                     d.EdgeMinDepth[i] = e.Long("min_depth", water ? 100 : 0);
                     d.EdgeRequiredSocket[i] = -1; // bound after sockets compile
+                    // a cable spans the ground between its stations: by default only the two end stations are sampled
                     d.EdgeSampleCells[i] = e["sample"] != null ? ResolveCells(e["sample"]) :
-                        ManhattanPath(d.NodeCell[d.EdgeFrom[i]], d.NodeCell[d.EdgeTo[i]], e["via"]);
+                        d.EdgeClass[i] == Traversal.Cable
+                            ? new[] { d.NodeCell[d.EdgeFrom[i]], d.NodeCell[d.EdgeTo[i]] }.Where(c => c >= 0).Distinct().ToArray()
+                            : ManhattanPath(d.NodeCell[d.EdgeFrom[i]], d.NodeCell[d.EdgeTo[i]], e["via"]);
                     var tags = new List<int>();
                     if (e["tags"] != null)
                         foreach (var t in e["tags"].Elements())
@@ -552,6 +555,25 @@ namespace Resq.Sim
                 }
                 d.EdgeSegments = es.Select(l => l.ToArray()).ToArray();
                 d.NodeSegments = ns.Select(l => l.ToArray()).ToArray();
+                d.SegmentRunout = segRun.ToArray();
+                d.SegmentOffset = Enumerable.Repeat(-1L, sc).ToArray();
+                for (int r = 0; r < d.RunoutIds.Length; r++)
+                {
+                    d.SegmentOffset[d.RunoutFirstSegment[r]] = 0;
+                    for (bool changed = true; changed;)
+                    {
+                        changed = false;
+                        for (int i = 0; i < sc; i++)
+                        {
+                            if (d.SegmentRunout[i] != r || d.SegmentOffset[i] < 0) continue;
+                            foreach (int nx in d.SegmentNext[i])
+                            {
+                                long t = d.SegmentOffset[i] + d.SegmentDelay[i];
+                                if (d.SegmentOffset[nx] < 0 || t < d.SegmentOffset[nx]) { d.SegmentOffset[nx] = t; changed = true; }
+                            }
+                        }
+                    }
+                }
             }
 
             /// <summary>World 5 lava DAG (named sources, successor delays >= 50) and finite coolant stores (spec 02 §10).</summary>

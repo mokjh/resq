@@ -332,5 +332,28 @@ namespace Resq.Sim.Tests
             RunTo(sim, 801);
             Check.Equal(LavaState.Cooling, sim.SegmentState(b), "enabled socket: cooling starts");
         }
+
+        // Spec 02 §6 with §10: a known crust expiry is a hard closure; nobody steps onto a crossing they cannot finish.
+        [SimTest("lava")]
+        public static void Admission_Respects_The_Known_Crust_Expiry()
+        {
+            var d = Fixture(Lava);
+            var sim = CooledAt310(d, out int cooler);
+            int cross = d.EdgeIndex["g_cross"], g = d.GroupIndex["camp"];
+            RunTo(sim, 440);
+            sim.Submit(Command.GroupRoute(g, d.NodeIndex["refuge"], true));
+            bool waitedAtBank = false;
+            RunTo(sim, 700, () =>
+            {
+                foreach (int r in d.GroupResidents[g])
+                {
+                    if (sim.S.RState[r] == (byte)ResidentState.Walking && sim.S.REdge[r] == cross && sim.S.RProgress[r] == 0)
+                        Check.True(sim.S.C.S + 40 <= 560, $"entered the crossing at {sim.S.C.S} and could not finish before the reheat at 560");
+                    if (sim.S.RReversing[r]) Check.True(false, "no resident is caught on the crust and turned back");
+                    if (sim.S.C.S > 521 && sim.S.C.S < 560 && sim.S.RState[r] == (byte)ResidentState.AtNode && sim.S.RNode[r] == d.NodeIndex["west"]) waitedAtBank = true;
+                }
+            });
+            Check.True(waitedAtBank, "someone reached the bank too late and waited instead of crossing");
+        }
     }
 }
