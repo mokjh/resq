@@ -1,0 +1,15 @@
+{
+  "id": "A",
+  "description": "Clear a continuous corridor and wet only its vulnerable bends.",
+  "steps": [
+    {"t": 5, "place": "firebreak:01"},
+    {"t": 6, "place": "firebreak:02"},
+    {"t": 7, "place": "generator:01"},
+    {"t": 8, "place": "crawler:01"},
+    {"t": 9, "place": "crawler:03"},
+    {"t": 10, "vehicle": "crawler:01", "group": "sawmill", "pickup": "sawmill_start", "to": "depot"},
+    {"t": 11, "vehicle": "crawler:03", "group": "orchard", "pickup": "orchard_start", "to": "high_landing"},
+    {"t": 1300, "place": "sprinkler:01"},
+    {"t": 2000, "group": "campsite", "to": "depot"}
+  ]
+}

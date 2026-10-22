@@ -1,0 +1,12 @@
+{
+  "id": "B",
+  "description": "Evacuate the farthest group first and progressively retreat the transport line.",
+  "steps": [
+    {"t": 5, "place": "firebreak:02"},
+    {"t": 6, "group": "campsite", "to": "depot"},
+    {"t": 7, "place": "crawler:03"},
+    {"t": 8, "vehicle": "crawler:03", "group": "orchard", "pickup": "orchard_start", "to": "high_landing"},
+    {"t": 600, "place": "crawler:01"},
+    {"t": 601, "vehicle": "crawler:01", "group": "sawmill", "pickup": "sawmill_start", "to": "depot"}
+  ]
+}

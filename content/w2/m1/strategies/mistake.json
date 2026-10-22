@@ -1,0 +1,12 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: a gap in the firebreak permits predictable spread). Plan A is followed, but only firebreak:01 is cut, so the strip nearest the trail keeps two trees (x 11..12). The forest fire crosses that gap onto the trail hedge at about S=930 (93 s) and creeps east along it, against the wind, keeping the trail closed to the end; the unprotected ridge hedge is lit from the forest's east neck at S=2007. Both wooded paths are closed at the end, so the path to the lookout is lost.",
+  "steps": [
+    {"t": 5, "place": "firebreak:01"},
+    {"t": 7, "place": "generator:01"},
+    {"t": 8, "place": "sprinkler:01"},
+    {"t": 9, "group": "lookout", "to": "high_landing"},
+    {"t": 10, "group": "campsite", "to": "depot"},
+    {"t": 1050, "disable": "sprinkler:01"}
+  ]
+}

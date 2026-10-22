@@ -1,0 +1,1141 @@
+{
+ "mission_id": "W2-M5",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  ",TTTTTTTTTTTTTTTTTTTTTTTT,,,,,,,",
+  ",TTTTTTTTTTTTTTTTTTTTTTTT,,,,,,,",
+  ",TTTTTTTTTTTTTTTTTTTTTTTToooo,,,",
+  ",TTTTTTTTTTTTTTTTTTTTTTTToooo,,,",
+  ",TTTTTTTTTTTTTTTTTTTTTTTToooo,,,",
+  ",TTTTTTTTTTTTTTTTTTTTTTTToooo,,,",
+  ",,,ccccc,,,bT,,,,,,,,,,TTvv,,,,,",
+  ",,,Tcccc,,,bT,,,,,PP,,,TTvv,,,,,",
+  ",,,Tbcchhhhhh,hhhhhhhhhhhvv,,,,,",
+  ",,,ccc====================,,,,,,",
+  ",,,ccccc,,,,,,,=,,,,,,,,,=,,,,,,",
+  ",,,,,Tb,,,,,,,,=,,,,,,,,,=,,,,,,",
+  ",,,,T,,b,,,,,,,=,,,,,,,,,=,,,,,,",
+  ",,,,T,,,,,,,,,,=,,,,,,,,,=,,,,,,",
+  ",,,,,T,,,,,,,,,=,,,,,,,,,=,,,,,,",
+  ",,,,,T,,========,,,,,,,,,=,,,,,,",
+  ",,,,,T,,,,,,,,,=,,,,,,,,HHHH,,,,",
+  ",TTTTT,,,,,,,DDDDD======HHHH,,,,",
+  ",TTTTT,,,,,,,DDDDD,,,,,,,,,,,,,,",
+  ",TTTTT,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200,
+   "fuel": 0
+  },
+  ",": {
+   "terrain": "meadow",
+   "code": 13,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "T": {
+   "terrain": "forest",
+   "code": 14,
+   "elev": 1200,
+   "fuel": 1000
+  },
+  "h": {
+   "terrain": "hedge_trees",
+   "code": 15,
+   "elev": 1200,
+   "fuel": 1000
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300,
+   "fuel": 0
+  },
+  "c": {
+   "terrain": "campsite",
+   "code": 17,
+   "elev": 100,
+   "fuel": 0
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100,
+   "fuel": 1000
+  },
+  "v": {
+   "terrain": "camp_ground",
+   "code": 11,
+   "elev": 300,
+   "fuel": 0
+  },
+  "P": {
+   "terrain": "pump_house",
+   "code": 22,
+   "elev": 1200,
+   "fuel": 0,
+   "building": true
+  },
+  "b": {
+   "terrain": "cabin",
+   "code": 23,
+   "elev": 1200,
+   "fuel": 1000,
+   "building": true
+  }
+ },
+ "regions": {
+  "forest": {
+   "x0": 0,
+   "y0": 0,
+   "x1": 31,
+   "y1": 23
+  },
+  "outer_forest": {
+   "x0": 1,
+   "y0": 15,
+   "x1": 2,
+   "y1": 20
+  },
+  "sawmill_outer": {
+   "x0": 1,
+   "y0": 1,
+   "x1": 2,
+   "y1": 3
+  },
+  "sawmill_access": [
+   [
+    8,
+    5
+   ],
+   [
+    9,
+    5
+   ],
+   [
+    10,
+    5
+   ],
+   [
+    11,
+    5
+   ],
+   [
+    12,
+    5
+   ],
+   [
+    13,
+    5
+   ],
+   [
+    14,
+    5
+   ],
+   [
+    6,
+    9
+   ],
+   [
+    7,
+    8
+   ],
+   [
+    5,
+    9
+   ]
+  ],
+  "corridor_flank": [
+   [
+    7,
+    12
+   ],
+   [
+    8,
+    12
+   ],
+   [
+    9,
+    12
+   ],
+   [
+    10,
+    12
+   ],
+   [
+    11,
+    12
+   ],
+   [
+    12,
+    12
+   ],
+   [
+    14,
+    12
+   ],
+   [
+    15,
+    12
+   ],
+   [
+    16,
+    12
+   ],
+   [
+    17,
+    12
+   ],
+   [
+    18,
+    12
+   ],
+   [
+    19,
+    12
+   ],
+   [
+    20,
+    12
+   ],
+   [
+    21,
+    12
+   ],
+   [
+    22,
+    12
+   ],
+   [
+    23,
+    12
+   ],
+   [
+    24,
+    12
+   ]
+  ],
+  "corridor": [
+   [
+    6,
+    11
+   ],
+   [
+    7,
+    11
+   ],
+   [
+    8,
+    11
+   ],
+   [
+    9,
+    11
+   ],
+   [
+    10,
+    11
+   ],
+   [
+    11,
+    11
+   ],
+   [
+    12,
+    11
+   ],
+   [
+    13,
+    11
+   ],
+   [
+    14,
+    11
+   ],
+   [
+    15,
+    11
+   ],
+   [
+    16,
+    11
+   ],
+   [
+    17,
+    11
+   ],
+   [
+    18,
+    11
+   ],
+   [
+    19,
+    11
+   ],
+   [
+    20,
+    11
+   ],
+   [
+    21,
+    11
+   ],
+   [
+    22,
+    11
+   ],
+   [
+    23,
+    11
+   ],
+   [
+    24,
+    11
+   ],
+   [
+    25,
+    11
+   ]
+  ],
+  "orchard_pump_house": "P"
+ },
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "campsite_start",
+   "at": [
+    6,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "campsite_assembly",
+   "at": [
+    6,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "campsite_pickup",
+   "at": [
+    6,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "orchard_start",
+   "at": [
+    25,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "orchard_assembly",
+   "at": [
+    25,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "orchard_pickup",
+   "at": [
+    25,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "sawmill_start",
+   "at": [
+    8,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "sawmill_assembly",
+   "at": [
+    8,
+    6
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "sawmill_pickup",
+   "at": [
+    8,
+    5
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "corridor_mid",
+   "at": [
+    15,
+    11
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "sawmill_junction",
+   "at": [
+    15,
+    5
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 16
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    25,
+    4
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 8
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_campsite_assembly",
+   "from": "campsite_start",
+   "to": "campsite_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_campsite_pickup",
+   "from": "campsite_assembly",
+   "to": "campsite_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_orchard_assembly",
+   "from": "orchard_start",
+   "to": "orchard_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_orchard_pickup",
+   "from": "orchard_assembly",
+   "to": "orchard_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_sawmill_assembly",
+   "from": "sawmill_start",
+   "to": "sawmill_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_sawmill_pickup",
+   "from": "sawmill_assembly",
+   "to": "sawmill_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_corridor_w",
+   "from": "campsite_pickup",
+   "to": "corridor_mid",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     6,
+     11
+    ],
+    [
+     7,
+     11
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     9,
+     11
+    ],
+    [
+     10,
+     11
+    ],
+    [
+     11,
+     11
+    ],
+    [
+     12,
+     11
+    ],
+    [
+     13,
+     11
+    ],
+    [
+     14,
+     11
+    ],
+    [
+     15,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_corridor_e",
+   "from": "corridor_mid",
+   "to": "orchard_pickup",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     11
+    ],
+    [
+     16,
+     11
+    ],
+    [
+     17,
+     11
+    ],
+    [
+     18,
+     11
+    ],
+    [
+     19,
+     11
+    ],
+    [
+     20,
+     11
+    ],
+    [
+     21,
+     11
+    ],
+    [
+     22,
+     11
+    ],
+    [
+     23,
+     11
+    ],
+    [
+     24,
+     11
+    ],
+    [
+     25,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_depot_road",
+   "from": "corridor_mid",
+   "to": "sawmill_junction",
+   "ticks": 200,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     5
+    ],
+    [
+     15,
+     6
+    ],
+    [
+     15,
+     7
+    ],
+    [
+     15,
+     8
+    ],
+    [
+     15,
+     9
+    ],
+    [
+     15,
+     10
+    ]
+   ]
+  },
+  {
+   "id": "g_depot_gate",
+   "from": "sawmill_junction",
+   "to": "depot",
+   "ticks": 50,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     3
+    ],
+    [
+     15,
+     4
+    ],
+    [
+     15,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "g_spur",
+   "from": "sawmill_pickup",
+   "to": "sawmill_junction",
+   "ticks": 150,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     5
+    ],
+    [
+     9,
+     5
+    ],
+    [
+     10,
+     5
+    ],
+    [
+     11,
+     5
+    ],
+    [
+     12,
+     5
+    ],
+    [
+     13,
+     5
+    ],
+    [
+     14,
+     5
+    ],
+    [
+     15,
+     5
+    ]
+   ]
+  },
+  {
+   "id": "g_orchard_safe",
+   "from": "orchard_pickup",
+   "to": "high_landing",
+   "ticks": 600,
+   "class": "ground",
+   "sample": [
+    [
+     25,
+     4
+    ],
+    [
+     25,
+     5
+    ],
+    [
+     25,
+     6
+    ],
+    [
+     25,
+     7
+    ],
+    [
+     25,
+     8
+    ],
+    [
+     25,
+     9
+    ],
+    [
+     25,
+     10
+    ]
+   ]
+  },
+  {
+   "id": "g_landing_depot",
+   "from": "high_landing",
+   "to": "depot",
+   "ticks": 250,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     3
+    ],
+    [
+     16,
+     3
+    ],
+    [
+     17,
+     3
+    ],
+    [
+     18,
+     3
+    ],
+    [
+     19,
+     3
+    ],
+    [
+     20,
+     3
+    ],
+    [
+     21,
+     3
+    ],
+    [
+     22,
+     3
+    ],
+    [
+     23,
+     3
+    ],
+    [
+     24,
+     3
+    ],
+    [
+     25,
+     3
+    ]
+   ]
+  }
+ ],
+ "sockets": [
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "high_landing",
+   "at": [
+    26,
+    4
+   ]
+  },
+  {
+   "id": "crawler:03",
+   "tool": "crawler",
+   "node": "corridor_mid",
+   "at": [
+    16,
+    10
+   ]
+  },
+  {
+   "id": "firebreak:01",
+   "tool": "firebreak",
+   "at": [
+    12,
+    13
+   ],
+   "cells": [
+    [
+     12,
+     13
+    ],
+    [
+     12,
+     14
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:02",
+   "tool": "firebreak",
+   "at": [
+    23,
+    13
+   ],
+   "cells": [
+    [
+     23,
+     13
+    ],
+    [
+     24,
+     13
+    ],
+    [
+     23,
+     14
+    ],
+    [
+     24,
+     14
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:03",
+   "tool": "firebreak",
+   "at": [
+    27,
+    15
+   ],
+   "cells": [
+    [
+     25,
+     15
+    ],
+    [
+     26,
+     15
+    ],
+    [
+     27,
+     15
+    ],
+    [
+     28,
+     15
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:04",
+   "tool": "firebreak",
+   "at": [
+    4,
+    13
+   ],
+   "cells": [
+    [
+     3,
+     12
+    ],
+    [
+     3,
+     13
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "sprinkler:01",
+   "tool": "sprinkler",
+   "at": [
+    10,
+    13
+   ],
+   "cells": [
+    [
+     11,
+     13
+    ],
+    [
+     11,
+     14
+    ]
+   ],
+   "store": "tank",
+   "power": "grid",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "sprinkler:02",
+   "tool": "sprinkler",
+   "at": [
+    22,
+    9
+   ],
+   "cells": [
+    [
+     18,
+     13
+    ],
+    [
+     19,
+     13
+    ],
+    [
+     18,
+     12
+    ],
+    [
+     19,
+     12
+    ]
+   ],
+   "store": "pond",
+   "power": "grid",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "sprinkler:03",
+   "tool": "sprinkler",
+   "at": [
+    4,
+    10
+   ],
+   "cells": [
+    [
+     4,
+     12
+    ]
+   ],
+   "store": "tank",
+   "power": "grid",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    17,
+    8
+   ],
+   "platform": [
+    [
+     17,
+     8
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    13,
+    13
+   ],
+   "platform": [
+    [
+     13,
+     13
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [
+  {
+   "id": "orchard_pump_house",
+   "power": "grid",
+   "demand": 0,
+   "region": "orchard_pump_house",
+   "max_heat": 300
+  }
+ ],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "campsite",
+   "start": "campsite_start",
+   "assembly": "campsite_assembly",
+   "pickup": "campsite_pickup"
+  },
+  {
+   "id": "orchard",
+   "start": "orchard_start",
+   "assembly": "orchard_assembly",
+   "pickup": "orchard_pickup",
+   "held": true
+  },
+  {
+   "id": "sawmill",
+   "start": "sawmill_start",
+   "assembly": "sawmill_assembly",
+   "pickup": "sawmill_pickup",
+   "held": true
+  }
+ ],
+ "routes": [
+  {
+   "id": "central_route",
+   "from": "campsite_pickup",
+   "to": "orchard_pickup",
+   "class": "ground"
+  }
+ ],
+ "roles": {
+  "forest": {
+   "regions": [
+    "forest"
+   ]
+  },
+  "outer_forest": {
+   "regions": [
+    "outer_forest",
+    "sawmill_outer"
+   ]
+  },
+  "sawmill_access": {
+   "regions": [
+    "sawmill_access"
+   ]
+  },
+  "corridor_flank": {
+   "regions": [
+    "corridor_flank"
+   ]
+  },
+  "orchard_pump_house": {
+   "infrastructure": [
+    "orchard_pump_house"
+   ]
+  },
+  "central_route": {
+   "edges": [
+    "g_corridor_w",
+    "g_corridor_e"
+   ]
+  },
+  "tank": {
+   "stores": [
+    "tank"
+   ]
+  },
+  "pond": {
+   "stores": [
+    "pond"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "edges": [
+    {
+     "id": "g_orchard_safe",
+     "ticks": 500
+    },
+    {
+     "id": "g_depot_gate",
+     "ticks": 100
+    }
+   ]
+  }
+ },
+ "fire": {
+  "enabled": true,
+  "wind_regions": [
+   "forest"
+  ]
+ },
+ "stores": [
+  {
+   "id": "tank",
+   "elev": 1200,
+   "volume": 600000000
+  },
+  {
+   "id": "pond",
+   "elev": 1200,
+   "volume": 1200000000
+  }
+ ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "B",
+  "description": "Run both on the nearest camp first, then use the protected longer loop.",
+  "steps": [
+    {"t": 5, "place": "firebreak:01"},
+    {"t": 6, "place": "crawler:01"},
+    {"t": 7, "place": "crawler:03"},
+    {"t": 8, "vehicle": "crawler:01", "group": "west_camp", "pickup": "west_camp_start", "to": "depot"},
+    {"t": 9, "vehicle": "crawler:03", "group": "west_camp", "pickup": "west_camp_start", "to": "depot"},
+    {"t": 600, "vehicle": "crawler:01", "group": "north_camp", "pickup": "north_camp_start", "to": "depot"},
+    {"t": 601, "vehicle": "crawler:03", "group": "east_camp", "pickup": "east_camp_start", "to": "high_landing"}
+  ]
+}
