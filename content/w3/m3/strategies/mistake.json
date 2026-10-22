@@ -1,0 +1,10 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: a closed road stops vehicles at a safe node; it does not fling rigidbody residents): the crawler is held at the depot and sent up the short road for the weather crew only late, to come back the way it went. It loads the crew at the top just before the 210 s release; the runout closes the upper slope road ahead of it and the loaded crawler stops at the safe slope-top bend, with the crew aboard and unharmed, but with no road to the depot.",
+  "steps": [
+    {"t": 1, "place": "crawler:01"},
+    {"t": 3, "group": "village", "to": "depot"},
+    {"t": 4, "group": "rock_shelf", "to": "high_landing"},
+    {"t": 1700, "vehicle": "crawler:01", "group": "weather_crew", "pickup": "weather_crew_pickup", "to": "depot"}
+  ]
+}

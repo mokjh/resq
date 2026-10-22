@@ -1,0 +1,675 @@
+{
+ "mission_id": "W3-M2",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  "###OOOOOOO############mmmmmmm###",
+  "###OOOOOOO############mmmmmmm###",
+  "###OOOOOOO############mmmmmmm###",
+  "###OOOOOOO############mmmmmmm###",
+  "###OOOOOOOtt##########mmmmmmm###",
+  "###uuuuuuu#t##########mmmmmmm###",
+  "###uuuuuu||||###======######=###",
+  "###########t|###=###########=###",
+  "########ttttmmmm=###########=###",
+  "########t###mmmm|||||||||###=###",
+  "########t#####|#########|###=###",
+  "#####vvvvv####|#########|###=###",
+  "#####vvvvv####|#########|###=###",
+  "#####vvvvv####|#########|###=###",
+  "#####vvvvv====|#########HHHHH###",
+  "#############=|#########HHHHH###",
+  "#############DDDDD######HHHHH###",
+  "#############DDDDD##############",
+  "#############DDDDD##############",
+  "################################",
+  "################################"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "O": {
+   "terrain": "observatory",
+   "code": 24,
+   "elev": 1200
+  },
+  "t": {
+   "terrain": "footpath",
+   "code": 25,
+   "elev": 1200
+  },
+  "|": {
+   "terrain": "cable_line",
+   "code": 26,
+   "elev": 1200
+  },
+  "u": {
+   "terrain": "upper_terrace",
+   "code": 27,
+   "elev": 1200
+  },
+  "m": {
+   "terrain": "mid_terrace",
+   "code": 28,
+   "elev": 1200
+  }
+ },
+ "regions": {},
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "observatory_start",
+   "at": [
+    6,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "observatory_assembly",
+   "at": [
+    6,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "observatory_pickup",
+   "at": [
+    6,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "station_start",
+   "at": [
+    25,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "station_assembly",
+   "at": [
+    25,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "station_pickup",
+   "at": [
+    25,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_start",
+   "at": [
+    7,
+    9
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "village_assembly",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "village_pickup",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "col",
+   "at": [
+    10,
+    12
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "intermediate",
+   "at": [
+    13,
+    12
+   ],
+   "flags": [
+    "staging"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "east_bend",
+   "at": [
+    28,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "orchard_lane",
+   "at": [
+    4,
+    4
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 10
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    26,
+    5
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 4
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_observatory_start",
+   "from": "observatory_start",
+   "to": "observatory_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_observatory_pickup",
+   "from": "observatory_assembly",
+   "to": "observatory_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_station_start",
+   "from": "station_start",
+   "to": "station_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_station_pickup",
+   "from": "station_assembly",
+   "to": "station_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_start",
+   "from": "village_start",
+   "to": "village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_pickup",
+   "from": "village_assembly",
+   "to": "village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_upper_path",
+   "from": "observatory_pickup",
+   "to": "col",
+   "ticks": 150,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false
+  },
+  {
+   "id": "g_col_descent",
+   "from": "col",
+   "to": "village_pickup",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false
+  },
+  {
+   "id": "c_upper",
+   "from": "observatory_pickup",
+   "to": "intermediate",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     6,
+     16
+    ],
+    [
+     13,
+     12
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_lower",
+   "from": "intermediate",
+   "to": "depot",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     13,
+     12
+    ],
+    [
+     15,
+     3
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_lower_east",
+   "from": "intermediate",
+   "to": "high_landing",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     13,
+     12
+    ],
+    [
+     26,
+     5
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_station_traverse",
+   "from": "station_pickup",
+   "to": "intermediate",
+   "ticks": 150,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_east_road_a",
+   "from": "station_pickup",
+   "to": "east_bend",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_east_road_b",
+   "from": "east_bend",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_road",
+   "from": "village_pickup",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_orchard_lane_a",
+   "from": "village_pickup",
+   "to": "orchard_lane",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_orchard_lane_b",
+   "from": "orchard_lane",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  }
+ ],
+ "sockets": [
+  {
+   "id": "winch:01",
+   "tool": "winch",
+   "node": "observatory_pickup",
+   "edge": "c_upper",
+   "at": [
+    9,
+    14
+   ],
+   "support": "upper_platform",
+   "power": "upper_grid",
+   "zone": "upper_winch"
+  },
+  {
+   "id": "winch:02",
+   "tool": "winch",
+   "node": "intermediate",
+   "edge": "c_lower",
+   "at": [
+    14,
+    11
+   ],
+   "power": "lower_grid",
+   "zone": "lower_winches"
+  },
+  {
+   "id": "winch:03",
+   "tool": "winch",
+   "node": "intermediate",
+   "edge": "c_lower_east",
+   "at": [
+    15,
+    11
+   ],
+   "power": "lower_grid",
+   "zone": "lower_winches"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    4,
+    17
+   ],
+   "platform": [
+    [
+     4,
+     17
+    ]
+   ],
+   "power": "upper_grid",
+   "zone": "upper_generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    12,
+    11
+   ],
+   "platform": [
+    [
+     12,
+     11
+    ]
+   ],
+   "power": "lower_grid",
+   "zone": "lower_generators"
+  },
+  {
+   "id": "generator:03",
+   "tool": "generator",
+   "at": [
+    17,
+    3
+   ],
+   "platform": [
+    [
+     17,
+     3
+    ]
+   ],
+   "power": "lower_grid",
+   "zone": "lower_generators"
+  },
+  {
+   "id": "brace:01",
+   "tool": "brace",
+   "at": [
+    7,
+    14
+   ],
+   "support": "upper_platform",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:02",
+   "tool": "brace",
+   "at": [
+    8,
+    14
+   ],
+   "support": "upper_platform",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:03",
+   "tool": "brace",
+   "at": [
+    9,
+    14
+   ],
+   "support": "upper_platform",
+   "zone": "braces"
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ],
+   "zone": "beacons"
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    27,
+    5
+   ],
+   "zone": "beacons"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "upper_grid",
+    "fixed_supply": 0
+   },
+   {
+    "id": "lower_grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "observatory",
+   "start": "observatory_start",
+   "assembly": "observatory_assembly",
+   "pickup": "observatory_pickup"
+  },
+  {
+   "id": "station",
+   "start": "station_start",
+   "assembly": "station_assembly",
+   "pickup": "station_pickup",
+   "held": true
+  },
+  {
+   "id": "village",
+   "start": "village_start",
+   "assembly": "village_assembly",
+   "pickup": "village_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "observatory_cable",
+   "from": "observatory_pickup",
+   "to": "depot",
+   "class": "cable"
+  }
+ ],
+ "roles": {
+  "upper_path": {
+   "edges": [
+    "g_upper_path"
+   ]
+  },
+  "station": {
+   "groups": [
+    "station"
+   ]
+  },
+  "observatory": {
+   "groups": [
+    "observatory"
+   ]
+  },
+  "upper_platform": {
+   "supports": [
+    "upper_platform"
+   ]
+  },
+  "intermediate": {
+   "edges": [
+    "c_upper",
+    "c_lower"
+   ]
+  },
+  "powered_cable": {
+   "edges": [
+    "c_upper",
+    "c_lower"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 4
+    },
+    {
+     "id": "high_landing",
+     "capacity": 10
+    }
+   ],
+   "edges": [
+    {
+     "id": "g_east_road_b",
+     "ticks": 400
+    }
+   ]
+  }
+ },
+ "supports": [
+  {
+   "id": "upper_platform",
+   "base_stability": 250,
+   "static_load": 0,
+   "nodes": [
+    "observatory_pickup"
+   ],
+   "edges": [
+    "c_upper"
+   ],
+   "collapse_nodes": [
+    "observatory_pickup"
+   ],
+   "collapse_edges": [
+    "c_upper"
+   ]
+  }
+ ]
+}

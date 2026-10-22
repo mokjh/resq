@@ -1,0 +1,594 @@
+{
+ "mission_id": "W3-M1",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  "###uuuuuuu############mmmmmmm###",
+  "###uuuuuuu############mmmmmmm###",
+  "###uuuuuuu############mmmmmmm###",
+  "###uuuuuuu############mmmmmmm###",
+  "###uuuuuuuSS==========mmmmmmm###",
+  "###uuuuuuuSS##########mmmmmmm###",
+  "######t###SS|############=######",
+  "######t#xx##|############=######",
+  "######t#xx##|############=######",
+  "######t#####|############=######",
+  "######t#####|############=k#####",
+  "######t#####|############=######",
+  "######ttttttt############=######",
+  "############t############=######",
+  "############t###########HHHHH###",
+  "############|||#########HHHHH###",
+  "#############DDDDD######HHHHH###",
+  "#############DDDDD##############",
+  "#############DDDDD##############",
+  "################################",
+  "################################"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "k": {
+   "terrain": "rock_shelf",
+   "code": 22,
+   "elev": 1200
+  },
+  "S": {
+   "terrain": "cable_station",
+   "code": 23,
+   "elev": 1200
+  },
+  "t": {
+   "terrain": "footpath",
+   "code": 25,
+   "elev": 1200
+  },
+  "|": {
+   "terrain": "cable_line",
+   "code": 26,
+   "elev": 1200
+  },
+  "u": {
+   "terrain": "upper_terrace",
+   "code": 27,
+   "elev": 1200
+  },
+  "m": {
+   "terrain": "mid_terrace",
+   "code": 28,
+   "elev": 1200
+  },
+  "x": {
+   "terrain": "decorative_rocks",
+   "code": 29,
+   "elev": 1200
+  }
+ },
+ "regions": {},
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "upper_station_start",
+   "at": [
+    6,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "upper_station_assembly",
+   "at": [
+    6,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "upper_station_pickup",
+   "at": [
+    6,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "lower_station_start",
+   "at": [
+    25,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "lower_station_assembly",
+   "at": [
+    25,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "lower_station_pickup",
+   "at": [
+    25,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "cable_station",
+   "at": [
+    10,
+    15
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "switchback",
+   "at": [
+    6,
+    9
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "lower_bend",
+   "at": [
+    25,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    26,
+    5
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 4
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_upper_station_start",
+   "from": "upper_station_start",
+   "to": "upper_station_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_upper_station_pickup",
+   "from": "upper_station_assembly",
+   "to": "upper_station_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_lower_station_start",
+   "from": "lower_station_start",
+   "to": "lower_station_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_lower_station_pickup",
+   "from": "lower_station_assembly",
+   "to": "lower_station_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_upper_platform",
+   "from": "upper_station_pickup",
+   "to": "cable_station",
+   "ticks": 40,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_switchback_a",
+   "from": "upper_station_pickup",
+   "to": "switchback",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false
+  },
+  {
+   "id": "g_switchback_b",
+   "from": "switchback",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false
+  },
+  {
+   "id": "c_station",
+   "from": "cable_station",
+   "to": "depot",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     10,
+     15
+    ],
+    [
+     15,
+     3
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_station_deck",
+   "from": "lower_station_pickup",
+   "to": "cable_station",
+   "ticks": 260,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false
+  },
+  {
+   "id": "g_lower_road_a",
+   "from": "lower_station_pickup",
+   "to": "lower_bend",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_lower_road_b",
+   "from": "lower_bend",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "c_lower",
+   "from": "lower_station_pickup",
+   "to": "high_landing",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     25,
+     16
+    ],
+    [
+     26,
+     5
+    ]
+   ],
+   "slots": 1
+  }
+ ],
+ "sockets": [
+  {
+   "id": "winch:01",
+   "tool": "winch",
+   "node": "cable_station",
+   "edge": "c_station",
+   "at": [
+    11,
+    14
+   ],
+   "support": "weak_support",
+   "power": "station_grid",
+   "zone": "winches"
+  },
+  {
+   "id": "winch:02",
+   "tool": "winch",
+   "node": "lower_station_pickup",
+   "edge": "c_lower",
+   "at": [
+    26,
+    15
+   ],
+   "power": "station_grid",
+   "zone": "winches"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    9,
+    17
+   ],
+   "platform": [
+    [
+     9,
+     17
+    ]
+   ],
+   "power": "station_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    17,
+    4
+   ],
+   "platform": [
+    [
+     17,
+     4
+    ]
+   ],
+   "power": "station_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "brace:01",
+   "tool": "brace",
+   "at": [
+    9,
+    13
+   ],
+   "support": "weak_support",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:02",
+   "tool": "brace",
+   "at": [
+    10,
+    13
+   ],
+   "support": "weak_support",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:03",
+   "tool": "brace",
+   "at": [
+    11,
+    13
+   ],
+   "support": "weak_support",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:04",
+   "tool": "brace",
+   "at": [
+    26,
+    10
+   ],
+   "support": "lower_road_wall",
+   "zone": "braces"
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ],
+   "zone": "beacons"
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    27,
+    5
+   ],
+   "zone": "beacons"
+  },
+  {
+   "id": "beacon:03",
+   "tool": "beacon",
+   "node": "cable_station",
+   "at": [
+    10,
+    16
+   ],
+   "zone": "beacons"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "station_grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [
+  {
+   "id": "cable_support",
+   "power": "station_grid",
+   "demand": 1,
+   "support": "weak_support",
+   "nodes": [
+    "cable_station"
+   ],
+   "gates_dock": true
+  }
+ ],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "upper_station",
+   "start": "upper_station_start",
+   "assembly": "upper_station_assembly",
+   "pickup": "upper_station_pickup"
+  },
+  {
+   "id": "lower_station",
+   "start": "lower_station_start",
+   "assembly": "lower_station_assembly",
+   "pickup": "lower_station_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "upper_station_cable",
+   "from": "cable_station",
+   "to": "depot",
+   "class": "cable"
+  }
+ ],
+ "roles": {
+  "weak_support": {
+   "supports": [
+    "weak_support"
+   ]
+  },
+  "cable_support": {
+   "infrastructure": [
+    "cable_support"
+   ]
+  },
+  "upper_station": {
+   "groups": [
+    "upper_station"
+   ]
+  },
+  "lower_station": {
+   "groups": [
+    "lower_station"
+   ]
+  },
+  "powered_cable": {
+   "edges": [
+    "c_station"
+   ]
+  },
+  "upper_path": {
+   "edges": [
+    "g_switchback_a"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 4
+    },
+    {
+     "id": "high_landing",
+     "capacity": 6
+    }
+   ],
+   "edges": [
+    {
+     "id": "g_lower_road_b",
+     "ticks": 400
+    }
+   ]
+  }
+ },
+ "supports": [
+  {
+   "id": "weak_support",
+   "base_stability": 400,
+   "static_load": 0,
+   "nodes": [
+    "cable_station"
+   ],
+   "edges": [
+    "c_station",
+    "g_station_deck"
+   ],
+   "collapse_nodes": [
+    "cable_station"
+   ],
+   "collapse_edges": [
+    "c_station",
+    "g_station_deck",
+    "g_upper_platform"
+   ]
+  },
+  {
+   "id": "lower_road_wall",
+   "base_stability": 600,
+   "static_load": 0,
+   "nodes": [
+    "lower_bend"
+   ],
+   "edges": [
+    "g_lower_road_a",
+    "g_lower_road_b"
+   ],
+   "collapse_nodes": [],
+   "collapse_edges": []
+  }
+ ]
+}

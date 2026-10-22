@@ -12,6 +12,7 @@
 - **World 4 module:** tide controllers (event ramps, fixed tracks, High Tide Start), sea in/out exchange with an exact ledger, current-multiplier validation, relay power links with flood hysteresis, dock-queue metric. 9 tests.
 - **World 5 module:** authored lava DAG with published arrivals, cooler cycle (50/200/50), finite coolant works, temporary shelters with exact protection accounting. 8 tests (RL01–RL06 and more); All five worlds' rules now run headlessly.
 - **Dock berths:** reserved at departure (origin held until arrival). 61/61 sim tests pass.
+- **Frostline (W3) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; real compact layouts via `class_overrides`; mistake runs fail (W3-M3 Relaxed excepted).
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
@@ -21,6 +22,12 @@
 
 ## In progress (helpers)
 - Blender look-dev quartet: cottage, bridge, skiff, resident.
+
+## Engine gaps found by mission helpers (fix after W2–W5 report, then revalidate all)
+- Vehicle relay hand-off: a second vehicle drops its order if the remaining group is aboard the first; unloading at a non-refuge node clears the group's walking target (W3-M2 B is time-tuned around it).
+- Cable edges sample ground water along their path by default; they should check only their end stations.
+- Spec §6 "known hard closure" admission check not implemented.
+- Mistake scripts use operation ticks, so Relaxed can change the decision (W1-M3, W3-M3).
 
 ## Known W1 gaps
 - Compact layouts are still the wide graph; the recipe's compact dock swap needs `class_overrides`.

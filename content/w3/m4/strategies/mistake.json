@@ -1,0 +1,55 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: ignoring the lower basin breaks a logically correct upper rescue plan): plan A exactly, but the pump is never placed. Everyone is down by about 60 s, yet the basin keeps rising: after the second melt it tops both generator platforms and drowns the lower-cable drive house until the winch breaks, so the main cable line is not available at the end.",
+  "steps": [
+    {
+      "t": 1,
+      "place": "generator:03"
+    },
+    {
+      "t": 2,
+      "place": "generator:01"
+    },
+    {
+      "t": 4,
+      "place": "brace:01"
+    },
+    {
+      "t": 5,
+      "place": "brace:02"
+    },
+    {
+      "t": 6,
+      "place": "winch:01"
+    },
+    {
+      "t": 7,
+      "place": "winch:02"
+    },
+    {
+      "t": 8,
+      "vehicle": "winch:01",
+      "group": "upper_terrace",
+      "pickup": "upper_terrace_pickup",
+      "to": "cable_station_pickup",
+      "evacuate": false
+    },
+    {
+      "t": 9,
+      "group": "cable_station",
+      "to": "high_landing"
+    },
+    {
+      "t": 10,
+      "group": "lower_village",
+      "to": "depot"
+    },
+    {
+      "t": 100,
+      "vehicle": "winch:02",
+      "group": "upper_terrace",
+      "pickup": "cable_station_pickup",
+      "to": "depot"
+    }
+  ]
+}

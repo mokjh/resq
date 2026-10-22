@@ -1,0 +1,17 @@
+{
+  "id": "A",
+  "description": "Pump the basin before peak melt and brace the busiest cable: two generators (station ridge and platform a), the pump on the basin from the first second, both braces on the lower-cable tower, then a two-winch relay brings the upper terrace down the main line. The station group walks the long east road; the lower village walks its road.",
+  "steps": [
+    {"t": 1, "place": "generator:03"},
+    {"t": 2, "place": "generator:01"},
+    {"t": 3, "place": "pump:01"},
+    {"t": 4, "place": "brace:01"},
+    {"t": 5, "place": "brace:02"},
+    {"t": 6, "place": "winch:01"},
+    {"t": 7, "place": "winch:02"},
+    {"t": 8, "vehicle": "winch:01", "group": "upper_terrace", "pickup": "upper_terrace_pickup", "to": "cable_station_pickup", "evacuate": false},
+    {"t": 9, "group": "cable_station", "to": "high_landing"},
+    {"t": 10, "group": "lower_village", "to": "depot"},
+    {"t": 100, "vehicle": "winch:02", "group": "upper_terrace", "pickup": "cable_station_pickup", "to": "depot"}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "A",
+  "description": "Brace the weak support and winch the upper group: power the station, lock all three braces at once, ferry the whole upper station down the cable two at a time; the lower station walks the long lower road.",
+  "steps": [
+    {"t": 1, "place": "generator:01"},
+    {"t": 2, "place": "winch:01"},
+    {"t": 3, "place": "brace:01"},
+    {"t": 4, "place": "brace:02"},
+    {"t": 5, "place": "brace:03"},
+    {"t": 6, "vehicle": "winch:01", "group": "upper_station", "pickup": "cable_station", "to": "depot"},
+    {"t": 7, "group": "lower_station", "to": "high_landing"}
+  ]
+}

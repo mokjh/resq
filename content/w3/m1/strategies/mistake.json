@@ -1,0 +1,12 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: bracing decorative rocks has no effect; only eligible supports accept placement): plan A, but the player trusts the rocks under the station and spends the second brace on the lower-road retaining wall, an eligible structure that is never threatened. The weak support carries one brace; after the 260 s tremor it runs down to zero and collapses, taking the cable, the platform and the station power with it.",
+  "steps": [
+    {"t": 1, "place": "generator:01"},
+    {"t": 2, "place": "winch:01"},
+    {"t": 3, "place": "brace:01"},
+    {"t": 4, "place": "brace:04"},
+    {"t": 6, "vehicle": "winch:01", "group": "upper_station", "pickup": "cable_station", "to": "depot"},
+    {"t": 7, "group": "lower_station", "to": "high_landing"}
+  ]
+}

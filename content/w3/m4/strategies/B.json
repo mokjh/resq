@@ -1,0 +1,17 @@
+{
+  "id": "B",
+  "description": "Evacuate the upper terrace before melt peaks, then shift power priority downward: one generator on the dry station ridge runs both winches while the pump waits at its default priority; once the upper terrace is down, the pump is put first and the upper winch last, so the pump and the lower winch share the generator while the lower cable brings the station group down. One brace goes on the lower-cable tower before the 190 s load.",
+  "steps": [
+    {"t": 1, "place": "generator:03"},
+    {"t": 2, "place": "winch:01"},
+    {"t": 3, "place": "winch:02"},
+    {"t": 4, "place": "pump:01"},
+    {"t": 5, "vehicle": "winch:01", "group": "upper_terrace", "pickup": "upper_terrace_pickup", "to": "cable_station_pickup", "evacuate": false},
+    {"t": 6, "group": "lower_village", "to": "depot"},
+    {"t": 100, "vehicle": "winch:02", "group": "upper_terrace", "pickup": "cable_station_pickup", "to": "depot"},
+    {"t": 700, "priority": "pump:01", "value": 5},
+    {"t": 701, "priority": "winch:01", "value": 30},
+    {"t": 702, "vehicle": "winch:02", "group": "cable_station", "pickup": "cable_station_pickup", "to": "depot"},
+    {"t": 1700, "place": "brace:01"}
+  ]
+}

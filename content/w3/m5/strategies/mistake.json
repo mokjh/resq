@@ -1,0 +1,71 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: using the receiving station as indefinite storage causes a capacity bottleneck): plan B, but once the village is out the crawler is told to take the mountain groups to the high landing through the lower transport window, which only opens at 420 s, instead of shuttling them down the shortcut. The crawler loads the first pair and waits at the closed window; the receiving station fills to its eight places; the lower winch cannot unload and stands loaded; four station residents back up on the deck. When the window opens the crawler's long run brings out only its own two.",
+  "steps": [
+    {
+      "t": 1,
+      "place": "generator:01"
+    },
+    {
+      "t": 2,
+      "place": "winch:01"
+    },
+    {
+      "t": 3,
+      "place": "winch:02"
+    },
+    {
+      "t": 4,
+      "place": "crawler:01"
+    },
+    {
+      "t": 5,
+      "vehicle": "crawler:01",
+      "group": "village",
+      "pickup": "village_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 6,
+      "vehicle": "winch:01",
+      "group": "observatory",
+      "pickup": "observatory_pickup",
+      "to": "station_pickup",
+      "evacuate": false
+    },
+    {
+      "t": 650,
+      "vehicle": "winch:02",
+      "group": "observatory",
+      "pickup": "station_pickup",
+      "to": "receiving_station",
+      "evacuate": false
+    },
+    {
+      "t": 651,
+      "vehicle": "crawler:01",
+      "group": "observatory",
+      "pickup": "receiving_station",
+      "to": "high_landing"
+    },
+    {
+      "t": 1590,
+      "vehicle": "crawler:01",
+      "group": "station",
+      "pickup": "receiving_station",
+      "to": "high_landing"
+    },
+    {
+      "t": 1591,
+      "vehicle": "winch:02",
+      "group": "station",
+      "pickup": "station_pickup",
+      "to": "receiving_station",
+      "evacuate": false
+    },
+    {
+      "t": 1700,
+      "place": "brace:02"
+    }
+  ]
+}

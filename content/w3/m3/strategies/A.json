@@ -1,0 +1,10 @@
+{
+  "id": "A",
+  "description": "Move the crawler through early and use the shelf afterward: the crawler leaves the depot at once, climbs the short road long before the release, loads the whole weather crew and drives on over the rock-shelf bypass to the high landing; it then climbs the shelf stair for the rock-shelf group. The village walks the slope-foot lane early.",
+  "steps": [
+    {"t": 1, "place": "crawler:01"},
+    {"t": 2, "vehicle": "crawler:01", "group": "weather_crew", "pickup": "weather_crew_pickup", "to": "high_landing"},
+    {"t": 3, "group": "village", "to": "depot"},
+    {"t": 1100, "vehicle": "crawler:01", "group": "rock_shelf", "pickup": "rock_shelf_pickup", "to": "high_landing"}
+  ]
+}

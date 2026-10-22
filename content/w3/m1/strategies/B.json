@@ -1,0 +1,15 @@
+{
+  "id": "B",
+  "description": "Evacuate the upper group early, then stabilize for the remaining transfer: the five standard walkers take the icy switchback at once and the lower station walks its road; with the walkers clear, power the station, brace the support and winch the one step-free resident who cannot use the stairs.",
+  "steps": [
+    {"t": 1, "group": "upper_station", "to": "depot"},
+    {"t": 2, "group": "lower_station", "to": "high_landing"},
+    {"t": 1300, "group": "upper_station", "to": "cable_station", "evacuate": false},
+    {"t": 1301, "place": "generator:01"},
+    {"t": 1302, "place": "brace:01"},
+    {"t": 1303, "place": "brace:02"},
+    {"t": 1304, "place": "brace:03"},
+    {"t": 1305, "place": "winch:01"},
+    {"t": 1306, "vehicle": "winch:01", "group": "upper_station", "pickup": "cable_station", "to": "depot"}
+  ]
+}
