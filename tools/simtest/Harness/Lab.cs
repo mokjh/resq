@@ -156,11 +156,14 @@ namespace Resq.Sim.Headless
             string strat = a.Length > 2 ? a[2] : "none";
             int every = 0;
             var maps = new HashSet<long>();
+            var probes = new List<(int x, int y)>();
             bool guided = a.Contains("--guided");
             for (int i = 0; i < a.Length; i++)
             {
                 if (a[i] == "--every") every = int.Parse(a[i + 1]);
                 if (a[i] == "--maps") foreach (var t in a[i + 1].Split(',')) maps.Add(long.Parse(t));
+                if (a[i] == "--probe") // "x,y;x,y" -> print water depth (mm) at those cells on --every lines
+                    foreach (var t in a[i + 1].Split(';')) { var xy = t.Split(','); probes.Add((int.Parse(xy[0]), int.Parse(xy[1]))); }
             }
             var d = Load(missionId, layout);
             var script = strat == "none" ? null : LoadStrategy(missionId, strat);
@@ -177,7 +180,8 @@ namespace Resq.Sim.Headless
                 sim.Step();
                 if (every > 0 && sim.S.C.O % every == 0)
                     sink.Lines.Add($"  -- O={sim.S.C.O} S={sim.S.C.S} evac={sim.S.C.Evacuated} backup={sim.S.C.AwaitingBackup} " +
-                                   $"phase={sim.S.C.Phase} vol={sim.TotalVolume() / 1_000_000_000}m3 " + Positions(sim));
+                                   $"phase={sim.S.C.Phase} vol={sim.TotalVolume() / 1_000_000_000}m3 " + Positions(sim) +
+                                   (probes.Count > 0 ? " depth[" + string.Join(" ", probes.Select(p => $"{p.x},{p.y}:{sim.Depth(d.CellIndex(p.x, p.y))}")) + "]" : ""));
                 if (maps.Contains(sim.S.C.O)) sink.Lines.Add($"depth map at O={sim.S.C.O}:\n" + DepthMap(sim, true));
             }
             foreach (var l in log) Console.WriteLine(l);

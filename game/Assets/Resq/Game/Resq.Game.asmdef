@@ -1,0 +1,19 @@
+{
+    "name": "Resq.Game",
+    "rootNamespace": "Resq.Game",
+    "references": [
+        "Resq.Sim",
+        "Oculus.VR",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

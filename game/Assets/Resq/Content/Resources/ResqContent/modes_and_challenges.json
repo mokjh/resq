@@ -1,0 +1,587 @@
+{
+  "schema_version": 1,
+  "rules_version": "resq-rules-1",
+  "rule_profiles": [
+    {
+      "id": "standard",
+      "hazard_clock_numerator": 1,
+      "hazard_clock_denominator": 1,
+      "warning_operation_time_multiplier": 1,
+      "advance_controls": false,
+      "automatic_checkpoint_retry": false,
+      "score_partition": "standard"
+    },
+    {
+      "id": "relaxed",
+      "hazard_clock_numerator": 1,
+      "hazard_clock_denominator": 2,
+      "warning_operation_time_multiplier": 2,
+      "advance_controls": false,
+      "automatic_checkpoint_retry": true,
+      "score_partition": "relaxed"
+    },
+    {
+      "id": "command",
+      "hazard_clock_numerator": 1,
+      "hazard_clock_denominator": 1,
+      "warning_operation_time_multiplier": 1,
+      "advance_controls": true,
+      "automatic_checkpoint_retry": false,
+      "score_partition": "command"
+    }
+  ],
+  "input_adapters": [
+    "hands",
+    "controller",
+    "head_dwell"
+  ],
+  "supported_combinations": [
+    {
+      "rules": "standard",
+      "input": "hands"
+    },
+    {
+      "rules": "standard",
+      "input": "controller"
+    },
+    {
+      "rules": "relaxed",
+      "input": "hands"
+    },
+    {
+      "rules": "relaxed",
+      "input": "controller"
+    },
+    {
+      "rules": "command",
+      "input": "hands"
+    },
+    {
+      "rules": "command",
+      "input": "controller"
+    },
+    {
+      "rules": "command",
+      "input": "head_dwell"
+    }
+  ],
+  "legacy_preset_mapping": {
+    "standard_hands": [
+      "standard",
+      "hands"
+    ],
+    "relaxed_hands": [
+      "relaxed",
+      "hands"
+    ],
+    "command_head_dwell": [
+      "command",
+      "head_dwell"
+    ]
+  },
+  "challenge_combinations": "one named definition only; no stacking; standard rules with hands/controller",
+  "challenges": [
+    {
+      "id": "W1-M1-early-surge",
+      "mission_id": "W1-M1",
+      "modifier": "early_surge",
+      "parameters": {
+        "event_id": "event_1",
+        "shift_scenario_ticks": -300
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M1-alternate-dock",
+      "mission_id": "W1-M1",
+      "modifier": "alternate_dock",
+      "parameters": {
+        "group_id": "low_dock",
+        "dock_role": "alternate_pickup"
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M2-early-surge",
+      "mission_id": "W1-M2",
+      "modifier": "early_surge",
+      "parameters": {
+        "event_id": "event_1",
+        "shift_scenario_ticks": -300
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M2-alternate-dock",
+      "mission_id": "W1-M2",
+      "modifier": "alternate_dock",
+      "parameters": {
+        "group_id": "ferry_landing",
+        "dock_role": "alternate_pickup"
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M3-early-surge",
+      "mission_id": "W1-M3",
+      "modifier": "early_surge",
+      "parameters": {
+        "event_id": "event_1",
+        "shift_scenario_ticks": -300
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M3-alternate-dock",
+      "mission_id": "W1-M3",
+      "modifier": "alternate_dock",
+      "parameters": {
+        "group_id": "east_workshop",
+        "dock_role": "alternate_pickup"
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M4-early-surge",
+      "mission_id": "W1-M4",
+      "modifier": "early_surge",
+      "parameters": {
+        "event_id": "event_1",
+        "shift_scenario_ticks": -300
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M4-alternate-dock",
+      "mission_id": "W1-M4",
+      "modifier": "alternate_dock",
+      "parameters": {
+        "group_id": "riverside",
+        "dock_role": "alternate_pickup"
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M5-early-surge",
+      "mission_id": "W1-M5",
+      "modifier": "early_surge",
+      "parameters": {
+        "event_id": "event_1",
+        "shift_scenario_ticks": -300
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W1-M5-alternate-dock",
+      "mission_id": "W1-M5",
+      "modifier": "alternate_dock",
+      "parameters": {
+        "group_id": "island",
+        "dock_role": "alternate_pickup"
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W2-M1-crosswind",
+      "mission_id": "W2-M1",
+      "modifier": "crosswind",
+      "parameters": {
+        "reverse_wind_vectors": true
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W2-M2-crosswind",
+      "mission_id": "W2-M2",
+      "modifier": "crosswind",
+      "parameters": {
+        "reverse_wind_vectors": true
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W2-M3-crosswind",
+      "mission_id": "W2-M3",
+      "modifier": "crosswind",
+      "parameters": {
+        "reverse_wind_vectors": true
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W2-M4-crosswind",
+      "mission_id": "W2-M4",
+      "modifier": "crosswind",
+      "parameters": {
+        "reverse_wind_vectors": true
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W2-M5-crosswind",
+      "mission_id": "W2-M5",
+      "modifier": "crosswind",
+      "parameters": {
+        "reverse_wind_vectors": true
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W3-M1-careful-operation",
+      "mission_id": "W3-M1",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W3-M2-careful-operation",
+      "mission_id": "W3-M2",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W3-M3-careful-operation",
+      "mission_id": "W3-M3",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W3-M4-careful-operation",
+      "mission_id": "W3-M4",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W3-M5-careful-operation",
+      "mission_id": "W3-M5",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W4-M1-high-tide-start",
+      "mission_id": "W4-M1",
+      "modifier": "high_tide_start",
+      "parameters": {
+        "initial_tide_segment_index": 1
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W4-M2-high-tide-start",
+      "mission_id": "W4-M2",
+      "modifier": "high_tide_start",
+      "parameters": {
+        "initial_tide_segment_index": 1
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W4-M3-high-tide-start",
+      "mission_id": "W4-M3",
+      "modifier": "high_tide_start",
+      "parameters": {
+        "initial_tide_segment_index": 1
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W4-M4-high-tide-start",
+      "mission_id": "W4-M4",
+      "modifier": "high_tide_start",
+      "parameters": {
+        "initial_tide_segment_index": 1
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W4-M5-high-tide-start",
+      "mission_id": "W4-M5",
+      "modifier": "high_tide_start",
+      "parameters": {
+        "initial_tide_segment_index": 1
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W5-M1-careful-operation",
+      "mission_id": "W5-M1",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W5-M2-careful-operation",
+      "mission_id": "W5-M2",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W5-M3-careful-operation",
+      "mission_id": "W5-M3",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W5-M4-careful-operation",
+      "mission_id": "W5-M4",
+      "modifier": "careful_operation",
+      "parameters": {
+        "maximum_equipment_losses": 0
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    },
+    {
+      "id": "W5-M5-careful-light-kit",
+      "mission_id": "W5-M5",
+      "modifier": "careful_light_kit",
+      "parameters": {
+        "maximum_equipment_losses": 0,
+        "supply_budget_delta": -1,
+        "default_loadout_delta": {
+          "barrier": -1
+        }
+      },
+      "rule_profiles": [
+        "standard"
+      ],
+      "layouts": [
+        "compact",
+        "wide"
+      ],
+      "unlock": "base_mission_success"
+    }
+  ],
+  "unsupported_ideas": [
+    "light_kit_except_W5-M5",
+    "arbitrary_modifier_combinations",
+    "head_dwell_under_standard_or_relaxed"
+  ],
+  "assisted_score_partition": "separate; ordinary suspension/resume remains unassisted",
+  "base_success_replays": 300,
+  "challenge_success_replays": 120
+}

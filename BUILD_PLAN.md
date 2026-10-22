@@ -15,7 +15,7 @@ Yours (Oct 22): attempt **all 25 missions** in the entry · **studio mode** · *
 
 Mine, as if I were you:
 1. **Gaming track, New Experience division** (project began Oct 14, inside the window).
-2. **Device testing last but never blind:** build and test everything on the Mac (Unity Editor + Meta XR Simulator with synthetic rooms and simulated hands + SpatialSim APK emulator). APKs build from day 2. Physical Quest 3/3S only in P5 (Nov 12–15).
+2. **Device testing last but never blind:** build and test everything on the Mac (Unity Editor + Meta XR Simulator with synthetic rooms and simulated hands + the Editor desktop adapter). APKs build from day 2 and are checked with aapt2 manifest checks and `metavr vrc-local store-listing-check` (SpatialSim only runs 2D panel apps, so it cannot test RESQ). Physical Quest 3/3S only in P5 (Nov 12–15).
 3. **Three factories make 25 missions possible:**
    - **Sim v2:** lean struct-of-arrays, integer, allocation-free, deterministic engine covering all five worlds' rules. Hash only at run end. Forecast = cheap clone + run-ahead on a worker thread. Old engine is the golden-value oracle in tests.
    - **Mission factory:** recipe + contract → layout compiler (implements §2 construction rules) → compact + wide layouts → headless validator (no-input must fail; strategies A and B must win on both layouts × 3 presets; challenges) → replay files.
@@ -36,6 +36,54 @@ Mine, as if I were you:
 - Accessibility: text 100/125/150%, captions on, ≥4.5:1 contrast + icon redundancy, high-contrast mode, reduced effects, 150% targets, Relaxed pacing, Open play.
 - Final art + audio for every shipped world. 72 Hz target (≥60 floor) on Quest 3 and 3S.
 - Competition-channel build + invite URL, < 3 min honest trailer, Devpost text, website.
+
+## Art & graphics pipeline — world-class, adapted from Waz (decided 22 Oct)
+
+Proven in the user's Waz projects: 686 provenance rows, Quest port at ~113 draws / 75k tris. RESQ adopts the routing and lessons. Every RESQ script and shader is **re-authored from scratch** in this repo, because the competition's New Experience division forbids pre-existing codebases. Waz is a reference for techniques only, never copied.
+
+**Look:** a hand-crafted miniature, made "readable toy-real".
+- **Shading:** one RESQ Lit shader family (World / Character / Interactable):
+  - 3-step toon ramp and soft wrap lighting;
+  - shadows tinted by world palette, never black;
+  - AO stored in vertex-colour alpha;
+  - rim light, plus a thin pixel-sized outline **only on interactables and residents**, so the things you can act on pop.
+- **Palette:** one palette per world, as data. Look-dev golden renders act as a regression gate.
+
+| Asset class | Route | Budget | Notes |
+|---|---|---|---|
+| Buildings (cottages, houses, stalls…) | **Scripted modular kit** in Blender with authored LODs | 1–2.5k tris | One shared trim atlas per world, built from Higgsfield `nano_banana_2` texture swatches made seamless by script. Extra edge loops give vertex AO room to work. |
+| Simple props, equipment, tools (barrier, bridge, pump, generator, beacon…) | **Scripted part templates** (lathe, bevel box, profile extrude, sweep), vertex colour | 150–2.5k tris | No credits; cleanest results in Waz tests. |
+| Organic props (trees, rocks, sacks, crops) | **Meshy-t2** image→3D at 2× budget, then RESQ `clean_prop` | ≤800 tris | 15 Meshy each. |
+| Hero landmarks (viaduct, lighthouse, observatory, cooling works, sawmill) and vehicles (bus, skiff, crawler, winch cabin) | `nano_banana_2` concept → **Tripo H3.1** (via Higgsfield) or **Meshy-7.1** multi-image → remesh → clean | 2–4k tris, 1024² texture | 9–30 credits each. |
+| Residents (adult, child, elder, step-free wheelchair) | Higgsfield character sheet (front/side/back, one reference element per character) → Meshy multi-image → voxel remesh → decimate to ~1k → one shared Mixamo-named skeleton → Meshy library clips | 0.8–1.2k tris, 512² atlas cell | 7 clips: idle, walk, wait, board, seated, wave, celebrate. Clips stripped to the armature, donor rest pose, per-clip floor offsets. Heads are slightly enlarged (miniature charm, readable at 0.6 m). |
+| Water, fire, snow, tide, lava | **Shaders and particles**, data-driven from the simulation | — | No meshes; animated by sim state. |
+| 2D: UI icons, mission cards, postcards, key art | Scripted SVG for icons and type (text is never AI-generated). `nano_banana_2` for postcard/key-art illustrations. | — | Real in-game renders are used for anything that shows gameplay. |
+
+**Headless Blender `clean_prop` (RESQ version):**
+1. Import, normalise scale and pivot.
+2. Voxel-remesh AI meshes before decimating, to fix holes.
+3. Collapse-decimate to budget, protecting colour edges.
+4. UV, then bake AO into vertex alpha.
+5. LOD1 at 50%, plus a convex `_COL` collider.
+6. Export FBX with `axis_forward=-Z`, `axis_up=Y`, `FBX_SCALE_UNITS`, `bake_space_transform`, sRGB colours.
+7. Write a JSON report and a preview render.
+
+**Unity side:**
+- **Import:** an AssetPostprocessor turns `_LODn` meshes into a LODGroup and `_COL` meshes into colliders, assigns RESQ Lit materials, and rebuilds prefabs only when an input changes.
+- **Textures:** ASTC 6×6 for world textures, 4×4 for characters.
+- **Shadow budget:** turn off shadow casting on the SDK hand-rig meshes. On Quest, Waz found they tripled draw calls.
+
+**Process gates:**
+- Lock the style prompt and negative prompt plus one reference element per character *before* batch generation.
+- Batch-generate, then batch-clean with one script.
+- Keep a manifest row per asset in `art/manifest.csv` (source, tool, model, cost, license, hash).
+- Run golden-render lookdev diffs.
+- **You review full-resolution stills and video, not small contact sheets** (a Waz lesson).
+
+**Credits (estimate for 5 worlds):**
+- **Meshy ≈ 600:** residents ~170, organic props ~200, landmarks/vehicles ~230. Balance is 1,084.
+- **Higgsfield ≈ 150:** swatches ~75, concepts/sheets ~40, Tripo heroes ~35. Balance is 110 Higgsfield; that's more than the current 60 cap, and the balance itself would need a top-up.
+- Both exceed the 22 Oct caps (Meshy 300 / Higgsfield 60). **Raising the caps is your decision.** Until then, everything that can be scripted is scripted first.
 
 ## Phases, steps and gates
 
@@ -80,7 +128,7 @@ Mine, as if I were you:
 1. Polish order: first-run path + W1 → each world's M1 → remaining missions.
 2. MR features: anchor-persistent valley with relocalize/fallback; room-aware storm; hand shadows + real-hand occlusion; residents look up at you.
 3. Accessibility pass + full one-hand and gaze-only runs of every world's M1.
-4. Performance in Editor/XR Sim profiling: sim ≤1.5 ms, ≤150 draw calls, ≤300k tris, 0 B/frame steady GC, per-world scene loading, ASTC, fixed foveation, fast boot scene; SpatialSim APK smoke.
+4. Performance in Editor/XR Sim profiling: sim ≤1.5 ms, ≤150 draw calls, ≤300k tris, 0 B/frame steady GC, per-world scene loading, ASTC, fixed foveation, fast boot scene; APK manifest/VRC checks.
 5. **On-device autopilot (dev builds only):** plays every mission's reference replays for P5 perf/stability runs without a human.
 6. Store readiness to Meta's release spec: minSdk 32 / targetSdk 34, `com.oculus.supportedDevices` = Quest 3 + 3S, not debuggable, VR intent category, `excludeFromRecents`, unique label, release keystore (created once, never changes), icon, splash, version code; `metavr vrc-local store-listing-check`. **RC1 uploaded (draft) to the Competition channel** to rehearse the judge path; every channel upload must already meet release packaging.
 7. FoV audit (`hz-unity-device-readiness`): no head-locked HUD; must-see UI inside the central 0–30°; captions/toasts lazy-follow.
@@ -163,10 +211,10 @@ Meta's official agent skills already installed in `~/.agents/skills/`:
 |---|---|
 | 25 missions in 26 days | Factories + headless validator; breadth first; per-world ship gate; checkpoints with you |
 | 8 GB RAM (Unity + XR Sim + Blender) | Exclusive Unity; Blender headless one job at a time; close the Simulator when idle |
-| Device-only bugs found late | XR Sim + SpatialSim from P1; Meta building blocks; perf budgets from day 1; autopilot for all 25 on device; RC1 by Nov 11; 1-day buffer |
+| Device-only bugs found late | XR Sim + desktop adapter from P1; Meta building blocks; perf budgets from day 1; autopilot for all 25 on device; RC1 by Nov 11; 1-day buffer |
 | Membership/dashboard lead time | Day-1 actions |
 | Art coherence across 5 worlds | One palette atlas, shared kit grammar, look locked Oct 31, import validator |
-| XR Simulator has "limited support" on macOS | Editor-only desktop adapter (mouse/keys → the same input→command layer, also used by PlayMode tests) as a guaranteed fallback, plus SpatialSim; the device phase catches the rest |
+| XR Simulator has "limited support" on macOS | Editor-only desktop adapter (mouse/keys → the same input→command layer, also used by PlayMode tests) as a guaranteed fallback; the device phase catches the rest |
 | Unknown judge rooms | Two-class `PlaceBox` + virtual fallback + anchor recovery; tested against MRUK sample rooms |
 | APK size/memory with 5 worlds | Per-world scenes, ASTC, Vorbis; target APK < 600 MB, memory < 1.5 GB |
 

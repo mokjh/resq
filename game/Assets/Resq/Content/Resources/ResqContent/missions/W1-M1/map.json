@@ -1,0 +1,690 @@
+{
+ "mission_id": "W1-M1",
+ "rows": [
+  "#############RRRRR##############",
+  "#############RRRRR##############",
+  "#############RRRRR##############",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###########~~~~~~~~~############",
+  "###########~#######~############",
+  "#####.....#~#######~LLLLL#######",
+  "#####.....#~#######~LLLLL#######",
+  "#####.....#~#######~LLLLL#######",
+  "#####======~=======~LLLLL#######",
+  "###########~##=####~LLLLL#######",
+  "###########~##=####~####.#######",
+  "###########~##=####~####.#######",
+  "####ddddddd~##=####~####.#######",
+  "####ddddddd###=####~HHHHHH######",
+  "####ddddddd##DDD###~HHHHHH######",
+  "####ddddddd##DDD###~HHHHHH######",
+  "#############DDD~~~~############",
+  "################~###############",
+  "################w###############"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "high",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  ".": {
+   "terrain": "terrace",
+   "code": 1,
+   "elev": 100
+  },
+  "~": {
+   "terrain": "channel",
+   "code": 0,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "R": {
+   "terrain": "reservoir",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 900,
+   "cond": 2000000
+  },
+  "d": {
+   "terrain": "basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "L": {
+   "terrain": "low_terrace",
+   "code": 7,
+   "elev": 100
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "w": {
+   "terrain": "weir",
+   "code": 12,
+   "elev": 200,
+   "cond": 2000000
+  }
+ },
+ "regions": {
+  "low_terrace": "L",
+  "diversion_basin": "d",
+  "west_terrace": "."
+ },
+ "sources": [
+  {
+   "id": "reservoir_in",
+   "at": [
+    15,
+    22
+   ],
+   "rate": 10000000
+  },
+  {
+   "id": "low_basin_in",
+   "at": [
+    22,
+    11
+   ],
+   "rate": 0
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outlet",
+   "at": [
+    16,
+    0
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "bus_start",
+   "at": [
+    7,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "bus_assembly",
+   "at": [
+    7,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "bus_pickup",
+   "at": [
+    7,
+    10
+   ],
+   "flags": [
+    "assembly",
+    "vehicle_parking"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "west_bridgehead",
+   "at": [
+    10,
+    10
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "east_bridgehead",
+   "at": [
+    12,
+    10
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "road_junction",
+   "at": [
+    14,
+    10
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "west_crossing",
+   "at": [
+    18,
+    10
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "east_crossing",
+   "at": [
+    20,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "safe_depth": 100
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 8,
+   "water_at": [
+    16,
+    2
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    20,
+    4
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 4,
+   "water_at": [
+    19,
+    4
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "low_dock_start",
+   "at": [
+    23,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "low_dock_assembly",
+   "at": [
+    23,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "low_dock",
+   "at": [
+    20,
+    11
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    19,
+    11
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 700
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_bus_start",
+   "from": "bus_start",
+   "to": "bus_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_bus_assembly",
+   "from": "bus_assembly",
+   "to": "bus_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_west_road",
+   "from": "bus_pickup",
+   "to": "west_bridgehead",
+   "ticks": 60,
+   "class": "ground"
+  },
+  {
+   "id": "g_bridge_a",
+   "from": "west_bridgehead",
+   "to": "east_bridgehead",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     11,
+     10
+    ]
+   ],
+   "max_depth": 800,
+   "tags": [
+    "bridge"
+   ]
+  },
+  {
+   "id": "g_east_road",
+   "from": "east_bridgehead",
+   "to": "road_junction",
+   "ticks": 40,
+   "class": "ground"
+  },
+  {
+   "id": "g_high_road",
+   "from": "road_junction",
+   "to": "depot",
+   "ticks": 160,
+   "class": "ground"
+  },
+  {
+   "id": "g_crossing_road",
+   "from": "west_crossing",
+   "to": "road_junction",
+   "ticks": 80,
+   "class": "ground"
+  },
+  {
+   "id": "g_bridge_b",
+   "from": "east_crossing",
+   "to": "west_crossing",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     19,
+     10
+    ]
+   ],
+   "max_depth": 800,
+   "tags": [
+    "bridge"
+   ]
+  },
+  {
+   "id": "g_low_start",
+   "from": "low_dock_start",
+   "to": "low_dock_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_low_dock",
+   "from": "low_dock_assembly",
+   "to": "low_dock",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_low_crossing",
+   "from": "low_dock_assembly",
+   "to": "east_crossing",
+   "ticks": 40,
+   "class": "ground"
+  },
+  {
+   "id": "g_causeway",
+   "from": "low_dock_assembly",
+   "to": "high_landing",
+   "ticks": 600,
+   "class": "ground",
+   "via": [
+    [
+     24,
+     11
+    ],
+    [
+     24,
+     5
+    ]
+   ],
+   "max_depth": 100
+  },
+  {
+   "id": "w_low_to_landing",
+   "from": "low_dock",
+   "to": "high_landing",
+   "ticks": 200,
+   "class": "water",
+   "sample": [
+    [
+     19,
+     4
+    ],
+    [
+     19,
+     5
+    ],
+    [
+     19,
+     6
+    ],
+    [
+     19,
+     7
+    ],
+    [
+     19,
+     8
+    ],
+    [
+     19,
+     9
+    ],
+    [
+     19,
+     10
+    ],
+    [
+     19,
+     11
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_landing_to_depot",
+   "from": "high_landing",
+   "to": "depot",
+   "ticks": 80,
+   "class": "water",
+   "sample": [
+    [
+     19,
+     3
+    ],
+    [
+     19,
+     2
+    ],
+    [
+     18,
+     2
+    ],
+    [
+     17,
+     2
+    ],
+    [
+     16,
+     2
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  }
+ ],
+ "sockets": [
+  {
+   "id": "bridge:01",
+   "tool": "bridge",
+   "edge": "g_bridge_a",
+   "at": [
+    11,
+    10
+   ],
+   "zone": "bridges"
+  },
+  {
+   "id": "bridge:02",
+   "tool": "bridge",
+   "edge": "g_bridge_b",
+   "at": [
+    19,
+    10
+   ],
+   "zone": "bridges"
+  },
+  {
+   "id": "barrier:01",
+   "tool": "barrier",
+   "at": [
+    16,
+    15
+   ],
+   "links": [
+    [
+     [
+      15,
+      15
+     ],
+     [
+      16,
+      15
+     ]
+    ]
+   ],
+   "zone": "fork"
+  },
+  {
+   "id": "barrier:02",
+   "tool": "barrier",
+   "at": [
+    14,
+    15
+   ],
+   "links": [
+    [
+     [
+      15,
+      15
+     ],
+     [
+      14,
+      15
+     ]
+    ]
+   ],
+   "zone": "fork"
+  },
+  {
+   "id": "barrier:03",
+   "tool": "barrier",
+   "at": [
+    19,
+    11
+   ],
+   "links": [
+    [
+     [
+      19,
+      9
+     ],
+     [
+      20,
+      9
+     ]
+    ],
+    [
+     [
+      19,
+      10
+     ],
+     [
+      20,
+      10
+     ]
+    ],
+    [
+     [
+      19,
+      11
+     ],
+     [
+      20,
+      11
+     ]
+    ],
+    [
+     [
+      19,
+      12
+     ],
+     [
+      20,
+      12
+     ]
+    ],
+    [
+     [
+      19,
+      13
+     ],
+     [
+      20,
+      13
+     ]
+    ]
+   ],
+   "zone": "levee"
+  },
+  {
+   "id": "skiff:01",
+   "tool": "skiff",
+   "node": "low_dock",
+   "at": [
+    19,
+    11
+   ]
+  },
+  {
+   "id": "skiff:02",
+   "tool": "skiff",
+   "node": "high_landing",
+   "at": [
+    19,
+    4
+   ]
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    15,
+    3
+   ]
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    21,
+    4
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [],
+  "links": []
+ },
+ "infrastructure": [
+  {
+   "id": "low_dock",
+   "nodes": [
+    "low_dock"
+   ],
+   "demand": 0
+  }
+ ],
+ "vehicles": [
+  {
+   "id": "bus",
+   "kind": "fixed_bus",
+   "node": "bus_pickup",
+   "seats": 4,
+   "slots": 2
+  }
+ ],
+ "groups": [
+  {
+   "id": "bus",
+   "start": "bus_start",
+   "assembly": "bus_assembly",
+   "pickup": "bus_pickup"
+  },
+  {
+   "id": "low_dock",
+   "start": "low_dock_start",
+   "assembly": "low_dock_assembly",
+   "pickup": "low_dock"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "reservoir": {
+   "sources": [
+    "reservoir_in"
+   ]
+  },
+  "low_basin": {
+   "sources": [
+    "low_basin_in"
+   ]
+  }
+ },
+ "tutorial": {
+  "group": "bus",
+  "pickup": "bus_pickup",
+  "destination": "depot"
+ }
+}
