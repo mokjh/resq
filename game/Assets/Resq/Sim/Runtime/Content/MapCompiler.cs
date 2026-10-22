@@ -920,7 +920,13 @@ namespace Resq.Sim
                 d.RouteIds = list.Select(r => r.Str("id")).ToArray();
                 d.RouteFrom = list.Select(r => NodeRef(r.Str("from"))).ToArray();
                 d.RouteTo = list.Select(r => NodeRef(r.Str("to"))).ToArray();
-                d.RouteClass = list.Select(r => r.Str("class", "ground") == "water" ? Traversal.Water : Traversal.Ground).ToArray();
+                d.RouteClass = list.Select(r => r.Str("class", "ground") switch
+                {
+                    "water" => Traversal.Water,
+                    "cable" => Traversal.Cable,
+                    "ground" => Traversal.Ground,
+                    var other => throw new ContentException($"route {r.Str("id")}: unknown class '{other}'"),
+                }).ToArray();
                 if (m["roles"] != null) foreach (var kv in m["roles"].Properties()) _roles[kv.Key] = kv.Value;
             }
 

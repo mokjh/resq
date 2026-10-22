@@ -79,6 +79,18 @@ namespace Resq.Sim
                     : Simulator.ConsumerInstanceBase + InstanceAt(sim, step.Str("priority"));
                 return Command.Priority(consumer, step.Int("value"));
             }
+            if (step.Has("cool"))
+            {
+                int inst = InstanceAt(sim, step.Str("cool"));
+                if (inst < 0) { error = "cooler " + step.Str("cool"); return default; }
+                return Command.Cool(inst);
+            }
+            if (step.Has("refill"))
+            {
+                int inst = InstanceAt(sim, step.Str("refill"));
+                if (inst < 0 || !d.CoolantIndex.TryGetValue(step.Str("store") ?? "", out int store)) { error = "refill " + step.Str("refill"); return default; }
+                return Command.Refill(inst, store);
+            }
             if (step.Has("end")) return Command.End(step.Flag("confirm_failure"));
             error = "unknown step " + step.ToCanonical();
             return default;

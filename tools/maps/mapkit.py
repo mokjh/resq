@@ -41,6 +41,9 @@ class Map:
         self.power = {"nodes": [], "links": []}
         self.tutorial = None
         self.class_overrides = {}
+        # World 2-5 sections passed through verbatim (see docs/map-schema.md):
+        # fire, stores, supports, runouts, tides, lava, coolant_stores
+        self.extra = {}
 
     # ---- painting ----
     def rect(self, ch, x0, y0, x1, y1):
@@ -100,6 +103,10 @@ class Map:
             doc["tutorial"] = self.tutorial
         if self.class_overrides:
             doc["class_overrides"] = self.class_overrides
+        for k, v in self.extra.items():
+            if k in doc:
+                raise ValueError(f"extra section '{k}' would overwrite a core section")
+            doc[k] = v
         return doc
 
     def write(self, world: int, mission: int):
