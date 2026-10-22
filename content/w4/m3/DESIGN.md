@@ -2,49 +2,53 @@
 
 Generator: `tools/maps/w4_m3.py` (kit `tools/maps/w4_kit.py`), which writes `map.json`. Strategies: `strategies/A.json`, `B.json` and `mistake.json`. Contract values are used unchanged; there is no `contract_overrides.json`.
 
+Retuned after engine commit a02c558, in which finished skiffs moor aside, the relay hand-off rules changed and known-closure admission was added. The first version's mistake relied on a finished boat blocking the only berth, and that no longer happens. Its B lost one resident to the new hand-off rule.
+
 ## Central decision
 "Handle multiple pickups and staging capacity."
 - **Four markets of five** surround a safe harbor island. It has two receiving docks, each with **one berth**: the receiving dock (depot anchor, capacity 12) and the high landing (capacity 8). Refuge totals exactly 20.
-- **Three skiffs carry 4 each.** Every market needs two trips (4 + 1), so the fleet must share two berths without a queue at the receiving dock. The 3★ condition is `max_dock_queue_operation_ticks ≤ 50` at `receiving_dock`.
-- **Berths are reserved at departure**, so two hulls can never overlap. A boat that cannot get its berth waits at its last node, which makes the queue readable.
-- **A boat that has finished its group stays moored in its last berth** (engine behaviour; see the notes). Plans must therefore stand a finished boat off, or give each dock one last user.
+- **Three skiffs carry 4 each,** so every market needs two trips (4 + 1).
+- **The receiving dock is the slow, threatened dock.** It lies at the head of the long marked **pontoon channel**, 250 ticks from the harbor junction. A boat reserves the berth when it sets off up the channel and keeps it until it is back at the harbor. Each visit therefore holds the berth for about 540 ticks, while a high-landing visit holds it for about 320.
+- **At 170 s a stall pontoon blocks that channel** (`set_edge_enabled(0)`, warned at 160 s). From then on the receiving dock takes walkers only, and boats can use only the high landing. Under the spec's known-closure admission rule, no boat sets off up the channel if the closure would land before it arrives.
+- **The 3★ condition** is `max_dock_queue_operation_ticks ≤ 50` at `receiving_dock`.
 
 **Water routes:**
-- the harbor junction links the receiving dock (60), the high landing (140), the west market (160) and the south market's high dock (80);
-- `pontoon_channel`: harbor ↔ north market (120). A stall pontoon blocks it at 170 s;
+- the harbor junction links the high landing (140), the west market (160), the north market (`w_north_channel`, 120) and the south market's high dock (80);
 - `tidal_lane`: harbor ↔ east market (140). Closed until 50 s;
-- `outer_loop`: west → north → east → high landing (240 / 240 / 200). From 300 s the current makes it 1.5× faster.
+- `outer_loop`: west → north → east → high landing (240 / 240 / 200). 1.5× faster from 300 s.
 
-**Ground.** The south market sits on a rock beside the harbor island, across a breach (`bridge:01`). Once bridged, the south market walks home, and its **high dock becomes a transfer point**: a non-refuge dock of capacity 6. Residents unloaded there have to be walked on over the bridge. A second, useless breach (`bridge:02`, a broken footway between the west market and the rock) is a decoy for the single bridge in stock.
+**Ground.** The south market sits on a rock beside the harbor island, across a breach (`bridge:01`). Once bridged, the south market walks home, and its **high dock becomes a transfer point**: a non-refuge staging dock of capacity 6. A resident dropped there waits until given a new group order and then walks on over the bridge. A second, useless breach (`bridge:02`, a broken footway from the west market) is a decoy for the single bridge.
 
 ## Threat sequence (scenario ticks, Standard)
-This contract has **no tide or water events**, so the sea holds its 150 mm datum throughout. The events are route changes:
-- **S 500 (50 s):** the tidal lane opens.
-- **S 1700 (170 s):** the pontoon channel closes. After this the north market can only be reached by the outer loop (west or east).
-- **S 3000 (300 s):** outer-loop travel takes `ceil(t × 1000 / 1500)`.
+There are no tide or water events in this contract (the sea holds its 150 mm datum); every event is a route change:
+- **S 500:** the tidal lane opens.
+- **S 1600:** warning, then **S 1700:** the pontoon channel to the receiving dock is blocked.
+- **S 3000:** the outer loop gets faster.
 
 ## Why A and B differ
 - **A** follows "Stagger arrivals through the two receiving docks."
-  - The south skiff lands both south-market loads at the receiving dock first (S 240–576), then is ordered to stand off in the harbor at t=600.
-  - The depot skiff is placed only once that berth is free (t=360). It lands the west market (S 855–1351), then the north market (S 1814–2750; its second trip goes round the outer loop after the pontoon closes).
-  - The high-landing skiff lands the east market at the high landing (S 462–918).
-  - The receiving dock never sees two boats at once, so the dock queue is **0**.
+  - The south skiff lands both south-market loads at the receiving dock (S 430–1146), well before the channel closes.
+  - The east and west skiffs land at the high landing from the start (S 462–1232 and S 847–1503).
+  - Once free (t=1200), the south skiff lifts the north market to the high landing too (S 1884–2460).
+  - Only one boat ever uses the receiving dock, so its queue is **0**, and nothing is still bound for it at 170 s.
 - **B** follows "Evacuate one island fully, then reuse its high dock as a transfer point."
   - The bridge closes the south breach, and the whole south market walks home (S 226–506).
-  - The depot skiff drops the north market at the emptied south high dock, `evacuate: false`, two trips through the pontoon channel before 170 s. At t=2500 the north market is walked on over the bridge (S 2720–3000). The group order has to come after the group's last unload, because each unload at a non-refuge dock clears that group's route.
-  - The west-pier skiff lands the west market at the receiving dock (S 324–820). The high-landing skiff lands the east market at the high landing (S 466–922).
-  - Each dock has a single boat user, so the receiving-dock queue is **0**.
+  - The south skiff drops the north market at the emptied south high dock. Each drop is walked on over the bridge: an order at t=600 after the first four, and another at t=1300 after the last one (S 820–1520).
+  - The west and east skiffs land at the high landing (S 404–1174 and S 789–1386).
+  - No boat ever enters the pontoon channel, so the receiving-dock queue is **0**.
 
-They differ in route (all-water versus the bridge and a ground transfer), in equipment (3 skiffs versus 3 skiffs plus the bridge) and in evacuation priority (south first by boat versus the south island emptied on foot).
+They differ in route (all-water versus the bridge and a ground transfer), in equipment (3 skiffs versus 3 skiffs plus the bridge) and in which docks carry the load (the receiving dock by water early versus the receiving dock on foot only).
 
 ## A single major mistake
-- **`mistake.json`, from the bible's "failure to communicate": "assigning all boats to one dock creates a readable queue, not overlapping models."** This is plan A's boats, but every boat is sent to the receiving dock and none is held back or stood off.
-  - The boats line up for the single berth: each waits at the harbor junction or its pickup with its berth reservation refused, and two hulls never share the dock.
-  - The south skiff finishes first and **stays moored in the berth**. The loaded east and west skiffs wait behind it for the rest of the operation, and the north market is never collected.
-  - Result: **FAIL** in all six configurations, with 5 of 20 rescued, loaded skiffs at the end and the dock queue far above 50.
+- **`mistake.json`, from the bible's "failure to communicate": "assigning all boats to one dock creates a readable queue, not overlapping models."** This is plan A's boats, but every boat is sent to the receiving dock.
+  - Its berth is held for each boat's whole run up and down the pontoon channel. The boats form a readable queue at the harbor junction: berths are reserved before a boat sets off, so hulls never overlap.
+  - At 170 s the stall pontoon blocks the channel. The boats still in the queue are already loaded and can never reach the dock, and the north market is left waiting at its pickup.
+  - Standard and Command: 9 rescued, 9 people stuck aboard. Relaxed (the closure comes at operation tick 3400): the queue nearly clears, but the north market's last boat is still queued when the channel closes, so 19 are rescued and one occupied skiff remains.
+  - Result: **FAIL** in all six configurations: `all_vehicles_unloaded` (required) is missed everywhere, `rescue_minimum` is also missed in Standard and Command, and mastery (dock queue) is missed everywhere.
+  - The failure follows from published rules only: one berth per dock, berth reservation at departure, and a warned channel closure. It no longer relies on idle boats blocking a berth.
 - **No input: FAIL**, with 0 rescued.
 
-## SimLab validation (`python3 tools/simtest/simtest.py lab validate W4-M3`)
+## SimLab validation (`python3 tools/simtest/simtest.py lab validate W4-M3`, after a02c558)
 ```
 ok   W4-M3 wide    Standard no-input   -> success=False rescued=0
 ok   W4-M3 wide    Standard strategy A -> stars=3 score=9429 rescued=20/20 backup=0 S=4800
@@ -52,18 +56,19 @@ ok   W4-M3 wide    Standard strategy B -> stars=3 score=9286 rescued=20/20 backu
 ok   ... identical for Relaxed and Command, wide and compact ...
 VALIDATION PASSED: 18/18 runs as expected
 ```
-Mistake: `RESULT W4-M3 {wide,compact} {Standard,Relaxed,Command} mistake: success=False stars=0 rescued=5/20`.
+Mistake:
+- `RESULT W4-M3 {wide,compact} {Standard,Command} mistake: success=False stars=0 rescued=9/20`
+- `RESULT W4-M3 {wide,compact} Relaxed mistake: success=False stars=0 rescued=19/20` (one loaded skiff left)
 
-Queue margin check (a temporary `contract_overrides.json` that tightened the mastery maximum to 0, 10 and 25, then removed): A and B met all three thresholds, and the mistake missed all three. The shipped map has no override.
+Queue check (a temporary override tightening the mastery maximum to 0, then removed): A and B both meet it in wide and compact. Their receiving-dock queue is 0.
 
 ## Compact layout
 `class_overrides.compact` swaps receiving capacity (receiving dock 12 → 8, high landing 8 → 12) and lengthens the high landing's approach (`w_landing_harbor` 140 → 200 ticks). Both plans pass unchanged at 3★.
 
-An earlier A, which re-routed the south skiff mid-trip, lost a resident in compact because the longer approach shifted its timing. The shipped A uses only timings that the compact change cannot reach: its receiving-dock windows use routes the override does not touch.
-
 ## Margins and notes
-- **Timing robustness.** No early event changes A's or B's routes (the tidal lane is never the shortest path for them), so their operation-tick timings are identical in all three profiles until S 1700. The stand-off at t=600 comes 24 ticks after the south skiff's last unload (S 576). The depot skiff reserves the berth about 250 ticks after the stand-off. B's walk order at t=2500 comes more than 1000 ticks after the north market's last drop.
-- **Critical (`receiving_harbor` operational).** The infrastructure is the harbor quay plus both receiving docks (demand 0, as the spec's harbor default). With no water events nothing in this contract can threaten it, so the critical objective holds for any plan. That is a property of the frozen contract and worth a look at the next design review.
-- **Barriers.** The kit includes 2 barriers and the recipe asks for 3 barrier sockets. They are authored as harbor sea-wall sockets, but with no tide or source events the sea never moves, so they have nothing to hold back and no strategy spends on them. Beacons likewise have no rules effect.
-- **Anchors.** The recipe binds `north_market` to the west anchor and `west_market` to the upper anchor. The map places markets by name instead (north market at the upper anchor, west market at the west anchor); the east and south (orchard) anchors are kept.
-- **Engine behaviour to note.** A skiff whose group is complete stays in its berth indefinitely, and the spec does not say whether an idle vehicle vacates. The mistake's deadlock and A's stand-off order both rest on this. See the report to the coordinator.
+- **Thinnest margin: the mistake in Relaxed.** It fails by one boatload: the last north-market boat is still queued when the channel closes at operation tick 3400. Shortening the pontoon channel below about 250 ticks would let the Relaxed mistake clear its queue.
+- A's last receiving-dock visit ends about 550 ticks before the closure (Standard). B never uses the channel.
+- **B's transfer orders must follow the drops.** A resident dropped at a non-refuge dock waits there until a new group order. Also, while some members are parked at the transfer dock, the boat waiting at the group's pickup still counts them as heading to that pickup (see the engine note in the report). So B gives a walk order right after the first four are dropped, which clears that, and another after the last drop. With a single late order (the pre-a02c558 B), the boat holding the fifth resident waited at the north pickup until that order came, and the fifth resident was never walked home: 19/20.
+- **Critical (`receiving_harbor` operational)** is the harbor quay plus both receiving docks (demand 0). Nothing in this contract can threaten it, and that is worth a look at the next design review. The blocked channel closes a route, not the dock.
+- **Barriers.** The recipe asks for 3 barrier sockets, authored as harbor sea walls. With no tide or source events they have nothing to hold back, and no strategy spends on them. Beacons have no rules effect.
+- **Anchors.** Markets are placed by name: north market at the upper anchor and west market at the west anchor, swapped relative to the recipe's bindings. The east and south anchors are kept.

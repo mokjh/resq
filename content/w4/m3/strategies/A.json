@@ -1,6 +1,6 @@
 {
   "id": "A",
-  "description": "Stagger arrivals through the two receiving docks: the south skiff lands both south-market loads at the receiving dock first and then stands off in the harbor; the depot skiff is launched only once the berth is free, lands the west market and then the north market there; the high-landing skiff lands the east market at the high landing.",
+  "description": "Stagger arrivals through the two receiving docks: the south skiff lands both south-market loads at the receiving dock, up its long pontoon channel, before the 170 s stall pontoon blocks it; the east and west skiffs land at the high landing from the start; once the south skiff is free it lifts the north market to the high landing too, so nothing is still bound for the receiving dock when its channel closes.",
   "steps": [
     {
       "t": 5,
@@ -25,28 +25,22 @@
       "to": "high_landing"
     },
     {
-      "t": 360,
-      "place": "skiff:01"
+      "t": 9,
+      "place": "skiff:04"
     },
     {
-      "t": 361,
-      "vehicle": "skiff:01",
+      "t": 10,
+      "vehicle": "skiff:04",
       "group": "west_market",
       "pickup": "west_market_pickup",
-      "to": "receiving_dock"
+      "to": "high_landing"
     },
     {
-      "t": 600,
+      "t": 1200,
       "vehicle": "skiff:03",
-      "to": "harbor",
-      "evacuate": false
-    },
-    {
-      "t": 1400,
-      "vehicle": "skiff:01",
       "group": "north_market",
       "pickup": "north_market_pickup",
-      "to": "receiving_dock"
+      "to": "high_landing"
     }
   ]
 }

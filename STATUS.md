@@ -28,7 +28,7 @@
 - Blender look-dev quartet: cottage, bridge, skiff, resident.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)
-Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission. All 25 still pass 18/18. Retune in progress for W4-M3 (B 2★, mistake now wins), W5-M2 (A 1★, B 2★), W5-M3 (1–2★) and W5-M4 (mistake now wins). Open: Relaxed-only mistake recoveries in W1-M3, W2-M2, W3-M3 and W5-M1 (strategy times are operation ticks); W4-M3 contract has no water events.
+Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission. All 25 still pass 18/18. W4-M3 retuned (A/B 3★, causal mistake). Retune in progress for W5-M2 (A 1★, B 2★), W5-M3 (1–2★) and W5-M4 (mistake now wins). Open: residents moored at a transfer node still count as "heading to" the pickup, so a boat can wait loaded for them (W4-M3 B works around it; fix after W5 reports). Relaxed-only mistake recoveries in W1-M3, W2-M2, W3-M3 and W5-M1 (strategy times are operation ticks); W4-M3 contract has no water events.
 
 ## Known W1 gaps
 - Compact layouts are still the wide graph; the recipe's compact dock swap needs `class_overrides`.

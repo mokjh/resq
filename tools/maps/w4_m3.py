@@ -2,8 +2,10 @@
 
 Story: four market islands (five people each) around a safe harbor island with two receiving docks, each one
 berth: the receiving dock (depot anchor) and the high landing. Water routes:
-  * the inner harbor junction links the receiving dock, the high landing, the west market and the south market;
-  * the pontoon channel is the short marked channel to the north market: a stall pontoon blocks it at 170 s;
+  * the inner harbor junction links the high landing, the west, north and south markets;
+  * the receiving dock lies at the head of the long marked pontoon channel (250 ticks from the harbor; its
+    berth stays reserved while a boat works up and back down it). A stall pontoon blocks that channel at
+    170 s: from then on the receiving dock takes walkers only, and boats must use the high landing;
   * the tidal lane is the short lane to the east market: closed until it opens at 50 s;
   * the outer loop rings west -> north -> east -> high landing; from 300 s the current makes it faster.
 The south market sits on a rock beside the harbor island. A breach separates them (bridge:01); bridged, the
@@ -60,11 +62,11 @@ m.edge("g_footway_breach", "footway_north", "footway_south", 40, sample=[[6, 12]
 m.edge("g_footway_s", "footway_south", "south_market_assembly", 60, sample=[[6, 10], [6, 9], [7, 9], [8, 9], [8, 8], [8, 7]])
 
 water = dict(cls="water", slots=2, min_depth=100, max_depth=2000)
-m.edge("w_dock_harbor", "receiving_dock", "harbor", 60, sample=[[15, y] for y in range(5, 11)], **water)
+m.edge("w_pontoon_channel", "receiving_dock", "harbor", 250, sample=[[15, y] for y in range(5, 11)], **water)
 m.edge("w_landing_harbor", "high_landing", "harbor", 140, sample=[[x, 10] for x in range(15, 26)] + [[25, y] for y in range(5, 10)], **water)
 m.edge("w_south_harbor", "south_market_pickup", "harbor", 80, sample=[[x, 7] for x in range(11, 16)] + [[15, 8], [15, 9]], **water)
 m.edge("w_west_harbor", "west_market_pickup", "harbor", 160, sample=[[x, 14] for x in range(8, 16)] + [[15, y] for y in range(10, 14)], **water)
-m.edge("w_pontoon_channel", "harbor", "north_market_pickup", 120, sample=[[15, y] for y in range(10, 18)], **water)
+m.edge("w_north_channel", "harbor", "north_market_pickup", 120, sample=[[15, y] for y in range(10, 18)], **water)
 m.edge("w_tidal_lane", "harbor", "east_market_pickup", 140, enabled=False,
        sample=[[x, 12] for x in range(15, 24)] + [[23, 13], [23, 14]], **water)
 m.edge("w_outer_west", "west_market_pickup", "north_market_pickup", 240,

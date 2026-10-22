@@ -39,7 +39,7 @@ They differ in mode per group (A: low market by ground and outer island by water
 - **`mistake.json`, from the bible's "failure to communicate": "an incorrect dock remains visible but rejects loading with a tide explanation."** This is plan A, but the skiff is sent to the outer island's **low jetty** instead of its high pier. The jetty sits in a scour hole behind the flats. A boat can only get there once the flats are awash (head ≥ 700), and by then the jetty's water is about 750 mm, over its 500 mm deck limit. The skiff lies alongside, every boarding is refused (dock out of range), and the outer island waits at the visible jetty for the rest of the operation. Result: **FAIL** in all six configurations, with 8 of 12 rescued against a minimum of 9.
 - **No input: FAIL**, with 0 rescued.
 - Related checks (not shipped strategies):
-  - A loaded skiff ordered to the depot after S 1842 arrives and can never unload, so the run fails because a vehicle is still loaded. See the engine note below.
+  - A loaded skiff ordered to the depot after S 1842 arrives and can never unload. The run fails because a vehicle is still loaded, and since a02c558 the wait also counts against mastery.
 
 ## SimLab validation (`python3 tools/simtest/simtest.py lab validate W4-M1`)
 ```
@@ -58,6 +58,6 @@ Mistake: `RESULT W4-M1 {wide,compact} {Standard,Relaxed,Command} mistake: succes
 - A's last low-market pair clears the causeway about 900 ticks before it closes. Starting the walk after about S 1100 strands the last pair.
 - A's skiff is back at the depot about 680 ticks before the quay closes.
 - The mistake's scour hole is already at about 470–600 mm when the flats first let a boat onto the approach (S≈700–715). The skiff needs at least 220 operation ticks to get there from the depot, and by then the hole stands at about 750 mm against the 500 mm limit. It never comes back into range, because the tide never falls below 950 mm again.
-- Mastery (`loaded_closed_dock_wait_operation_ticks = 0`) is met by both plans with zero waits. In this engine the counter only grows when a loaded boat cannot set off (route closed, or the destination berth taken). It does not grow while a loaded boat sits at a destination dock that is closed. See the engine note.
+- Mastery (`loaded_closed_dock_wait_operation_ticks = 0`) is met by both plans with zero waits. Since engine commit a02c558 the counter follows spec 03: it counts ticks a loaded, stationary boat waits while its chosen unload dock is closed, so a loaded boat sent to the depot after the peak now fails mastery, as the brief intends.
 - Beacons have no rules effect in the current engine, so no strategy spends on them (as in W1).
 - Recipe anchors are kept approximately. The recipe's generic W4 role list (`medical_landing_access`, `pontoon_channel`, …) is not bound where this mission has no such feature. The bound roles are `tide`, `low_market`, `tidal_lane`, `high_causeway`, `receiving_station` and `receiving_dock`.

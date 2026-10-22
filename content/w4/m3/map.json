@@ -536,10 +536,10 @@
    ]
   },
   {
-   "id": "w_dock_harbor",
+   "id": "w_pontoon_channel",
    "from": "receiving_dock",
    "to": "harbor",
-   "ticks": 60,
+   "ticks": 250,
    "class": "water",
    "sample": [
     [
@@ -748,7 +748,7 @@
    "max_depth": 2000
   },
   {
-   "id": "w_pontoon_channel",
+   "id": "w_north_channel",
    "from": "harbor",
    "to": "north_market_pickup",
    "ticks": 120,
