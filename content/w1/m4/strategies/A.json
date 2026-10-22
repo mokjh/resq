@@ -1,0 +1,18 @@
+{
+  "id": "A",
+  "description": "Protect the dry power spine and alternate pump assignments to lower both basins.",
+  "steps": [
+    {"t": 5, "place": "generator:01"},
+    {"t": 6, "place": "barrier:01"},
+    {"t": 7, "place": "generator:02"},
+    {"t": 8, "place": "pump:01"},
+    {"t": 9, "place": "pump:03"},
+    {"t": 10, "group": "clinic", "to": "depot"},
+    {"t": 11, "group": "tram", "to": "high_landing"},
+    {"t": 12, "place": "skiff:01"},
+    {"t": 13, "vehicle": "skiff:01", "group": "riverside", "pickup": "riverside_pickup", "to": "depot"},
+    {"t": 3500, "disable": "pump:03"},
+    {"t": 3501, "move": "pump:03", "to": "pump:02"},
+    {"t": 3502, "enable": "pump:02"}
+  ]
+}

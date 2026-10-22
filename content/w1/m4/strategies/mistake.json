@@ -1,0 +1,13 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): power is overcommitted. Only the ridge generator is deployed but both pumps are laid; the clinic takes its unit first and the second-basin pump stays queued (unpowered) through the final spill, so the second basin climbs over the clinic pad.",
+  "steps": [
+    {"t": 5, "place": "skiff:02"},
+    {"t": 6, "vehicle": "skiff:02", "group": "riverside", "pickup": "riverside_pickup", "to": "depot"},
+    {"t": 7, "group": "clinic", "to": "depot"},
+    {"t": 8, "group": "tram", "to": "high_landing"},
+    {"t": 350, "place": "generator:01"},
+    {"t": 353, "place": "pump:01"},
+    {"t": 354, "place": "pump:02"}
+  ]
+}

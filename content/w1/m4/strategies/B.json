@@ -1,0 +1,15 @@
+{
+  "id": "B",
+  "description": "Evacuate riverside first, then dedicate both pumps to the clinic/tram sector.",
+  "steps": [
+    {"t": 5, "place": "skiff:02"},
+    {"t": 6, "vehicle": "skiff:02", "group": "riverside", "pickup": "riverside_pickup", "to": "depot"},
+    {"t": 7, "group": "clinic", "to": "depot"},
+    {"t": 8, "group": "tram", "to": "high_landing"},
+    {"t": 350, "place": "generator:01"},
+    {"t": 351, "place": "barrier:01"},
+    {"t": 352, "place": "generator:02"},
+    {"t": 353, "place": "pump:01"},
+    {"t": 354, "place": "pump:02"}
+  ]
+}
