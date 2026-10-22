@@ -57,3 +57,10 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | Coolant works | An infrastructure entry with `producer {store, feedstock, ticks}`. It runs while that infrastructure is operational (power and safety from stage 4). Feedstock is reserved at job start; a job starts only below store capacity. `resource_remaining` on a coolant store counts charges. |
 | Shelters | A placed shelter on a `shelter` node (capacity 1–6, never a refuge). Each hazard pulse it consumes protection when occupied and its node is unsafe or its hazard region is hot. That interval's protection masks resident exposure and shelter damage. `enable_shelter_hazard` makes the shelter node itself unsafe. |
 | Arrival damage | A Hot arrival (or a return to Hot) breaks equipment on the segment's cells, except coolers bound to that segment and shelters with protection left. Spent coolant is never a loss. |
+
+## 23 Oct 2026 — engine gaps closed for World 2 (reported by the W2 mission helper)
+
+| Decision | Result |
+|---|---|
+| Pumps and stores | A pump `intake`/`outlet` may name a finite store, so tank ↔ pond ↔ cell pumping works (spec 02 §4). This previously crashed the compiler. |
+| Initial fire | `fire.burning` cells start Burning at S=0, and a legend `heat` sets initial heat. These are compiled initial state, not tick-zero events (spec 02 §2). W2-M4's contract has only wind events, so its fire must already be burning. |

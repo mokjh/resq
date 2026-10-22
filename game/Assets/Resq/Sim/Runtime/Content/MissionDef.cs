@@ -215,6 +215,7 @@ namespace Resq.Sim
         public bool FireEnabled;
         public int[] CellFuel0, CellHeat0, CellWet0;
         public bool[] CellBuilding;
+        public bool[] CellBurning0;           // already burning at S=0 (heat at least the danger level)
         public int[] CellWindRegion;          // region index whose wind applies to the cell, or -1 (calm)
         public int[][] SocketCells;           // firebreak (<=8) / sprinkler (<=4) target cells
         public int[] SocketStore;             // sprinkler source store index or -1

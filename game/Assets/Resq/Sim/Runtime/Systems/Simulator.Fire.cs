@@ -41,6 +41,18 @@ namespace Resq.Sim
                 S.FState[c] = (byte)FireState.Unburned;
                 S.FWarnStart[c] = -1;
                 S.FCoolStart[c] = -1;
+                if (D.CellBurning0[c])
+                {
+                    S.FState[c] = (byte)FireState.Burning;
+                    S.FHeat[c] = Math.Max(S.FHeat[c], FireDangerHeat);
+                    S.FWarnStart[c] = 0;
+                }
+                else if (S.FHeat[c] >= FireLatchHeat)
+                {
+                    S.FState[c] = (byte)FireState.Heating; // a warm start is already warned at S=0
+                    S.FWarnStart[c] = 0;
+                }
+                if (S.FHeat[c] >= FireLatchHeat || D.CellBurning0[c]) S.FLatch[c] = true;
             }
         }
 

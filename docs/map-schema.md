@@ -26,8 +26,9 @@ Coordinates are `[x, y]`, with the origin at the southwest. The grid is 32×24 a
 
 ## World 2 — fire
 
-- `fire: {enabled: true, wind_regions: [region…]}`. Wind codes: 1 W, 2 E, 3 N, 4 S, 5 NE, 6 SE, 7 SW, 8 NW (fire spreads toward that direction).
-- `stores: [{id, elev, area, volume}]` are finite water tanks. They are extra water nodes; sprinklers draw from them.
+- `fire: {enabled: true, wind_regions: [region…], burning: <cell spec>}`. Wind codes: 1 W, 2 E, 3 N, 4 S, 5 NE, 6 SE, 7 SW, 8 NW (fire spreads toward that direction).
+- `burning` cells start the mission already Burning (heat ≥ 600, latched, warned at S=0). They need fuel. A legend `heat` (0–1000) sets initial heat; ≥ 300 starts as Heating, warned at S=0.
+- `stores: [{id, elev, area, volume}]` are finite water tanks and ponds. They are extra water nodes: sprinklers draw from them, and a pump `intake`/`outlet` may name a store id instead of a cell.
 - Sockets:
   - `firebreak`: `cells` (1–8 fuel cells; no buildings).
   - `sprinkler`: `cells` (1–4), `store`, `power`.

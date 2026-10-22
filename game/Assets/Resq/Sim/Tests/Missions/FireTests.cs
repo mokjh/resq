@@ -13,7 +13,7 @@ namespace Resq.Sim.Tests
         const string Ignite = "{\"id\":\"fire_ignite\",\"at_scenario_tick\":300,\"warning_at_scenario_tick\":200,\"known_at_start\":true," +
                               "\"operations\":[{\"kind\":\"ignite_region\",\"target_role\":\"ignition\",\"value\":700}]}";
 
-        static MissionDef Fixture(int windCode = 2, long tankVolume = 2_000_000_000, int igniteX = 5)
+        static MissionDef Fixture(int windCode = 2, long tankVolume = 2_000_000_000, int igniteX = 5, System.Action<JsonNode, JsonNode> edit = null)
         {
             var map = JsonNode.Parse(File.ReadAllText(RepoPaths.Resolve("content/w1/m1/map.json")));
             JsonNode contract = null;
@@ -44,6 +44,7 @@ namespace Resq.Sim.Tests
             if (windCode != 0)
                 contract["events"].Add(JsonNode.Parse("{\"id\":\"fire_wind\",\"at_scenario_tick\":10,\"warning_at_scenario_tick\":0,\"known_at_start\":true," +
                                                       $"\"operations\":[{{\"kind\":\"set_wind\",\"target_role\":\"wind\",\"value\":{windCode}}}]}}"));
+            edit?.Invoke(map, contract);
             return MapCompiler.Compile(map, contract, rules, "wide");
         }
 
@@ -212,6 +213,52 @@ namespace Resq.Sim.Tests
             r.Submit(Command.Place(d.SocketIndex["sprinkler:01"], ToolKind.Sprinkler));
             RunTo(r, 900);
             Check.Equal(a.S.Hash(), r.S.Hash(), "replay from scratch matches");
+        }
+
+        // Initial state, not a tick-zero event (spec 02 §2): a map can author a fire already burning at S=0.
+        [SimTest("fire")]
+        public static void Map_Can_Start_With_A_Burning_Fire()
+        {
+            var d = Fixture(edit: (map, contract) =>
+            {
+                map["fire"].Set("burning", JsonNode.Parse("[[7,12]]"));
+                // drop the scheduled ignition so only the authored initial fire exists
+                var events = JsonNode.Parse("[]");
+                foreach (var ev in contract["events"].Elements()) if (ev.Str("id") != "fire_ignite") events.Add(ev);
+                contract.Set("events", events);
+            });
+            var sim = new Simulator(d, RuleProfile.Standard);
+            int c = d.CellIndex(7, 12);
+            Check.Equal(FireState.Burning, sim.CellFire(c), "burning at S=0");
+            Check.True(sim.CellHeat(c) >= Simulator.FireDangerHeat, "initial burning heat at least the danger level");
+            Check.True(sim.S.FLatch[c], "a burning cell latches ground admission from the start");
+            RunTo(sim, 200);
+            Check.True(sim.CellHeat(d.CellIndex(8, 12)) > 0, "it spreads heat from the first pulse");
+            bool threw = false;
+            try { Fixture(edit: (map, contract) => map["fire"].Set("burning", JsonNode.Parse("[[2,2]]"))); } catch (ContentException) { threw = true; }
+            Check.True(threw, "a cell with no fuel cannot start burning");
+        }
+
+        // A pump may draw from or deliver to a finite store (tanks and ponds are water nodes too, spec 02 §4).
+        [SimTest("fire")]
+        public static void Pump_Moves_Water_From_Pond_To_Tank()
+        {
+            var d = Fixture(tankVolume: 0, edit: (map, contract) =>
+            {
+                map.Set("stores", JsonNode.Parse("[{\"id\":\"tank\",\"elev\":1200,\"volume\":0},{\"id\":\"pond\",\"elev\":1000,\"volume\":500000000}]"));
+                map["sockets"].Add(JsonNode.Parse("{\"id\":\"pump:09\",\"tool\":\"pump\",\"at\":[20,20],\"intake\":\"pond\",\"outlet\":\"tank\",\"power\":\"grid\"}"));
+                contract["permitted_tools"].Add(JsonNode.OfString("pump"));
+                contract["maximum_stock"].Set("pump", 1);
+                contract["default_loadout"].Set("pump", 1);
+            });
+            var sim = new Simulator(d, RuleProfile.Standard);
+            int tank = d.StoreNode[d.StoreIndex["tank"]], pond = d.StoreNode[d.StoreIndex["pond"]];
+            // the W1-M1 base map has river sources and an outlet, so check the closed pond+tank pair, not the whole map
+            long pair = sim.S.Volume[tank] + sim.S.Volume[pond];
+            sim.Submit(Command.Place(d.SocketIndex["pump:09"], ToolKind.Pump));
+            RunTo(sim, 50, () => Check.Equal(pair, sim.S.Volume[tank] + sim.S.Volume[pond], "pumping between stores conserves volume"));
+            Check.True(sim.S.Volume[tank] > 0, "the tank fills");
+            Check.Equal(500_000_000L - sim.S.Volume[tank], sim.S.Volume[pond], "exactly what left the pond");
         }
     }
 }

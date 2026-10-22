@@ -386,15 +386,24 @@ namespace Resq.Sim
                 var fire = m["fire"];
                 d.FireEnabled = fire != null && fire.Flag("enabled", true);
                 d.CellFuel0 = new int[n]; d.CellHeat0 = new int[n]; d.CellWet0 = new int[n];
-                d.CellBuilding = new bool[n]; d.CellWindRegion = new int[n];
+                d.CellBuilding = new bool[n]; d.CellWindRegion = new int[n]; d.CellBurning0 = new bool[n];
                 for (int c = 0; c < n; c++)
                 {
                     var lg = _legend[_chars[c]];
                     d.CellFuel0[c] = d.FireEnabled ? lg.Int("fuel", 1000) : 0; // spec 02 §7: default fuel 1000; roads/water author 0
                     d.CellWet0[c] = lg.Int("wetness");
+                    d.CellHeat0[c] = d.FireEnabled ? lg.Int("heat") : 0;
+                    if (d.CellHeat0[c] < 0 || d.CellHeat0[c] > 1000) throw new ContentException($"legend heat outside 0..1000");
                     d.CellBuilding[c] = lg.Flag("building");
                     d.CellWindRegion[c] = -1;
                 }
+                // fires already burning at S=0 (initial state, not a tick-zero event; spec 02 §2)
+                if (fire?["burning"] != null)
+                    foreach (int c in ResolveCells(fire["burning"]))
+                    {
+                        if (d.CellFuel0[c] <= 0) throw new ContentException($"initially burning cell ({d.CellX(c)},{d.CellY(c)}) has no fuel");
+                        d.CellBurning0[c] = true;
+                    }
                 if (fire?["wind_regions"] != null)
                     foreach (var r in fire["wind_regions"].Elements())
                     {
@@ -720,8 +729,8 @@ namespace Resq.Sim
                     int zi = zones.IndexOf(zone); if (zi < 0) { zi = zones.Count; zones.Add(zone); }
                     d.SocketZone[i] = zi;
                     d.SocketEdge[i] = s.Str("edge") != null ? EdgeRef(s.Str("edge")) : -1;
-                    d.SocketIntake[i] = s["intake"] != null ? Cell(s["intake"]) : -1;
-                    d.SocketOutlet[i] = s["outlet"] != null ? Cell(s["outlet"]) : -1;
+                    d.SocketIntake[i] = WaterNodeRef(s["intake"]);
+                    d.SocketOutlet[i] = WaterNodeRef(s["outlet"]);
                     d.SocketNode[i] = s.Str("node") != null ? NodeRef(s.Str("node")) : -1;
                     d.SocketDestination[i] = s.Str("destination") != null ? NodeRef(s.Str("destination")) : -1;
                     d.SocketPowerNode[i] = PowerRef(s.Str("power"));
@@ -801,6 +810,13 @@ namespace Resq.Sim
                     for (int i = 0; i < d.SocketIds.Length; i++) if (d.SocketKind[i] == ToolKind.Brace && d.SocketSupport[i] == sp) n++;
                     if (n > 3) throw new ContentException($"support {d.SupportIds[sp]} has {n} brace sockets (max 3)");
                 }
+            }
+
+            /// <summary>A pump end: a grid cell [x,y] or a finite store id (tanks/ponds are water nodes too, spec 02 §4).</summary>
+            int WaterNodeRef(JsonNode spec)
+            {
+                if (spec == null) return -1;
+                return spec.Kind == JsonKind.String ? d.StoreNode[StoreRef(spec.AsString())] : Cell(spec);
             }
 
             int StoreRef(string id)
