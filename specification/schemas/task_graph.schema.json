@@ -1,0 +1,165 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "definition_status": {
+      "type": "string"
+    },
+    "freeze_id": {
+      "type": "string"
+    },
+    "runtime_state_path": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "integer"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "automatic_scope_cuts": {
+          "type": "boolean"
+        },
+        "competition_missions": {
+          "type": "integer"
+        },
+        "missions": {
+          "type": "integer"
+        },
+        "worlds": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "automatic_scope_cuts",
+        "competition_missions",
+        "missions",
+        "worlds"
+      ],
+      "additionalProperties": false
+    },
+    "source_graph": {
+      "type": "string"
+    },
+    "tasks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "acceptance_checks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "depends_on": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "execution_type": {
+            "type": "string"
+          },
+          "expected_artifacts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "inputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "max_asset_repair_attempts": {
+            "anyOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          },
+          "max_repair_attempts": {
+            "type": "integer"
+          },
+          "original_task_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "release_scope": {
+            "type": "string"
+          },
+          "required_evidence_kind": {
+            "type": "string"
+          },
+          "required_gates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "single_writer_locks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stop_condition": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "workstream": {
+            "type": "string"
+          },
+          "write_areas": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "acceptance_checks",
+          "depends_on",
+          "execution_type",
+          "expected_artifacts",
+          "id",
+          "inputs",
+          "max_asset_repair_attempts",
+          "max_repair_attempts",
+          "original_task_ids",
+          "release_scope",
+          "required_evidence_kind",
+          "required_gates",
+          "single_writer_locks",
+          "stop_condition",
+          "title",
+          "workstream",
+          "write_areas"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "definition_status",
+    "freeze_id",
+    "runtime_state_path",
+    "schema_version",
+    "scope",
+    "source_graph",
+    "tasks"
+  ],
+  "additionalProperties": false
+}

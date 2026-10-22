@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C05",
+  "event": "passed",
+  "run_id": "bounded-refresh-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 5,
+  "previous_event_sha256": "e17f1e16698e5f82a75bf3dcce3ad15a7ca66fa1574273aa73f5bd15bbb13b92",
+  "result_path": "evidence/results/C05/bounded-refresh-20261017/attempt-01.json",
+  "result_sha256": "0d070dcb717e4549c2f54ff64ea4abaab8e91bfd4a888524898da019bd2bc2c3",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-16T21:51:29.877795+00:00"
+}

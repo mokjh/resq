@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "action": {
+      "type": "string",
+      "minLength": 1
+    },
+    "provider": {
+      "type": "string",
+      "minLength": 1
+    },
+    "destination": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authorized_by": {
+      "const": "user"
+    },
+    "user_instruction_reference": {
+      "type": "string",
+      "minLength": 1
+    },
+    "recorded_utc": {
+      "type": "string",
+      "minLength": 1
+    },
+    "maximum_credits": {
+      "type": "number",
+      "minimum": 0
+    },
+    "maximum_usd": {
+      "type": "number",
+      "minimum": 0
+    },
+    "allowed_artifact_hashes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "minItems": 0
+    },
+    "expires_utc": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "action",
+    "provider",
+    "destination",
+    "authorized_by",
+    "user_instruction_reference",
+    "recorded_utc",
+    "maximum_credits",
+    "maximum_usd",
+    "allowed_artifact_hashes",
+    "expires_utc"
+  ],
+  "additionalProperties": false
+}

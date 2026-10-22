@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Transport.Tests","references":["Resq.Core","Resq.Simulation","Resq.Content","Resq.Runtime.Transport.Editor"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"noEngineReferences":false}

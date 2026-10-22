@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "gate_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "const": "passed"
+    },
+    "type": {
+      "enum": [
+        "account",
+        "machine",
+        "permission",
+        "hardware",
+        "human",
+        "external",
+        "paid"
+      ]
+    },
+    "reviewer_kind": {
+      "enum": [
+        "human",
+        "machine"
+      ]
+    },
+    "reviewer_alias": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_utc": {
+      "type": "string",
+      "minLength": 1
+    },
+    "criteria": {
+      "type": "object",
+      "additionalProperties": {
+        "const": true
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "kind": {
+            "type": "string",
+            "minLength": 1
+          },
+          "byte_length": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "kind",
+          "byte_length"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "authorization_path": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "gate_id",
+    "status",
+    "type",
+    "reviewer_kind",
+    "reviewer_alias",
+    "observed_utc",
+    "criteria",
+    "evidence",
+    "authorization_path"
+  ],
+  "additionalProperties": false
+}

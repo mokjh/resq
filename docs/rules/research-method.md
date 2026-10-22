@@ -1,0 +1,11 @@
+# F07 capture method and boundaries
+
+The specialist owns only `docs/rules/**` and `evidence/rules/**`. It read the root instructions/handoff, F07 definition, check-f07 assertions, `tools/adapter_research.py::inspect_rules`, the original decisions/sources document, and the frozen competition contract. Original specifications and mutable task state were not edited.
+
+The four exact official URLs were opened with `web.run` and their relevant dated, category, access, originality, eligibility and presentation sections read. Direct HTTP requests used Python `urllib.request`; rules and FAQ returned 403, overview and announcement returned 200. The raw successful response bodies are retained unchanged. For rules and FAQ, `captures/*.web.json` stores the actual web.run returned text and metadata with local retrieval time; no whole-origin-HTML claim is made. HTMLParser generated the two `.text.txt` files from the stored HTML while excluding script/style text. Raw bodies and rendered excerpts are distinct evidence formats.
+
+The Quest verify-first skill was read at `/Users/dev/.agents/skills/hz-quest-verify-first/SKILL.md`. No Meta documentation MCP was discoverable in the tool list. The already-installed `/Users/dev/.metavr/bin/metavr` ran `docs search 'Meta VR Start Developer Competition 2026 Competition release channel hands-first'`; the unedited output is `evidence/rules/metavr-docs-search.log`. Search succeeded but included older competitions, so only the exact 2026 official sources support this review. No install/setup/device action was needed or performed.
+
+The deadline conversion uses Python `zoneinfo` for `America/Los_Angeles`, UTC and `Africa/Cairo` on 18 November 2026; see the machine record. A local timestamp records retrieval time, not the organizer's last modification. Content hashes bind the retained bytes and cannot establish that the organizer will not revise a page later.
+
+Only capture/hash/format sanity checks were performed by this specialist. No heavy build/test/import/render, acceptance CLI, state update, external write, contact or submission was performed. The primary coordinator owns acceptance and status/handoff updates. No persistent owned process remains after this research.

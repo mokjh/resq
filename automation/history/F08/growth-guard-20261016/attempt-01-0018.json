@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F08",
+  "event": "pending",
+  "run_id": "growth-guard-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 18,
+  "previous_event_sha256": "b6dcc6af2b8139af50ef51dc9762239b257b62be0eb512610e0eba7037d68257",
+  "result_path": "evidence/results/F08/build-binding-20261016/attempt-01.json",
+  "result_sha256": "f0eedf3e955d4378d488190a2605f8c30e331adf544ea3069b3b73edc85589a9",
+  "reason": "Accepted prerequisite head changed: F02; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T01:32:10.416117+00:00"
+}

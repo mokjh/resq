@@ -1,0 +1,8 @@
+{
+  "name": "Resq.Probe",
+  "rootNamespace": "Resq.Probe",
+  "references": [],
+  "allowUnsafeCode": false,
+  "autoReferenced": true,
+  "noEngineReferences": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "passed",
+  "run_id": "continuation-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 5,
+  "previous_event_sha256": "5d75667ede67c9eb27faaaeed5d78763dbd3d10486c0b31376230ea545136a8d",
+  "result_path": "evidence/results/F07/continuation-20261016/attempt-01.json",
+  "result_sha256": "9ad588803e929e495e57f04ad421bfd88ab16466a423412d811c2d4342d8b199",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-15T22:46:06.476490+00:00"
+}

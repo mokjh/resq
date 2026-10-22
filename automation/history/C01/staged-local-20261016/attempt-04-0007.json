@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C01",
+  "event": "running",
+  "run_id": "staged-local-20261016",
+  "attempt_id": "attempt-04",
+  "sequence": 7,
+  "previous_event_sha256": "2dd390d0cc7794068e5e74e7fa62436782c028268f00e377d19fe2291a9ae9d0",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T19:33:31.237381+00:00"
+}

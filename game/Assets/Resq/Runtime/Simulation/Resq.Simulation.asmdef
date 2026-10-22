@@ -1,0 +1,12 @@
+{
+  "name": "Resq.Simulation",
+  "rootNamespace": "Resq.Simulation",
+  "references": [
+    "Resq.Core",
+    "Resq.Content",
+    "Resq.Progression"
+  ],
+  "allowUnsafeCode": false,
+  "autoReferenced": true,
+  "noEngineReferences": true
+}

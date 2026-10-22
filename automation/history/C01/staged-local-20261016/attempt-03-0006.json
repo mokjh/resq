@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C01",
+  "event": "failed",
+  "run_id": "staged-local-20261016",
+  "attempt_id": "attempt-03",
+  "sequence": 6,
+  "previous_event_sha256": "5ef992c97fe8d21af320cd17d007a4f0f68301ee2acba0dbc23a500201404d2f",
+  "result_path": "evidence/results/C01/staged-local-20261016/attempt-03.json",
+  "result_sha256": "4b3d4d59f99a0ebb9930e92a8aed1c204df621def4552e4bcfd4db256a06eb98",
+  "reason": "Unity process/native report failed",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T19:30:09.158547+00:00"
+}

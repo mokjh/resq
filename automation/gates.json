@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "gates": [
+    {
+      "id": "host_license",
+      "kind": "account",
+      "pass_condition": "Preflight confirms installed Editor and valid current license readiness; no activation bypass",
+      "notes": "Readiness permits F03; actual licensed compilation is required by F03 acceptance, never by its own prerequisite gate.",
+      "authorization_actions": [],
+      "status": "passed",
+      "evidence_path": "evidence/gates/host_license/ready-20261016/gate.json",
+      "evidence_sha256": "e5f4df1ef46d1f0884f2e72132782d3b7a9ad32525dbf87e202c309d55f4c768"
+    },
+    {
+      "id": "host_working_storage",
+      "kind": "machine",
+      "pass_condition": "F03only: exact lean native-generated host packages, <=8MiBassets, measured64MiBgrowthcap +64MiBovershoot +2GiBhardreserve; fresh volume observation and owned cancellation. Does not admit Android/render/other tasks.",
+      "notes": "User-directed F03 reserve reassessment16October2026; separate from unchanged working_storage gate for other operations.",
+      "authorization_actions": [],
+      "status": "passed",
+      "evidence_path": "evidence/gates/host_working_storage/bounded64-20261016/gate.json",
+      "evidence_sha256": "c65aadb17bfb949b5ba03189baadd533d768779feaa1606f49c1382f7c1be5c4"
+    },
+    {
+      "id": "local_working_storage",
+      "kind": "machine",
+      "pass_condition": "F04/F06 staged local work only: fresh per-stage admission from local_operation_profiles.json;2GiB hard reserve plus explicit enforced growth budget and cancellation margin; unknown full peaks stay unknown. No task acceptance from readiness.",
+      "notes": "User-directed16October2026 reassessment. Reuse installed Android tools; do not change global preferences or other projects. Generic large-operation policies unchanged.",
+      "authorization_actions": [],
+      "status": "passed",
+      "evidence_path": "evidence/gates/local_working_storage/staged-20261016/gate.json",
+      "evidence_sha256": "97d554c6fb55575685d9e345c5f0c1c675513a21dc86f108b940f4e3ca32eb70"
+    },
+    {
+      "id": "working_storage",
+      "kind": "machine",
+      "pass_condition": "Use06section3.1: Unity max40GiB,peak+10; art max15GiB,3xnew+10; web max10GiB,peak+5; capture max20GiB,2xraw+3xexport+10; remeasure outputvolume",
+      "notes": "User chose freeing internal space; do not delete unrelated work.",
+      "authorization_actions": [],
+      "status": "blocked",
+      "evidence_path": "evidence/foundation/build-candidate-20261016/blocked-audit/audit.json",
+      "evidence_sha256": "bc083eb243a867bc93cbc61d5efd64b46e0b1b7f847d835bd07980ed44112deb"
+    },
+    {
+      "id": "unity_setup_authorization",
+      "kind": "permission",
+      "pass_condition": "Exact Android modules/package and any bridge changes approved",
+      "notes": "Original policy disallows implicit Unity package/MCP installation.",
+      "authorization_actions": [
+        "unity_setup"
+      ],
+      "status": "passed",
+      "evidence_path": "evidence/authorization/unity-setup-20261016/gate.json",
+      "evidence_sha256": "f8210612f173bc65e36f2e347c14262f814d851fb27efb0c5bb8b1380472b613"
+    },
+    {
+      "id": "quest_devices",
+      "kind": "hardware",
+      "pass_condition": "Both target devices connected/trusted and model/OS verified",
+      "notes": "User confirmed access, not connection or qualification.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "human_testers",
+      "kind": "human",
+      "pass_condition": "Consenting adult participants and observer are available; agreed session scope recorded",
+      "notes": "Readiness permits testing; actual observations are required by Wn-HUMAN/FULL-HUMAN, never by this prerequisite.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "mobbin_access",
+      "kind": "account",
+      "pass_condition": "Actual authenticated image results inspected",
+      "notes": "Connection probe was successful; full reference lock still required.",
+      "authorization_actions": [],
+      "status": "passed",
+      "evidence_path": "evidence/gates/mobbin_access/foundation-20261016/gate.json",
+      "evidence_sha256": "3978f2a83ac451b954ec1b45c0d3208097021c07a5b5880fdd12e3a59c3d2a8d"
+    },
+    {
+      "id": "capture_consent",
+      "kind": "human",
+      "pass_condition": "Specific room/person footage consent and privacy review recorded",
+      "notes": "No raw room uploads implied.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "vercel_preview_authorization",
+      "kind": "external",
+      "pass_condition": "Exact account/team/project and preview exposure approved",
+      "notes": "Local site must be reviewable first.",
+      "authorization_actions": [
+        "preview_deployment"
+      ],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "vercel_production_authorization",
+      "kind": "external",
+      "pass_condition": "Exact production destination authorized",
+      "notes": "Domain additionally requires ownership+DNS authorization; without it use real Vercel host.",
+      "authorization_actions": [
+        "production_deployment"
+      ],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "video_publication_authorization",
+      "kind": "external",
+      "pass_condition": "Final reviewed file and destination approved",
+      "notes": "Public upload separate from local assembly.",
+      "authorization_actions": [
+        "public_video_upload"
+      ],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "competition_eligibility",
+      "kind": "human",
+      "pass_condition": "Entrant confirms current eligibility/membership/rights",
+      "notes": "Deadline does not permit scope cuts.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "release_channel_authorization",
+      "kind": "external",
+      "pass_condition": "ExactAPK and Competition channel approved",
+      "notes": "No silent external release.",
+      "authorization_actions": [
+        "release_channel_upload"
+      ],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "entrant_final_submission",
+      "kind": "human",
+      "pass_condition": "Entrant is ready and accepts personal responsibility for final submission",
+      "notes": "Readiness permits D12; D12 supplies authentic receipt. No bot registration/legal attestation.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "commercial_owner_decisions",
+      "kind": "human",
+      "pass_condition": "Nameclearance/price/ratings/markets legally reviewed and approved",
+      "notes": "Do not invent legalclearance or finalprice.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "commercial_publication_authorization",
+      "kind": "external",
+      "pass_condition": "Final build/site/media destination explicitly approved",
+      "notes": "Local candidate and evidence remain available if blocked.",
+      "authorization_actions": [
+        "commercial_publication"
+      ],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "paid_generation_authorization",
+      "kind": "paid",
+      "pass_condition": "Exactprovider/project/assetbatch and verifiedcredit cap approved",
+      "notes": "Defaults0; Blender originals continue independently.",
+      "authorization_actions": [
+        "paid_generation"
+      ],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    },
+    {
+      "id": "support_identity",
+      "kind": "human",
+      "pass_condition": "Real owner identity and support contact supplied for truthful privacy/press/support pages",
+      "notes": "Do not invent company/contact; content model and other local work continue.",
+      "authorization_actions": [],
+      "status": "not_verified",
+      "evidence_path": null,
+      "evidence_sha256": null
+    }
+  ]
+}

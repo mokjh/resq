@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "pending",
+  "run_id": "dependency-refresh",
+  "attempt_id": "reconcile",
+  "sequence": 3,
+  "previous_event_sha256": "a99fe6c95ed38997359cf0638b3f05b464c5cddf5d67d1f6c76f348a96b5ca65",
+  "result_path": "evidence/results/F07/implementation-20261016/attempt-01.json",
+  "result_sha256": "594c634d6519714f4e374c886fe65eb521b84fdd21bb90c357facd27c9163c33",
+  "reason": "Accepted prerequisite head changed: F02; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T22:43:08.441945+00:00"
+}

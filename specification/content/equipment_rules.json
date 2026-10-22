@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "rules_version": "resq-rules-1",
+  "equipment": [
+    {
+      "id": "barrier",
+      "supply_cost": 2,
+      "socket_kind": "hydraulic_edge",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.barrier",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "bridge",
+      "supply_cost": 3,
+      "socket_kind": "ground_gap",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.bridge",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "pump",
+      "supply_cost": 3,
+      "socket_kind": "pump_link",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.pump",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "skiff",
+      "supply_cost": 4,
+      "socket_kind": "launch_dock",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.skiff",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "beacon",
+      "supply_cost": 1,
+      "socket_kind": "assembly",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.beacon",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "generator",
+      "supply_cost": 3,
+      "socket_kind": "dry_power_source",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.generator",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "firebreak",
+      "supply_cost": 2,
+      "socket_kind": "fuel_strip",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.firebreak",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "sprinkler",
+      "supply_cost": 3,
+      "socket_kind": "wetting_area",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.sprinkler",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "crawler",
+      "supply_cost": 4,
+      "socket_kind": "vehicle_depot",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.crawler",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "brace",
+      "supply_cost": 2,
+      "socket_kind": "structural_support",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.brace",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "winch",
+      "supply_cost": 3,
+      "socket_kind": "vertical_link",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.winch",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "relay",
+      "supply_cost": 2,
+      "socket_kind": "power_link",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.relay",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "cooler",
+      "supply_cost": 3,
+      "socket_kind": "cooling_segment",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.cooler",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    },
+    {
+      "id": "shelter",
+      "supply_cost": 4,
+      "socket_kind": "refuge",
+      "rules_ref": "specification/02_RUNTIME_RULES.md#equipment-defaults",
+      "prefab_id": "equipment.shelter",
+      "finite_stock": true,
+      "refund_on_reposition": false
+    }
+  ],
+  "fixed_vehicle": {
+    "id": "bus",
+    "seats": 4,
+    "ground_movement_slots": 2,
+    "purchasable": false
+  },
+  "fixed_infrastructure": {
+    "medical_station": {
+      "power_demand": 1
+    },
+    "clinic_power": {
+      "power_demand": 1
+    },
+    "lighthouse": {
+      "power_demand": 1
+    },
+    "cooling_works": {
+      "power_demand": 1
+    },
+    "refill_station": {
+      "power_demand": 0
+    },
+    "orchard_pump_house": {
+      "power_demand": 0
+    },
+    "cable_support": {
+      "power_demand": 0
+    },
+    "receiving_harbor": {
+      "power_demand": 0
+    }
+  },
+  "supply_policy": "reserve_selected_stock_then_spend_on_successful_deployment; no purchase charge at loadout"
+}

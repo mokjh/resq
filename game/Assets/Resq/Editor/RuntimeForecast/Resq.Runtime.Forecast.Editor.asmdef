@@ -1,0 +1,13 @@
+{
+  "name": "Resq.Runtime.Forecast.Editor",
+  "rootNamespace": "Resq.Editor.RuntimeForecast",
+  "references": [
+    "Resq.Content",
+    "Resq.Replay.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "autoReferenced": true,
+  "noEngineReferences": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C04",
+  "event": "passed",
+  "run_id": "bounded-integration-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 10,
+  "previous_event_sha256": "17d7b96b5f9daf544c0f6219b750f3e06c0d9e0bb25b75516c7e7661d6ae91c8",
+  "result_path": "evidence/results/C04/bounded-integration-20261017/attempt-01.json",
+  "result_sha256": "59f55409f6f1e11f6b4cdba14ebd4f7a3ac26f64d2c6a8224b85cbb71583098e",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-16T21:15:56.505272+00:00"
+}

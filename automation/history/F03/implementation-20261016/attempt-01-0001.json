@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "blocked",
+  "run_id": "implementation-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 1,
+  "previous_event_sha256": null,
+  "result_path": "evidence/results/F03/implementation-20261016/attempt-01.json",
+  "result_sha256": "09d6c497eb810488e7375313b540082c09d64d458f6efbfee0d445dbe33551ee",
+  "reason": "GATE_NOT_VERIFIED: host_license — Preflight confirms installed Editor and valid current license readiness; no activation bypass",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T21:22:41.656365+00:00"
+}

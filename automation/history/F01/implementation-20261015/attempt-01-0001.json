@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F01",
+  "event": "accepted",
+  "run_id": "implementation-20261015",
+  "attempt_id": "attempt-01",
+  "sequence": 1,
+  "previous_event_sha256": null,
+  "result_path": "evidence/results/F01/implementation-20261015/attempt-01.json",
+  "result_sha256": "bded8bf98f94649ce0c078d562c9057535455adbbb7018ed3a80de8992781b98",
+  "verifier": "tools/verify_task_result.py + coordinator dereference",
+  "accepted_utc": "2026-10-15T20:57:05.448957+00:00",
+  "evidence_level": "automated_host_preflight_only"
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F02",
+  "event": "passed",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-02",
+  "sequence": 26,
+  "previous_event_sha256": "841e2a7865adc3517c8c1d51e2e04b13961760caecaf33bca69b11d3ad955dc4",
+  "result_path": "evidence/results/F02/bounded-host-20261016/attempt-02.json",
+  "result_sha256": "d6fb0d2b32acfa4c90423940c282d8d7b18e8a5b71ef404fb3b18bcdc478558a",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-16T17:46:21.948132+00:00"
+}

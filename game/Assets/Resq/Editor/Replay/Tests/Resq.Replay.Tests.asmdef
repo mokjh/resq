@@ -1,0 +1,1 @@
+{"name":"Resq.Replay.Tests","references":["Resq.Content","Resq.Core","Resq.Simulation","Resq.Progression","Resq.Persistence","Resq.Replay.Editor"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"noEngineReferences":false}

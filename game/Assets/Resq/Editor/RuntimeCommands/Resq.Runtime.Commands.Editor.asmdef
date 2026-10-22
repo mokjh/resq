@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Commands.Editor","rootNamespace":"Resq.Editor.RuntimeCommands","references":["Resq.Content"],"includePlatforms":["Editor"],"autoReferenced":true,"noEngineReferences":true}

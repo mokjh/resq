@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "passed",
+  "run_id": "device-binding-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 11,
+  "previous_event_sha256": "234d019f1278f32ce302f7a7066e88aba36eff7de6d27a307076fa6ffc1458e3",
+  "result_path": "evidence/results/F07/device-binding-20261016/attempt-01.json",
+  "result_sha256": "484fe72ee579c9f9708495943e8b7f3b8313b2f3f93b4f9b92b9b2cd51fed62c",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-15T23:48:36.111396+00:00"
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "pending",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-02",
+  "sequence": 10,
+  "previous_event_sha256": "8a16e71ebdcafbab2910801e08d6fe39e178bfc69f467b85b35f2b0f238502cf",
+  "result_path": "evidence/results/F03/bounded-host-20261016/attempt-04.json",
+  "result_sha256": "aac69ae44d8b546a498aac7a333bc18f698fff4104a5f984430981171c20e054",
+  "reason": "Accepted prerequisite head changed: F02; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T17:46:21.951681+00:00"
+}

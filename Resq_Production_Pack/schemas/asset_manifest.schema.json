@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Resq asset provenance and qualification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "assets"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "asset_id",
+          "status",
+          "category",
+          "source_path",
+          "export_path",
+          "source_sha256",
+          "export_sha256",
+          "provenance",
+          "metrics",
+          "notes"
+        ],
+        "properties": {
+          "asset_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "status": {
+            "enum": [
+              "planned",
+              "source_created",
+              "exported",
+              "unity_verified",
+              "qualified",
+              "quarantined"
+            ]
+          },
+          "category": {
+            "type": "string",
+            "minLength": 1
+          },
+          "source_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "export_path": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "source_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "export_sha256": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "provenance": {
+            "type": "object",
+            "required": [
+              "creator_or_provider",
+              "rights_status",
+              "evidence_paths"
+            ],
+            "properties": {
+              "creator_or_provider": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "rights_status": {
+                "enum": [
+                  "unverified",
+                  "verified",
+                  "blocked"
+                ]
+              },
+              "evidence_paths": {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              },
+              "project_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "generation_id": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "triangles_lod0",
+              "materials",
+              "texture_bytes",
+              "units_verified",
+              "colliders_verified",
+              "unity_render_verified"
+            ],
+            "properties": {
+              "triangles_lod0": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "materials": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "texture_bytes": {
+                "type": [
+                  "integer",
+                  "null"
+                ],
+                "minimum": 0
+              },
+              "units_verified": {
+                "type": "boolean"
+              },
+              "colliders_verified": {
+                "type": "boolean"
+              },
+              "unity_render_verified": {
+                "type": "boolean"
+              }
+            }
+          },
+          "notes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        }
+      }
+    }
+  }
+}

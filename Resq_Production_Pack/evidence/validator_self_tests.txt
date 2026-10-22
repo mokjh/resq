@@ -1,0 +1,14 @@
+test_duplicate_json_key (__main__.PackValidatorTests.test_duplicate_json_key) ... ok
+test_duplicate_mission (__main__.PackValidatorTests.test_duplicate_mission) ... ok
+test_false_release_claim (__main__.PackValidatorTests.test_false_release_claim) ... ok
+test_missing_equipment (__main__.PackValidatorTests.test_missing_equipment) ... ok
+test_outside_event (__main__.PackValidatorTests.test_outside_event) ... ok
+test_over_budget (__main__.PackValidatorTests.test_over_budget) ... ok
+test_rescue_minimum (__main__.PackValidatorTests.test_rescue_minimum) ... ok
+test_task_cycle (__main__.PackValidatorTests.test_task_cycle) ... ok
+test_valid_pack (__main__.PackValidatorTests.test_valid_pack) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.056s
+
+OK

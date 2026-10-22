@@ -1,0 +1,63 @@
+# --- OS / editors ---
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+
+# --- Unity (game/) ---
+game/[Ll]ibrary/
+game/[Tt]emp/
+game/[Oo]bj/
+game/[Ll]ogs/
+game/[Uu]ser[Ss]ettings/
+game/[Bb]uild/
+game/[Bb]uilds/
+game/MemoryCaptures/
+game/Recordings/
+game/*.csproj
+game/*.sln
+game/*.slnx
+game/.vs/
+game/.utmp/
+game/sysinfo.txt
+game/*.apk
+game/*.aab
+game/crashlytics-buildid.txt
+
+# --- Build outputs and tool caches ---
+/build/
+/builds/
+tools/.cache/
+tools/runner/bin/
+tools/runner/obj/
+reference/legacy-sim/bin/
+reference/legacy-sim/obj/
+
+# --- Secrets and signing (never commit) ---
+.env
+.env.*
+!.env.example
+*.keystore
+*.jks
+keystore/
+secrets/
+
+# --- Web ---
+web/app/node_modules/
+web/app/.next/
+web/app/out/
+web/app/.vercel/
+node_modules/
+
+# --- Video raw captures (private room footage stays local) ---
+video/raw/
+video/cache/
+video/exports/*.mov
+
+# --- Frozen pre-22-Oct-2026 process evidence: kept on disk, not tracked ---
+/evidence/
+/automation/locks/

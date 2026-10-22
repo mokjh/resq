@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C07",
+  "event": "failed",
+  "run_id": "bounded-local-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 2,
+  "previous_event_sha256": "9c6dc9807628178136dcbb75aa8eeaa64acba6a3b9355b38bc7b76e8e8f89f73",
+  "result_path": "evidence/results/C07/bounded-local-20261017/attempt-01.json",
+  "result_sha256": "ce91d8ec0736677f67c01d1ab36012cdfd96f41f5b1ef9608a8fa62a196af91a",
+  "reason": "Unity process/native report failed",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T23:56:35.115949+00:00"
+}

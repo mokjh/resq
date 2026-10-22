@@ -1,0 +1,7307 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/CompiledMission",
+  "$defs": {
+    "EquipmentCount": {
+      "type": "object",
+      "properties": {
+        "equipment_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "equipment_id",
+        "count"
+      ],
+      "additionalProperties": false
+    },
+    "WorldDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5
+        },
+        "release_scope": {
+          "enum": [
+            "competition",
+            "full_release"
+          ],
+          "type": "string"
+        },
+        "title_key": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "art_bundle_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "audio_bundle_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        }
+      },
+      "required": [
+        "id",
+        "order",
+        "release_scope",
+        "title_key",
+        "art_bundle_id",
+        "audio_bundle_id"
+      ],
+      "additionalProperties": false
+    },
+    "BarrierParameters": {
+      "type": "object",
+      "properties": {
+        "crest_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "warning_head_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "damage_head_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "damage_per_pulse": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "crest_mm",
+        "warning_head_mm",
+        "damage_head_mm",
+        "damage_per_pulse"
+      ],
+      "additionalProperties": false
+    },
+    "BridgeParameters": {
+      "type": "object",
+      "properties": {
+        "close_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "damage_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "close_depth_mm",
+        "damage_depth_mm"
+      ],
+      "additionalProperties": false
+    },
+    "PumpParameters": {
+      "type": "object",
+      "properties": {
+        "rate_mm3_per_second": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000
+        },
+        "max_lift_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "rate_mm3_per_second",
+        "max_lift_mm"
+      ],
+      "additionalProperties": false
+    },
+    "SkiffParameters": {
+      "type": "object",
+      "properties": {
+        "boarding_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "unboarding_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "boarding_operation_ticks",
+        "unboarding_operation_ticks"
+      ],
+      "additionalProperties": false
+    },
+    "CrawlerParameters": {
+      "type": "object",
+      "properties": {
+        "boarding_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "unboarding_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "boarding_operation_ticks",
+        "unboarding_operation_ticks"
+      ],
+      "additionalProperties": false
+    },
+    "BeaconParameters": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "GeneratorParameters": {
+      "type": "object",
+      "properties": {
+        "shutdown_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "restart_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "damage_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "shutdown_depth_mm",
+        "restart_depth_mm",
+        "damage_depth_mm"
+      ],
+      "additionalProperties": false
+    },
+    "FirebreakParameters": {
+      "type": "object",
+      "properties": {
+        "maximum_cells": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "uses": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "maximum_cells",
+        "uses"
+      ],
+      "additionalProperties": false
+    },
+    "SprinklerParameters": {
+      "type": "object",
+      "properties": {
+        "rate_mm3_per_second": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000
+        },
+        "maximum_cells": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "rate_mm3_per_second",
+        "maximum_cells"
+      ],
+      "additionalProperties": false
+    },
+    "BraceParameters": {
+      "type": "object",
+      "properties": {
+        "stability_bonus": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "maximum_per_support": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "stability_bonus",
+        "maximum_per_support"
+      ],
+      "additionalProperties": false
+    },
+    "WinchParameters": {
+      "type": "object",
+      "properties": {
+        "crossing_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "duty_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "rest_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "brake_operation_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "crossing_operation_ticks",
+        "duty_operation_ticks",
+        "rest_operation_ticks",
+        "brake_operation_ticks"
+      ],
+      "additionalProperties": false
+    },
+    "RelayParameters": {
+      "type": "object",
+      "properties": {
+        "disconnect_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "reconnect_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "disconnect_depth_mm",
+        "reconnect_depth_mm"
+      ],
+      "additionalProperties": false
+    },
+    "CoolerParameters": {
+      "type": "object",
+      "properties": {
+        "initial_charges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "capacity_charges": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "cooling_scenario_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "crust_scenario_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "reheat_scenario_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "initial_charges",
+        "capacity_charges",
+        "cooling_scenario_ticks",
+        "crust_scenario_ticks",
+        "reheat_scenario_ticks"
+      ],
+      "additionalProperties": false
+    },
+    "ShelterParameters": {
+      "type": "object",
+      "properties": {
+        "initial_protection_scenario_ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "initial_protection_scenario_ticks"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentDef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "barrier",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/BarrierParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "bridge",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/BridgeParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "pump",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/PumpParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "skiff",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/SkiffParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "crawler",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/CrawlerParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "beacon",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/BeaconParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "generator",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/GeneratorParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "firebreak",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/FirebreakParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "sprinkler",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/SprinklerParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "brace",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/BraceParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "winch",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/WinchParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "relay",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/RelayParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "cooler",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/CoolerParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "const": "shelter",
+              "type": "string"
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "supply_cost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "first_world_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "socket_kinds": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+              },
+              "minItems": 0,
+              "maxItems": 16384
+            },
+            "power_supply": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "power_demand": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "resident_seats": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "movement_slots": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "relocation_policy": {
+              "enum": [
+                "none",
+                "idle_same_zone"
+              ],
+              "type": "string"
+            },
+            "durability": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 2147483647
+            },
+            "parameters": {
+              "$ref": "#/$defs/ShelterParameters"
+            },
+            "prefab_id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            }
+          },
+          "required": [
+            "id",
+            "revision",
+            "supply_cost",
+            "first_world_id",
+            "socket_kinds",
+            "power_supply",
+            "power_demand",
+            "resident_seats",
+            "movement_slots",
+            "relocation_policy",
+            "durability",
+            "parameters",
+            "prefab_id"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "RuleProfileDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "enum": [
+            "standard",
+            "relaxed",
+            "command"
+          ],
+          "type": "string"
+        },
+        "scenario_numerator": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2
+        },
+        "scenario_denominator": {
+          "const": 2,
+          "type": "integer"
+        },
+        "planning_allowed": {
+          "const": true,
+          "type": "boolean"
+        },
+        "extra_stock": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EquipmentCount"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "permitted_input_adapters": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        }
+      },
+      "required": [
+        "id",
+        "scenario_numerator",
+        "scenario_denominator",
+        "planning_allowed",
+        "extra_stock",
+        "permitted_input_adapters"
+      ],
+      "additionalProperties": false
+    },
+    "ShiftEventOperation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "shift_event",
+          "type": "string"
+        },
+        "event_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "delta_scenario_ticks": {
+          "type": "integer",
+          "minimum": -1000000,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "kind",
+        "event_id",
+        "delta_scenario_ticks"
+      ],
+      "additionalProperties": false
+    },
+    "ReplacePickupNodeOperation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "replace_pickup_node",
+          "type": "string"
+        },
+        "group_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        }
+      },
+      "required": [
+        "kind",
+        "group_id",
+        "node_id"
+      ],
+      "additionalProperties": false
+    },
+    "ReverseWindVectorsOperation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "reverse_wind_vectors",
+          "type": "string"
+        },
+        "enabled": {
+          "const": true,
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "enabled"
+      ],
+      "additionalProperties": false
+    },
+    "TideStartIndexOperation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "tide_start_index",
+          "type": "string"
+        },
+        "controller_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "index": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        }
+      },
+      "required": [
+        "kind",
+        "controller_id",
+        "index"
+      ],
+      "additionalProperties": false
+    },
+    "MaximumEquipmentLossesOperation": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "maximum_equipment_losses",
+          "type": "string"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "kind",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "ChallengeOperation": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ShiftEventOperation"
+        },
+        {
+          "$ref": "#/$defs/ReplacePickupNodeOperation"
+        },
+        {
+          "$ref": "#/$defs/ReverseWindVectorsOperation"
+        },
+        {
+          "$ref": "#/$defs/TideStartIndexOperation"
+        },
+        {
+          "$ref": "#/$defs/MaximumEquipmentLossesOperation"
+        }
+      ]
+    },
+    "ChallengeDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "base_mission_version_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChallengeOperation"
+          },
+          "minItems": 0,
+          "maxItems": 2048
+        },
+        "replacement_default_stock": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EquipmentCount"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "replacement_maximum_stock": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EquipmentCount"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "resulting_budget": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "id",
+        "revision",
+        "base_mission_version_id",
+        "operations",
+        "replacement_default_stock",
+        "replacement_maximum_stock",
+        "resulting_budget"
+      ],
+      "additionalProperties": false
+    },
+    "GroupDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "resident_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "start_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "assembly_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "initially_held": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "resident_ids",
+        "start_node_id",
+        "assembly_node_id",
+        "initially_held"
+      ],
+      "additionalProperties": false
+    },
+    "AtEndTemporal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "at_end",
+          "type": "string"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false
+    },
+    "EverByTemporal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ever_by",
+          "type": "string"
+        },
+        "deadline_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "kind",
+        "deadline_tick"
+      ],
+      "additionalProperties": false
+    },
+    "AlwaysTemporal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "always",
+          "type": "string"
+        },
+        "start_event": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "end_event": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        }
+      },
+      "required": [
+        "kind",
+        "start_event",
+        "end_event"
+      ],
+      "additionalProperties": false
+    },
+    "EverBeforeTemporal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "ever_before",
+          "type": "string"
+        },
+        "end_event": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        }
+      },
+      "required": [
+        "kind",
+        "end_event"
+      ],
+      "additionalProperties": false
+    },
+    "HoldForTemporal": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "hold_for",
+          "type": "string"
+        },
+        "scenario_ticks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "start_event": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "end_event": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        }
+      },
+      "required": [
+        "kind",
+        "scenario_ticks",
+        "start_event",
+        "end_event"
+      ],
+      "additionalProperties": false
+    },
+    "TemporalDef": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/AtEndTemporal"
+        },
+        {
+          "$ref": "#/$defs/EverByTemporal"
+        },
+        {
+          "$ref": "#/$defs/AlwaysTemporal"
+        },
+        {
+          "$ref": "#/$defs/EverBeforeTemporal"
+        },
+        {
+          "$ref": "#/$defs/HoldForTemporal"
+        }
+      ]
+    },
+    "RescueCountParams": {
+      "type": "object",
+      "properties": {
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "RescueCountCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "rescue_count",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/RescueCountParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "GroupEvacuatedParams": {
+      "type": "object",
+      "properties": {
+        "group_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "group_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "GroupEvacuatedCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "group_evacuated",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/GroupEvacuatedParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "InfrastructureOperationalParams": {
+      "type": "object",
+      "properties": {
+        "infrastructure_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "operational": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "infrastructure_id",
+        "operational"
+      ],
+      "additionalProperties": false
+    },
+    "InfrastructureOperationalCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "infrastructure_operational",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/InfrastructureOperationalParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "RouteAvailableParams": {
+      "type": "object",
+      "properties": {
+        "route_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "traversal_class": {
+          "enum": [
+            "ground",
+            "water",
+            "cable"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "route_id",
+        "traversal_class"
+      ],
+      "additionalProperties": false
+    },
+    "RouteAvailableCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "route_available",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/RouteAvailableParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "ExposureBelowParams": {
+      "type": "object",
+      "properties": {
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "hazard": {
+          "enum": [
+            "water",
+            "fire",
+            "lava",
+            "runout"
+          ],
+          "type": "string"
+        },
+        "threshold": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "region_id",
+        "hazard",
+        "threshold"
+      ],
+      "additionalProperties": false
+    },
+    "ExposureBelowCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "exposure_below",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/ExposureBelowParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentLossesAtMostParams": {
+      "type": "object",
+      "properties": {
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentLossesAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "equipment_losses_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EquipmentLossesAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "SupplyRemainingAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        }
+      },
+      "required": [
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "SupplyRemainingAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "supply_remaining_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/SupplyRemainingAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceRemainingParams": {
+      "type": "object",
+      "properties": {
+        "store_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "store_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceRemainingCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "resource_remaining",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/ResourceRemainingParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "AllVehiclesUnloadedParams": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "AllVehiclesUnloadedCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "all_vehicles_unloaded",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/AllVehiclesUnloadedParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "TemporarySheltersEmptyParams": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "TemporarySheltersEmptyCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "temporary_shelters_empty",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/TemporarySheltersEmptyParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "TemporaryStagingEmptyParams": {
+      "type": "object",
+      "properties": {},
+      "required": [],
+      "additionalProperties": false
+    },
+    "TemporaryStagingEmptyCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "temporary_staging_empty",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/TemporaryStagingEmptyParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioElapsedAtMostParams": {
+      "type": "object",
+      "properties": {
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        }
+      },
+      "required": [
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "ScenarioElapsedAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "scenario_elapsed_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/ScenarioElapsedAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "AllParams": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConditionDef"
+          },
+          "minItems": 1,
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "conditions"
+      ],
+      "additionalProperties": false
+    },
+    "AllCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "all",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/AllParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "AnyParams": {
+      "type": "object",
+      "properties": {
+        "conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ConditionDef"
+          },
+          "minItems": 1,
+          "maxItems": 16
+        }
+      },
+      "required": [
+        "conditions"
+      ],
+      "additionalProperties": false
+    },
+    "AnyCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "any",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/AnyParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EvacuatedByModeAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "evacuated_by_mode",
+          "type": "string"
+        },
+        "group_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "ground",
+            "water",
+            "cable"
+          ],
+          "type": "string"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "group_id",
+        "mode",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "EvacuatedByModeAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EvacuatedByModeAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EdgeTransfersAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "edge_transfers",
+          "type": "string"
+        },
+        "edge_tag": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "edge_tag",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "EdgeTransfersAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EdgeTransfersAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentDeploymentsAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "equipment_deployments",
+          "type": "string"
+        },
+        "equipment_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "equipment_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentDeploymentsAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EquipmentDeploymentsAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "MaxNodeDwellScenarioTicksAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "max_node_dwell_scenario_ticks",
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "node_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "MaxNodeDwellScenarioTicksAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/MaxNodeDwellScenarioTicksAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "PeakNodeOccupancyAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "peak_node_occupancy",
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "node_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "PeakNodeOccupancyAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/PeakNodeOccupancyAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "MaxDockQueueOperationTicksAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "max_dock_queue_operation_ticks",
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "node_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "MaxDockQueueOperationTicksAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/MaxDockQueueOperationTicksAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "LoadedClosedDockWaitOperationTicksAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "loaded_closed_dock_wait_operation_ticks",
+          "type": "string"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "LoadedClosedDockWaitOperationTicksAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/LoadedClosedDockWaitOperationTicksAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "PumpedIntoRegionMm3AtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "pumped_into_region_mm3",
+          "type": "string"
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "region_id",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "PumpedIntoRegionMm3AtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/PumpedIntoRegionMm3AtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "GeneratorShutdownsAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "generator_shutdowns",
+          "type": "string"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "GeneratorShutdownsAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/GeneratorShutdownsAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "StationShutdownsAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "station_shutdowns",
+          "type": "string"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "StationShutdownsAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/StationShutdownsAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "ShelterExhaustionsAtLeastParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "shelter_exhaustions",
+          "type": "string"
+        },
+        "minimum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "minimum"
+      ],
+      "additionalProperties": false
+    },
+    "ShelterExhaustionsAtLeastCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_least",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/ShelterExhaustionsAtLeastParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EvacuatedByModeAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "evacuated_by_mode",
+          "type": "string"
+        },
+        "group_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "mode": {
+          "enum": [
+            "ground",
+            "water",
+            "cable"
+          ],
+          "type": "string"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "group_id",
+        "mode",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "EvacuatedByModeAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EvacuatedByModeAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EdgeTransfersAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "edge_transfers",
+          "type": "string"
+        },
+        "edge_tag": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "edge_tag",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "EdgeTransfersAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EdgeTransfersAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentDeploymentsAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "equipment_deployments",
+          "type": "string"
+        },
+        "equipment_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "equipment_id",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "EquipmentDeploymentsAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/EquipmentDeploymentsAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "MaxNodeDwellScenarioTicksAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "max_node_dwell_scenario_ticks",
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "node_id",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "MaxNodeDwellScenarioTicksAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/MaxNodeDwellScenarioTicksAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "PeakNodeOccupancyAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "peak_node_occupancy",
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "node_id",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "PeakNodeOccupancyAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/PeakNodeOccupancyAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "MaxDockQueueOperationTicksAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "max_dock_queue_operation_ticks",
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "node_id",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "MaxDockQueueOperationTicksAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/MaxDockQueueOperationTicksAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "LoadedClosedDockWaitOperationTicksAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "loaded_closed_dock_wait_operation_ticks",
+          "type": "string"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "LoadedClosedDockWaitOperationTicksAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/LoadedClosedDockWaitOperationTicksAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "PumpedIntoRegionMm3AtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "pumped_into_region_mm3",
+          "type": "string"
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "region_id",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "PumpedIntoRegionMm3AtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/PumpedIntoRegionMm3AtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "GeneratorShutdownsAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "generator_shutdowns",
+          "type": "string"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "GeneratorShutdownsAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/GeneratorShutdownsAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "StationShutdownsAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "station_shutdowns",
+          "type": "string"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "StationShutdownsAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/StationShutdownsAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "ShelterExhaustionsAtMostParams": {
+      "type": "object",
+      "properties": {
+        "metric": {
+          "const": "shelter_exhaustions",
+          "type": "string"
+        },
+        "maximum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "metric",
+        "maximum"
+      ],
+      "additionalProperties": false
+    },
+    "ShelterExhaustionsAtMostCondition": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "counter_at_most",
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/$defs/ShelterExhaustionsAtMostParams"
+        }
+      },
+      "required": [
+        "kind",
+        "params"
+      ],
+      "additionalProperties": false
+    },
+    "ConditionDef": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/RescueCountCondition"
+        },
+        {
+          "$ref": "#/$defs/GroupEvacuatedCondition"
+        },
+        {
+          "$ref": "#/$defs/InfrastructureOperationalCondition"
+        },
+        {
+          "$ref": "#/$defs/RouteAvailableCondition"
+        },
+        {
+          "$ref": "#/$defs/ExposureBelowCondition"
+        },
+        {
+          "$ref": "#/$defs/EquipmentLossesAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/SupplyRemainingAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/ResourceRemainingCondition"
+        },
+        {
+          "$ref": "#/$defs/AllVehiclesUnloadedCondition"
+        },
+        {
+          "$ref": "#/$defs/TemporarySheltersEmptyCondition"
+        },
+        {
+          "$ref": "#/$defs/TemporaryStagingEmptyCondition"
+        },
+        {
+          "$ref": "#/$defs/ScenarioElapsedAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/AllCondition"
+        },
+        {
+          "$ref": "#/$defs/AnyCondition"
+        },
+        {
+          "$ref": "#/$defs/EvacuatedByModeAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/EdgeTransfersAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/EquipmentDeploymentsAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/MaxNodeDwellScenarioTicksAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/PeakNodeOccupancyAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/MaxDockQueueOperationTicksAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/LoadedClosedDockWaitOperationTicksAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/PumpedIntoRegionMm3AtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/GeneratorShutdownsAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/StationShutdownsAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/ShelterExhaustionsAtLeastCondition"
+        },
+        {
+          "$ref": "#/$defs/EvacuatedByModeAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/EdgeTransfersAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/EquipmentDeploymentsAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/MaxNodeDwellScenarioTicksAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/PeakNodeOccupancyAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/MaxDockQueueOperationTicksAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/LoadedClosedDockWaitOperationTicksAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/PumpedIntoRegionMm3AtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/GeneratorShutdownsAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/StationShutdownsAtMostCondition"
+        },
+        {
+          "$ref": "#/$defs/ShelterExhaustionsAtMostCondition"
+        }
+      ]
+    },
+    "ObjectiveDef": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "rescue_count",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/RescueCountParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "group_evacuated",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/GroupEvacuatedParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "infrastructure_operational",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/InfrastructureOperationalParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "route_available",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/RouteAvailableParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "exposure_below",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/ExposureBelowParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "equipment_losses_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EquipmentLossesAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "supply_remaining_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/SupplyRemainingAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "resource_remaining",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/ResourceRemainingParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "all_vehicles_unloaded",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/AllVehiclesUnloadedParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "temporary_shelters_empty",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/TemporarySheltersEmptyParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "temporary_staging_empty",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/TemporaryStagingEmptyParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "scenario_elapsed_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/ScenarioElapsedAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "all",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/AllParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "any",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/AnyParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EvacuatedByModeAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EdgeTransfersAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EquipmentDeploymentsAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/MaxNodeDwellScenarioTicksAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/PeakNodeOccupancyAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/MaxDockQueueOperationTicksAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/LoadedClosedDockWaitOperationTicksAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/PumpedIntoRegionMm3AtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/GeneratorShutdownsAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/StationShutdownsAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_least",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/ShelterExhaustionsAtLeastParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EvacuatedByModeAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EdgeTransfersAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/EquipmentDeploymentsAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/MaxNodeDwellScenarioTicksAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/PeakNodeOccupancyAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/MaxDockQueueOperationTicksAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/LoadedClosedDockWaitOperationTicksAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/PumpedIntoRegionMm3AtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/GeneratorShutdownsAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/StationShutdownsAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "tier": {
+              "enum": [
+                "required",
+                "critical",
+                "mastery",
+                "optional"
+              ],
+              "type": "string"
+            },
+            "kind": {
+              "const": "counter_at_most",
+              "type": "string"
+            },
+            "params": {
+              "$ref": "#/$defs/ShelterExhaustionsAtMostParams"
+            },
+            "temporal": {
+              "$ref": "#/$defs/TemporalDef"
+            }
+          },
+          "required": [
+            "id",
+            "tier",
+            "kind",
+            "params",
+            "temporal"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "MilestoneDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "group_boarded",
+            "final_unload_started",
+            "all_evacuated",
+            "first_cooled_crossing_closed"
+          ],
+          "type": "string"
+        },
+        "target": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "EventOperation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_source_rate",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "warn_route",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_edge_enabled",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_current_multiplier",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 500,
+              "maximum": 2000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "release_group",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "ignite_region",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_wind",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_region_cooling",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "warn_resource",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "add_heat",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "warn_wind_change",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_stability_loss",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_support_load",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "tremor",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "warn_runout",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "release_avalanche",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "warn_support",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_tide_segment",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 3
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "set_infrastructure_demand",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 32
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "advance_lava",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "enable_cooler_socket",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "warn_reheat",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000000
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "kind": {
+              "const": "enable_shelter_hazard",
+              "type": "string"
+            },
+            "target_role": {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            "value": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "kind",
+            "target_role",
+            "value"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "EventDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "at_scenario_tick": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "warning_at_scenario_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "known_at_start": {
+          "type": "boolean"
+        },
+        "operations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EventOperation"
+          },
+          "minItems": 1,
+          "maxItems": 2048
+        }
+      },
+      "required": [
+        "id",
+        "at_scenario_tick",
+        "warning_at_scenario_tick",
+        "known_at_start",
+        "operations"
+      ],
+      "additionalProperties": false
+    },
+    "CompiledMission": {
+      "type": "object",
+      "properties": {
+        "mission_version_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "revision": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "world_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "rules_version": {
+          "const": "resq-rules-1",
+          "type": "string"
+        },
+        "duration_scenario_ticks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1000000
+        },
+        "total_residents": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 256
+        },
+        "minimum_rescues": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "supply_budget": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "default_stock": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EquipmentCount"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "maximum_stock": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EquipmentCount"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "permitted_equipment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "layout_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 2
+        },
+        "groups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/GroupDef"
+          },
+          "minItems": 1,
+          "maxItems": 256
+        },
+        "objectives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ObjectiveDef"
+          },
+          "minItems": 1,
+          "maxItems": 128
+        },
+        "protection_objective_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 128
+        },
+        "milestones": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MilestoneDef"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EventDef"
+          },
+          "minItems": 0,
+          "maxItems": 2048
+        },
+        "rule_profile_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 3
+        },
+        "challenge_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "tutorial_policy": {
+          "enum": [
+            "none",
+            "guided_first_play_then_unguided",
+            "world_mechanic_guidance"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "mission_version_id",
+        "id",
+        "revision",
+        "world_id",
+        "rules_version",
+        "duration_scenario_ticks",
+        "total_residents",
+        "minimum_rescues",
+        "supply_budget",
+        "default_stock",
+        "maximum_stock",
+        "permitted_equipment_ids",
+        "layout_ids",
+        "groups",
+        "objectives",
+        "protection_objective_ids",
+        "milestones",
+        "events",
+        "rule_profile_ids",
+        "challenge_ids",
+        "tutorial_policy"
+      ],
+      "additionalProperties": false
+    },
+    "NavNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "assembly",
+            "junction",
+            "dock",
+            "shelter",
+            "evacuation",
+            "vehicle_parking"
+          ],
+          "type": "string"
+        },
+        "position_mm": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": -1000000,
+            "maximum": 1000000
+          },
+          "minItems": 3,
+          "maxItems": 3
+        },
+        "resident_capacity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "vehicle_slots": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "dock_berths": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "mobility_classes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "standard",
+              "step_free"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 2
+        },
+        "hazard_region_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "power_consumer_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "is_temporary_staging": {
+          "type": "boolean"
+        },
+        "safe_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "safe_heat_points": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "dock_min_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "dock_max_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "position_mm",
+        "resident_capacity",
+        "vehicle_slots",
+        "dock_berths",
+        "mobility_classes",
+        "hazard_region_ids",
+        "power_consumer_id",
+        "is_temporary_staging",
+        "safe_depth_mm",
+        "safe_heat_points",
+        "dock_min_depth_mm",
+        "dock_max_depth_mm"
+      ],
+      "additionalProperties": false
+    },
+    "NavEdge": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "from_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "to_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "traversal_class": {
+          "enum": [
+            "ground",
+            "water",
+            "cable"
+          ],
+          "type": "string"
+        },
+        "mobility_classes": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "standard",
+              "step_free"
+            ],
+            "type": "string"
+          },
+          "minItems": 1,
+          "maxItems": 2
+        },
+        "movement_capacity": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "base_operation_ticks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "current_multiplier_permille": {
+          "type": "integer",
+          "minimum": 500,
+          "maximum": 2000
+        },
+        "administrative_enabled": {
+          "type": "boolean"
+        },
+        "required_equipment_socket_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required_power_consumer_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hazard_region_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "maximum_water_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "minimum_water_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "maximum_heat_points": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "step_free": {
+          "type": "boolean"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        }
+      },
+      "required": [
+        "id",
+        "from_node_id",
+        "to_node_id",
+        "traversal_class",
+        "mobility_classes",
+        "movement_capacity",
+        "base_operation_ticks",
+        "current_multiplier_permille",
+        "administrative_enabled",
+        "required_equipment_socket_id",
+        "required_power_consumer_id",
+        "hazard_region_ids",
+        "maximum_water_depth_mm",
+        "minimum_water_depth_mm",
+        "maximum_heat_points",
+        "step_free",
+        "tags"
+      ],
+      "additionalProperties": false
+    },
+    "NamedRoute": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "from_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "to_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "required_waypoint_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "traversal_class": {
+          "enum": [
+            "ground",
+            "water",
+            "cable"
+          ],
+          "type": "string"
+        },
+        "mobility_class": {
+          "enum": [
+            "standard",
+            "step_free"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "from_node_id",
+        "to_node_id",
+        "required_waypoint_ids",
+        "traversal_class",
+        "mobility_class"
+      ],
+      "additionalProperties": false
+    },
+    "Socket": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "permitted_equipment_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "orientation_steps": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 3
+          },
+          "minItems": 1,
+          "maxItems": 4
+        },
+        "relocation_zone": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "footprint_cell_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "hydraulic_link_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "intake_node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "outlet_node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "power_node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "support_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "lava_segment_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "fire_cell_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "resource_store_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "node_id",
+        "permitted_equipment_ids",
+        "orientation_steps",
+        "relocation_zone",
+        "footprint_cell_ids",
+        "hydraulic_link_id",
+        "intake_node_id",
+        "outlet_node_id",
+        "power_node_id",
+        "support_id",
+        "lava_segment_id",
+        "fire_cell_ids",
+        "resource_store_id",
+        "enabled"
+      ],
+      "additionalProperties": false
+    },
+    "WaterNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "terrain",
+            "tank"
+          ],
+          "type": "string"
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "elevation_mm": {
+          "type": "integer",
+          "minimum": -10000,
+          "maximum": 100000
+        },
+        "area_mm2": {
+          "type": "integer",
+          "minimum": 10000,
+          "maximum": 10000000
+        },
+        "initial_volume_mm3": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "region_id",
+        "elevation_mm",
+        "area_mm2",
+        "initial_volume_mm3"
+      ],
+      "additionalProperties": false
+    },
+    "HydraulicLink": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "from_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "to_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "from_kind": {
+          "enum": [
+            "water_node",
+            "sea_boundary"
+          ],
+          "type": "string"
+        },
+        "to_kind": {
+          "enum": [
+            "water_node",
+            "sea_boundary"
+          ],
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "both",
+            "forward"
+          ],
+          "type": "string"
+        },
+        "sill_mm": {
+          "type": "integer",
+          "minimum": -10000,
+          "maximum": 100000
+        },
+        "conductance_mm2_per_second": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "maximum_transfer_mm3": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
+        },
+        "gate_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initial_gate_open": {
+          "type": "boolean"
+        },
+        "barrier_socket_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "from_id",
+        "to_id",
+        "from_kind",
+        "to_kind",
+        "direction",
+        "sill_mm",
+        "conductance_mm2_per_second",
+        "maximum_transfer_mm3",
+        "gate_id",
+        "initial_gate_open",
+        "barrier_socket_id"
+      ],
+      "additionalProperties": false
+    },
+    "WaterRateDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "water_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "initial_rate_mm3_per_second": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000
+        }
+      },
+      "required": [
+        "id",
+        "water_node_id",
+        "initial_rate_mm3_per_second"
+      ],
+      "additionalProperties": false
+    },
+    "PowerNode": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "platform_region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "initial_enabled": {
+          "type": "boolean"
+        },
+        "fixed_supply": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "disconnect_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "reconnect_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "id",
+        "platform_region_id",
+        "initial_enabled",
+        "fixed_supply",
+        "disconnect_depth_mm",
+        "reconnect_depth_mm"
+      ],
+      "additionalProperties": false
+    },
+    "PowerLink": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "from_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "to_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "initial_enabled": {
+          "type": "boolean"
+        },
+        "relay_socket_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "from_node_id",
+        "to_node_id",
+        "initial_enabled",
+        "relay_socket_id"
+      ],
+      "additionalProperties": false
+    },
+    "InfrastructureDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "clinic",
+            "lighthouse",
+            "dock",
+            "station",
+            "pump_house",
+            "cooling_works",
+            "route_service"
+          ],
+          "type": "string"
+        },
+        "power_node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initial_demand": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "initial_priority": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "required_nav_node_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "required_support_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "required_equipment_socket_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "hazard_region_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "maximum_depth_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "maximum_heat_points": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "power_node_id",
+        "initial_demand",
+        "initial_priority",
+        "required_nav_node_ids",
+        "required_support_ids",
+        "required_equipment_socket_ids",
+        "hazard_region_ids",
+        "maximum_depth_mm",
+        "maximum_heat_points"
+      ],
+      "additionalProperties": false
+    },
+    "FireCellDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "initial_fuel": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "initial_heat": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "initial_wetness": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "extra_cooling_points_per_pulse": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 2147483647
+        },
+        "building_cell": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "region_id",
+        "initial_fuel",
+        "initial_heat",
+        "initial_wetness",
+        "extra_cooling_points_per_pulse",
+        "building_cell"
+      ],
+      "additionalProperties": false
+    },
+    "FireLink": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "from_cell_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "to_cell_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "direction_code": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 8
+        }
+      },
+      "required": [
+        "id",
+        "from_cell_id",
+        "to_cell_id",
+        "direction_code"
+      ],
+      "additionalProperties": false
+    },
+    "SupportDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "structure",
+            "slope"
+          ],
+          "type": "string"
+        },
+        "node_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "edge_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "initial_base_stability": {
+          "type": "integer",
+          "minimum": -1000,
+          "maximum": 1000
+        },
+        "static_load_points": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
+        },
+        "loss_points_per_second": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "brace_socket_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "collapse_edge_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "station_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "node_ids",
+        "edge_ids",
+        "region_id",
+        "initial_base_stability",
+        "static_load_points",
+        "loss_points_per_second",
+        "brace_socket_ids",
+        "collapse_edge_ids",
+        "station_ids"
+      ],
+      "additionalProperties": false
+    },
+    "RunoutSegment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "successor_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "travel_scenario_ticks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "settle_scenario_ticks": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "region_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "edge_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "debris_reopenable": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "successor_ids",
+        "travel_scenario_ticks",
+        "settle_scenario_ticks",
+        "region_ids",
+        "edge_ids",
+        "debris_reopenable"
+      ],
+      "additionalProperties": false
+    },
+    "RunoutDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "source_support_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RunoutSegment"
+          },
+          "minItems": 1,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "source_support_id",
+        "segments"
+      ],
+      "additionalProperties": false
+    },
+    "TideKnot": {
+      "type": "object",
+      "properties": {
+        "scenario_tick": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000
+        },
+        "level_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        }
+      },
+      "required": [
+        "scenario_tick",
+        "level_mm"
+      ],
+      "additionalProperties": false
+    },
+    "TideDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "event_ramps",
+            "fixed_track"
+          ],
+          "type": "string"
+        },
+        "initial_level_mm": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "knots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TideKnot"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "repeat_period": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000000
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "initial_level_mm",
+        "knots",
+        "repeat_period"
+      ],
+      "additionalProperties": false
+    },
+    "LavaSegmentDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "region_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "successor_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "arrival_delay_scenario_ticks": {
+          "type": "integer",
+          "minimum": 50,
+          "maximum": 6000
+        },
+        "crossing_edge_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "cooler_socket_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "source_enabled": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "region_id",
+        "successor_ids",
+        "arrival_delay_scenario_ticks",
+        "crossing_edge_ids",
+        "cooler_socket_ids",
+        "source_enabled"
+      ],
+      "additionalProperties": false
+    },
+    "ResourceStoreDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "unit": {
+          "enum": [
+            "water_mm3",
+            "coolant_charge",
+            "coolant_feedstock"
+          ],
+          "type": "string"
+        },
+        "initial_amount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "capacity": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000000000000
+        },
+        "water_node_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "unit",
+        "initial_amount",
+        "capacity",
+        "water_node_id"
+      ],
+      "additionalProperties": false
+    },
+    "ProducerDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "infrastructure_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "input_store_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "output_store_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "input_per_charge": {
+          "const": 1,
+          "type": "integer"
+        },
+        "production_scenario_ticks": {
+          "const": 100,
+          "type": "integer"
+        },
+        "power_demand": {
+          "const": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "infrastructure_id",
+        "input_store_id",
+        "output_store_id",
+        "input_per_charge",
+        "production_scenario_ticks",
+        "power_demand"
+      ],
+      "additionalProperties": false
+    },
+    "ResidentSpawn": {
+      "type": "object",
+      "properties": {
+        "resident_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "group_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "mobility_class": {
+          "enum": [
+            "standard",
+            "step_free"
+          ],
+          "type": "string"
+        },
+        "start_node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "fixed_vehicle_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "resident_id",
+        "group_id",
+        "mobility_class",
+        "start_node_id",
+        "fixed_vehicle_id"
+      ],
+      "additionalProperties": false
+    },
+    "VehicleSpawn": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "kind": {
+          "enum": [
+            "fixed_bus",
+            "skiff",
+            "crawler",
+            "winch"
+          ],
+          "type": "string"
+        },
+        "node_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "seats": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "movement_slots": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 2147483647
+        },
+        "initial_route_id": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initial_occupant_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "kind",
+        "node_id",
+        "seats",
+        "movement_slots",
+        "initial_route_id",
+        "initial_occupant_ids"
+      ],
+      "additionalProperties": false
+    },
+    "RoleBinding": {
+      "type": "object",
+      "properties": {
+        "role_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "target_kind": {
+          "enum": [
+            "water_source",
+            "nav_edge_set",
+            "nav_node",
+            "group",
+            "fire_region",
+            "wind_region",
+            "water_store",
+            "support",
+            "runout",
+            "tide",
+            "infrastructure",
+            "lava_source",
+            "socket",
+            "shelter_region"
+          ],
+          "type": "string"
+        },
+        "target_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+          },
+          "minItems": 1,
+          "maxItems": 16384
+        }
+      },
+      "required": [
+        "role_id",
+        "target_kind",
+        "target_ids"
+      ],
+      "additionalProperties": false
+    },
+    "LayoutDef": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "mission_version_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "layout_class": {
+          "enum": [
+            "wide",
+            "compact"
+          ],
+          "type": "string"
+        },
+        "graph_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "geometry_art_id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_.:@-]{1,128}$"
+        },
+        "nav_nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NavNode"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "nav_edges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NavEdge"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/NamedRoute"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "sockets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Socket"
+          },
+          "minItems": 0,
+          "maxItems": 512
+        },
+        "water_nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WaterNode"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "hydraulic_links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/HydraulicLink"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WaterRateDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "sinks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WaterRateDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "power_nodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PowerNode"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "power_links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/PowerLink"
+          },
+          "minItems": 0,
+          "maxItems": 16384
+        },
+        "infrastructure": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/InfrastructureDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "fire_cells": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FireCellDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "fire_links": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/FireLink"
+          },
+          "minItems": 0,
+          "maxItems": 32768
+        },
+        "supports": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/SupportDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "runouts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RunoutDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "tides": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/TideDef"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "lava_segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LavaSegmentDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "resources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResourceStoreDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "producers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ProducerDef"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        },
+        "spawns": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ResidentSpawn"
+          },
+          "minItems": 0,
+          "maxItems": 256
+        },
+        "fixed_vehicles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/VehicleSpawn"
+          },
+          "minItems": 0,
+          "maxItems": 32
+        },
+        "roles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RoleBinding"
+          },
+          "minItems": 0,
+          "maxItems": 4096
+        }
+      },
+      "required": [
+        "id",
+        "mission_version_id",
+        "layout_class",
+        "graph_hash",
+        "geometry_art_id",
+        "nav_nodes",
+        "nav_edges",
+        "routes",
+        "sockets",
+        "water_nodes",
+        "hydraulic_links",
+        "sources",
+        "sinks",
+        "power_nodes",
+        "power_links",
+        "infrastructure",
+        "fire_cells",
+        "fire_links",
+        "supports",
+        "runouts",
+        "tides",
+        "lava_segments",
+        "resources",
+        "producers",
+        "spawns",
+        "fixed_vehicles",
+        "roles"
+      ],
+      "additionalProperties": false
+    },
+    "ContentBundle": {
+      "type": "object",
+      "properties": {
+        "freeze_id": {
+          "const": "resq-spec-freeze-1.1.0",
+          "type": "string"
+        },
+        "rules_version": {
+          "const": "resq-rules-1",
+          "type": "string"
+        },
+        "worlds": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/WorldDef"
+          },
+          "minItems": 1,
+          "maxItems": 5
+        },
+        "equipment": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/EquipmentDef"
+          },
+          "minItems": 1,
+          "maxItems": 14
+        },
+        "rule_profiles": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RuleProfileDef"
+          },
+          "minItems": 1,
+          "maxItems": 3
+        },
+        "challenges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ChallengeDef"
+          },
+          "minItems": 0,
+          "maxItems": 30
+        },
+        "missions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CompiledMission"
+          },
+          "minItems": 1,
+          "maxItems": 25
+        },
+        "layouts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/LayoutDef"
+          },
+          "minItems": 1,
+          "maxItems": 50
+        },
+        "asset_catalog_hash": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "freeze_id",
+        "rules_version",
+        "worlds",
+        "equipment",
+        "rule_profiles",
+        "challenges",
+        "missions",
+        "layouts",
+        "asset_catalog_hash"
+      ],
+      "additionalProperties": false
+    },
+    "ContentBundleEnvelope": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1,
+          "type": "integer"
+        },
+        "payload_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "payload": {
+          "$ref": "#/$defs/ContentBundle"
+        }
+      },
+      "required": [
+        "schema_version",
+        "payload_sha256",
+        "payload"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

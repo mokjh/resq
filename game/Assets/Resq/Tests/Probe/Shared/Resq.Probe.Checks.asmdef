@@ -1,0 +1,7 @@
+{
+  "name": "Resq.Probe.Checks",
+  "references": ["Resq.Probe"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false,
+  "noEngineReferences": true
+}

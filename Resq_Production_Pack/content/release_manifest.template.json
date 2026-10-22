@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "product_name": "Resq",
+  "status": "specification_only",
+  "commit": null,
+  "content_hash": null,
+  "build_id": null,
+  "apk_path": null,
+  "apk_sha256": null,
+  "toolchain_lock_path": null,
+  "target_missions": [
+    "W1-M1",
+    "W1-M2",
+    "W1-M3",
+    "W1-M4",
+    "W1-M5"
+  ],
+  "implemented_missions": [],
+  "qualified_missions": [],
+  "target_devices": [
+    "Meta Quest 3",
+    "Meta Quest 3S"
+  ],
+  "qualified_devices": [],
+  "verified_features": [],
+  "known_issues": [],
+  "competition_channel_url": null,
+  "public_video_url": null,
+  "website_deployment_id": null,
+  "website_url": null,
+  "intended_domain": "playresq.com",
+  "domain_ownership_verified": false,
+  "evidence_paths": [],
+  "notes": [
+    "This is a template, not an actual release. Planned missions and target devices are not qualified content."
+  ]
+}

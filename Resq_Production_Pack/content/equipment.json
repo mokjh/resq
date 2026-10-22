@@ -1,0 +1,58 @@
+[
+  {
+    "id": "barrier",
+    "supply_cost": 2
+  },
+  {
+    "id": "bridge",
+    "supply_cost": 3
+  },
+  {
+    "id": "pump",
+    "supply_cost": 3
+  },
+  {
+    "id": "skiff",
+    "supply_cost": 4
+  },
+  {
+    "id": "beacon",
+    "supply_cost": 1
+  },
+  {
+    "id": "generator",
+    "supply_cost": 3
+  },
+  {
+    "id": "firebreak",
+    "supply_cost": 2
+  },
+  {
+    "id": "sprinkler",
+    "supply_cost": 3
+  },
+  {
+    "id": "crawler",
+    "supply_cost": 4
+  },
+  {
+    "id": "brace",
+    "supply_cost": 2
+  },
+  {
+    "id": "winch",
+    "supply_cost": 3
+  },
+  {
+    "id": "relay",
+    "supply_cost": 2
+  },
+  {
+    "id": "cooler",
+    "supply_cost": 3
+  },
+  {
+    "id": "shelter",
+    "supply_cost": 4
+  }
+]

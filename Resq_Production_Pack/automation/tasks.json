@@ -1,0 +1,718 @@
+{
+  "schema_version": 1,
+  "status": "plan_not_executed",
+  "tasks": [
+    {
+      "id": "T01",
+      "title": "Inspect repository and capabilities",
+      "workstream": "foundation",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [],
+      "expected_artifacts": [
+        "evidence/preflight.json",
+        "BLOCKERS.md"
+      ],
+      "acceptance": "No overwritten files; real harmless tool probes; unknown fields remain unknown.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T02",
+      "title": "Freeze scope and current rule interpretation",
+      "workstream": "foundation",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T01"
+      ],
+      "expected_artifacts": [
+        "DECISIONS.md",
+        "evidence/rules-check.md"
+      ],
+      "acceptance": "Track, division, eligibility gates, deadlines, provenance policy and human submission recorded.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T03",
+      "title": "Prove and lock compatible Unity/XR toolchain",
+      "workstream": "foundation",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T01"
+      ],
+      "expected_artifacts": [
+        "automation/toolchain.lock.json",
+        "evidence/toolchain-probe.json"
+      ],
+      "acceptance": "Actual Android build and real package compatibility; preserve existing MCP or record approval gate.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T04",
+      "title": "Create pure simulation and test assemblies",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T03"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Core",
+        "game/Assets/Resq/Tests"
+      ],
+      "acceptance": "Compile and execute a real test using isolated simulation state.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T05",
+      "title": "Compile typed mission content and validation",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T04"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content",
+        "evidence/content-validation.json"
+      ],
+      "acceptance": "References, capacities, predicates and event bounds fail on invalid content.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T06",
+      "title": "Implement integer flood grid and forecasts",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T04",
+        "T05"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Simulation/Water",
+        "evidence/water-tests.xml"
+      ],
+      "acceptance": "Mass conservation, repeatability, bounded outflow, power-linked pumps, stable forecast snapshots.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T07",
+      "title": "Implement routes residents and vehicle reservations",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T04",
+        "T05"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Simulation/Rescue",
+        "evidence/rescue-tests.xml"
+      ],
+      "acceptance": "No lost/duplicated people; valid boarding, rerouting, seat reservations and safe arrival.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T08",
+      "title": "Implement tools resources and command validation",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T06",
+        "T07"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Simulation/Tools",
+        "evidence/tool-tests.xml"
+      ],
+      "acceptance": "Invalid placement is free; valid deployment once; no resource/refund exploit.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T09",
+      "title": "Implement objective outcome and scoring rules",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T07",
+        "T08"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Simulation/Objectives",
+        "evidence/objective-tests.xml"
+      ],
+      "acceptance": "Rescue minimum and mandatory goals gate success; deterministic score; reward idempotency.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T10",
+      "title": "Author playable first-operation blockout",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T05",
+        "T06",
+        "T07",
+        "T08",
+        "T09"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W1/M1",
+        "evidence/replays/W1-M1"
+      ],
+      "acceptance": "Two real successful reference command replays and interpretable no-input outcome.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T11",
+      "title": "Implement safe table placement and MR fallback",
+      "workstream": "xr",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T03"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/XR/Placement",
+        "evidence/placement-tests"
+      ],
+      "acceptance": "Two fixed layout classes and safe no-room-permission fallback.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T12",
+      "title": "Implement one-hand-complete interaction and menus",
+      "workstream": "xr",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T10",
+        "T11"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/XR/Interaction",
+        "game/Assets/Resq/UI",
+        "evidence/input-tests"
+      ],
+      "acceptance": "Cold start to results without controllers; valid preview, commit, cancel and far selection.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T13",
+      "title": "Implement save pause resume and recovery",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T09",
+        "T12"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Persistence",
+        "evidence/save-tests.xml"
+      ],
+      "acceptance": "Atomic migration-safe save, backup restore, immediate pause, accurate suspended state.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T14",
+      "title": "Implement optional Command mode and accessibility",
+      "workstream": "xr",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T12",
+        "T13"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/XR/CommandMode",
+        "evidence/accessibility-tests"
+      ],
+      "acceptance": "Head-dwell complete path; hand absence is expected; no false eye-tracking claim.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T15",
+      "title": "Lock look-development kit in Unity",
+      "workstream": "art",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T10",
+        "T12"
+      ],
+      "expected_artifacts": [
+        "art/lookdev",
+        "art/provenance",
+        "evidence/lookdev-contact-sheet"
+      ],
+      "acceptance": "Cottage, bridge, boat, resident share approved material/silhouette rules; Unity render inspected.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T16",
+      "title": "Build and audit shared and Alder Valley asset kits",
+      "workstream": "art",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T15"
+      ],
+      "expected_artifacts": [
+        "art/source",
+        "art/export",
+        "art/asset-manifest.json",
+        "evidence/asset-audit.json"
+      ],
+      "acceptance": "Editable sources, rights records, scale/pivots/LODs/colliders and actual Unity import proof.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T17",
+      "title": "Complete first-operation guided tutorial",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T13",
+        "T16"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/Tutorial",
+        "evidence/tutorial-run"
+      ],
+      "acceptance": "First meaningful rescue within target; replay permits alternative strategy; no stuck instructions.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T18",
+      "title": "Author W1-M2 through W1-M5 and tested variants",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T10",
+        "T13",
+        "T16"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W1",
+        "evidence/replays/W1"
+      ],
+      "acceptance": "Every included mission has two successful distinct reference replays, both layout classes, and failure explanation.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T19",
+      "title": "Integrate audio progression debrief and aftercare",
+      "workstream": "gameplay",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T17",
+        "T18"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Audio",
+        "game/Assets/Resq/Progression",
+        "evidence/progression-tests"
+      ],
+      "acceptance": "Clear warning/rescue audio, correct rewards/unlocks, no fabricated statistics.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T20",
+      "title": "Automated regression and worst-case content audit",
+      "workstream": "qa",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T14",
+        "T19"
+      ],
+      "expected_artifacts": [
+        "evidence/regression",
+        "evidence/content-audit.json"
+      ],
+      "acceptance": "All released paths validated; illegal command fuzzing; no missing prefabs/IDs; no test weakening.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T21",
+      "title": "Qualify physical headset behavior and comfort",
+      "workstream": "qa",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T20"
+      ],
+      "expected_artifacts": [
+        "evidence/device-qualification",
+        "evidence/playtest-observations"
+      ],
+      "acceptance": "Real Quest3/3S runs, seating/room/input matrix, human comfort observations; untested claims blocked.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T22",
+      "title": "Profile and optimize then requalify",
+      "workstream": "qa",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T21"
+      ],
+      "expected_artifacts": [
+        "evidence/performance",
+        "evidence/thermal-soak"
+      ],
+      "acceptance": "Recorded native frame times, correct build settings, no persistent spikes/leaks in released content.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T23",
+      "title": "Freeze competition candidate and truthful manifest",
+      "workstream": "release",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T02",
+        "T22"
+      ],
+      "expected_artifacts": [
+        "releases/candidate",
+        "releases/release-manifest.json"
+      ],
+      "acceptance": "Actual signed APK hashes; no P0/P1; only implemented qualified content and features declared.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T24",
+      "title": "Research website references with actual Mobbin access",
+      "workstream": "web",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T01"
+      ],
+      "expected_artifacts": [
+        "web/design/reference-lock.md"
+      ],
+      "acceptance": "Actual retrieved references and a dominant original design synthesis; not a fabricated research report.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T25",
+      "title": "Prepare real approved capture and screenshot sources",
+      "workstream": "capture",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T23"
+      ],
+      "expected_artifacts": [
+        "captures/raw",
+        "captures/capture-manifest.json",
+        "web/public/media"
+      ],
+      "acceptance": "Actual build/device/replay provenance, rights/privacy cleared, raw footage preserved.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T26",
+      "title": "Implement the reference-locked marketing website",
+      "workstream": "web",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T23",
+        "T24",
+        "T25"
+      ],
+      "expected_artifacts": [
+        "web/src",
+        "web/content"
+      ],
+      "acceptance": "Real available CTAs/media; public content truthfully follows release manifest.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T27",
+      "title": "Test and preview-deploy website within authority",
+      "workstream": "web",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T26"
+      ],
+      "expected_artifacts": [
+        "evidence/web-tests",
+        "evidence/vercel-preview.json"
+      ],
+      "acceptance": "Type/build/browser/a11y/media checks pass against actual deployed preview; scope identity verified.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T28",
+      "title": "Assemble captioned gameplay trailer from real clips",
+      "workstream": "capture",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T25"
+      ],
+      "expected_artifacts": [
+        "captures/edl.json",
+        "releases/video",
+        "evidence/video-validation.json"
+      ],
+      "acceptance": "Under3minutes; honest actual gameplay; measured timeline and captions; no generated gameplay.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T29",
+      "title": "Prepare accurate Devpost submission and judge guide",
+      "workstream": "release",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T23",
+        "T27",
+        "T28"
+      ],
+      "expected_artifacts": [
+        "releases/devpost-draft.md",
+        "releases/judge-guide.md"
+      ],
+      "acceptance": "Claims verified; known limitations; authentic build access; no final bot submission.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T30",
+      "title": "Publish authorized website and connect owned domain",
+      "workstream": "release",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T27"
+      ],
+      "expected_artifacts": [
+        "evidence/vercel-production.json",
+        "evidence/domain-verification.json"
+      ],
+      "acceptance": "Explicit scope authorization and actual domain ownership; deployed paths/DNS rechecked.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T31",
+      "title": "Publish authorized video and prepare judge distribution",
+      "workstream": "release",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T28",
+        "T29"
+      ],
+      "expected_artifacts": [
+        "evidence/public-video.json",
+        "evidence/judge-access.json"
+      ],
+      "acceptance": "Actual public playback and release-channel access; no secrets exposed; entrant approval.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T32",
+      "title": "Entrant final submission and archive",
+      "workstream": "human_gate",
+      "release_scope": "competition",
+      "status": "pending",
+      "depends_on": [
+        "T02",
+        "T29",
+        "T31"
+      ],
+      "expected_artifacts": [
+        "releases/submission-archive"
+      ],
+      "acceptance": "Entrant confirms rules/eligibility/rights and submits personally; freeze and preserve access.",
+      "evidence_required": true,
+      "max_repair_attempts": 0,
+      "execution_type": "human"
+    },
+    {
+      "id": "T33",
+      "title": "Emberwood mechanic and first mission",
+      "workstream": "full_release",
+      "release_scope": "full_release",
+      "status": "pending",
+      "depends_on": [
+        "T23"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W2/M1",
+        "evidence/W2-mechanic"
+      ],
+      "acceptance": "Fire/wind/wetness route strategy works; qualified single-hand first mission.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T34",
+      "title": "Emberwood complete world qualification",
+      "workstream": "full_release",
+      "release_scope": "full_release",
+      "status": "pending",
+      "depends_on": [
+        "T33"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W2",
+        "evidence/W2-release"
+      ],
+      "acceptance": "Five missions, asset kit, reference solutions, device/comfort evidence.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T35",
+      "title": "Frostline world implementation and qualification",
+      "workstream": "full_release",
+      "release_scope": "full_release",
+      "status": "pending",
+      "depends_on": [
+        "T34"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W3",
+        "evidence/W3-release"
+      ],
+      "acceptance": "Structural support, runout and winch mechanics; five qualified missions.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T36",
+      "title": "Tidemark world implementation and qualification",
+      "workstream": "full_release",
+      "release_scope": "full_release",
+      "status": "pending",
+      "depends_on": [
+        "T35"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W4",
+        "evidence/W4-release"
+      ],
+      "acceptance": "Tide-driven route windows and transfer capacity; five qualified missions.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T37",
+      "title": "Cinder Reach world implementation and qualification",
+      "workstream": "full_release",
+      "release_scope": "full_release",
+      "status": "pending",
+      "depends_on": [
+        "T36"
+      ],
+      "expected_artifacts": [
+        "game/Assets/Resq/Content/W5",
+        "evidence/W5-release"
+      ],
+      "acceptance": "Authored lava/cooling/shelter trade-offs; five qualified missions without full fluid simulation.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    },
+    {
+      "id": "T38",
+      "title": "Full game product qualification and launch preparation",
+      "workstream": "full_release",
+      "release_scope": "full_release",
+      "status": "pending",
+      "depends_on": [
+        "T37"
+      ],
+      "expected_artifacts": [
+        "releases/full-game-candidate",
+        "evidence/full-game-qualification"
+      ],
+      "acceptance": "All actual content/input paths qualified; name cleared; current store requirements and commercial terms reviewed.",
+      "evidence_required": true,
+      "max_repair_attempts": 3,
+      "execution_type": "agent_with_gates"
+    }
+  ]
+}

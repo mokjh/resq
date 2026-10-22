@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "expected_count": {
+      "type": "integer"
+    },
+    "freeze_id": {
+      "type": "string"
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "acceptance_group": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "introduced_world_id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "required_for_full": {
+            "type": "boolean"
+          },
+          "source_requirement": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "acceptance_group",
+          "category",
+          "id",
+          "introduced_world_id",
+          "name",
+          "required_for_full",
+          "source_requirement"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schema_version": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "expected_count",
+    "freeze_id",
+    "rows",
+    "schema_version",
+    "status"
+  ],
+  "additionalProperties": false
+}

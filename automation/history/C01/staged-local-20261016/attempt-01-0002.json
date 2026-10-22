@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C01",
+  "event": "blocked",
+  "run_id": "staged-local-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 2,
+  "previous_event_sha256": "5b930bde71e235c9993aa6de9f80cf8532ceaabff3c1ab6d36ccd0ca79f02d19",
+  "result_path": "evidence/results/C01/staged-local-20261016/attempt-01.json",
+  "result_sha256": "f687695d422db449eef8cea89b22660fd5c455b7da29023a38b11ffa66ad7959",
+  "reason": "WORKING_STORAGE_BELOW_FLOOR: fresh output/temp observation blocks Editor launch; see operation-storage.json",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T19:27:00.216155+00:00"
+}

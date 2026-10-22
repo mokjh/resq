@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F08",
+  "event": "running",
+  "run_id": "device-binding-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 10,
+  "previous_event_sha256": "ed4585f417ba071fb13a30351696f01d40271c42325e8762d76dd1a661ad6187",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T23:47:36.131683+00:00"
+}

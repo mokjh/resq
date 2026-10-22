@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Equipment.Editor","rootNamespace":"Resq.Editor.RuntimeEquipment","references":["Resq.Content"],"includePlatforms":["Editor"],"autoReferenced":true,"noEngineReferences":true}

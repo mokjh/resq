@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "status": "unverified_template",
+  "unity": {
+    "candidate_line": "6.3 LTS",
+    "actual_version": null,
+    "executable_path": null,
+    "android_modules_verified": false,
+    "license_verified": false
+  },
+  "render_pipeline": {
+    "candidate": "URP",
+    "package_version": null
+  },
+  "xr": {
+    "provider": null,
+    "interaction_sdk_version": null,
+    "mruk_version": null,
+    "probe_evidence_path": null
+  },
+  "blender": {
+    "actual_version": null,
+    "executable_path": null,
+    "background_probe_path": null
+  },
+  "node": {
+    "actual_version": null
+  },
+  "nextjs": {
+    "actual_version": null
+  },
+  "codex": {
+    "actual_version": null
+  },
+  "ffmpeg": {
+    "actual_version": null
+  },
+  "packages_lock_sha256": null
+}

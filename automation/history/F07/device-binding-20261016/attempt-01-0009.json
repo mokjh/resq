@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "pending",
+  "run_id": "device-binding-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 9,
+  "previous_event_sha256": "efd4ebbfad07545e3d8d7338120141975cfa1f126e8f7d636693c6c6ea09cc18",
+  "result_path": "evidence/results/F07/native-preflight-20261016/attempt-01.json",
+  "result_sha256": "f255efb21670c2f3507e737af8b139fc8236c1eeda25e44359c8b0383f6bf64d",
+  "reason": "Accepted prerequisite head changed: F02; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T23:46:21.092605+00:00"
+}

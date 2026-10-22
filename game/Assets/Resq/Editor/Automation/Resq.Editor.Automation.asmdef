@@ -1,0 +1,7 @@
+{
+  "name": "Resq.Editor.Automation",
+  "references": ["UnityEngine.TestRunner", "UnityEditor.TestRunner"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": false,
+  "noEngineReferences": false
+}

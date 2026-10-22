@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F02",
+  "event": "failed",
+  "run_id": "build-binding-20261016",
+  "attempt_id": "attempt-02",
+  "sequence": 18,
+  "previous_event_sha256": "2ba6d3301e57e3107a5d4fc1a2e5e552aa34c117e2659f747ae4612c6dabad18",
+  "result_path": "evidence/results/F02/build-binding-20261016/attempt-02.json",
+  "result_sha256": "08d232510ff23bcffddb23fe825758ab2b1bcbed657918e0f4052fa7c1281bbe",
+  "reason": "Native test process emitted no report: test_runner_core.py",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T00:31:42.217438+00:00"
+}

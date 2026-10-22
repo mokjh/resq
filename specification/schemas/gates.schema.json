@@ -1,0 +1,82 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "authorization_actions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence_path": {
+            "anyOf": [
+              {
+                "type": "string",
+                "minLength": 1,
+                "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "evidence_sha256": {
+            "anyOf": [
+              {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "id": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "pass_condition": {
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "not_verified",
+              "passed",
+              "blocked",
+              "expired"
+            ]
+          }
+        },
+        "required": [
+          "authorization_actions",
+          "evidence_path",
+          "evidence_sha256",
+          "id",
+          "kind",
+          "notes",
+          "pass_condition",
+          "status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schema_version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "gates",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

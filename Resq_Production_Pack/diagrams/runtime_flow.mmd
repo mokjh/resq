@@ -1,0 +1,25 @@
+flowchart TD
+  A[Boot and validate save] --> B{Valid current run?}
+  B -->|Yes| C[Hub: Continue or choose operation]
+  B -->|No| D[Hub: Begin rescue]
+  C --> E[Permission and placement adapter]
+  D --> E
+  E --> F{Safe real surface available?}
+  F -->|Yes| G[Select tested layout and anchor]
+  F -->|No or declined| H[Virtual rescue table]
+  G --> I[Briefing and loadout]
+  H --> I
+  I --> J[Planning and forecast]
+  J --> K[Active simulation]
+  K --> L[Validated input commands]
+  L --> K
+  K --> M{Objective or end condition?}
+  M -->|Continue| K
+  M -->|Complete| N[Outcome and atomic save]
+  N --> O[Debrief and aftercare]
+  O --> C
+  K --> P[Pause or tracking interruption]
+  P --> Q[Cancel unsafe preview and checkpoint]
+  Q --> R{Tracking and anchor restored?}
+  R -->|Yes: explicit resume| K
+  R -->|Fallback requested| E

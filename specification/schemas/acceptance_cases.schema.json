@@ -1,0 +1,957 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "contracts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "coverage_derivation": {
+            "type": "object",
+            "properties": {
+              "attempted_commands_per_seed": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "string"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "base_success_configurations": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "caption_variants": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "challenge_success_configurations": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "consenting_participants": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "five_minute_profiles": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "fuzzer_seeds_per_world": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "layout_count": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "mission_count": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "models": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "physical_full_mission_runs": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "repeats_per_target": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "required_page_outcomes": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "sidecar_formats": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "target_runtimes": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "thermal_minutes_per_model": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "string"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "thermal_soaks": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "three_star_configurations": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "string"
+                  },
+                  "metric_minimum": {
+                    "type": "integer"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "timeline_seconds": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "string"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              },
+              "widths_css_px": {
+                "type": "object",
+                "properties": {
+                  "fields": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "group_by": {
+                    "type": "array",
+                    "items": {}
+                  },
+                  "kind": {
+                    "type": "string"
+                  },
+                  "metric": {
+                    "type": "null"
+                  },
+                  "metric_minimum": {
+                    "type": "null"
+                  },
+                  "operation": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "fields",
+                  "group_by",
+                  "kind",
+                  "metric",
+                  "metric_minimum",
+                  "operation"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "id": {
+            "type": "string"
+          },
+          "required_cases": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "case_id": {
+                  "type": "string"
+                },
+                "dimensions": {
+                  "type": "object",
+                  "properties": {
+                    "assertion_id": {
+                      "type": "string"
+                    },
+                    "case": {
+                      "type": "string"
+                    },
+                    "challenge": {
+                      "type": "string"
+                    },
+                    "edition": {
+                      "type": "string"
+                    },
+                    "effects": {
+                      "type": "string"
+                    },
+                    "format": {
+                      "type": "string"
+                    },
+                    "input": {
+                      "type": "string"
+                    },
+                    "layout": {
+                      "type": "string"
+                    },
+                    "lux_band": {
+                      "type": "string"
+                    },
+                    "mission": {
+                      "type": "string"
+                    },
+                    "mission_player_slot": {
+                      "type": "integer"
+                    },
+                    "model": {
+                      "type": "string"
+                    },
+                    "page": {
+                      "type": "string"
+                    },
+                    "participant_slot": {
+                      "type": "integer"
+                    },
+                    "phase": {
+                      "type": "string"
+                    },
+                    "placement": {
+                      "type": "string"
+                    },
+                    "profile": {
+                      "type": "string"
+                    },
+                    "repeat": {
+                      "type": "integer"
+                    },
+                    "room": {
+                      "type": "string"
+                    },
+                    "seed": {
+                      "type": "integer"
+                    },
+                    "state": {
+                      "type": "string"
+                    },
+                    "strategy": {
+                      "type": "string"
+                    },
+                    "target": {
+                      "type": "string"
+                    },
+                    "trial": {
+                      "type": "integer"
+                    },
+                    "variant": {
+                      "type": "string"
+                    },
+                    "width_css_px": {
+                      "type": "integer"
+                    },
+                    "world": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "maximum_metrics": {
+                  "type": "object",
+                  "properties": {
+                    "application_memory_mib": {
+                      "type": "integer"
+                    },
+                    "audio_voices": {
+                      "type": "integer"
+                    },
+                    "cpu_p95_ms": {
+                      "type": "integer"
+                    },
+                    "draw_calls": {
+                      "type": "integer"
+                    },
+                    "gameplay_vehicles": {
+                      "type": "integer"
+                    },
+                    "gpu_p95_ms": {
+                      "type": "integer"
+                    },
+                    "measured_duration_ms": {
+                      "type": "integer"
+                    },
+                    "missed_application_frames_percent": {
+                      "type": "integer"
+                    },
+                    "native_refresh_hz": {
+                      "type": "integer"
+                    },
+                    "resident_views": {
+                      "type": "integer"
+                    },
+                    "shadow_lights": {
+                      "type": "integer"
+                    },
+                    "simulation_p95_ms": {
+                      "type": "number"
+                    },
+                    "steady_allocation_bytes_per_frame": {
+                      "type": "integer"
+                    },
+                    "timeline_seconds": {
+                      "type": "integer"
+                    },
+                    "unexplained_half_second_miss_segments": {
+                      "type": "integer"
+                    },
+                    "visible_triangles": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                },
+                "minimum_metrics": {
+                  "type": "object",
+                  "properties": {
+                    "attempted_commands": {
+                      "type": "integer"
+                    },
+                    "controllers_unpaired": {
+                      "type": "integer"
+                    },
+                    "duration_minutes": {
+                      "type": "integer"
+                    },
+                    "first_time_mission_player": {
+                      "type": "integer"
+                    },
+                    "lighting_measured": {
+                      "type": "integer"
+                    },
+                    "measured_duration_ms": {
+                      "type": "integer"
+                    },
+                    "native_refresh_hz": {
+                      "type": "integer"
+                    },
+                    "rescued_minimum_met": {
+                      "type": "integer"
+                    },
+                    "timeline_seconds": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "case_id",
+                "dimensions",
+                "kind",
+                "maximum_metrics",
+                "minimum_metrics"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "task_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "coverage_derivation",
+          "id",
+          "required_cases",
+          "task_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "freeze_id": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "contracts",
+    "freeze_id",
+    "schema_version",
+    "status"
+  ],
+  "additionalProperties": false
+}

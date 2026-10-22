@@ -1,0 +1,112 @@
+{
+  "schema_version": 1,
+  "task_id": "C08",
+  "event": "resource_stop_correction",
+  "run_id": "resumable-20261018",
+  "attempt_id": "attempt-03",
+  "sequence": 17,
+  "previous_event_sha256": "0e5dca3f50718c4e5aa5f2556ff5e4a29cdaf7da78e6a898aeb3bf271bf6c585",
+  "result_path": "evidence/results/C08/resumable-20261018/attempt-03.json",
+  "result_sha256": "8b80f0002c9c0347280dc2467d43701065b4b78e34b8747cb0b59e0bbbb47a4e",
+  "reason": "Exact resource-stop classification annotation; original failed event/result and all cumulative counters retained.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-17T23:37:40.636170+00:00",
+  "implementation_round": {
+    "task_id": "C08",
+    "run_id": "resumable-20261018",
+    "round_id": "c08-resumable-executor-20261018",
+    "authorization": {
+      "path": "evidence/runtime-forecast-refactor-20261018/authorization.json",
+      "sha256": "a3eeefe73f9a975976e3371d3adb27deb526b305c458bf7f501ebfc1c1cd18d6"
+    },
+    "proposal": {
+      "path": "evidence/runtime-forecast-20261017/milestone/resumable-executor-proposal.md",
+      "sha256": "e49add24b0cda90125849194942648ff56b4f4e02083bf3c12ad5aa1a988c1e6"
+    },
+    "history_anchor": {
+      "path": "automation/history/C08/performance-review-20261017/attempt-05-0010.json",
+      "sha256": "ff593b49e915e551266f0d994f4bae28b868e3fe349ba594ca5e2f112c804351",
+      "sequence": 10
+    },
+    "historical_task_counters": {
+      "repair_attempts": 3,
+      "execution_attempts": 5,
+      "failed_attempts": 3
+    },
+    "repair_limit": 3
+  },
+  "resource_stop_correction": {
+    "id": "c08-attempt03-resource-stop-20261018",
+    "task_id": "C08",
+    "run_id": "resumable-20261018",
+    "round_id": "c08-resumable-executor-20261018",
+    "attempt_id": "attempt-03",
+    "failed_sequence": 16,
+    "annotation_sequence": 17,
+    "recorded_round_counters": {
+      "repair_attempts": 2,
+      "execution_attempts": 3,
+      "failed_attempts": 3
+    },
+    "stop_reason": "runtime-forecast volume below2GiB hard reserve",
+    "lowest_free_bytes": 2078433280,
+    "peak_positive_growth_bytes": 1244668,
+    "references": {
+      "failed_event": {
+        "path": "automation/history/C08/resumable-20261018/attempt-03-0016.json",
+        "sha256": "0e5dca3f50718c4e5aa5f2556ff5e4a29cdaf7da78e6a898aeb3bf271bf6c585"
+      },
+      "result": {
+        "path": "evidence/results/C08/resumable-20261018/attempt-03.json",
+        "sha256": "8b80f0002c9c0347280dc2467d43701065b4b78e34b8747cb0b59e0bbbb47a4e"
+      },
+      "check_report": {
+        "path": "evidence/checks/c08/resumable-20261018/attempt-03.json",
+        "sha256": "487f12c300e0d469ff6912c575429f5ec52906e8a0fe512dc6ff0a1e39c89875"
+      },
+      "terminal_observation": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/terminal-observation.json",
+        "sha256": "84acd6ac6ae2e5c62b58d308c75a523f4382f13c850b9e98f3cee46fd65524e1"
+      },
+      "source_manifest": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/inputs/source-manifest.json",
+        "sha256": "44acf41fa503291ad0ea28407e426055fc43e13c547dd8a511c19dc90cd72613"
+      },
+      "wrapper_source": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/inputs/source/tools/run_unity_bounded.py",
+        "sha256": "788b68941721a049504a77e8ee22157007c1770570cc6b4d47e024b7389b94e7"
+      },
+      "adapter_source": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/inputs/source/tools/adapter_unity.py",
+        "sha256": "18d898ddbd1b7b00853e0684c3a2f989ff7940f4240c6abb42f4e81a9ddf4d4b"
+      },
+      "outcome": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/outcome.json",
+        "sha256": "34f1e2c2f8be997379017ec046fa7f693d8d8b489e1f4aba84cb20635201d2e0"
+      },
+      "measurements": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/measurements.json",
+        "sha256": "0d9e984b28f74b32620ac9f42bd1be4d03841f8704663c6f0275cded79122028"
+      },
+      "admission": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/admission.json",
+        "sha256": "4af320f24080848078ece3306c87dea83bac4302ecd12033434449facf26c7d9"
+      },
+      "editor_log": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/editor.log",
+        "sha256": "caa895ea0843f0b0e4d25c75e19ed6a1533396c046899e7ed5a9cf78ceffedad"
+      },
+      "terminal_lock": {
+        "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/terminal-lock-verification.json",
+        "sha256": "abca31ca3b802ae3f1886fba4b759a9188e14e7c6f4f1e9b8e92dca11c976495"
+      }
+    },
+    "absent_native_outputs": [
+      "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/nunit.xml",
+      "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/unity-cases.json",
+      "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-runtime-ordering/nunit.xml",
+      "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-runtime-ordering/unity-cases.json",
+      "evidence/checks/runtime-ordering/resumable-20261018/attempt-03.json"
+    ]
+  }
+}

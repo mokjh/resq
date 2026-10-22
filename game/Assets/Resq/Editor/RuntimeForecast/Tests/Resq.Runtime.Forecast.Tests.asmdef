@@ -1,0 +1,22 @@
+{
+  "name": "Resq.Runtime.Forecast.Tests",
+  "rootNamespace": "Resq.Tests.Forecast",
+  "references": [
+    "Resq.Content",
+    "Resq.Core",
+    "Resq.Simulation",
+    "Resq.Progression",
+    "Resq.Persistence",
+    "Resq.Forecast",
+    "Resq.Replay.Editor",
+    "Resq.Runtime.Forecast.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "optionalUnityReferences": [
+    "TestAssemblies"
+  ],
+  "autoReferenced": false,
+  "noEngineReferences": false
+}

@@ -1,0 +1,1 @@
+{"name":"Resq.Persistence","rootNamespace":"Resq.Persistence","references":["Resq.Content","Resq.Core","Resq.Simulation","Resq.Progression"],"allowUnsafeCode":false,"autoReferenced":true,"noEngineReferences":true}

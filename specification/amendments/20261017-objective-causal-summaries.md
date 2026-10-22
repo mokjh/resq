@@ -1,0 +1,5 @@
+# Controlled amendment 13 — objective metric ownership
+
+C06 implementation review identified history that cannot be recovered from capped recent events or final transport positions: station first activation, dock continuous wait windows, completed edge passages and completed node dwell. Section03 now binds explicit internal causal-summary rows in the existing MetricState shape and immutable per-boundary actual transport observations. It also defines the existing monitor flag by temporal policy and exact restore coherence. These close representation/clock ambiguities; no private continuation blob or retrospective invented history is permitted.
+
+All public objective kinds, root state shapes, rules-v1 safety/score thresholds, task/check/case definitions, budgets and all25missions remain. No save/replay or authored campaign acceptance is inferred. Exact prior inputs and amendment12 seal are retained under evidence/runtime-objectives-20261017/metric-amendment-inputs and specification/archive/freeze_manifest-1.1.0-amendment-12.json.

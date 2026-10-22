@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "mode": "bounded_autonomy",
+  "local_repository_writes": true,
+  "preserve_existing_work": true,
+  "destructive_git_operations": false,
+  "secret_disclosure": false,
+  "local_builds_and_tests": true,
+  "install_unity_packages_without_approval": false,
+  "install_mcp_without_approval": false,
+  "paid_generation": {
+    "enabled": false,
+    "provider_allowlist": [
+      "Higgsfield"
+    ],
+    "total_budget_usd": 0,
+    "max_repair_attempts_per_asset": 2,
+    "unknown_cost_action": "block",
+    "uncertain_submission_action": "reconcile_existing_id"
+  },
+  "external_actions": {
+    "private_uploads": false,
+    "preview_deployment": false,
+    "production_deployment": false,
+    "public_video_upload": false,
+    "dns_changes": false,
+    "release_channel_upload": false
+  },
+  "authorization_records": [
+    "evidence/authorization/unity-setup-20261016/authorization.json"
+  ],
+  "domain_purchase": false,
+  "devpost_final_submission": "entrant_only",
+  "legal_attestations": "entrant_only",
+  "human_comfort_observations": "human_only",
+  "max_code_repair_attempts": 3,
+  "on_block": "record_once_and_continue_independent_tasks",
+  "on_missing_evidence": "not_verified",
+  "single_writer_resources": [
+    "Unity project assets/settings",
+    "shared content manifests",
+    "Blender source files",
+    "release manifests"
+  ],
+  "notes": [
+    "These conservative defaults are for a specification pack. Record actual standing authorization and destination scopes before external writes. Do not treat the user request for a plan as completed OAuth or unlimited credits.",
+    "Freeze1.1.0 preserves full25scope; generating planning artifacts grants no spending/publication/install approval."
+  ]
+}

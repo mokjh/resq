@@ -1,0 +1,2137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "freeze_id": {
+      "type": "string"
+    },
+    "missions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "base_rule_profiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "default_loadout": {
+            "type": "object",
+            "properties": {
+              "barrier": {
+                "type": "integer"
+              },
+              "beacon": {
+                "type": "integer"
+              },
+              "brace": {
+                "type": "integer"
+              },
+              "bridge": {
+                "type": "integer"
+              },
+              "cooler": {
+                "type": "integer"
+              },
+              "crawler": {
+                "type": "integer"
+              },
+              "firebreak": {
+                "type": "integer"
+              },
+              "generator": {
+                "type": "integer"
+              },
+              "pump": {
+                "type": "integer"
+              },
+              "relay": {
+                "type": "integer"
+              },
+              "shelter": {
+                "type": "integer"
+              },
+              "skiff": {
+                "type": "integer"
+              },
+              "sprinkler": {
+                "type": "integer"
+              },
+              "winch": {
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "duration_scenario_ticks": {
+            "type": "integer"
+          },
+          "events": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "at_scenario_tick": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000000
+                },
+                "id": {
+                  "type": "string"
+                },
+                "known_at_start": {
+                  "type": "boolean"
+                },
+                "operations": {
+                  "type": "array",
+                  "items": {
+                    "oneOf": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_source_rate"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "warn_route"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_edge_enabled"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_current_multiplier"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 500,
+                            "maximum": 2000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "release_group"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "ignite_region"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_wind"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 8
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_region_cooling"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "warn_resource"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "add_heat"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "warn_wind_change"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_stability_loss"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 100
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_support_load"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "tremor"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "warn_runout"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "release_avalanche"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "warn_support"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_tide_segment"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 3
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "set_infrastructure_demand"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 32
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "advance_lava"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "enable_cooler_socket"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "warn_reheat"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 1000000
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "kind": {
+                            "const": "enable_shelter_hazard"
+                          },
+                          "target_role": {
+                            "type": "string",
+                            "minLength": 1
+                          },
+                          "value": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1
+                          }
+                        },
+                        "required": [
+                          "kind",
+                          "target_role",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                },
+                "warning_at_scenario_tick": {
+                  "type": "integer",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "at_scenario_tick",
+                "id",
+                "known_at_start",
+                "operations",
+                "warning_at_scenario_tick"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "failure_explanation_brief": {
+            "type": "string"
+          },
+          "global_success_conditions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "assembly_node_id": {
+                  "type": "string"
+                },
+                "count": {
+                  "type": "integer"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "mobility_counts": {
+                  "type": "object",
+                  "properties": {
+                    "standard": {
+                      "type": "integer"
+                    },
+                    "step_free": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "standard",
+                    "step_free"
+                  ],
+                  "additionalProperties": false
+                },
+                "start_node_id": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "assembly_node_id",
+                "count",
+                "id",
+                "mobility_counts",
+                "start_node_id"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "layout_recipe_id": {
+            "type": "string"
+          },
+          "maximum_stock": {
+            "type": "object",
+            "properties": {
+              "barrier": {
+                "type": "integer"
+              },
+              "beacon": {
+                "type": "integer"
+              },
+              "brace": {
+                "type": "integer"
+              },
+              "bridge": {
+                "type": "integer"
+              },
+              "cooler": {
+                "type": "integer"
+              },
+              "crawler": {
+                "type": "integer"
+              },
+              "firebreak": {
+                "type": "integer"
+              },
+              "generator": {
+                "type": "integer"
+              },
+              "pump": {
+                "type": "integer"
+              },
+              "relay": {
+                "type": "integer"
+              },
+              "shelter": {
+                "type": "integer"
+              },
+              "skiff": {
+                "type": "integer"
+              },
+              "sprinkler": {
+                "type": "integer"
+              },
+              "winch": {
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "milestones": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "target": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "id",
+                "kind",
+                "target"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "minimum_rescues": {
+            "type": "integer"
+          },
+          "mission_revision": {
+            "type": "integer"
+          },
+          "objectives": {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "rescue_count"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "minimum": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "minimum"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "ever_before"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "group_evacuated"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "group_id": {
+                          "type": "string"
+                        },
+                        "minimum": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "group_id",
+                        "minimum"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "infrastructure_operational"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "infrastructure_id": {
+                          "type": "string"
+                        },
+                        "operational": {
+                          "type": "boolean"
+                        }
+                      },
+                      "required": [
+                        "infrastructure_id",
+                        "operational"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "exposure_below"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "hazard": {
+                          "type": "string"
+                        },
+                        "region_id": {
+                          "type": "string"
+                        },
+                        "threshold": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "hazard",
+                        "region_id",
+                        "threshold"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_least"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "group_id": {
+                          "anyOf": [
+                            {
+                              "type": "string"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "metric": {
+                          "const": "evacuated_by_mode"
+                        },
+                        "minimum": {
+                          "type": "integer"
+                        },
+                        "mode": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "group_id",
+                        "metric",
+                        "minimum",
+                        "mode"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "generator_shutdowns"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "route_available"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "route_id": {
+                          "type": "string"
+                        },
+                        "traversal_class": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "route_id",
+                        "traversal_class"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "hold_for"
+                            },
+                            "scenario_ticks": {
+                              "type": "integer"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "scenario_ticks",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "resource_remaining"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "minimum": {
+                          "type": "integer"
+                        },
+                        "store_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "minimum",
+                        "store_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "all_vehicles_unloaded"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "equipment_id": {
+                          "type": "string"
+                        },
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "equipment_deployments"
+                        }
+                      },
+                      "required": [
+                        "equipment_id",
+                        "maximum",
+                        "metric"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "station_shutdowns"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "max_node_dwell_scenario_ticks"
+                        },
+                        "node_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric",
+                        "node_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_least"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "edge_tag": {
+                          "type": "string"
+                        },
+                        "metric": {
+                          "const": "edge_transfers"
+                        },
+                        "minimum": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "edge_tag",
+                        "metric",
+                        "minimum"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "peak_node_occupancy"
+                        },
+                        "node_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric",
+                        "node_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "loaded_closed_dock_wait_operation_ticks"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "max_dock_queue_operation_ticks"
+                        },
+                        "node_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric",
+                        "node_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "pumped_into_region_mm3"
+                        },
+                        "region_id": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric",
+                        "region_id"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "temporary_staging_empty"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "temporary_shelters_empty"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {},
+                      "required": [],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "kind": {
+                              "const": "at_end"
+                            }
+                          },
+                          "required": [
+                            "kind"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "counter_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        },
+                        "metric": {
+                          "const": "shelter_exhaustions"
+                        }
+                      },
+                      "required": [
+                        "maximum",
+                        "metric"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "kind": {
+                      "const": "equipment_losses_at_most"
+                    },
+                    "params": {
+                      "type": "object",
+                      "properties": {
+                        "maximum": {
+                          "type": "integer"
+                        }
+                      },
+                      "required": [
+                        "maximum"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "temporal": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "properties": {
+                            "end_event": {
+                              "type": "string"
+                            },
+                            "kind": {
+                              "const": "always"
+                            },
+                            "start_event": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "end_event",
+                            "kind",
+                            "start_event"
+                          ],
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "tier": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "kind",
+                    "params",
+                    "temporal",
+                    "tier"
+                  ],
+                  "additionalProperties": false
+                }
+              ]
+            }
+          },
+          "permitted_tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "protection_objective_ids": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "reference_strategy_briefs": {
+            "type": "object",
+            "properties": {
+              "A": {
+                "type": "string"
+              },
+              "B": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "A",
+              "B"
+            ],
+            "additionalProperties": false
+          },
+          "release_scope": {
+            "type": "string"
+          },
+          "required_checks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "rules_version": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "supply_budget": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "total_residents": {
+            "type": "integer"
+          },
+          "tutorial_policy": {
+            "type": "string"
+          },
+          "world_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "base_rule_profiles",
+          "default_loadout",
+          "duration_scenario_ticks",
+          "events",
+          "failure_explanation_brief",
+          "global_success_conditions",
+          "groups",
+          "id",
+          "layout_recipe_id",
+          "maximum_stock",
+          "milestones",
+          "minimum_rescues",
+          "mission_revision",
+          "objectives",
+          "permitted_tools",
+          "protection_objective_ids",
+          "reference_strategy_briefs",
+          "release_scope",
+          "required_checks",
+          "rules_version",
+          "status",
+          "supply_budget",
+          "title",
+          "total_residents",
+          "tutorial_policy",
+          "world_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schema_version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "freeze_id",
+    "missions",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

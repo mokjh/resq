@@ -1,0 +1,1 @@
+{"name":"Resq.Content.Tests","references":["Resq.Content","Resq.Content.Editor"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"noEngineReferences":false}

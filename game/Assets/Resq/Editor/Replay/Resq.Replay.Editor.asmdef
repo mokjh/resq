@@ -1,0 +1,1 @@
+{"name":"Resq.Replay.Editor","rootNamespace":"Resq.Editor.Replay","references":["Resq.Content","Resq.Core","Resq.Simulation","Resq.Persistence"],"includePlatforms":["Editor"],"autoReferenced":true,"noEngineReferences":true}

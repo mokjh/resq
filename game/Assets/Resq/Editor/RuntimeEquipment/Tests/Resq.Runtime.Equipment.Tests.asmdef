@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Equipment.Tests","references":["Resq.Core","Resq.Simulation","Resq.Content","Resq.Runtime.Equipment.Editor"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"noEngineReferences":false}

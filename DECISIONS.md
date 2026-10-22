@@ -1,0 +1,18 @@
+# RESQ decision ledger
+
+Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archive/process-2026-10/DECISIONS.md`.
+
+## 22 Oct 2026 — studio reset and competition plan (user-approved)
+
+| Decision | Result |
+|---|---|
+| Competition entry | Meta VR Start Developer Competition 2026: Gaming track, New Experience division. Submit Tue 17 Nov; the deadline is Wed 18 Nov, 22:00 Cairo. |
+| Scope | The user chose to attempt all 25 missions in the entry. Per-world ship gate: a world is playable in the entry only if all five of its missions pass validation, a Simulator playthrough and a device smoke test. Otherwise it is shown honestly as "in development". Alder Valley's five missions are never cut. |
+| Process | Studio mode replaces the 229-task evidence/admission regime. Gates are real tests, deterministic replays, performance budgets, playtests and user reviews. Old records are archived, not deleted. |
+| Device testing | Last. Physical Quest 3/3S work happens only in phase P5 (12–15 Nov); everything before that runs in the Editor, Meta XR Simulator and SpatialSim. |
+| Simulation | New lean "Sim v2": struct-of-arrays, integer, allocation-free, deterministic, covering every world's rules. The old engine is kept unchanged as a golden-value oracle in `reference/legacy-sim/`. |
+| Content | Mission factory: recipe plus contract feed a layout compiler, then a headless validator (no input must fail; strategies A and B must win on both layouts and all three presets). |
+| Art | Original scripted-Blender kits on one palette atlas. Paid generation capped at Meshy ≤ 300 and Higgsfield ≤ 60 credits, each spend logged with its license. |
+| Machine | RESQ gets exclusive use of Unity on this Mac until 18 Nov (the user pauses Waz). Reclaimed the throwaway bootstrap Unity `Library/` cache in `evidence/` (5.7 GB). |
+| Git | Local commits on `main` at each working step. No push without the user's OK. |
+| External writes | Store uploads, deploys, YouTube and domain are confirmed with the user at the time. |

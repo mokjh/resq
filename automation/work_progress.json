@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "kind": "non_accepting_foundation_preparation_index",
+  "updated_utc": "2026-10-16T21:59:00.277563+00:00",
+  "authority": "automation/task_state.json alone records accepted task heads",
+  "full_scope_missions": 25,
+  "F03": {
+    "status": "actual_native_four_cases_independently_accepted",
+    "evidence": [
+      "evidence/foundation/source-bootstrap-20261016/template-source.json",
+      "evidence/foundation/source-bootstrap-20261016/csharp-attempt-01/verification.json",
+      "evidence/foundation/source-bootstrap-20261016/editor-typecheck-complete-foundation/verification.json",
+      "evidence/foundation/native-host-20261016/attempt-01/measurements.json",
+      "evidence/foundation/native-host-20261016/attempt-02/measurements.json",
+      "evidence/results/F03/bounded-host-20261016/attempt-05.json",
+      "evidence/runs/F03/bounded-host-20261016/attempt-05/nunit.xml",
+      "evidence/foundation/f03-bounded-20261016/milestone/summary.json"
+    ],
+    "remaining": [],
+    "accepted_result": "evidence/results/F03/bounded-host-20261016/attempt-05.json"
+  },
+  "F04": {
+    "status": "existing_native_Android_roots_and_isolated_URP_preparation_passed_full_candidate_pending",
+    "evidence": [
+      "evidence/toolchain/preparation/20261015-222738Z-registry-resolution/setup-request-final.json",
+      "evidence/toolchain/preparation/20261015-222738Z-registry-resolution/checkpoint-manifest.json",
+      "evidence/foundation/project-inspection/source-20261016/repair-01/verification.json",
+      "evidence/foundation/project-inspection/integrated-editor-20261016/verification.json",
+      "evidence/foundation/project-inspection/native-20261016/inventory.json",
+      "evidence/toolchain/reuse-inspection-20261016/observation.json",
+      "evidence/resource-reassessment-20261016/android-tools-02/selected-tools.json",
+      "evidence/resource-reassessment-20261016/render-packages-04/outcome.json",
+      "evidence/resource-reassessment-20261016/meta-archive-measurement/summary.json",
+      "evidence/toolchain/f04-probe-source-20261016/source-checkpoint.json",
+      "evidence/resource-reassessment-20261016/meta-retention-01/outcome.json",
+      "evidence/toolchain/f04-probe-source-20261016/core-source-checkpoint.json",
+      "evidence/toolchain/f04-probe-source-20261016/interaction-source-checkpoint.json"
+    ],
+    "remaining": [
+      "fresh scoped capacity for remaining native packages and actual Android build",
+      "actual Core/ISDK/MRUK/OpenXR/native matched package resolution in main game",
+      "real SDK rig/provider/features and nativecase emitter",
+      "ARM64IL2CPPAPK/resolved actual candidate binding"
+    ],
+    "setup_authorization": "approved prepared $0 scope; evidence/authorization/unity-setup-20261016/authorization.json",
+    "build_identity_preparation": {
+      "source": "tools/build_candidate.py",
+      "protocol": "docs/foundation/build-candidate-binding.md",
+      "checkpoint": "evidence/foundation/build-candidate-20261016/checkpoint/source-checkpoint.json",
+      "historical_tests_passed": 165,
+      "latest_fixes_native_tests": "173actualF02tests accepted;27build-bindingcases",
+      "remaining_native_gaps": [
+        "genuine F04 native assertions/emitter",
+        "SDK rig/provider/feature wiring",
+        "actual licensed resolution/build",
+        "APK package_id/version_code verification"
+      ],
+      "accepted": false
+    }
+  },
+  "F05": {
+    "status": "adapter_and_synthetic_protocol_prepared; physical execution deferred until all25POLISH",
+    "evidence": [
+      "evidence/toolchain/preparation/20261015-221659Z/validator-tests.json",
+      "evidence/foundation/source-bootstrap-20261016/probe-recorder-attempt-01/verification.json",
+      "evidence/implementation/device-probe-20261016/source-checkpoint.json",
+      "evidence/implementation/device-probe-20261016/missing-input/verification.json",
+      "evidence/implementation/physical-last-20261016/device-adapter-rerun/native.json"
+    ],
+    "physical_sessions": 0,
+    "remaining": [
+      "real SDK callback wiring",
+      "actual candidate on both authorized Quest models",
+      "consent/authentication/capture/observations",
+      "registered independent acceptance"
+    ],
+    "registered_backend": "tools/backends/device.py",
+    "backend_tests": {
+      "initial_source_passed": 28,
+      "extended_executed": 31,
+      "extended_successes": 29,
+      "extended_resource_errors": 2,
+      "corrected_fixture_rerun": "31 passed; physical-last-20261016/device-adapter-rerun"
+    },
+    "latest_adapter_suite": {
+      "executed": 31,
+      "failed": 0,
+      "skipped": 0,
+      "evidence_kind": "synthetic_automated_only"
+    }
+  },
+  "F06": {
+    "status": "actual_native_calibration_orientation_failure_diagnosed_asset_repairs_exhausted",
+    "evidence": [
+      "evidence/calibration/blender-export-attempt-03.json",
+      "evidence/calibration/native-attempt-03/independent-export-audit.json",
+      "evidence/foundation/source-bootstrap-20261016/editor-typecheck-complete-foundation/verification.json",
+      "evidence/calibration/qualification-preparation-20261016/final/verification.json",
+      "evidence/calibration/combined-editor-20261016/final/verification.json",
+      "evidence/calibration/bounded-20261016/measure-02/outcome.json",
+      "evidence/calibration/bounded-20261016/diagnostic-01/import-diagnostic.json",
+      "docs/foundation/calibration-native-blocker-20261016.md"
+    ],
+    "asset_repairs_consumed": 2,
+    "remaining": [
+      "review explicit revised approach beyond consumed twoassetrepairs",
+      "actual correct forward orientation and root geometry",
+      "actual render/pixelinspection and authentic fresh preservation/qualified inlet"
+    ],
+    "registered_backend": "tools/backends/art.py",
+    "qualification_verifier": "tools/art/qualify_calibration.py",
+    "synthetic_safety_tests": 50
+  },
+  "device_test_schedule": "All25POLISH plus X05/X06/tutorial precede F05 and every real Meta/VR-human test; controlled amendment3",
+  "resq_only_cleanup": {
+    "evidence": "evidence/maintenance/resq-cleanup-20261016/cleanup-result.json",
+    "protected_files_unchanged": 3993,
+    "outside_resq_deletions": 0,
+    "allocated_bytes_removed": 664100864
+  },
+  "C01": {
+    "status": "actual_three_native_cases_independently_accepted",
+    "accepted_result": "evidence/results/C01/staged-local-20261016/attempt-04.json",
+    "evidence": [
+      "evidence/results/C01/staged-local-20261016/independent-verification-attempt-04.txt",
+      "evidence/runs/C01/staged-local-20261016/attempt-04/nunit.xml",
+      "evidence/runs/C01/staged-local-20261016/attempt-04/synthetic-compiler.bundle.json"
+    ],
+    "remaining": [],
+    "limits": "Synthetic structural compiler/wire-definition validation only; campaign geometry/replays remain separate tasks."
+  },
+  "C02": {
+    "status": "actual_native_three_cases_independently_accepted",
+    "accepted_result": "evidence/results/C02/bounded-local-20261016/attempt-02.json",
+    "native_growth_bytes": 212763,
+    "remaining": [],
+    "limits": [
+      "Mandatory system seam and explicitly synthetic domain fixtures; no campaign rescue/device/human/performance acceptance."
+    ]
+  },
+  "C03": {
+    "status": "actual_native_three_cases_independently_accepted",
+    "accepted_result": "evidence/results/C03/bounded-local-20261016/attempt-01.json",
+    "native_growth_bytes": 1525906,
+    "remaining": [],
+    "limits": [
+      "Water subsystem+suppliedboundarycontrols; no actualequipmentdamage/fireintegration/campaign/devicequalification."
+    ]
+  },
+  "C04": {
+    "status": "actual_native_four_cases_independently_accepted",
+    "accepted_result": "evidence/results/C04/bounded-metrics-20261017/attempt-01.json",
+    "native_growth_bytes": 497838,
+    "remaining": [],
+    "limits": [
+      "Syntheticcomponentandactualcompiler/clockintegrationtests; no campaign/device/human/performanceacceptance."
+    ],
+    "evidence": [
+      "evidence/results/C04/bounded-integration-20261017/independent-verification-attempt-01.txt"
+    ],
+    "lowest_free_bytes": 6433521664
+  },
+  "C05": {
+    "status": "actual_native_four_cases_independently_accepted",
+    "accepted": true,
+    "accepted_result": "evidence/results/C05/bounded-refresh-20261017/attempt-01.json",
+    "native_growth_bytes": 89211,
+    "lowest_free_bytes": 6433148928,
+    "remaining": [],
+    "limits": "Actual component tests, synthetic later-worldmechanics; no complete gameplay/campaign/device qualification."
+  },
+  "C06": {
+    "status": "actual_both_native_suites_five_cases_independently_accepted",
+    "accepted": true,
+    "accepted_result": "evidence/results/C06/bounded-local-20261017/attempt-05.json",
+    "native_executed": true,
+    "native_case_count": 5,
+    "measurements": {
+      "check-c06": {
+        "full_peak_known": false,
+        "highest_memory_pressure_level": 2,
+        "lowest_free_bytes": 6415978496,
+        "observed_utc": "2026-10-16T21:55:26.612398+00:00",
+        "peak_positive_growth_bytes": 116396,
+        "task_accepted": false
+      },
+      "check-runtime-units": {
+        "full_peak_known": false,
+        "highest_memory_pressure_level": 2,
+        "lowest_free_bytes": 6422044672,
+        "observed_utc": "2026-10-16T21:55:31.034192+00:00",
+        "peak_positive_growth_bytes": 61553,
+        "task_accepted": false
+      }
+    },
+    "remaining": [],
+    "milestone": "evidence/runtime-objectives-20261017/milestone/summary.json",
+    "limits": "Exact native subsystem/integration evidence with synthetic safety fixtures, not authored25mission/device/human/performance/release acceptance."
+  },
+  "C07": {
+    "status": "dependency_ready_not_started",
+    "accepted": false,
+    "remaining": [
+      "Exact full-domain/clock reconstruction; atomic save and strictmigration/replay implementation",
+      "Explicit scoped native resource profile if appropriate",
+      "Actualnativechecks independentverification acceptance"
+    ]
+  }
+}

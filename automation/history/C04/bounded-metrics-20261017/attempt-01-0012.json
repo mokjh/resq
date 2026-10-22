@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C04",
+  "event": "passed",
+  "run_id": "bounded-metrics-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 12,
+  "previous_event_sha256": "a403c634ff000a2b199c9f171f2a7b83822a0c97a65dee73dc945424bc55410e",
+  "result_path": "evidence/results/C04/bounded-metrics-20261017/attempt-01.json",
+  "result_sha256": "900628a07157fd5cca238e9ee1d57b6ba69f6183b93999c20e6da66c75f040e5",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-16T21:50:04.813232+00:00"
+}

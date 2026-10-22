@@ -1,0 +1,8 @@
+{
+  "name": "Resq.Tests",
+  "references": ["Resq.Core", "Resq.Tests.Shared", "Resq.Editor.Automation"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false,
+  "noEngineReferences": false
+}

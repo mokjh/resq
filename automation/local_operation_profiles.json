@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "id": "resq-staged-local-1",
+  "reserve_bytes": 2147483648,
+  "authority": "Direct user16October2026 F04/F06 reassessment, installed Android tool reuse and C01 safe continuation",
+  "stages": {
+    "runtime-content": {
+      "task": "C01",
+      "growth": 134217728,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "calibration-measure": {
+      "task": "F06",
+      "growth": 67108864,
+      "buffer": 67108864,
+      "graphics": false
+    },
+    "calibration-render": {
+      "task": "F06",
+      "growth": 268435456,
+      "buffer": 134217728,
+      "graphics": true
+    },
+    "render-packages": {
+      "task": "F06",
+      "growth": 1610612736,
+      "buffer": 268435456,
+      "graphics": false
+    },
+    "xr-packages": {
+      "task": "F04",
+      "growth": 2147483648,
+      "buffer": 268435456,
+      "graphics": false
+    },
+    "android-probe-build": {
+      "task": "F04",
+      "growth": 2147483648,
+      "buffer": 268435456,
+      "graphics": false
+    },
+    "android-tools-inspect": {
+      "task": "F04",
+      "growth": 67108864,
+      "buffer": 67108864,
+      "graphics": false
+    }
+  },
+  "full_peak_known": false,
+  "basis": "Existing Android tools add zero installation bytes. Candidate local archives known 1010485442B expansion; builtins existing444816396B. Import/Meta/IL2CPP/Gradle peaks unknown and bounded by cancellation, never treated as zero. Calibration geometry/native observation161189B positivegrowth. C01 leanhost source/test stage bounded128MiB.",
+  "acceptance_checks_unchanged": true,
+  "physical_tests_final_only": true,
+  "mission_count": 25
+}

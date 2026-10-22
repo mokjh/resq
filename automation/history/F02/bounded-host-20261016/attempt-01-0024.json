@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F02",
+  "event": "failed",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 24,
+  "previous_event_sha256": "ae3dd1e73fa71198e81fdf4e5da77a779d9c1b7503a0c7e78f9f36791b568313",
+  "result_path": "evidence/results/F02/bounded-host-20261016/attempt-01.json",
+  "result_sha256": "99dbc52465b945e262dfb1a658a21427b7edb240cef03b8555b33aa8d28bcd0d",
+  "reason": "Required test suite failed: test_task_execution.py",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T17:41:54.109427+00:00"
+}

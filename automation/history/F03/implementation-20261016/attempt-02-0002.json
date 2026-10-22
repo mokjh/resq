@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "blocked",
+  "run_id": "implementation-20261016",
+  "attempt_id": "attempt-02",
+  "sequence": 2,
+  "previous_event_sha256": "78d4e49015d2a4565f14345cce520e9fc7ade40dceb77fa3ba970b1630e9fd01",
+  "result_path": "evidence/results/F03/implementation-20261016/attempt-02.json",
+  "result_sha256": "e5f83b2090bb9527bfe0f5e768300b546b923f492f0259a8777f397a89bd5412",
+  "reason": "GATE_NOT_VERIFIED: working_storage — Use06section3.1: Unity max40GiB,peak+10; art max15GiB,3xnew+10; web max10GiB,peak+5; capture max20GiB,2xraw+3xexport+10; remeasure outputvolume",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T21:25:11.212455+00:00"
+}

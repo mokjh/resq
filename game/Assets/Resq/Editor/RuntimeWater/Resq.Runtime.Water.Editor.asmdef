@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Water.Editor","rootNamespace":"Resq.Editor.RuntimeWater","references":["Resq.Content"],"includePlatforms":["Editor"],"autoReferenced":true,"noEngineReferences":true}

@@ -1,0 +1,1372 @@
+[
+  {
+    "id": "W1-M1",
+    "world_id": "W1",
+    "order": 1,
+    "title": "First Crossing",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "competition",
+    "duration_seconds": 360,
+    "total_residents": 8,
+    "minimum_rescues": 6,
+    "supply_budget": 12,
+    "default_loadout": {
+      "bridge": 1,
+      "barrier": 2,
+      "skiff": 1,
+      "beacon": 1
+    },
+    "core_decision": "Learn bridge placement, flood forecasts, and a first boat route.",
+    "layout_brief": "Bus group of 4 at the west crossing; 4 residents at the low dock; depot and high landing are safe.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Reservoir inflow increases; highlight the fork forecast."
+      },
+      {
+        "simulation_second": 140,
+        "description": "Low-dock water rises toward closure threshold."
+      },
+      {
+        "simulation_second": 240,
+        "description": "Final moderate surge tests the placed barrier."
+      }
+    ],
+    "required_objectives_brief": "Evacuate at least 6 residents; deliver the bus group to the depot.",
+    "mastery_brief": "Rescue all 8 and keep the low dock usable until its group boards.",
+    "reference_plan_a": "Bridge the bus crossing, divert water west, then skiff the dock group.",
+    "reference_plan_b": "Divert first, skiff the low dock, then build the bridge before the last surge.",
+    "failure_explanation": "Leaving the dock above the flood threshold too long closes boarding; backup transport recovers the unrescued group.",
+    "signature_moment": "The first passengers turn and wave as the bridge unfolds.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W1-M2",
+    "world_id": "W1",
+    "order": 2,
+    "title": "The Lower Road",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "competition",
+    "duration_seconds": 420,
+    "total_residents": 12,
+    "minimum_rescues": 9,
+    "supply_budget": 16,
+    "default_loadout": {
+      "pump": 1,
+      "generator": 1,
+      "skiff": 1,
+      "barrier": 2,
+      "beacon": 1
+    },
+    "core_decision": "Understand downstream consequences and dry power placement.",
+    "layout_brief": "Three groups of 4: orchard, river houses, and ferry landing; pump has two legal outlet regions.",
+    "event_briefs": [
+      {
+        "simulation_second": 45,
+        "description": "Rain begins in the upper basin."
+      },
+      {
+        "simulation_second": 130,
+        "description": "A warning reveals the lower-road closure forecast."
+      },
+      {
+        "simulation_second": 250,
+        "description": "Upper inflow peaks; a low generator platform becomes unsafe."
+      }
+    ],
+    "required_objectives_brief": "Evacuate at least 9; maintain power at the medical station at mission end.",
+    "mastery_brief": "Rescue all 12 without exposing the orchard assembly point.",
+    "reference_plan_a": "Put the generator on high ground and pump into the empty basin while the skiff cycles.",
+    "reference_plan_b": "Use paired barriers to spare the road, ferry the orchard first, and reserve the pump for the late surge.",
+    "failure_explanation": "An outlet into the orchard transfers the hazard to waiting residents; debrief displays the actual flow path.",
+    "signature_moment": "A pumping hose visibly bulges while a previously flooded road reappears.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W1-M3",
+    "world_id": "W1",
+    "order": 3,
+    "title": "Two Banks",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "competition",
+    "duration_seconds": 480,
+    "total_residents": 14,
+    "minimum_rescues": 11,
+    "supply_budget": 17,
+    "default_loadout": {
+      "bridge": 1,
+      "skiff": 2,
+      "barrier": 2,
+      "beacon": 2
+    },
+    "core_decision": "Allocate transport capacity between separated groups.",
+    "layout_brief": "West village has 8 residents; east workshop 6. One bridge socket connects only the high paths, not both docks.",
+    "event_briefs": [
+      {
+        "simulation_second": 70,
+        "description": "A central surge closes the low footpath."
+      },
+      {
+        "simulation_second": 180,
+        "description": "Debris blocks one boat lane after a clear warning."
+      },
+      {
+        "simulation_second": 320,
+        "description": "The east landing becomes the shorter remaining route."
+      }
+    ],
+    "required_objectives_brief": "Evacuate at least 11; empty the east workshop group.",
+    "mastery_brief": "Rescue all 14 with no idle fully loaded skiff at the end.",
+    "reference_plan_a": "Bridge the high road for western pedestrians; use both boats on eastern and overflow groups.",
+    "reference_plan_b": "Evacuate east early with one skiff, route the other west, then bridge the final safe path.",
+    "failure_explanation": "A boat assigned to a closing lane waits at a safe node; the player must reassign it.",
+    "signature_moment": "Two boats cross beneath the viaduct carrying different rescue groups.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W1-M4",
+    "world_id": "W1",
+    "order": 4,
+    "title": "Power Before Water",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "competition",
+    "duration_seconds": 480,
+    "total_residents": 16,
+    "minimum_rescues": 12,
+    "supply_budget": 18,
+    "default_loadout": {
+      "pump": 2,
+      "generator": 2,
+      "barrier": 1,
+      "skiff": 1
+    },
+    "core_decision": "Trade early protection against immediate evacuation.",
+    "layout_brief": "Clinic, tram depot, and riverside housing share a power bottleneck. Dry source sockets are scarce but sufficient.",
+    "event_briefs": [
+      {
+        "simulation_second": 50,
+        "description": "First spill enters the clinic basin."
+      },
+      {
+        "simulation_second": 160,
+        "description": "Tram passengers reach the assembly point."
+      },
+      {
+        "simulation_second": 280,
+        "description": "One low connection shuts down unless protected."
+      },
+      {
+        "simulation_second": 380,
+        "description": "Final spill threatens the second basin."
+      }
+    ],
+    "required_objectives_brief": "Evacuate at least 12; preserve the clinic power connection at end.",
+    "mastery_brief": "Rescue all 16 while keeping both generators operational.",
+    "reference_plan_a": "Protect the dry power spine and alternate pump assignments to lower both basins.",
+    "reference_plan_b": "Evacuate riverside first, then dedicate both pumps to the clinic/tram sector.",
+    "failure_explanation": "Overcommitting power leaves a pump queued; the UI names the inactive consumer.",
+    "signature_moment": "The town’s lights return in a visible chain when power is restored.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W1-M5",
+    "world_id": "W1",
+    "order": 5,
+    "title": "The Long Way Home",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "competition",
+    "duration_seconds": 540,
+    "total_residents": 20,
+    "minimum_rescues": 15,
+    "supply_budget": 20,
+    "default_loadout": {
+      "bridge": 1,
+      "pump": 1,
+      "generator": 1,
+      "skiff": 1,
+      "barrier": 3,
+      "beacon": 1
+    },
+    "core_decision": "Combine flow, power, routing, and a deliberate equipment tradeoff.",
+    "layout_brief": "Four groups of 5 occupy the upper village, orchard, workshop, and island landing. Three elevations create alternate safe routes.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "First surge reveals the main fork."
+      },
+      {
+        "simulation_second": 170,
+        "description": "A forecast landslide closes the short road."
+      },
+      {
+        "simulation_second": 290,
+        "description": "Reservoir overflow increases source flow."
+      },
+      {
+        "simulation_second": 420,
+        "description": "Late inflow tests the downstream basin."
+      }
+    ],
+    "required_objectives_brief": "Evacuate at least 15; restore a continuous route between depot and upper village.",
+    "mastery_brief": "Rescue all 20 and finish with no stranded loaded vehicle.",
+    "reference_plan_a": "Build the long bridge route, protect generator ground, and ferry the isolated island.",
+    "reference_plan_b": "Prioritize island and orchard with the skiff, then redirect the late surge and open the land route.",
+    "failure_explanation": "A poor early diversion consumes safe basin capacity and forces a longer evacuation; no instant unannounced loss.",
+    "signature_moment": "The final bus and skiff arrive together while the town’s rescue bell rings.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W2-M1",
+    "world_id": "W2",
+    "order": 1,
+    "title": "A Line in the Trees",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 360,
+    "total_residents": 10,
+    "minimum_rescues": 8,
+    "supply_budget": 13,
+    "default_loadout": {
+      "firebreak": 2,
+      "sprinkler": 1,
+      "generator": 1,
+      "beacon": 3
+    },
+    "core_decision": "Learn fuel removal and moisture.",
+    "layout_brief": "Campsite and lookout connect through two wooded paths; one tank supplies both sprinkler sockets.",
+    "event_briefs": [
+      {
+        "simulation_second": 50,
+        "description": "A marked dry-cell cluster ignites."
+      },
+      {
+        "simulation_second": 160,
+        "description": "Steady wind advances heat toward the short path."
+      },
+      {
+        "simulation_second": 260,
+        "description": "The first cooled strip becomes safe to cross."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 8; preserve a path to the lookout.",
+    "mastery_brief": "Rescue all 10 while retaining water in the tank.",
+    "reference_plan_a": "Break the nearest fuel strip and wet the approach.",
+    "reference_plan_b": "Defend the longer path and stage the campsite first.",
+    "failure_explanation": "A gap in the firebreak permits predictable spread.",
+    "signature_moment": "The fire stops along the exact strip the player cleared.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W2-M2",
+    "world_id": "W2",
+    "order": 2,
+    "title": "Last Bus from Camp",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 18,
+    "minimum_rescues": 14,
+    "supply_budget": 18,
+    "default_loadout": {
+      "crawler": 2,
+      "firebreak": 2,
+      "sprinkler": 1,
+      "generator": 1
+    },
+    "core_decision": "Coordinate finite ground transport capacity.",
+    "layout_brief": "Three camps each hold 6 people; two road loops meet at a refill station.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "One road becomes threatened."
+      },
+      {
+        "simulation_second": 190,
+        "description": "A wind warning marks the alternate loop."
+      },
+      {
+        "simulation_second": 330,
+        "description": "The refill station approaches heat threshold."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 14; unload every occupied crawler before finishing.",
+    "mastery_brief": "Rescue all 18 without losing the refill station.",
+    "reference_plan_a": "Stage one crawler on each loop and protect the common junction.",
+    "reference_plan_b": "Run both on the nearest camp first, then use the protected longer loop.",
+    "failure_explanation": "An empty vehicle on the wrong loop costs time but can be rerouted.",
+    "signature_moment": "Campers board with tiny backpacks and return a lost flag.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W2-M3",
+    "world_id": "W2",
+    "order": 3,
+    "title": "Water Is a Route",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 16,
+    "minimum_rescues": 12,
+    "supply_budget": 20,
+    "default_loadout": {
+      "sprinkler": 2,
+      "generator": 1,
+      "pump": 1,
+      "crawler": 1,
+      "firebreak": 2
+    },
+    "core_decision": "Make water supply and transport choices interact.",
+    "layout_brief": "A pond and storage tank feed separate areas; a pump link can refill the tank without protecting the road by itself.",
+    "event_briefs": [
+      {
+        "simulation_second": 40,
+        "description": "Orchard edge heats."
+      },
+      {
+        "simulation_second": 150,
+        "description": "The tank drops below half unless replenished."
+      },
+      {
+        "simulation_second": 300,
+        "description": "A second ignition threatens the return road."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 12; keep the orchard assembly route usable.",
+    "mastery_brief": "Rescue all 16 with neither water source exhausted.",
+    "reference_plan_a": "Pump pond water into the tank and alternate sprinklers.",
+    "reference_plan_b": "Use firebreaks to minimize wetting and reserve pumped water for the return road.",
+    "failure_explanation": "A sprinkler without water shows a visible dry gauge rather than pretending to operate.",
+    "signature_moment": "A hose network creates a brief corridor through a glowing forest edge.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W2-M4",
+    "world_id": "W2",
+    "order": 4,
+    "title": "When the Wind Turns",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 20,
+    "minimum_rescues": 15,
+    "supply_budget": 19,
+    "default_loadout": {
+      "crawler": 2,
+      "firebreak": 3,
+      "sprinkler": 1,
+      "beacon": 2
+    },
+    "core_decision": "Anticipate forecast direction changes.",
+    "layout_brief": "Four groups use a road network with two dominant wind-exposed edges; a fixed powered tank is provided.",
+    "event_briefs": [
+      {
+        "simulation_second": 70,
+        "description": "Wind is stable westward."
+      },
+      {
+        "simulation_second": 200,
+        "description": "A 40-second warning precedes an eastward turn."
+      },
+      {
+        "simulation_second": 360,
+        "description": "A second turn threatens the unprotected flank."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 15; empty the lookout group.",
+    "mastery_brief": "Rescue all 20 without rebuilding a committed firebreak.",
+    "reference_plan_a": "Protect both flanks selectively and time transport before the turn.",
+    "reference_plan_b": "Concentrate early rescues on the future downwind side, then retreat along the safe loop.",
+    "failure_explanation": "Ignoring the visible wind timeline makes the formerly safe flank dangerous.",
+    "signature_moment": "Leaves and smoke lean before the route warning changes.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W2-M5",
+    "world_id": "W2",
+    "order": 5,
+    "title": "The Green Corridor",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 24,
+    "minimum_rescues": 18,
+    "supply_budget": 23,
+    "default_loadout": {
+      "crawler": 2,
+      "sprinkler": 2,
+      "generator": 1,
+      "firebreak": 3
+    },
+    "core_decision": "Maintain a living evacuation corridor through a combined burn.",
+    "layout_brief": "Campsite, orchard, and sawmill each hold 8; two water tanks and one long safe route can support a coordinated solution.",
+    "event_briefs": [
+      {
+        "simulation_second": 50,
+        "description": "Outer forest ignition."
+      },
+      {
+        "simulation_second": 170,
+        "description": "Sawmill access becomes threatened."
+      },
+      {
+        "simulation_second": 310,
+        "description": "Wind shifts toward the central route."
+      },
+      {
+        "simulation_second": 430,
+        "description": "Final heat peak reaches the corridor flank."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 18; preserve the central route at end.",
+    "mastery_brief": "Rescue all 24 and save the orchard pump house.",
+    "reference_plan_a": "Clear a continuous corridor and wet only its vulnerable bends.",
+    "reference_plan_b": "Evacuate the farthest group first and progressively retreat the transport line.",
+    "failure_explanation": "Protecting every decorative building leaves too little transport capacity.",
+    "signature_moment": "The last crawler exits as residents begin planting the first new sapling.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W3-M1",
+    "world_id": "W3",
+    "order": 1,
+    "title": "Hold the Station",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 360,
+    "total_residents": 10,
+    "minimum_rescues": 8,
+    "supply_budget": 14,
+    "default_loadout": {
+      "brace": 3,
+      "winch": 1,
+      "generator": 1,
+      "beacon": 2
+    },
+    "core_decision": "Introduce structure-specific support and vertical transfers.",
+    "layout_brief": "Two terraces connect at the cable station; one known weak support threatens the link.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "A support begins losing stability."
+      },
+      {
+        "simulation_second": 160,
+        "description": "Meltwater increases load."
+      },
+      {
+        "simulation_second": 260,
+        "description": "A minor tremor tests bracing."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 8; preserve the cable support.",
+    "mastery_brief": "Rescue all 10 with no station shutdown.",
+    "reference_plan_a": "Brace the weak support and winch the upper group.",
+    "reference_plan_b": "Evacuate the upper group early, then stabilize for the remaining transfer.",
+    "failure_explanation": "Bracing decorative rocks has no effect; only eligible supports accept placement.",
+    "signature_moment": "Cable tension relaxes visibly when a brace locks into place.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W3-M2",
+    "world_id": "W3",
+    "order": 2,
+    "title": "Above the Snowline",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 420,
+    "total_residents": 14,
+    "minimum_rescues": 11,
+    "supply_budget": 17,
+    "default_loadout": {
+      "winch": 2,
+      "generator": 2,
+      "brace": 2,
+      "beacon": 1
+    },
+    "core_decision": "Manage independent rescue links and power.",
+    "layout_brief": "Three terraces; two winch links and one sheltered intermediate node.",
+    "event_briefs": [
+      {
+        "simulation_second": 50,
+        "description": "Upper path closes under snow."
+      },
+      {
+        "simulation_second": 160,
+        "description": "Sheltered node receives an arriving group."
+      },
+      {
+        "simulation_second": 290,
+        "description": "One unbraced cable platform approaches instability."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 11; empty the top observatory.",
+    "mastery_brief": "Rescue all 14 without trapping residents at the intermediate node.",
+    "reference_plan_a": "Run both winches as a staged relay with separate power.",
+    "reference_plan_b": "Prioritize the observatory, then reuse the lower link for all groups.",
+    "failure_explanation": "Moving people uphill into a temporary staging node without onward capacity blocks the route.",
+    "signature_moment": "Tiny lights descend the mountain in two synchronized lifts.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W3-M3",
+    "world_id": "W3",
+    "order": 3,
+    "title": "The Quiet Slope",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 16,
+    "minimum_rescues": 12,
+    "supply_budget": 18,
+    "default_loadout": {
+      "brace": 3,
+      "crawler": 1,
+      "winch": 1,
+      "generator": 1,
+      "beacon": 2
+    },
+    "core_decision": "Read runout zones and preserve a secondary route.",
+    "layout_brief": "A broad slope threatens one road; a rock shelf provides a longer bypass.",
+    "event_briefs": [
+      {
+        "simulation_second": 90,
+        "description": "Slope stability warning appears."
+      },
+      {
+        "simulation_second": 210,
+        "description": "A marked avalanche runout closes the short road."
+      },
+      {
+        "simulation_second": 340,
+        "description": "Cooling makes one debris edge clearable in the authored route."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 12; evacuate the weather crew.",
+    "mastery_brief": "Rescue all 16 without entering the marked runout during release.",
+    "reference_plan_a": "Move the crawler through early and use the shelf afterward.",
+    "reference_plan_b": "Avoid the short road entirely and stage winch transfers above it.",
+    "failure_explanation": "A closed road stops vehicles at a safe node; it does not fling rigidbody residents.",
+    "signature_moment": "A soft wall of stylized snow follows the warned corridor exactly.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W3-M4",
+    "world_id": "W3",
+    "order": 4,
+    "title": "Cable and Current",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 18,
+    "minimum_rescues": 14,
+    "supply_budget": 20,
+    "default_loadout": {
+      "winch": 2,
+      "generator": 2,
+      "brace": 2,
+      "pump": 1,
+      "beacon": 1
+    },
+    "core_decision": "Combine snow support and flooding power platforms.",
+    "layout_brief": "A warming lower basin threatens generators while upper cables carry residents.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Lower snowmelt starts."
+      },
+      {
+        "simulation_second": 190,
+        "description": "Cable load increases."
+      },
+      {
+        "simulation_second": 310,
+        "description": "A second meltwater source activates."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 14; keep one complete powered cable route available at end.",
+    "mastery_brief": "Rescue all 18 while keeping both lower platforms dry.",
+    "reference_plan_a": "Pump the basin before peak melt and brace the busiest cable.",
+    "reference_plan_b": "Evacuate the upper terrace before melt peaks, then shift power priority downward.",
+    "failure_explanation": "Ignoring the lower basin breaks a logically correct upper rescue plan.",
+    "signature_moment": "A small stream passes beneath the rescued cable line rather than over its power box.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W3-M5",
+    "world_id": "W3",
+    "order": 5,
+    "title": "Dawn at Frostline",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 22,
+    "minimum_rescues": 17,
+    "supply_budget": 22,
+    "default_loadout": {
+      "winch": 2,
+      "generator": 2,
+      "brace": 3,
+      "crawler": 1
+    },
+    "core_decision": "Coordinate a complete mountain evacuation.",
+    "layout_brief": "Observatory, station, and village groups converge through limited safe terraces.",
+    "event_briefs": [
+      {
+        "simulation_second": 70,
+        "description": "Forecast warming begins."
+      },
+      {
+        "simulation_second": 180,
+        "description": "First cable support warning."
+      },
+      {
+        "simulation_second": 300,
+        "description": "Runout closes the valley shortcut."
+      },
+      {
+        "simulation_second": 420,
+        "description": "Final transport window opens at the lower station."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 17; clear the observatory and station groups.",
+    "mastery_brief": "Rescue all 22 with no occupied vehicle or shelter left behind.",
+    "reference_plan_a": "Use a vertical relay before the runout, then transfer onto the crawler.",
+    "reference_plan_b": "Clear the lower village first to free receiving capacity for the mountain groups.",
+    "failure_explanation": "Using the receiving station as indefinite storage causes a capacity bottleneck.",
+    "signature_moment": "The sun reaches the restored station as the last cabin arrives.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W4-M1",
+    "world_id": "W4",
+    "order": 1,
+    "title": "Between Two Tides",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 420,
+    "total_residents": 12,
+    "minimum_rescues": 9,
+    "supply_budget": 15,
+    "default_loadout": {
+      "skiff": 2,
+      "bridge": 1,
+      "beacon": 2,
+      "relay": 1
+    },
+    "core_decision": "Learn readable tide windows.",
+    "layout_brief": "Two islands connect by a low causeway and an all-tide boat route; a fixed dry source powers the receiving dock.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Tide begins rising."
+      },
+      {
+        "simulation_second": 180,
+        "description": "Causeway closes."
+      },
+      {
+        "simulation_second": 300,
+        "description": "High landing becomes optimal for unloading."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 9; clear the low-market group.",
+    "mastery_brief": "Rescue all 12 without a loaded boat waiting at a closed dock.",
+    "reference_plan_a": "Walk the nearest group early and ferry the late group.",
+    "reference_plan_b": "Use both boats from the beginning and reserve the bridge for the high route.",
+    "failure_explanation": "An incorrect dock remains visible but rejects loading with a tide explanation.",
+    "signature_moment": "Market umbrellas fold as the water reaches the tide ruler.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W4-M2",
+    "world_id": "W4",
+    "order": 2,
+    "title": "Keep the Light",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 16,
+    "minimum_rescues": 12,
+    "supply_budget": 19,
+    "default_loadout": {
+      "relay": 3,
+      "generator": 1,
+      "skiff": 2,
+      "beacon": 2
+    },
+    "core_decision": "Keep a dry power route while transporting residents.",
+    "layout_brief": "Three elevated relay sockets can route around a flood-prone connection to the lighthouse.",
+    "event_briefs": [
+      {
+        "simulation_second": 70,
+        "description": "Low cable channel floods."
+      },
+      {
+        "simulation_second": 210,
+        "description": "Receiving dock needs lighthouse power for its safe route signal."
+      },
+      {
+        "simulation_second": 350,
+        "description": "Peak tide threatens the shortest relay path."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 12; power the lighthouse at end.",
+    "mastery_brief": "Rescue all 16 with no power outage during final unloading.",
+    "reference_plan_a": "Build the longer elevated network immediately.",
+    "reference_plan_b": "Use the short network early, then transfer idle relays to the high sockets before peak tide.",
+    "failure_explanation": "Moving a relay while its only route is actively required temporarily blocks unloading.",
+    "signature_moment": "A lighthouse beam returns exactly when the circuit closes.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W4-M3",
+    "world_id": "W4",
+    "order": 3,
+    "title": "The Floating Market",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 20,
+    "minimum_rescues": 15,
+    "supply_budget": 21,
+    "default_loadout": {
+      "skiff": 3,
+      "barrier": 2,
+      "beacon": 2,
+      "bridge": 1
+    },
+    "core_decision": "Handle multiple pickups and staging capacity.",
+    "layout_brief": "Four markets each hold 5; the safe island has limited docks but sufficient total refuge.",
+    "event_briefs": [
+      {
+        "simulation_second": 50,
+        "description": "First tidal lane opens."
+      },
+      {
+        "simulation_second": 170,
+        "description": "A stall pontoon blocks one marked channel."
+      },
+      {
+        "simulation_second": 300,
+        "description": "Current direction favors the outer loop."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 15; unload all occupied skiffs.",
+    "mastery_brief": "Rescue all 20 without exceeding any staging node capacity.",
+    "reference_plan_a": "Stagger arrivals through the two receiving docks.",
+    "reference_plan_b": "Evacuate one island fully, then reuse its high dock as a transfer point.",
+    "failure_explanation": "Assigning all boats to one dock creates a readable queue, not overlapping models.",
+    "signature_moment": "Boats line up between colorful awnings and a miniature harbor crane.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W4-M4",
+    "world_id": "W4",
+    "order": 4,
+    "title": "Storm Switch",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 22,
+    "minimum_rescues": 17,
+    "supply_budget": 23,
+    "default_loadout": {
+      "skiff": 2,
+      "pump": 2,
+      "generator": 1,
+      "relay": 2,
+      "barrier": 1
+    },
+    "core_decision": "Combine rain inflow and sea-level changes.",
+    "layout_brief": "Rain fills an inland basin while tide threatens pump outlets and the power network.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Rain source starts."
+      },
+      {
+        "simulation_second": 190,
+        "description": "Tide reduces discharge efficiency."
+      },
+      {
+        "simulation_second": 320,
+        "description": "A brief low-tide window opens."
+      },
+      {
+        "simulation_second": 440,
+        "description": "Final rain peak."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 17; keep the medical landing accessible at end.",
+    "mastery_brief": "Rescue all 22 without pumping into the occupied market basin.",
+    "reference_plan_a": "Store inflow behind a barrier, then pump during low tide.",
+    "reference_plan_b": "Keep high docks available and prioritize boat evacuation while managing only the critical basin.",
+    "failure_explanation": "A pump outlet submerged under a tide has reduced effect, clearly shown in its forecast.",
+    "signature_moment": "Two different water levels become visible across the barrier line.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W4-M5",
+    "world_id": "W4",
+    "order": 5,
+    "title": "Harbor of Everyone",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 26,
+    "minimum_rescues": 20,
+    "supply_budget": 26,
+    "default_loadout": {
+      "skiff": 3,
+      "relay": 2,
+      "generator": 1,
+      "bridge": 1,
+      "barrier": 2
+    },
+    "core_decision": "Master transport, tide windows, and power topology.",
+    "layout_brief": "Three islands, two causeways, four pickup groups, and a lighthouse-backed safe harbor.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Rising tide closes the first causeway."
+      },
+      {
+        "simulation_second": 180,
+        "description": "Power warning at the harbor."
+      },
+      {
+        "simulation_second": 300,
+        "description": "Outer route becomes faster with the current."
+      },
+      {
+        "simulation_second": 430,
+        "description": "Last high-water phase closes low docks."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 20; restore lighthouse power and empty every temporary staging dock.",
+    "mastery_brief": "Rescue all 26 with the high causeway still usable.",
+    "reference_plan_a": "Prioritize low docks, then use the outer loop for the final groups.",
+    "reference_plan_b": "Open the high causeway and use boats only for isolated islands while protecting the network.",
+    "failure_explanation": "Saving the lighthouse alone cannot satisfy the rescue goal.",
+    "signature_moment": "The harbor fills with rescued boats under a single calm sweep of light.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W5-M1",
+    "world_id": "W5",
+    "order": 1,
+    "title": "A Path Through Heat",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 420,
+    "total_residents": 12,
+    "minimum_rescues": 9,
+    "supply_budget": 16,
+    "default_loadout": {
+      "cooler": 2,
+      "bridge": 1,
+      "beacon": 3,
+      "shelter": 1
+    },
+    "core_decision": "Introduce temporary cooled crossings.",
+    "layout_brief": "Two heat channels divide an orchard from a high landing; one shelter socket lies outside the permanent safe zone.",
+    "event_briefs": [
+      {
+        "simulation_second": 70,
+        "description": "Lava advances into a marked channel."
+      },
+      {
+        "simulation_second": 210,
+        "description": "First cooling opportunity appears."
+      },
+      {
+        "simulation_second": 330,
+        "description": "Cooled segment begins reheating."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 9; empty the temporary shelter before completion.",
+    "mastery_brief": "Rescue all 12 before the first crossing reheats.",
+    "reference_plan_a": "Cool a crossing only when residents are ready to move.",
+    "reference_plan_b": "Stage residents in shelter, cool the longer route, then cross together.",
+    "failure_explanation": "Cooling too early wastes the safe window; the timer remains visible.",
+    "signature_moment": "A black crust forms under a cooling plume and opens a narrow path.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W5-M2",
+    "world_id": "W5",
+    "order": 2,
+    "title": "Borrowed Safety",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 18,
+    "minimum_rescues": 14,
+    "supply_budget": 22,
+    "default_loadout": {
+      "shelter": 2,
+      "cooler": 2,
+      "crawler": 1,
+      "beacon": 4
+    },
+    "core_decision": "Use refuge as a temporary logistics tool, not a destination.",
+    "layout_brief": "Two groups need protection while the crawler travels between sectors.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Heat advances toward the first assembly point."
+      },
+      {
+        "simulation_second": 180,
+        "description": "Shelter protection starts being consumed."
+      },
+      {
+        "simulation_second": 320,
+        "description": "The outer route opens after a cooling phase."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 14; both temporary shelters empty at end.",
+    "mastery_brief": "Rescue all 18 without exhausting a shelter protection interval.",
+    "reference_plan_a": "Stage one group, evacuate the other, then return along the cooled route.",
+    "reference_plan_b": "Use both shelters briefly and alternate transport pickups before heat peaks.",
+    "failure_explanation": "Leaving residents in shelters fails the evacuation condition even if they remain safe.",
+    "signature_moment": "Shelter lamps change state as the last group boards the crawler.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W5-M3",
+    "world_id": "W5",
+    "order": 3,
+    "title": "The Cooling Works",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 480,
+    "total_residents": 20,
+    "minimum_rescues": 15,
+    "supply_budget": 24,
+    "default_loadout": {
+      "cooler": 3,
+      "pump": 2,
+      "generator": 1,
+      "relay": 1,
+      "shelter": 1
+    },
+    "core_decision": "Protect coolant logistics and power.",
+    "layout_brief": "A cooling plant supplies finite coolant; water drainage protects its generator and relay.",
+    "event_briefs": [
+      {
+        "simulation_second": 50,
+        "description": "Drainage basin begins filling."
+      },
+      {
+        "simulation_second": 170,
+        "description": "Heat threatens coolant delivery."
+      },
+      {
+        "simulation_second": 310,
+        "description": "A second channel cuts the default route."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 15; keep the cooling works available at end.",
+    "mastery_brief": "Rescue all 20 while retaining one coolant charge.",
+    "reference_plan_a": "Secure drainage and power first, then cool the short route.",
+    "reference_plan_b": "Evacuate via the longer path and save cooling for the late channel.",
+    "failure_explanation": "Power loss stops production but does not erase stored coolant.",
+    "signature_moment": "The plant’s pipes light in sequence and a safe corridor opens.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W5-M4",
+    "world_id": "W5",
+    "order": 4,
+    "title": "Three Ways Out",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 24,
+    "minimum_rescues": 18,
+    "supply_budget": 27,
+    "default_loadout": {
+      "skiff": 2,
+      "crawler": 1,
+      "cooler": 2,
+      "shelter": 1,
+      "bridge": 1
+    },
+    "core_decision": "Choose among sea, road, and temporary crossings.",
+    "layout_brief": "Three sectors support different transport types; all routes share limited final receiving capacity.",
+    "event_briefs": [
+      {
+        "simulation_second": 70,
+        "description": "Road warning."
+      },
+      {
+        "simulation_second": 200,
+        "description": "Heat closes the short land route."
+      },
+      {
+        "simulation_second": 330,
+        "description": "Sea route improves as debris clears."
+      },
+      {
+        "simulation_second": 440,
+        "description": "Final cooling window."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 18; clear the research crew and all temporary refuge.",
+    "mastery_brief": "Rescue all 24 with no stranded vehicle load.",
+    "reference_plan_a": "Ferry the coast early, then use crawler and cooling inland.",
+    "reference_plan_b": "Use shelter to stage inland groups while boats clear the receiving dock.",
+    "failure_explanation": "Overloading one final landing creates a queue; capacity indicators must predict it.",
+    "signature_moment": "A boat and crawler transfer groups at the same tiny pier.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  },
+  {
+    "id": "W5-M5",
+    "world_id": "W5",
+    "order": 5,
+    "title": "Every Little Life",
+    "status": "authored_brief_unimplemented",
+    "release_scope": "full_release",
+    "duration_seconds": 540,
+    "total_residents": 30,
+    "minimum_rescues": 23,
+    "supply_budget": 30,
+    "default_loadout": {
+      "skiff": 2,
+      "crawler": 1,
+      "cooler": 2,
+      "shelter": 1,
+      "generator": 1,
+      "pump": 1,
+      "barrier": 1
+    },
+    "core_decision": "Final combined-system rescue with meaningful priorities.",
+    "layout_brief": "Five groups of 6 span an orchard, station, research terraces, waterfront, and high village. No new mechanic is introduced.",
+    "event_briefs": [
+      {
+        "simulation_second": 60,
+        "description": "Rain and heat begin in separate regions."
+      },
+      {
+        "simulation_second": 170,
+        "description": "First transport route warning."
+      },
+      {
+        "simulation_second": 290,
+        "description": "Generator platform needs drainage."
+      },
+      {
+        "simulation_second": 400,
+        "description": "Last heat front approaches the staging zone."
+      }
+    ],
+    "required_objectives_brief": "Rescue at least 23; empty all temporary shelters and restore the final ferry route.",
+    "mastery_brief": "Rescue all 30 without any equipment loss.",
+    "reference_plan_a": "Stabilize the power/drainage spine, ferry coast groups, and cool the inland route just in time.",
+    "reference_plan_b": "Evacuate the most exposed groups first, use shelter for the high village, and dedicate late resources to the ferry connection.",
+    "failure_explanation": "A plan that protects scenery but delays evacuation cannot earn a successful outcome.",
+    "signature_moment": "Every rescued group joins a single departure; the credits can be skipped without interrupting the final save.",
+    "required_evidence": [
+      "compiled content validation",
+      "reference plan A replay",
+      "reference plan B replay",
+      "no-input baseline",
+      "one-hand completion",
+      "device performance capture"
+    ],
+    "input_presets": [
+      "standard_hands",
+      "relaxed_hands",
+      "command_head_dwell"
+    ]
+  }
+]

@@ -1,0 +1,507 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "freeze_id": {
+      "type": "string"
+    },
+    "layout_classes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "board_depth_mm": {
+            "type": "integer"
+          },
+          "board_width_mm": {
+            "type": "integer"
+          },
+          "denominator": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "string"
+          },
+          "usable_depth_mm": {
+            "type": "integer"
+          },
+          "usable_depth_mm_numerator": {
+            "type": "integer"
+          },
+          "usable_width_mm": {
+            "type": "integer"
+          },
+          "usable_width_mm_numerator": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "board_depth_mm",
+          "board_width_mm",
+          "id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "recipes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "anchors": {
+            "type": "object",
+            "properties": {
+              "bridge_a": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "bridge_b": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "depot": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "east": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "fork": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "high_landing": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "orchard": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "outlet": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "source": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "upper": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "west": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              }
+            },
+            "required": [
+              "bridge_a",
+              "bridge_b",
+              "depot",
+              "east",
+              "fork",
+              "high_landing",
+              "orchard",
+              "outlet",
+              "source",
+              "upper",
+              "west"
+            ],
+            "additionalProperties": false
+          },
+          "authoring_status": {
+            "type": "string"
+          },
+          "fixed_sources": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "group_bindings": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "anchor": {
+                  "type": "string"
+                },
+                "assembly_capacity": {
+                  "type": "integer"
+                },
+                "assembly_node_id": {
+                  "type": "string"
+                },
+                "ground_route": {
+                  "type": "string"
+                },
+                "group_id": {
+                  "type": "string"
+                },
+                "pickup_capacity": {
+                  "type": "integer"
+                },
+                "pickup_node_id": {
+                  "type": "string"
+                },
+                "start_capacity": {
+                  "type": "integer"
+                },
+                "start_node_id": {
+                  "type": "string"
+                },
+                "vertical_route": {
+                  "anyOf": [
+                    {
+                      "type": "null"
+                    },
+                    {
+                      "type": "string"
+                    }
+                  ]
+                },
+                "water_route": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "anchor",
+                "assembly_capacity",
+                "assembly_node_id",
+                "ground_route",
+                "group_id",
+                "pickup_capacity",
+                "pickup_node_id",
+                "start_capacity",
+                "start_node_id",
+                "vertical_route",
+                "water_route"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "id": {
+            "type": "string"
+          },
+          "logical_grid": {
+            "type": "object",
+            "properties": {
+              "cell_area_mm2": {
+                "type": "integer"
+              },
+              "cell_pitch_mm": {
+                "type": "integer"
+              },
+              "height": {
+                "type": "integer"
+              },
+              "width": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "cell_area_mm2",
+              "cell_pitch_mm",
+              "height",
+              "width"
+            ],
+            "additionalProperties": false
+          },
+          "mission_distinction_source": {
+            "type": "string"
+          },
+          "mission_id": {
+            "type": "string"
+          },
+          "nav_defaults": {
+            "type": "object",
+            "properties": {
+              "assembly_to_pickup_ticks": {
+                "type": "integer"
+              },
+              "dock_berths": {
+                "type": "integer"
+              },
+              "ground_edge_slots": {
+                "type": "integer"
+              },
+              "long_ground_ticks": {
+                "type": "integer"
+              },
+              "short_ground_ticks": {
+                "type": "integer"
+              },
+              "start_to_assembly_ticks": {
+                "type": "integer"
+              },
+              "step_free_required": {
+                "type": "boolean"
+              },
+              "vertical_leg_ticks": {
+                "type": "integer"
+              },
+              "water_edge_slots": {
+                "type": "integer"
+              },
+              "water_leg_ticks": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "assembly_to_pickup_ticks",
+              "dock_berths",
+              "ground_edge_slots",
+              "long_ground_ticks",
+              "short_ground_ticks",
+              "start_to_assembly_ticks",
+              "step_free_required",
+              "vertical_leg_ticks",
+              "water_edge_slots",
+              "water_leg_ticks"
+            ],
+            "additionalProperties": false
+          },
+          "receiving": {
+            "type": "object",
+            "properties": {
+              "berths_per_dock": {
+                "type": "integer"
+              },
+              "compact_primary": {
+                "type": "string"
+              },
+              "compact_secondary": {
+                "type": "string"
+              },
+              "total_permanent_capacity": {
+                "type": "integer"
+              },
+              "wide_primary": {
+                "type": "string"
+              },
+              "wide_secondary": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "berths_per_dock",
+              "compact_primary",
+              "compact_secondary",
+              "total_permanent_capacity",
+              "wide_primary",
+              "wide_secondary"
+            ],
+            "additionalProperties": false
+          },
+          "required_roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "resource_stores": {
+            "type": "object",
+            "properties": {
+              "coolant": {
+                "type": "integer"
+              },
+              "pond": {
+                "type": "integer"
+              },
+              "tank": {
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "socket_counts": {
+            "type": "object",
+            "properties": {
+              "barrier": {
+                "type": "integer"
+              },
+              "beacon": {
+                "type": "integer"
+              },
+              "brace": {
+                "type": "integer"
+              },
+              "bridge": {
+                "type": "integer"
+              },
+              "cooler": {
+                "type": "integer"
+              },
+              "crawler": {
+                "type": "integer"
+              },
+              "firebreak": {
+                "type": "integer"
+              },
+              "generator": {
+                "type": "integer"
+              },
+              "pump": {
+                "type": "integer"
+              },
+              "relay": {
+                "type": "integer"
+              },
+              "shelter": {
+                "type": "integer"
+              },
+              "skiff": {
+                "type": "integer"
+              },
+              "sprinkler": {
+                "type": "integer"
+              },
+              "winch": {
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "terrain_profile": {
+            "type": "object",
+            "properties": {
+              "channel_elevation_mm": {
+                "type": "integer"
+              },
+              "default_cell_volume_mm3": {
+                "type": "integer"
+              },
+              "default_conductance_mm2_per_s": {
+                "type": "integer"
+              },
+              "high_ground_elevation_mm": {
+                "type": "integer"
+              },
+              "initial_source_mm3_per_s": {
+                "type": "integer"
+              },
+              "low_assembly_elevation_mm": {
+                "type": "integer"
+              },
+              "outlet_capacity_mm3_per_s": {
+                "type": "integer"
+              },
+              "road_elevation_mm": {
+                "type": "integer"
+              }
+            },
+            "required": [
+              "channel_elevation_mm",
+              "default_cell_volume_mm3",
+              "default_conductance_mm2_per_s",
+              "high_ground_elevation_mm",
+              "initial_source_mm3_per_s",
+              "low_assembly_elevation_mm",
+              "outlet_capacity_mm3_per_s",
+              "road_elevation_mm"
+            ],
+            "additionalProperties": false
+          },
+          "topology_contract": {
+            "type": "object",
+            "properties": {
+              "alternative_hazard_destinations": {
+                "type": "integer"
+              },
+              "alternative_rescue_corridors": {
+                "type": "integer"
+              },
+              "blocked_short_route_has_safe_bypass": {
+                "type": "boolean"
+              },
+              "fixed_bus": {
+                "type": "boolean"
+              },
+              "no_input_auto_dispatch": {
+                "type": "boolean"
+              },
+              "room_dependent_dock_configuration": {
+                "type": "boolean"
+              },
+              "runtime_generated_puzzles": {
+                "type": "boolean"
+              },
+              "safe_receiving_reachable_for_each_spawn": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "alternative_hazard_destinations",
+              "alternative_rescue_corridors",
+              "blocked_short_route_has_safe_bypass",
+              "fixed_bus",
+              "no_input_auto_dispatch",
+              "room_dependent_dock_configuration",
+              "runtime_generated_puzzles",
+              "safe_receiving_reachable_for_each_spawn"
+            ],
+            "additionalProperties": false
+          },
+          "world_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "anchors",
+          "authoring_status",
+          "fixed_sources",
+          "group_bindings",
+          "id",
+          "logical_grid",
+          "mission_distinction_source",
+          "mission_id",
+          "nav_defaults",
+          "receiving",
+          "required_roles",
+          "resource_stores",
+          "socket_counts",
+          "terrain_profile",
+          "topology_contract",
+          "world_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "schema_version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "freeze_id",
+    "layout_classes",
+    "recipes",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

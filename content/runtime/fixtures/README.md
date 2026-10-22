@@ -1,0 +1,1 @@
+These inputs exercise the pure content compiler. They are synthetic format/topology fixtures, not authored campaign levels, gameplay, reference solutions or acceptance evidence. No simulation outcome is asserted.

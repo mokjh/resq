@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F02",
+  "event": "passed",
+  "run_id": "growth-guard-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 22,
+  "previous_event_sha256": "c3b38846e5c9a9ae3acbb898c77fcb29fbc5342ea96ca4cf5a3b9a3fa02a01cd",
+  "result_path": "evidence/results/F02/growth-guard-20261016/attempt-01.json",
+  "result_sha256": "ad949fb541375db179def99a18d62b4abcbc5a53abf7c48e52715913ed3fa467",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-16T01:32:10.404294+00:00"
+}

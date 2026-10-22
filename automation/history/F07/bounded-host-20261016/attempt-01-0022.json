@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "running",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 22,
+  "previous_event_sha256": "75a11505765697de0c4984812fa599787534a59360e4f16482bfd58354937a69",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T17:46:50.580475+00:00"
+}

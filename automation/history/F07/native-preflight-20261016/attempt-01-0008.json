@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "passed",
+  "run_id": "native-preflight-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 8,
+  "previous_event_sha256": "8d3a2ef74ed0754875a0a17561b94a7dc44afc6531eaac061df930bc006ad07d",
+  "result_path": "evidence/results/F07/native-preflight-20261016/attempt-01.json",
+  "result_sha256": "f255efb21670c2f3507e737af8b139fc8236c1eeda25e44359c8b0383f6bf64d",
+  "reason": "All required native checks and immutable artifacts independently verified.",
+  "verifier": "independent_validate_task_result",
+  "recorded_utc": "2026-10-15T23:22:20.844428+00:00"
+}

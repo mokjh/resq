@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "equipment": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "finite_stock": {
+            "type": "boolean"
+          },
+          "id": {
+            "type": "string"
+          },
+          "prefab_id": {
+            "type": "string"
+          },
+          "refund_on_reposition": {
+            "type": "boolean"
+          },
+          "rules_ref": {
+            "type": "string"
+          },
+          "socket_kind": {
+            "type": "string"
+          },
+          "supply_cost": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "finite_stock",
+          "id",
+          "prefab_id",
+          "refund_on_reposition",
+          "rules_ref",
+          "socket_kind",
+          "supply_cost"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "fixed_infrastructure": {
+      "type": "object",
+      "properties": {
+        "cable_support": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "clinic_power": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "cooling_works": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "lighthouse": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "medical_station": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "orchard_pump_house": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "receiving_harbor": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        },
+        "refill_station": {
+          "type": "object",
+          "properties": {
+            "power_demand": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "power_demand"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "cable_support",
+        "clinic_power",
+        "cooling_works",
+        "lighthouse",
+        "medical_station",
+        "orchard_pump_house",
+        "receiving_harbor",
+        "refill_station"
+      ],
+      "additionalProperties": false
+    },
+    "fixed_vehicle": {
+      "type": "object",
+      "properties": {
+        "ground_movement_slots": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "string"
+        },
+        "purchasable": {
+          "type": "boolean"
+        },
+        "seats": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "ground_movement_slots",
+        "id",
+        "purchasable",
+        "seats"
+      ],
+      "additionalProperties": false
+    },
+    "rules_version": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "integer"
+    },
+    "supply_policy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "equipment",
+    "fixed_infrastructure",
+    "fixed_vehicle",
+    "rules_version",
+    "schema_version",
+    "supply_policy"
+  ],
+  "additionalProperties": false
+}

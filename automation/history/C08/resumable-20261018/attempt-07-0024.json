@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "task_id": "C08",
+  "event": "running",
+  "run_id": "resumable-20261018",
+  "attempt_id": "attempt-07",
+  "sequence": 24,
+  "previous_event_sha256": "f26126485b39d008251ee7db7a742379a301d1abd0d0ef8edc8b454a42975964",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-18T17:22:53.831135+00:00",
+  "implementation_round": {
+    "task_id": "C08",
+    "run_id": "resumable-20261018",
+    "round_id": "c08-resumable-executor-20261018",
+    "authorization": {
+      "path": "evidence/runtime-forecast-refactor-20261018/authorization.json",
+      "sha256": "a3eeefe73f9a975976e3371d3adb27deb526b305c458bf7f501ebfc1c1cd18d6"
+    },
+    "proposal": {
+      "path": "evidence/runtime-forecast-20261017/milestone/resumable-executor-proposal.md",
+      "sha256": "e49add24b0cda90125849194942648ff56b4f4e02083bf3c12ad5aa1a988c1e6"
+    },
+    "history_anchor": {
+      "path": "automation/history/C08/performance-review-20261017/attempt-05-0010.json",
+      "sha256": "ff593b49e915e551266f0d994f4bae28b868e3fe349ba594ca5e2f112c804351",
+      "sequence": 10
+    },
+    "historical_task_counters": {
+      "repair_attempts": 3,
+      "execution_attempts": 5,
+      "failed_attempts": 3
+    },
+    "repair_limit": 3
+  }
+}

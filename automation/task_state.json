@@ -1,0 +1,1518 @@
+{
+  "schema_version": 1,
+  "freeze_id": "resq-spec-freeze-1.1.0",
+  "task_states": {
+    "F01": {
+      "status": "passed",
+      "result_path": "evidence/results/F01/implementation-20261015/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "bded8bf98f94649ce0c078d562c9057535455adbbb7018ed3a80de8992781b98"
+    },
+    "F02": {
+      "status": "passed",
+      "result_path": "evidence/results/F02/bounded-host-20261016/attempt-02.json",
+      "repair_attempts": 0,
+      "result_sha256": "d6fb0d2b32acfa4c90423940c282d8d7b18e8a5b71ef404fb3b18bcdc478558a",
+      "execution_attempts": 13,
+      "failed_attempts": 0
+    },
+    "F03": {
+      "status": "passed",
+      "result_path": "evidence/results/F03/bounded-host-20261016/attempt-05.json",
+      "repair_attempts": 0,
+      "result_sha256": "49260cbb3b03d5a6c1aa32217cef2e16009e2d622e21ec0f1fee83d7629f0adf",
+      "execution_attempts": 5,
+      "failed_attempts": 0
+    },
+    "F04": {
+      "status": "blocked",
+      "result_path": "evidence/results/F04/staged-local-20261016/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "2c25e012ff721670030d7f1ae92efdfaf65b1dfd9ec1265c5db1d80a2093e673",
+      "execution_attempts": 1
+    },
+    "F05": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "F06": {
+      "status": "blocked",
+      "result_path": "evidence/results/F06/staged-local-20261016/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "fd25599874c725202c6dd14691bd4bda318bed5ea4883b4c0adff8941f546606",
+      "execution_attempts": 1
+    },
+    "F07": {
+      "status": "passed",
+      "result_path": "evidence/results/F07/bounded-host-20261016/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "c83de508933b50c410b8c271f01ed33f900f09c7c66959f31535e3e04dbf5a81",
+      "execution_attempts": 8,
+      "failed_attempts": 0
+    },
+    "F08": {
+      "status": "passed",
+      "result_path": "evidence/results/F08/bounded-host-20261016/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "754bcda65c7398a8b2ccacba1be6bbd45a8b12c1870bea1cf5873704dd0ca532",
+      "execution_attempts": 8,
+      "failed_attempts": 0
+    },
+    "C01": {
+      "status": "passed",
+      "result_path": "evidence/results/C01/staged-local-20261016/attempt-04.json",
+      "repair_attempts": 0,
+      "result_sha256": "d38573d6e8cbde8672f48e87285f8fc647dda1adf32d291e88075d6e03e2864f",
+      "execution_attempts": 4,
+      "failed_attempts": 0
+    },
+    "C02": {
+      "status": "passed",
+      "result_path": "evidence/results/C02/bounded-local-20261016/attempt-02.json",
+      "repair_attempts": 0,
+      "result_sha256": "616305a643fafbe492b7a79227f8118b01797477a70f45856fd9db77d7fe2509",
+      "execution_attempts": 4,
+      "failed_attempts": 0
+    },
+    "C03": {
+      "status": "passed",
+      "result_path": "evidence/results/C03/bounded-local-20261016/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "29aa34be5da943d6e59f8332cc89162bccdcc920a28486102a640dd11be919e3",
+      "execution_attempts": 1,
+      "failed_attempts": 0
+    },
+    "C04": {
+      "status": "passed",
+      "result_path": "evidence/results/C04/bounded-metrics-20261017/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "900628a07157fd5cca238e9ee1d57b6ba69f6183b93999c20e6da66c75f040e5",
+      "execution_attempts": 8,
+      "failed_attempts": 0
+    },
+    "C05": {
+      "status": "passed",
+      "result_path": "evidence/results/C05/bounded-refresh-20261017/attempt-01.json",
+      "repair_attempts": 0,
+      "result_sha256": "0d070dcb717e4549c2f54ff64ea4abaab8e91bfd4a888524898da019bd2bc2c3",
+      "execution_attempts": 4,
+      "failed_attempts": 0
+    },
+    "C06": {
+      "status": "passed",
+      "result_path": "evidence/results/C06/bounded-local-20261017/attempt-05.json",
+      "repair_attempts": 0,
+      "result_sha256": "1412d386a5cc844767bc6aee30cc56dc3e0d40233298c1005447b0b0cc09f865",
+      "execution_attempts": 7,
+      "failed_attempts": 0
+    },
+    "C07": {
+      "status": "passed",
+      "result_path": "evidence/results/C07/bounded-local-20261017/attempt-02.json",
+      "repair_attempts": 0,
+      "result_sha256": "7579198ba102080d77e0d65fca6358f1ddaacabd0f537f48e89b881c3a7808c9",
+      "execution_attempts": 3,
+      "failed_attempts": 0
+    },
+    "C08": {
+      "status": "failed",
+      "result_path": "evidence/results/C08/resumable-20261018/attempt-07.json",
+      "repair_attempts": 6,
+      "result_sha256": "33ae6c988c592b5eb057872058d324c8ff7cc206060f892e265d58353d22b9b7",
+      "execution_attempts": 12,
+      "failed_attempts": 8,
+      "implementation_rounds": {
+        "c08-resumable-executor-20261018": {
+          "binding": {
+            "task_id": "C08",
+            "run_id": "resumable-20261018",
+            "round_id": "c08-resumable-executor-20261018",
+            "authorization": {
+              "path": "evidence/runtime-forecast-refactor-20261018/authorization.json",
+              "sha256": "a3eeefe73f9a975976e3371d3adb27deb526b305c458bf7f501ebfc1c1cd18d6"
+            },
+            "proposal": {
+              "path": "evidence/runtime-forecast-20261017/milestone/resumable-executor-proposal.md",
+              "sha256": "e49add24b0cda90125849194942648ff56b4f4e02083bf3c12ad5aa1a988c1e6"
+            },
+            "history_anchor": {
+              "path": "automation/history/C08/performance-review-20261017/attempt-05-0010.json",
+              "sha256": "ff593b49e915e551266f0d994f4bae28b868e3fe349ba594ca5e2f112c804351",
+              "sequence": 10
+            },
+            "historical_task_counters": {
+              "repair_attempts": 3,
+              "execution_attempts": 5,
+              "failed_attempts": 3
+            },
+            "repair_limit": 3
+          },
+          "repair_attempts": 3,
+          "execution_attempts": 7,
+          "failed_attempts": 5,
+          "history_head": {
+            "path": "automation/history/C08/resumable-20261018/attempt-07-0025.json",
+            "sha256": "a1f3950e03ecc9554719e969c4f4268b7b3abea64c7581c6fa9fdd3397a9d45b"
+          },
+          "resource_stop_corrections": [
+            {
+              "id": "c08-attempt03-resource-stop-20261018",
+              "task_id": "C08",
+              "run_id": "resumable-20261018",
+              "round_id": "c08-resumable-executor-20261018",
+              "attempt_id": "attempt-03",
+              "failed_sequence": 16,
+              "annotation_sequence": 17,
+              "recorded_round_counters": {
+                "repair_attempts": 2,
+                "execution_attempts": 3,
+                "failed_attempts": 3
+              },
+              "stop_reason": "runtime-forecast volume below2GiB hard reserve",
+              "lowest_free_bytes": 2078433280,
+              "peak_positive_growth_bytes": 1244668,
+              "references": {
+                "failed_event": {
+                  "path": "automation/history/C08/resumable-20261018/attempt-03-0016.json",
+                  "sha256": "0e5dca3f50718c4e5aa5f2556ff5e4a29cdaf7da78e6a898aeb3bf271bf6c585"
+                },
+                "result": {
+                  "path": "evidence/results/C08/resumable-20261018/attempt-03.json",
+                  "sha256": "8b80f0002c9c0347280dc2467d43701065b4b78e34b8747cb0b59e0bbbb47a4e"
+                },
+                "check_report": {
+                  "path": "evidence/checks/c08/resumable-20261018/attempt-03.json",
+                  "sha256": "487f12c300e0d469ff6912c575429f5ec52906e8a0fe512dc6ff0a1e39c89875"
+                },
+                "terminal_observation": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/terminal-observation.json",
+                  "sha256": "84acd6ac6ae2e5c62b58d308c75a523f4382f13c850b9e98f3cee46fd65524e1"
+                },
+                "source_manifest": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/inputs/source-manifest.json",
+                  "sha256": "44acf41fa503291ad0ea28407e426055fc43e13c547dd8a511c19dc90cd72613"
+                },
+                "wrapper_source": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/inputs/source/tools/run_unity_bounded.py",
+                  "sha256": "788b68941721a049504a77e8ee22157007c1770570cc6b4d47e024b7389b94e7"
+                },
+                "adapter_source": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/inputs/source/tools/adapter_unity.py",
+                  "sha256": "18d898ddbd1b7b00853e0684c3a2f989ff7940f4240c6abb42f4e81a9ddf4d4b"
+                },
+                "outcome": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/outcome.json",
+                  "sha256": "34f1e2c2f8be997379017ec046fa7f693d8d8b489e1f4aba84cb20635201d2e0"
+                },
+                "measurements": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/measurements.json",
+                  "sha256": "0d9e984b28f74b32620ac9f42bd1be4d03841f8704663c6f0275cded79122028"
+                },
+                "admission": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/admission.json",
+                  "sha256": "4af320f24080848078ece3306c87dea83bac4302ecd12033434449facf26c7d9"
+                },
+                "editor_log": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/editor.log",
+                  "sha256": "caa895ea0843f0b0e4d25c75e19ed6a1533396c046899e7ed5a9cf78ceffedad"
+                },
+                "terminal_lock": {
+                  "path": "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/native-local/terminal-lock-verification.json",
+                  "sha256": "abca31ca3b802ae3f1886fba4b759a9188e14e7c6f4f1e9b8e92dca11c976495"
+                }
+              },
+              "absent_native_outputs": [
+                "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/nunit.xml",
+                "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-c08/unity-cases.json",
+                "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-runtime-ordering/nunit.xml",
+                "evidence/runs/C08/resumable-20261018/attempt-03/checks/check-runtime-ordering/unity-cases.json",
+                "evidence/checks/runtime-ordering/resumable-20261018/attempt-03.json"
+              ]
+            }
+          ],
+          "code_failed_attempts": 4
+        }
+      }
+    },
+    "C09": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "X01": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "X02": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "X03": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "X04": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "X05": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "X06": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M1-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M1-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M1-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M1-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M1-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M2-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M2-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M2-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M2-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M2-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M3-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M3-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M3-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M3-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M3-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M4-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M4-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M4-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M4-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M4-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M5-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M5-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M5-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M5-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-M5-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M1-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M1-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M1-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M1-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M1-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M2-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M2-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M2-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M2-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M2-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M3-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M3-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M3-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M3-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M3-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M4-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M4-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M4-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M4-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M4-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M5-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M5-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M5-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M5-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-M5-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M1-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M1-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M1-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M1-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M1-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M2-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M2-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M2-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M2-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M2-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M3-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M3-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M3-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M3-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M3-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M4-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M4-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M4-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M4-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M4-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M5-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M5-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M5-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M5-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-M5-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M1-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M1-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M1-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M1-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M1-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M2-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M2-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M2-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M2-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M2-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M3-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M3-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M3-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M3-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M3-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M4-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M4-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M4-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M4-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M4-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M5-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M5-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M5-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M5-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-M5-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M1-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M1-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M1-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M1-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M1-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M2-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M2-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M2-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M2-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M2-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M3-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M3-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M3-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M3-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M3-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M4-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M4-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M4-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M4-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M4-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M5-AUTHOR": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M5-REPLAY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M5-INTEGRATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M5-POLISH": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-M5-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-TUTORIAL-LOGIC": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-VERTICAL": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "ART-LOOKDEV": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "ART-SHARED": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-KIT": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-AUDIO": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-ONBOARD": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-REGRESSION": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-PERFORMANCE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-DEVICE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W1-FREEZE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-MECHANIC": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-FIRST": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-KIT": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-AUDIO": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-ONBOARD": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-REGRESSION": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-PERFORMANCE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-DEVICE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W2-FREEZE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-MECHANIC": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-FIRST": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-KIT": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-AUDIO": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-ONBOARD": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-REGRESSION": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-PERFORMANCE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-DEVICE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W3-FREEZE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-MECHANIC": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-FIRST": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-KIT": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-AUDIO": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-ONBOARD": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-REGRESSION": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-PERFORMANCE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-DEVICE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W4-FREEZE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-MECHANIC": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-FIRST": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-KIT": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-AUDIO": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-ONBOARD": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-REGRESSION": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-PERFORMANCE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-DEVICE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "W5-FREEZE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D01": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D02": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D03": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D04": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D05": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D06": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D07": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D08": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D09": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D10": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D11": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D12": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL01": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL02": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL03": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL04": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL05": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "ART-HF-BRIEF": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "ART-HF-GENERATE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-PERFORMANCE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-DEVICE": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-QUALIFY": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-VIDEO": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-WEB": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-WEB-PREVIEW": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "ART-LOOKDEV-HUMAN": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "D03-REVIEW": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    },
+    "FULL-VIDEO-REVIEW": {
+      "status": "pending",
+      "result_path": null,
+      "repair_attempts": 0,
+      "result_sha256": null
+    }
+  }
+}

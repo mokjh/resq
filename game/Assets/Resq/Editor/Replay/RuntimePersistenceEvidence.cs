@@ -1,0 +1,43 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Xml;
+using Resq.Content;
+namespace Resq.Editor.Replay
+{
+    public static class RuntimePersistenceEvidence
+    {
+        public static void WriteEvidence(string xmlPath, string packetPath) => Write(xmlPath, packetPath, "check-c07", new[] { "ExactContinuationAndActualReplay", "AtomicGenerationsAndSchemaSafety", "ExplicitRecoveryKeepsAssistance", "ClosedPrivacyAndOwnerValidation" });
+        private static void Write(string xmlPath, string packetPath, string check, string[] methods)
+        {
+            var document = new XmlDocument { XmlResolver = null };
+            using (var reader = XmlReader.Create(xmlPath, new XmlReaderSettings { DtdProcessing = DtdProcessing.Prohibit, XmlResolver = null })) document.Load(reader);
+            var rows = new SortedDictionary<string, string>(StringComparer.Ordinal);
+            foreach (XmlElement test in document.GetElementsByTagName("test-case"))
+            {
+                if (test.GetAttribute("result") != "Passed") throw new InvalidOperationException("Nonpassing native persistence case");
+                var properties = test.SelectNodes("properties/property[@name='case_id']"); if (properties.Count != 1) throw new InvalidOperationException("Exact native case identity required");
+                rows.Add(((XmlElement)properties[0]).GetAttribute("value"), test.GetAttribute("fullname"));
+            }
+            var expected = Enumerable.Range(1, methods.Length).Select(i => check + "/assertion/assertion_id=" + check + "-a0" + i).ToArray();
+            if (!rows.Keys.SequenceEqual(expected)) throw new InvalidOperationException("Exact persistence native case set required");
+            for (int i = 0; i < methods.Length; i++) if (rows[expected[i]] != "Resq.Tests.Persistence.RuntimePersistenceTests." + methods[i]) throw new InvalidOperationException("Unexpected native test method identity");
+            string hash; using (var stream = File.OpenRead(xmlPath)) using (var digest = SHA256.Create()) hash = BitConverter.ToString(digest.ComputeHash(stream)).Replace("-", "").ToLowerInvariant();
+            string recordings = Path.Combine(Path.GetDirectoryName(xmlPath), "replay-recordings");
+            var replay = ReplayDocument.Read(StrictJson.Parse(File.ReadAllBytes(Path.Combine(recordings, "tracking-recovery.replay.json"))));
+            var journal = ReplayApplicationJournal.Read(StrictJson.Parse(File.ReadAllBytes(Path.Combine(recordings, "tracking-recovery.application.json"))), replay);
+            var actual = StrictJson.Parse(File.ReadAllBytes(Path.Combine(recordings, "tracking-recovery.result.json")));
+            if (actual["status"].Text != "passed" || actual["replay_sha256"].Text != replay.Value.Sha256() || actual["application_journal_sha256"].Text != journal.Sha256 || actual["actual_final_state_sha256"].Text != replay.Value["expected"]["final_state_sha256"].Text) throw new InvalidOperationException("Native recovery replay evidence binding mismatch");
+            var cases = rows.Select(row => JsonValue.Object(new Dictionary<string, JsonValue> {
+                {"case_id",JsonValue.String(row.Key)},{"kind",JsonValue.String("assertion")},{"dimensions",JsonValue.Object(new Dictionary<string,JsonValue>{{"assertion_id",JsonValue.String(row.Key.Split('=')[1])}})},
+                {"status",JsonValue.String("passed")},{"metrics",JsonValue.Object(new Dictionary<string,JsonValue>())},{"participant_alias",JsonValue.Null()},{"proof_index",JsonValue.Null()},
+                {"observations",JsonValue.Object(new Dictionary<string,JsonValue>{{"native_case_id",JsonValue.String(row.Value)},{"native_xml_sha256",JsonValue.String(hash)},
+                    {"replay_sha256",JsonValue.String(replay.Value.Sha256())},{"application_journal_sha256",JsonValue.String(journal.Sha256)}})} }));
+            var packet = JsonValue.Object(new Dictionary<string,JsonValue> { {"status",JsonValue.String("passed")},{"case_outcomes",JsonValue.Array(cases)} });
+            using (var stream = new FileStream(packetPath, FileMode.CreateNew, FileAccess.Write)) using (var writer = new StreamWriter(stream, new UTF8Encoding(false, true))) writer.WriteLine(packet.Canonical());
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "Resq.Forecast",
+  "rootNamespace": "Resq.Simulation.Forecast",
+  "references": [
+    "Resq.Content",
+    "Resq.Core",
+    "Resq.Simulation",
+    "Resq.Persistence"
+  ],
+  "allowUnsafeCode": false,
+  "autoReferenced": true,
+  "noEngineReferences": true
+}

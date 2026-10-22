@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C05",
+  "event": "pending",
+  "run_id": "bounded-metrics-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 3,
+  "previous_event_sha256": "21db752b48e752856a0fbf00d0bd822a15fd9e13d8863dadc79d51f8325a566a",
+  "result_path": "evidence/results/C05/bounded-local-20261017/attempt-01.json",
+  "result_sha256": "28f50031a4d5b866aa51ade0d89783e52b561e76d9048c11940c0c9b9513c588",
+  "reason": "Accepted prerequisite head changed: C04; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T21:50:04.816321+00:00"
+}

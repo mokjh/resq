@@ -1,0 +1,223 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "assisted_score_partition": {
+      "type": "string"
+    },
+    "base_success_replays": {
+      "type": "integer"
+    },
+    "challenge_combinations": {
+      "type": "string"
+    },
+    "challenge_success_replays": {
+      "type": "integer"
+    },
+    "challenges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "layouts": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mission_id": {
+            "type": "string"
+          },
+          "modifier": {
+            "type": "string"
+          },
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "default_loadout_delta": {
+                "type": "object",
+                "properties": {
+                  "barrier": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "barrier"
+                ],
+                "additionalProperties": false
+              },
+              "dock_role": {
+                "type": "string"
+              },
+              "event_id": {
+                "type": "string"
+              },
+              "group_id": {
+                "type": "string"
+              },
+              "initial_tide_segment_index": {
+                "type": "integer"
+              },
+              "maximum_equipment_losses": {
+                "type": "integer"
+              },
+              "reverse_wind_vectors": {
+                "type": "boolean"
+              },
+              "shift_scenario_ticks": {
+                "type": "integer"
+              },
+              "supply_budget_delta": {
+                "type": "integer"
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "rule_profiles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unlock": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "layouts",
+          "mission_id",
+          "modifier",
+          "parameters",
+          "rule_profiles",
+          "unlock"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "input_adapters": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "legacy_preset_mapping": {
+      "type": "object",
+      "properties": {
+        "command_head_dwell": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "relaxed_hands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "standard_hands": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "command_head_dwell",
+        "relaxed_hands",
+        "standard_hands"
+      ],
+      "additionalProperties": false
+    },
+    "rule_profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "advance_controls": {
+            "type": "boolean"
+          },
+          "automatic_checkpoint_retry": {
+            "type": "boolean"
+          },
+          "hazard_clock_denominator": {
+            "type": "integer"
+          },
+          "hazard_clock_numerator": {
+            "type": "integer"
+          },
+          "id": {
+            "type": "string"
+          },
+          "score_partition": {
+            "type": "string"
+          },
+          "warning_operation_time_multiplier": {
+            "type": "integer"
+          }
+        },
+        "required": [
+          "advance_controls",
+          "automatic_checkpoint_retry",
+          "hazard_clock_denominator",
+          "hazard_clock_numerator",
+          "id",
+          "score_partition",
+          "warning_operation_time_multiplier"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "rules_version": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "integer"
+    },
+    "supported_combinations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "input": {
+            "type": "string"
+          },
+          "rules": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "input",
+          "rules"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "unsupported_ideas": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "assisted_score_partition",
+    "base_success_replays",
+    "challenge_combinations",
+    "challenge_success_replays",
+    "challenges",
+    "input_adapters",
+    "legacy_preset_mapping",
+    "rule_profiles",
+    "rules_version",
+    "schema_version",
+    "supported_combinations",
+    "unsupported_ideas"
+  ],
+  "additionalProperties": false
+}

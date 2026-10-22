@@ -1,0 +1,1 @@
+{"name":"Resq.Content.Editor","rootNamespace":"Resq.Editor.Content","references":["Resq.Content"],"includePlatforms":["Editor"],"autoReferenced":true,"noEngineReferences":true}

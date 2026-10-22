@@ -1,0 +1,1066 @@
+{
+  "freeze_id": "resq-spec-freeze-1.1.0",
+  "rules_version": "resq-rules-1",
+  "worlds": [
+    {
+      "id": "W1",
+      "order": 1,
+      "release_scope": "competition",
+      "title_key": "world.fixture",
+      "art_bundle_id": "fixture.art",
+      "audio_bundle_id": "fixture.audio"
+    }
+  ],
+  "equipment": [
+    {
+      "id": "beacon",
+      "revision": 1,
+      "supply_cost": 1,
+      "first_world_id": "W1",
+      "socket_kinds": [
+        "assembly"
+      ],
+      "power_supply": 0,
+      "power_demand": 0,
+      "resident_seats": 0,
+      "movement_slots": 0,
+      "relocation_policy": "idle_same_zone",
+      "durability": 100,
+      "parameters": {},
+      "prefab_id": "fixture.beacon"
+    },
+    {
+      "id": "firebreak",
+      "revision": 1,
+      "supply_cost": 2,
+      "first_world_id": "W1",
+      "socket_kinds": [
+        "fuel_strip"
+      ],
+      "power_supply": 0,
+      "power_demand": 0,
+      "resident_seats": 0,
+      "movement_slots": 0,
+      "relocation_policy": "none",
+      "durability": 100,
+      "parameters": {
+        "maximum_cells": 8,
+        "uses": 1
+      },
+      "prefab_id": "fixture.firebreak"
+    }
+  ],
+  "rule_profiles": [
+    {
+      "id": "standard",
+      "scenario_numerator": 2,
+      "scenario_denominator": 2,
+      "planning_allowed": true,
+      "extra_stock": [],
+      "permitted_input_adapters": [
+        "reference_replay"
+      ]
+    }
+  ],
+  "challenges": [],
+  "missions": [
+    {
+      "mission_version_id": "fixture-v1",
+      "id": "fixture",
+      "revision": 1,
+      "world_id": "W1",
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 1000,
+      "total_residents": 1,
+      "minimum_rescues": 1,
+      "supply_budget": 3,
+      "default_stock": [
+        {
+          "equipment_id": "beacon",
+          "count": 1
+        },
+        {
+          "equipment_id": "firebreak",
+          "count": 1
+        }
+      ],
+      "maximum_stock": [
+        {
+          "equipment_id": "beacon",
+          "count": 1
+        },
+        {
+          "equipment_id": "firebreak",
+          "count": 1
+        }
+      ],
+      "permitted_equipment_ids": [
+        "beacon",
+        "firebreak"
+      ],
+      "layout_ids": [
+        "fixture-compact",
+        "fixture-wide"
+      ],
+      "groups": [
+        {
+          "id": "group",
+          "resident_ids": [
+            "fixture:resident:group:01"
+          ],
+          "start_node_id": "start",
+          "assembly_node_id": "assembly",
+          "initially_held": false
+        }
+      ],
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 1
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery",
+          "tier": "mastery",
+          "kind": "exposure_below",
+          "params": {
+            "region_id": "wet",
+            "hazard": "water",
+            "threshold": 100
+          },
+          "temporal": {
+            "kind": "hold_for",
+            "scenario_ticks": 50,
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "exit",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "surge",
+          "at_scenario_tick": 100,
+          "warning_at_scenario_tick": 0,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "source",
+              "value": 100
+            }
+          ]
+        }
+      ],
+      "rule_profile_ids": [
+        "standard"
+      ],
+      "challenge_ids": [],
+      "tutorial_policy": "none"
+    }
+  ],
+  "layouts": [
+    {
+      "id": "fixture-compact",
+      "mission_version_id": "fixture-v1",
+      "layout_class": "compact",
+      "geometry_art_id": "fixture.geometry",
+      "nav_nodes": [
+        {
+          "id": "assembly",
+          "kind": "assembly",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        },
+        {
+          "id": "junction",
+          "kind": "junction",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        },
+        {
+          "id": "refuge",
+          "kind": "evacuation",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        },
+        {
+          "id": "start",
+          "kind": "assembly",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        }
+      ],
+      "nav_edges": [
+        {
+          "id": "a",
+          "from_node_id": "start",
+          "to_node_id": "assembly",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        },
+        {
+          "id": "b",
+          "from_node_id": "assembly",
+          "to_node_id": "refuge",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        },
+        {
+          "id": "c",
+          "from_node_id": "assembly",
+          "to_node_id": "junction",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        },
+        {
+          "id": "d",
+          "from_node_id": "junction",
+          "to_node_id": "refuge",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "id": "exit",
+          "from_node_id": "assembly",
+          "to_node_id": "refuge",
+          "required_waypoint_ids": [],
+          "traversal_class": "ground",
+          "mobility_class": "step_free"
+        }
+      ],
+      "sockets": [
+        {
+          "id": "beacon:01",
+          "kind": "assembly",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "beacon"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "dry1"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [],
+          "resource_store_id": null,
+          "enabled": true
+        },
+        {
+          "id": "beacon:02",
+          "kind": "assembly",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "beacon"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "dry2"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [],
+          "resource_store_id": null,
+          "enabled": true
+        },
+        {
+          "id": "firebreak:01",
+          "kind": "fuel_strip",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "firebreak"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "firebreak1a"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [
+            "firebreak1a",
+            "firebreak1b"
+          ],
+          "resource_store_id": null,
+          "enabled": true
+        },
+        {
+          "id": "firebreak:02",
+          "kind": "fuel_strip",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "firebreak"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "firebreak2a"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [
+            "firebreak2a",
+            "firebreak2b"
+          ],
+          "resource_store_id": null,
+          "enabled": true
+        }
+      ],
+      "water_nodes": [
+        {
+          "id": "dry1",
+          "kind": "terrain",
+          "region_id": "dry",
+          "elevation_mm": 1200,
+          "area_mm2": 1000000,
+          "initial_volume_mm3": 0
+        },
+        {
+          "id": "dry2",
+          "kind": "terrain",
+          "region_id": "dry",
+          "elevation_mm": 1200,
+          "area_mm2": 1000000,
+          "initial_volume_mm3": 0
+        },
+        {
+          "id": "water",
+          "kind": "terrain",
+          "region_id": "wet",
+          "elevation_mm": 0,
+          "area_mm2": 1000000,
+          "initial_volume_mm3": 0
+        }
+      ],
+      "hydraulic_links": [],
+      "sources": [
+        {
+          "id": "inflow",
+          "water_node_id": "water",
+          "initial_rate_mm3_per_second": 0
+        }
+      ],
+      "sinks": [],
+      "power_nodes": [],
+      "power_links": [],
+      "infrastructure": [],
+      "fire_cells": [
+        {
+          "id": "firebreak1a",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        },
+        {
+          "id": "firebreak1b",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        },
+        {
+          "id": "firebreak2a",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        },
+        {
+          "id": "firebreak2b",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        }
+      ],
+      "fire_links": [
+        {
+          "id": "firebreak1",
+          "from_cell_id": "firebreak1a",
+          "to_cell_id": "firebreak1b",
+          "direction_code": 1
+        },
+        {
+          "id": "firebreak2",
+          "from_cell_id": "firebreak2a",
+          "to_cell_id": "firebreak2b",
+          "direction_code": 1
+        }
+      ],
+      "supports": [],
+      "runouts": [],
+      "tides": [],
+      "lava_segments": [],
+      "resources": [],
+      "producers": [],
+      "spawns": [
+        {
+          "resident_id": "fixture:resident:group:01",
+          "group_id": "group",
+          "mobility_class": "step_free",
+          "start_node_id": "start",
+          "fixed_vehicle_id": null
+        }
+      ],
+      "fixed_vehicles": [],
+      "roles": [
+        {
+          "role_id": "source",
+          "target_kind": "water_source",
+          "target_ids": [
+            "inflow"
+          ]
+        }
+      ],
+      "graph_hash": "5476ee4b8035757c719442193c5fb0461ff143d7d5351ea0e2b495b30c67f98d"
+    },
+    {
+      "id": "fixture-wide",
+      "mission_version_id": "fixture-v1",
+      "layout_class": "wide",
+      "geometry_art_id": "fixture.geometry",
+      "nav_nodes": [
+        {
+          "id": "assembly",
+          "kind": "assembly",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        },
+        {
+          "id": "junction",
+          "kind": "junction",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        },
+        {
+          "id": "refuge",
+          "kind": "evacuation",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        },
+        {
+          "id": "start",
+          "kind": "assembly",
+          "position_mm": [
+            0,
+            0,
+            0
+          ],
+          "resident_capacity": 1,
+          "vehicle_slots": 1,
+          "dock_berths": 1,
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "hazard_region_ids": [],
+          "power_consumer_id": null,
+          "is_temporary_staging": false,
+          "safe_depth_mm": 100,
+          "safe_heat_points": 600,
+          "dock_min_depth_mm": 0,
+          "dock_max_depth_mm": 2000
+        }
+      ],
+      "nav_edges": [
+        {
+          "id": "a",
+          "from_node_id": "start",
+          "to_node_id": "assembly",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        },
+        {
+          "id": "b",
+          "from_node_id": "assembly",
+          "to_node_id": "refuge",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        },
+        {
+          "id": "c",
+          "from_node_id": "assembly",
+          "to_node_id": "junction",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        },
+        {
+          "id": "d",
+          "from_node_id": "junction",
+          "to_node_id": "refuge",
+          "traversal_class": "ground",
+          "mobility_classes": [
+            "standard",
+            "step_free"
+          ],
+          "movement_capacity": 2,
+          "base_operation_ticks": 10,
+          "current_multiplier_permille": 1000,
+          "administrative_enabled": true,
+          "required_equipment_socket_id": null,
+          "required_power_consumer_id": null,
+          "hazard_region_ids": [],
+          "maximum_water_depth_mm": 100,
+          "minimum_water_depth_mm": 0,
+          "maximum_heat_points": 600,
+          "step_free": true,
+          "tags": [
+            "fixture_path"
+          ]
+        }
+      ],
+      "routes": [
+        {
+          "id": "exit",
+          "from_node_id": "assembly",
+          "to_node_id": "refuge",
+          "required_waypoint_ids": [],
+          "traversal_class": "ground",
+          "mobility_class": "step_free"
+        }
+      ],
+      "sockets": [
+        {
+          "id": "beacon:01",
+          "kind": "assembly",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "beacon"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "dry1"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [],
+          "resource_store_id": null,
+          "enabled": true
+        },
+        {
+          "id": "beacon:02",
+          "kind": "assembly",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "beacon"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "dry2"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [],
+          "resource_store_id": null,
+          "enabled": true
+        },
+        {
+          "id": "firebreak:01",
+          "kind": "fuel_strip",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "firebreak"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "firebreak1a"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [
+            "firebreak1a",
+            "firebreak1b"
+          ],
+          "resource_store_id": null,
+          "enabled": true
+        },
+        {
+          "id": "firebreak:02",
+          "kind": "fuel_strip",
+          "node_id": "assembly",
+          "permitted_equipment_ids": [
+            "firebreak"
+          ],
+          "orientation_steps": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "relocation_zone": "dry",
+          "footprint_cell_ids": [
+            "firebreak2a"
+          ],
+          "hydraulic_link_id": null,
+          "intake_node_id": null,
+          "outlet_node_id": null,
+          "power_node_id": null,
+          "support_id": null,
+          "lava_segment_id": null,
+          "fire_cell_ids": [
+            "firebreak2a",
+            "firebreak2b"
+          ],
+          "resource_store_id": null,
+          "enabled": true
+        }
+      ],
+      "water_nodes": [
+        {
+          "id": "dry1",
+          "kind": "terrain",
+          "region_id": "dry",
+          "elevation_mm": 1200,
+          "area_mm2": 1000000,
+          "initial_volume_mm3": 0
+        },
+        {
+          "id": "dry2",
+          "kind": "terrain",
+          "region_id": "dry",
+          "elevation_mm": 1200,
+          "area_mm2": 1000000,
+          "initial_volume_mm3": 0
+        },
+        {
+          "id": "water",
+          "kind": "terrain",
+          "region_id": "wet",
+          "elevation_mm": 0,
+          "area_mm2": 1000000,
+          "initial_volume_mm3": 0
+        }
+      ],
+      "hydraulic_links": [],
+      "sources": [
+        {
+          "id": "inflow",
+          "water_node_id": "water",
+          "initial_rate_mm3_per_second": 0
+        }
+      ],
+      "sinks": [],
+      "power_nodes": [],
+      "power_links": [],
+      "infrastructure": [],
+      "fire_cells": [
+        {
+          "id": "firebreak1a",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        },
+        {
+          "id": "firebreak1b",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        },
+        {
+          "id": "firebreak2a",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        },
+        {
+          "id": "firebreak2b",
+          "region_id": "burn",
+          "initial_fuel": 1000,
+          "initial_heat": 0,
+          "initial_wetness": 0,
+          "extra_cooling_points_per_pulse": 0,
+          "building_cell": false
+        }
+      ],
+      "fire_links": [
+        {
+          "id": "firebreak1",
+          "from_cell_id": "firebreak1a",
+          "to_cell_id": "firebreak1b",
+          "direction_code": 1
+        },
+        {
+          "id": "firebreak2",
+          "from_cell_id": "firebreak2a",
+          "to_cell_id": "firebreak2b",
+          "direction_code": 1
+        }
+      ],
+      "supports": [],
+      "runouts": [],
+      "tides": [],
+      "lava_segments": [],
+      "resources": [],
+      "producers": [],
+      "spawns": [
+        {
+          "resident_id": "fixture:resident:group:01",
+          "group_id": "group",
+          "mobility_class": "step_free",
+          "start_node_id": "start",
+          "fixed_vehicle_id": null
+        }
+      ],
+      "fixed_vehicles": [],
+      "roles": [
+        {
+          "role_id": "source",
+          "target_kind": "water_source",
+          "target_ids": [
+            "inflow"
+          ]
+        }
+      ],
+      "graph_hash": "1cdfb8e4782258830ad1921b50b88a11f0ccdc60221ed68b14ac0f823a169044"
+    }
+  ],
+  "asset_catalog_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+}

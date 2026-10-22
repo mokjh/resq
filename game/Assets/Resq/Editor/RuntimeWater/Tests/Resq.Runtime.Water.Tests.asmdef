@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Water.Tests","references":["Resq.Core","Resq.Simulation","Resq.Content","Resq.Runtime.Water.Editor"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"noEngineReferences":false}

@@ -1,0 +1,4843 @@
+{
+  "schema_version": 1,
+  "freeze_id": "resq-spec-freeze-1.1.0",
+  "missions": [
+    {
+      "id": "W1-M1",
+      "title": "First Crossing",
+      "world_id": "W1",
+      "release_scope": "competition",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 3600,
+      "total_residents": 8,
+      "minimum_rescues": 6,
+      "supply_budget": 12,
+      "default_loadout": {
+        "bridge": 1,
+        "barrier": 2,
+        "skiff": 1,
+        "beacon": 1
+      },
+      "maximum_stock": {
+        "bridge": 1,
+        "barrier": 2,
+        "skiff": 1,
+        "beacon": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "beacon",
+        "bridge",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "bus",
+          "count": 4,
+          "start_node_id": "bus_start",
+          "assembly_node_id": "bus_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "low_dock",
+          "count": 4,
+          "start_node_id": "low_dock_start",
+          "assembly_node_id": "low_dock_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W1-M1-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "bus",
+            "minimum": 4
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "bus",
+            "minimum": 4
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "low_dock",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "low_dock_group_boarded"
+          }
+        }
+      ],
+      "milestones": [
+        {
+          "id": "low_dock_group_boarded",
+          "kind": "group_boarded",
+          "target": "low_dock"
+        }
+      ],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "reservoir",
+              "value": 60000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1400,
+          "warning_at_scenario_tick": 1300,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "low_basin",
+              "value": 10000000
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2400,
+          "warning_at_scenario_tick": 2300,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "reservoir",
+              "value": 90000000
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Bridge the bus crossing, divert water west, then skiff the dock group.",
+        "B": "Divert first, skiff the low dock, then build the bridge before the last surge."
+      },
+      "failure_explanation_brief": "Leaving the dock above the flood threshold too long closes boarding; backup transport recovers the unrescued group.",
+      "tutorial_policy": "guided_first_play_then_unguided",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W1-M2",
+      "title": "The Lower Road",
+      "world_id": "W1",
+      "release_scope": "competition",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4200,
+      "total_residents": 12,
+      "minimum_rescues": 9,
+      "supply_budget": 16,
+      "default_loadout": {
+        "pump": 1,
+        "generator": 1,
+        "skiff": 1,
+        "barrier": 2,
+        "beacon": 1
+      },
+      "maximum_stock": {
+        "pump": 1,
+        "generator": 1,
+        "skiff": 1,
+        "barrier": 2,
+        "beacon": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "beacon",
+        "generator",
+        "pump",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "orchard",
+          "count": 4,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "river_houses",
+          "count": 4,
+          "start_node_id": "river_houses_start",
+          "assembly_node_id": "river_houses_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "ferry_landing",
+          "count": 4,
+          "start_node_id": "ferry_landing_start",
+          "assembly_node_id": "ferry_landing_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W1-M2-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 9
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "medical_station",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "medical_station",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "exposure_below",
+          "params": {
+            "region_id": "orchard_assembly",
+            "hazard": "water",
+            "threshold": 1
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 450,
+          "warning_at_scenario_tick": 350,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "upper_basin",
+              "value": 40000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1300,
+          "warning_at_scenario_tick": 1200,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_route",
+              "target_role": "lower_road",
+              "value": 400
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2500,
+          "warning_at_scenario_tick": 2400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "upper_basin",
+              "value": 80000000
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Put the generator on high ground and pump into the empty basin while the skiff cycles.",
+        "B": "Use paired barriers to spare the road, ferry the orchard first, and reserve the pump for the late surge."
+      },
+      "failure_explanation_brief": "An outlet into the orchard transfers the hazard to waiting residents; debrief displays the actual flow path.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W1-M3",
+      "title": "Two Banks",
+      "world_id": "W1",
+      "release_scope": "competition",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 14,
+      "minimum_rescues": 11,
+      "supply_budget": 17,
+      "default_loadout": {
+        "bridge": 1,
+        "skiff": 2,
+        "barrier": 2,
+        "beacon": 2
+      },
+      "maximum_stock": {
+        "bridge": 1,
+        "skiff": 2,
+        "barrier": 2,
+        "beacon": 2
+      },
+      "permitted_tools": [
+        "barrier",
+        "beacon",
+        "bridge",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "west_village",
+          "count": 8,
+          "start_node_id": "west_village_start",
+          "assembly_node_id": "west_village_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "east_workshop",
+          "count": 6,
+          "start_node_id": "east_workshop_start",
+          "assembly_node_id": "east_workshop_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W1-M3-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 11
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "east_workshop",
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "east_workshop",
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_least",
+          "params": {
+            "metric": "evacuated_by_mode",
+            "minimum": 4,
+            "group_id": "west_village",
+            "mode": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 700,
+          "warning_at_scenario_tick": 600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "central_basin",
+              "value": 60000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1800,
+          "warning_at_scenario_tick": 1700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "boat_lane_inner",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3200,
+          "warning_at_scenario_tick": 3100,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_current_multiplier",
+              "target_role": "east_lane",
+              "value": 1500
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Bridge the high road for western pedestrians; use both boats on eastern and overflow groups.",
+        "B": "Evacuate east early with one skiff, route the other west, then bridge the final safe path."
+      },
+      "failure_explanation_brief": "A boat assigned to a closing lane waits at a safe node; the player must reassign it.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W1-M4",
+      "title": "Power Before Water",
+      "world_id": "W1",
+      "release_scope": "competition",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 16,
+      "minimum_rescues": 12,
+      "supply_budget": 18,
+      "default_loadout": {
+        "pump": 2,
+        "generator": 2,
+        "barrier": 1,
+        "skiff": 1
+      },
+      "maximum_stock": {
+        "pump": 2,
+        "generator": 2,
+        "barrier": 1,
+        "skiff": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "generator",
+        "pump",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "clinic",
+          "count": 6,
+          "start_node_id": "clinic_start",
+          "assembly_node_id": "clinic_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "tram",
+          "count": 6,
+          "start_node_id": "tram_start",
+          "assembly_node_id": "tram_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "riverside",
+          "count": 4,
+          "start_node_id": "riverside_start",
+          "assembly_node_id": "riverside_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W1-M4-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 12
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "clinic_power",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "clinic_power",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "generator_shutdowns",
+            "maximum": 0
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 500,
+          "warning_at_scenario_tick": 400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "clinic_basin",
+              "value": 30000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1600,
+          "warning_at_scenario_tick": 1500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "release_group",
+              "target_role": "tram",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2800,
+          "warning_at_scenario_tick": 2700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "power_basin",
+              "value": 30000000
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 3800,
+          "warning_at_scenario_tick": 3700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "second_basin",
+              "value": 50000000
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Protect the dry power spine and alternate pump assignments to lower both basins.",
+        "B": "Evacuate riverside first, then dedicate both pumps to the clinic/tram sector."
+      },
+      "failure_explanation_brief": "Overcommitting power leaves a pump queued; the UI names the inactive consumer.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W1-M5",
+      "title": "The Long Way Home",
+      "world_id": "W1",
+      "release_scope": "competition",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 20,
+      "minimum_rescues": 15,
+      "supply_budget": 20,
+      "default_loadout": {
+        "bridge": 1,
+        "pump": 1,
+        "generator": 1,
+        "skiff": 1,
+        "barrier": 3,
+        "beacon": 1
+      },
+      "maximum_stock": {
+        "bridge": 1,
+        "pump": 1,
+        "generator": 1,
+        "skiff": 1,
+        "barrier": 3,
+        "beacon": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "beacon",
+        "bridge",
+        "generator",
+        "pump",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "upper_village",
+          "count": 5,
+          "start_node_id": "upper_village_start",
+          "assembly_node_id": "upper_village_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "orchard",
+          "count": 5,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "workshop",
+          "count": 5,
+          "start_node_id": "workshop_start",
+          "assembly_node_id": "workshop_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "island",
+          "count": 5,
+          "start_node_id": "island_start",
+          "assembly_node_id": "island_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W1-M5-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 15
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "depot_upper",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "depot_upper",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "route_available",
+          "params": {
+            "route_id": "depot_upper",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "hold_for",
+            "scenario_ticks": 100,
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "reservoir",
+              "value": 50000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1700,
+          "warning_at_scenario_tick": 1600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "short_road",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2900,
+          "warning_at_scenario_tick": 2800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "reservoir",
+              "value": 80000000
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4200,
+          "warning_at_scenario_tick": 4100,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "downstream_basin",
+              "value": 30000000
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Build the long bridge route, protect generator ground, and ferry the isolated island.",
+        "B": "Prioritize island and orchard with the skiff, then redirect the late surge and open the land route."
+      },
+      "failure_explanation_brief": "A poor early diversion consumes safe basin capacity and forces a longer evacuation; no instant unannounced loss.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W2-M1",
+      "title": "A Line in the Trees",
+      "world_id": "W2",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 3600,
+      "total_residents": 10,
+      "minimum_rescues": 8,
+      "supply_budget": 13,
+      "default_loadout": {
+        "firebreak": 2,
+        "sprinkler": 1,
+        "generator": 1,
+        "beacon": 3
+      },
+      "maximum_stock": {
+        "firebreak": 2,
+        "sprinkler": 1,
+        "generator": 1,
+        "beacon": 3
+      },
+      "permitted_tools": [
+        "beacon",
+        "firebreak",
+        "generator",
+        "sprinkler"
+      ],
+      "groups": [
+        {
+          "id": "campsite",
+          "count": 6,
+          "start_node_id": "campsite_start",
+          "assembly_node_id": "campsite_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "lookout",
+          "count": 4,
+          "start_node_id": "lookout_start",
+          "assembly_node_id": "lookout_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W2-M1-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "lookout_path",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "lookout_path",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "resource_remaining",
+          "params": {
+            "store_id": "tank",
+            "minimum": 1000000
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 500,
+          "warning_at_scenario_tick": 400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "ignite_region",
+              "target_role": "dry_cluster",
+              "value": 700
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1600,
+          "warning_at_scenario_tick": 1500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_wind",
+              "target_role": "forest",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2600,
+          "warning_at_scenario_tick": 2500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_region_cooling",
+              "target_role": "firebreak_approach",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Break the nearest fuel strip and wet the approach.",
+        "B": "Defend the longer path and stage the campsite first."
+      },
+      "failure_explanation_brief": "A gap in the firebreak permits predictable spread.",
+      "tutorial_policy": "world_mechanic_guidance",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W2-M2",
+      "title": "Last Bus from Camp",
+      "world_id": "W2",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 18,
+      "minimum_rescues": 14,
+      "supply_budget": 18,
+      "default_loadout": {
+        "crawler": 2,
+        "firebreak": 2,
+        "sprinkler": 1,
+        "generator": 1
+      },
+      "maximum_stock": {
+        "crawler": 2,
+        "firebreak": 2,
+        "sprinkler": 1,
+        "generator": 1
+      },
+      "permitted_tools": [
+        "crawler",
+        "firebreak",
+        "generator",
+        "sprinkler"
+      ],
+      "groups": [
+        {
+          "id": "north_camp",
+          "count": 6,
+          "start_node_id": "north_camp_start",
+          "assembly_node_id": "north_camp_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "east_camp",
+          "count": 6,
+          "start_node_id": "east_camp_start",
+          "assembly_node_id": "east_camp_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "west_camp",
+          "count": 6,
+          "start_node_id": "west_camp_start",
+          "assembly_node_id": "west_camp_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W2-M2-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 14
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "all_vehicles_unloaded",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "refill_station",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "refill_station",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "ignite_region",
+              "target_role": "short_road_fuel",
+              "value": 700
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1900,
+          "warning_at_scenario_tick": 1800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_wind",
+              "target_role": "forest",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3300,
+          "warning_at_scenario_tick": 3200,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "add_heat",
+              "target_role": "refill_station_region",
+              "value": 200
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Stage one crawler on each loop and protect the common junction.",
+        "B": "Run both on the nearest camp first, then use the protected longer loop."
+      },
+      "failure_explanation_brief": "An empty vehicle on the wrong loop costs time but can be rerouted.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W2-M3",
+      "title": "Water Is a Route",
+      "world_id": "W2",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 16,
+      "minimum_rescues": 12,
+      "supply_budget": 20,
+      "default_loadout": {
+        "sprinkler": 2,
+        "generator": 1,
+        "pump": 1,
+        "crawler": 1,
+        "firebreak": 2
+      },
+      "maximum_stock": {
+        "sprinkler": 2,
+        "generator": 1,
+        "pump": 1,
+        "crawler": 1,
+        "firebreak": 2
+      },
+      "permitted_tools": [
+        "crawler",
+        "firebreak",
+        "generator",
+        "pump",
+        "sprinkler"
+      ],
+      "groups": [
+        {
+          "id": "orchard",
+          "count": 8,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "pond_houses",
+          "count": 8,
+          "start_node_id": "pond_houses_start",
+          "assembly_node_id": "pond_houses_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W2-M3-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 12
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "orchard_assembly_route",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "orchard_assembly_route",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "resource_remaining",
+          "params": {
+            "store_id": "pond",
+            "minimum": 1000000
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_2",
+          "tier": "mastery",
+          "kind": "resource_remaining",
+          "params": {
+            "store_id": "tank",
+            "minimum": 1000000
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 400,
+          "warning_at_scenario_tick": 300,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "ignite_region",
+              "target_role": "orchard_edge",
+              "value": 700
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1500,
+          "warning_at_scenario_tick": 1400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_resource",
+              "target_role": "tank",
+              "value": 500
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3000,
+          "warning_at_scenario_tick": 2900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "ignite_region",
+              "target_role": "return_road_fuel",
+              "value": 700
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Pump pond water into the tank and alternate sprinklers.",
+        "B": "Use firebreaks to minimize wetting and reserve pumped water for the return road."
+      },
+      "failure_explanation_brief": "A sprinkler without water shows a visible dry gauge rather than pretending to operate.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W2-M4",
+      "title": "When the Wind Turns",
+      "world_id": "W2",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 20,
+      "minimum_rescues": 15,
+      "supply_budget": 19,
+      "default_loadout": {
+        "crawler": 2,
+        "firebreak": 3,
+        "sprinkler": 1,
+        "beacon": 2
+      },
+      "maximum_stock": {
+        "crawler": 2,
+        "firebreak": 3,
+        "sprinkler": 1,
+        "beacon": 2
+      },
+      "permitted_tools": [
+        "beacon",
+        "crawler",
+        "firebreak",
+        "sprinkler"
+      ],
+      "groups": [
+        {
+          "id": "lookout",
+          "count": 8,
+          "start_node_id": "lookout_start",
+          "assembly_node_id": "lookout_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "east_camp",
+          "count": 6,
+          "start_node_id": "east_camp_start",
+          "assembly_node_id": "east_camp_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "west_camp",
+          "count": 6,
+          "start_node_id": "west_camp_start",
+          "assembly_node_id": "west_camp_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W2-M4-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 15
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "lookout",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "lookout",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "equipment_deployments",
+            "maximum": 2,
+            "equipment_id": "firebreak"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 700,
+          "warning_at_scenario_tick": 600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_wind",
+              "target_role": "forest",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 2000,
+          "warning_at_scenario_tick": 1900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_wind_change",
+              "target_role": "forest",
+              "value": 400
+            }
+          ]
+        },
+        {
+          "id": "wind_turn_announced",
+          "at_scenario_tick": 2400,
+          "warning_at_scenario_tick": 2000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_wind",
+              "target_role": "forest",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3600,
+          "warning_at_scenario_tick": 3500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_wind",
+              "target_role": "forest",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Protect both flanks selectively and time transport before the turn.",
+        "B": "Concentrate early rescues on the future downwind side, then retreat along the safe loop."
+      },
+      "failure_explanation_brief": "Ignoring the visible wind timeline makes the formerly safe flank dangerous.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W2-M5",
+      "title": "The Green Corridor",
+      "world_id": "W2",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 24,
+      "minimum_rescues": 18,
+      "supply_budget": 23,
+      "default_loadout": {
+        "crawler": 2,
+        "sprinkler": 2,
+        "generator": 1,
+        "firebreak": 3
+      },
+      "maximum_stock": {
+        "crawler": 2,
+        "sprinkler": 2,
+        "generator": 1,
+        "firebreak": 3
+      },
+      "permitted_tools": [
+        "crawler",
+        "firebreak",
+        "generator",
+        "sprinkler"
+      ],
+      "groups": [
+        {
+          "id": "campsite",
+          "count": 8,
+          "start_node_id": "campsite_start",
+          "assembly_node_id": "campsite_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "orchard",
+          "count": 8,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "sawmill",
+          "count": 8,
+          "start_node_id": "sawmill_start",
+          "assembly_node_id": "sawmill_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W2-M5-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 18
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "central_route",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "central_route",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "orchard_pump_house",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 500,
+          "warning_at_scenario_tick": 400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "ignite_region",
+              "target_role": "outer_forest",
+              "value": 700
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1700,
+          "warning_at_scenario_tick": 1600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "add_heat",
+              "target_role": "sawmill_access",
+              "value": 200
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3100,
+          "warning_at_scenario_tick": 3000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_wind",
+              "target_role": "forest",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4300,
+          "warning_at_scenario_tick": 4200,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "add_heat",
+              "target_role": "corridor_flank",
+              "value": 200
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Clear a continuous corridor and wet only its vulnerable bends.",
+        "B": "Evacuate the farthest group first and progressively retreat the transport line."
+      },
+      "failure_explanation_brief": "Protecting every decorative building leaves too little transport capacity.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W3-M1",
+      "title": "Hold the Station",
+      "world_id": "W3",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 3600,
+      "total_residents": 10,
+      "minimum_rescues": 8,
+      "supply_budget": 14,
+      "default_loadout": {
+        "brace": 3,
+        "winch": 1,
+        "generator": 1,
+        "beacon": 2
+      },
+      "maximum_stock": {
+        "brace": 3,
+        "winch": 1,
+        "generator": 1,
+        "beacon": 2
+      },
+      "permitted_tools": [
+        "beacon",
+        "brace",
+        "generator",
+        "winch"
+      ],
+      "groups": [
+        {
+          "id": "upper_station",
+          "count": 6,
+          "start_node_id": "upper_station_start",
+          "assembly_node_id": "upper_station_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "lower_station",
+          "count": 4,
+          "start_node_id": "lower_station_start",
+          "assembly_node_id": "lower_station_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W3-M1-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "cable_support",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "cable_support",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "station_shutdowns",
+            "maximum": 0
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_stability_loss",
+              "target_role": "weak_support",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1600,
+          "warning_at_scenario_tick": 1500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_support_load",
+              "target_role": "weak_support",
+              "value": 100
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2600,
+          "warning_at_scenario_tick": 2500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "tremor",
+              "target_role": "weak_support",
+              "value": 150
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Brace the weak support and winch the upper group.",
+        "B": "Evacuate the upper group early, then stabilize for the remaining transfer."
+      },
+      "failure_explanation_brief": "Bracing decorative rocks has no effect; only eligible supports accept placement.",
+      "tutorial_policy": "world_mechanic_guidance",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W3-M2",
+      "title": "Above the Snowline",
+      "world_id": "W3",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4200,
+      "total_residents": 14,
+      "minimum_rescues": 11,
+      "supply_budget": 17,
+      "default_loadout": {
+        "winch": 2,
+        "generator": 2,
+        "brace": 2,
+        "beacon": 1
+      },
+      "maximum_stock": {
+        "winch": 2,
+        "generator": 2,
+        "brace": 2,
+        "beacon": 1
+      },
+      "permitted_tools": [
+        "beacon",
+        "brace",
+        "generator",
+        "winch"
+      ],
+      "groups": [
+        {
+          "id": "observatory",
+          "count": 6,
+          "start_node_id": "observatory_start",
+          "assembly_node_id": "observatory_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "station",
+          "count": 4,
+          "start_node_id": "station_start",
+          "assembly_node_id": "station_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "village",
+          "count": 4,
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W3-M2-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 11
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "observatory",
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "observatory",
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "max_node_dwell_scenario_ticks",
+            "maximum": 100,
+            "node_id": "intermediate"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 500,
+          "warning_at_scenario_tick": 400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "upper_path",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1600,
+          "warning_at_scenario_tick": 1500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "release_group",
+              "target_role": "station",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2900,
+          "warning_at_scenario_tick": 2800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_stability_loss",
+              "target_role": "upper_platform",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Run both winches as a staged relay with separate power.",
+        "B": "Prioritize the observatory, then reuse the lower link for all groups."
+      },
+      "failure_explanation_brief": "Moving people uphill into a temporary staging node without onward capacity blocks the route.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W3-M3",
+      "title": "The Quiet Slope",
+      "world_id": "W3",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 16,
+      "minimum_rescues": 12,
+      "supply_budget": 18,
+      "default_loadout": {
+        "brace": 3,
+        "crawler": 1,
+        "winch": 1,
+        "generator": 1,
+        "beacon": 2
+      },
+      "maximum_stock": {
+        "brace": 3,
+        "crawler": 1,
+        "winch": 1,
+        "generator": 1,
+        "beacon": 2
+      },
+      "permitted_tools": [
+        "beacon",
+        "brace",
+        "crawler",
+        "generator",
+        "winch"
+      ],
+      "groups": [
+        {
+          "id": "weather_crew",
+          "count": 6,
+          "start_node_id": "weather_crew_start",
+          "assembly_node_id": "weather_crew_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "rock_shelf",
+          "count": 4,
+          "start_node_id": "rock_shelf_start",
+          "assembly_node_id": "rock_shelf_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "village",
+          "count": 6,
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W3-M3-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 12
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "weather_crew",
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "weather_crew",
+            "minimum": 6
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_least",
+          "params": {
+            "metric": "edge_transfers",
+            "minimum": 1,
+            "edge_tag": "rock_shelf_bypass"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 900,
+          "warning_at_scenario_tick": 800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_runout",
+              "target_role": "quiet_slope",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 2100,
+          "warning_at_scenario_tick": 2000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "release_avalanche",
+              "target_role": "quiet_slope",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3400,
+          "warning_at_scenario_tick": 3300,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "debris_bypass",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Move the crawler through early and use the shelf afterward.",
+        "B": "Avoid the short road entirely and stage winch transfers above it."
+      },
+      "failure_explanation_brief": "A closed road stops vehicles at a safe node; it does not fling rigidbody residents.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W3-M4",
+      "title": "Cable and Current",
+      "world_id": "W3",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 18,
+      "minimum_rescues": 14,
+      "supply_budget": 20,
+      "default_loadout": {
+        "winch": 2,
+        "generator": 2,
+        "brace": 2,
+        "pump": 1,
+        "beacon": 1
+      },
+      "maximum_stock": {
+        "winch": 2,
+        "generator": 2,
+        "brace": 2,
+        "pump": 1,
+        "beacon": 1
+      },
+      "permitted_tools": [
+        "beacon",
+        "brace",
+        "generator",
+        "pump",
+        "winch"
+      ],
+      "groups": [
+        {
+          "id": "upper_terrace",
+          "count": 6,
+          "start_node_id": "upper_terrace_start",
+          "assembly_node_id": "upper_terrace_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "cable_station",
+          "count": 6,
+          "start_node_id": "cable_station_start",
+          "assembly_node_id": "cable_station_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "lower_village",
+          "count": 6,
+          "start_node_id": "lower_village_start",
+          "assembly_node_id": "lower_village_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W3-M4-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 14
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "powered_cable",
+            "traversal_class": "cable"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "powered_cable",
+            "traversal_class": "cable"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "exposure_below",
+          "params": {
+            "region_id": "lower_platform_a",
+            "hazard": "water",
+            "threshold": 1
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        },
+        {
+          "id": "mastery_2",
+          "tier": "mastery",
+          "kind": "exposure_below",
+          "params": {
+            "region_id": "lower_platform_b",
+            "hazard": "water",
+            "threshold": 1
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "lower_basin",
+              "value": 20000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1900,
+          "warning_at_scenario_tick": 1800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_support_load",
+              "target_role": "busy_cable",
+              "value": 150
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3100,
+          "warning_at_scenario_tick": 3000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "melt_basin",
+              "value": 20000000
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Pump the basin before peak melt and brace the busiest cable.",
+        "B": "Evacuate the upper terrace before melt peaks, then shift power priority downward."
+      },
+      "failure_explanation_brief": "Ignoring the lower basin breaks a logically correct upper rescue plan.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W3-M5",
+      "title": "Dawn at Frostline",
+      "world_id": "W3",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 22,
+      "minimum_rescues": 17,
+      "supply_budget": 22,
+      "default_loadout": {
+        "winch": 2,
+        "generator": 2,
+        "brace": 3,
+        "crawler": 1
+      },
+      "maximum_stock": {
+        "winch": 2,
+        "generator": 2,
+        "brace": 3,
+        "crawler": 1
+      },
+      "permitted_tools": [
+        "brace",
+        "crawler",
+        "generator",
+        "winch"
+      ],
+      "groups": [
+        {
+          "id": "observatory",
+          "count": 8,
+          "start_node_id": "observatory_start",
+          "assembly_node_id": "observatory_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "station",
+          "count": 8,
+          "start_node_id": "station_start",
+          "assembly_node_id": "station_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "village",
+          "count": 6,
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W3-M5-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 17
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "observatory",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_2",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "station",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "observatory",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "peak_node_occupancy",
+            "maximum": 6,
+            "node_id": "receiving_station"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 700,
+          "warning_at_scenario_tick": 600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_stability_loss",
+              "target_role": "upper_support",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1800,
+          "warning_at_scenario_tick": 1700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_support",
+              "target_role": "upper_support",
+              "value": 600
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3000,
+          "warning_at_scenario_tick": 2900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "release_avalanche",
+              "target_role": "valley_slope",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4200,
+          "warning_at_scenario_tick": 4100,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "lower_window",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Use a vertical relay before the runout, then transfer onto the crawler.",
+        "B": "Clear the lower village first to free receiving capacity for the mountain groups."
+      },
+      "failure_explanation_brief": "Using the receiving station as indefinite storage causes a capacity bottleneck.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W4-M1",
+      "title": "Between Two Tides",
+      "world_id": "W4",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4200,
+      "total_residents": 12,
+      "minimum_rescues": 9,
+      "supply_budget": 15,
+      "default_loadout": {
+        "skiff": 2,
+        "bridge": 1,
+        "beacon": 2,
+        "relay": 1
+      },
+      "maximum_stock": {
+        "skiff": 2,
+        "bridge": 1,
+        "beacon": 2,
+        "relay": 1
+      },
+      "permitted_tools": [
+        "beacon",
+        "bridge",
+        "relay",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "low_market",
+          "count": 8,
+          "start_node_id": "low_market_start",
+          "assembly_node_id": "low_market_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "outer_island",
+          "count": 4,
+          "start_node_id": "outer_island_start",
+          "assembly_node_id": "outer_island_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W4-M1-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 9
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "low_market",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "low_market",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "loaded_closed_dock_wait_operation_ticks",
+            "maximum": 0
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1800,
+          "warning_at_scenario_tick": 1700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3000,
+          "warning_at_scenario_tick": 2900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 3
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Walk the nearest group early and ferry the late group.",
+        "B": "Use both boats from the beginning and reserve the bridge for the high route."
+      },
+      "failure_explanation_brief": "An incorrect dock remains visible but rejects loading with a tide explanation.",
+      "tutorial_policy": "world_mechanic_guidance",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W4-M2",
+      "title": "Keep the Light",
+      "world_id": "W4",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 16,
+      "minimum_rescues": 12,
+      "supply_budget": 19,
+      "default_loadout": {
+        "relay": 3,
+        "generator": 1,
+        "skiff": 2,
+        "beacon": 2
+      },
+      "maximum_stock": {
+        "relay": 3,
+        "generator": 1,
+        "skiff": 2,
+        "beacon": 2
+      },
+      "permitted_tools": [
+        "beacon",
+        "generator",
+        "relay",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "west_island",
+          "count": 6,
+          "start_node_id": "west_island_start",
+          "assembly_node_id": "west_island_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "market",
+          "count": 6,
+          "start_node_id": "market_start",
+          "assembly_node_id": "market_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "lighthouse",
+          "count": 4,
+          "start_node_id": "lighthouse_start",
+          "assembly_node_id": "lighthouse_assembly",
+          "mobility_counts": {
+            "standard": 3,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W4-M2-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 12
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "lighthouse",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "lighthouse",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "lighthouse",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "final_unloading_started",
+            "end_event": "final_unloading_ended"
+          }
+        }
+      ],
+      "milestones": [
+        {
+          "id": "final_unloading_started",
+          "kind": "final_unload_started",
+          "target": "all_residents"
+        },
+        {
+          "id": "final_unloading_ended",
+          "kind": "all_evacuated",
+          "target": "all_residents"
+        }
+      ],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 700,
+          "warning_at_scenario_tick": 600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 2100,
+          "warning_at_scenario_tick": 2000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_infrastructure_demand",
+              "target_role": "lighthouse",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3500,
+          "warning_at_scenario_tick": 3400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Build the longer elevated network immediately.",
+        "B": "Use the short network early, then transfer idle relays to the high sockets before peak tide."
+      },
+      "failure_explanation_brief": "Moving a relay while its only route is actively required temporarily blocks unloading.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W4-M3",
+      "title": "The Floating Market",
+      "world_id": "W4",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 20,
+      "minimum_rescues": 15,
+      "supply_budget": 21,
+      "default_loadout": {
+        "skiff": 3,
+        "barrier": 2,
+        "beacon": 2,
+        "bridge": 1
+      },
+      "maximum_stock": {
+        "skiff": 3,
+        "barrier": 2,
+        "beacon": 2,
+        "bridge": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "beacon",
+        "bridge",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "north_market",
+          "count": 5,
+          "start_node_id": "north_market_start",
+          "assembly_node_id": "north_market_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "east_market",
+          "count": 5,
+          "start_node_id": "east_market_start",
+          "assembly_node_id": "east_market_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "south_market",
+          "count": 5,
+          "start_node_id": "south_market_start",
+          "assembly_node_id": "south_market_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "west_market",
+          "count": 5,
+          "start_node_id": "west_market_start",
+          "assembly_node_id": "west_market_assembly",
+          "mobility_counts": {
+            "standard": 4,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W4-M3-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 15
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "all_vehicles_unloaded",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "receiving_harbor",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "max_dock_queue_operation_ticks",
+            "maximum": 50,
+            "node_id": "receiving_dock"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 500,
+          "warning_at_scenario_tick": 400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "tidal_lane",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1700,
+          "warning_at_scenario_tick": 1600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "pontoon_channel",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3000,
+          "warning_at_scenario_tick": 2900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_current_multiplier",
+              "target_role": "outer_loop",
+              "value": 1500
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Stagger arrivals through the two receiving docks.",
+        "B": "Evacuate one island fully, then reuse its high dock as a transfer point."
+      },
+      "failure_explanation_brief": "Assigning all boats to one dock creates a readable queue, not overlapping models.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W4-M4",
+      "title": "Storm Switch",
+      "world_id": "W4",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 22,
+      "minimum_rescues": 17,
+      "supply_budget": 23,
+      "default_loadout": {
+        "skiff": 2,
+        "pump": 2,
+        "generator": 1,
+        "relay": 2,
+        "barrier": 1
+      },
+      "maximum_stock": {
+        "skiff": 2,
+        "pump": 2,
+        "generator": 1,
+        "relay": 2,
+        "barrier": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "generator",
+        "pump",
+        "relay",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "medical_landing",
+          "count": 6,
+          "start_node_id": "medical_landing_start",
+          "assembly_node_id": "medical_landing_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "market",
+          "count": 8,
+          "start_node_id": "market_start",
+          "assembly_node_id": "market_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "inland",
+          "count": 8,
+          "start_node_id": "inland_start",
+          "assembly_node_id": "inland_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W4-M4-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 17
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "medical_landing_access",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "medical_landing_access",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "pumped_into_region_mm3",
+            "region_id": "market_basin",
+            "maximum": 0
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "inland_basin",
+              "value": 40000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1900,
+          "warning_at_scenario_tick": 1800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 2
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3200,
+          "warning_at_scenario_tick": 3100,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4400,
+          "warning_at_scenario_tick": 4300,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "inland_basin",
+              "value": 80000000
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Store inflow behind a barrier, then pump during low tide.",
+        "B": "Keep high docks available and prioritize boat evacuation while managing only the critical basin."
+      },
+      "failure_explanation_brief": "A pump outlet submerged under a tide has reduced effect, clearly shown in its forecast.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W4-M5",
+      "title": "Harbor of Everyone",
+      "world_id": "W4",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 26,
+      "minimum_rescues": 20,
+      "supply_budget": 26,
+      "default_loadout": {
+        "skiff": 3,
+        "relay": 2,
+        "generator": 1,
+        "bridge": 1,
+        "barrier": 2
+      },
+      "maximum_stock": {
+        "skiff": 3,
+        "relay": 2,
+        "generator": 1,
+        "bridge": 1,
+        "barrier": 2
+      },
+      "permitted_tools": [
+        "barrier",
+        "bridge",
+        "generator",
+        "relay",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "low_market",
+          "count": 8,
+          "start_node_id": "low_market_start",
+          "assembly_node_id": "low_market_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "middle_island",
+          "count": 6,
+          "start_node_id": "middle_island_start",
+          "assembly_node_id": "middle_island_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "lighthouse",
+          "count": 6,
+          "start_node_id": "lighthouse_start",
+          "assembly_node_id": "lighthouse_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "outer_island",
+          "count": 6,
+          "start_node_id": "outer_island_start",
+          "assembly_node_id": "outer_island_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W4-M5-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 20
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "lighthouse",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_2",
+          "tier": "required",
+          "kind": "temporary_staging_empty",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "lighthouse",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "route_available",
+          "params": {
+            "route_id": "high_causeway",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1800,
+          "warning_at_scenario_tick": 1700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_support",
+              "target_role": "harbor_power",
+              "value": 600
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3000,
+          "warning_at_scenario_tick": 2900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_current_multiplier",
+              "target_role": "outer_loop",
+              "value": 1500
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4300,
+          "warning_at_scenario_tick": 4200,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_tide_segment",
+              "target_role": "tide",
+              "value": 2
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Prioritize low docks, then use the outer loop for the final groups.",
+        "B": "Open the high causeway and use boats only for isolated islands while protecting the network."
+      },
+      "failure_explanation_brief": "Saving the lighthouse alone cannot satisfy the rescue goal.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W5-M1",
+      "title": "A Path Through Heat",
+      "world_id": "W5",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4200,
+      "total_residents": 12,
+      "minimum_rescues": 9,
+      "supply_budget": 16,
+      "default_loadout": {
+        "cooler": 2,
+        "bridge": 1,
+        "beacon": 3,
+        "shelter": 1
+      },
+      "maximum_stock": {
+        "cooler": 2,
+        "bridge": 1,
+        "beacon": 3,
+        "shelter": 1
+      },
+      "permitted_tools": [
+        "beacon",
+        "bridge",
+        "cooler",
+        "shelter"
+      ],
+      "groups": [
+        {
+          "id": "orchard",
+          "count": 6,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "research",
+          "count": 6,
+          "start_node_id": "research_start",
+          "assembly_node_id": "research_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W5-M1-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 9
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "temporary_shelters_empty",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "high_landing_path",
+            "traversal_class": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 12
+          },
+          "temporal": {
+            "kind": "ever_before",
+            "end_event": "first_crossing_reheated"
+          }
+        }
+      ],
+      "milestones": [
+        {
+          "id": "first_crossing_reheated",
+          "kind": "first_cooled_crossing_closed",
+          "target": "first_channel"
+        }
+      ],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 700,
+          "warning_at_scenario_tick": 600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "advance_lava",
+              "target_role": "first_channel",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 2100,
+          "warning_at_scenario_tick": 2000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "enable_cooler_socket",
+              "target_role": "crossing_a",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3300,
+          "warning_at_scenario_tick": 3200,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_reheat",
+              "target_role": "first_channel",
+              "value": 100
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Cool a crossing only when residents are ready to move.",
+        "B": "Stage residents in shelter, cool the longer route, then cross together."
+      },
+      "failure_explanation_brief": "Cooling too early wastes the safe window; the timer remains visible.",
+      "tutorial_policy": "world_mechanic_guidance",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W5-M2",
+      "title": "Borrowed Safety",
+      "world_id": "W5",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 18,
+      "minimum_rescues": 14,
+      "supply_budget": 22,
+      "default_loadout": {
+        "shelter": 2,
+        "cooler": 2,
+        "crawler": 1,
+        "beacon": 4
+      },
+      "maximum_stock": {
+        "shelter": 2,
+        "cooler": 2,
+        "crawler": 1,
+        "beacon": 4
+      },
+      "permitted_tools": [
+        "beacon",
+        "cooler",
+        "crawler",
+        "shelter"
+      ],
+      "groups": [
+        {
+          "id": "orchard",
+          "count": 9,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 8,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "village",
+          "count": 9,
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "mobility_counts": {
+            "standard": 8,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W5-M2-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 14
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "temporary_shelters_empty",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "temporary_shelters_empty",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_most",
+          "params": {
+            "metric": "shelter_exhaustions",
+            "maximum": 0
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "advance_lava",
+              "target_role": "assembly_channel",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1800,
+          "warning_at_scenario_tick": 1700,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "enable_shelter_hazard",
+              "target_role": "shelter_a",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3200,
+          "warning_at_scenario_tick": 3100,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "outer_route",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Stage one group, evacuate the other, then return along the cooled route.",
+        "B": "Use both shelters briefly and alternate transport pickups before heat peaks."
+      },
+      "failure_explanation_brief": "Leaving residents in shelters fails the evacuation condition even if they remain safe.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W5-M3",
+      "title": "The Cooling Works",
+      "world_id": "W5",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 4800,
+      "total_residents": 20,
+      "minimum_rescues": 15,
+      "supply_budget": 24,
+      "default_loadout": {
+        "cooler": 3,
+        "pump": 2,
+        "generator": 1,
+        "relay": 1,
+        "shelter": 1
+      },
+      "maximum_stock": {
+        "cooler": 3,
+        "pump": 2,
+        "generator": 1,
+        "relay": 1,
+        "shelter": 1
+      },
+      "permitted_tools": [
+        "cooler",
+        "generator",
+        "pump",
+        "relay",
+        "shelter"
+      ],
+      "groups": [
+        {
+          "id": "cooling_works",
+          "count": 8,
+          "start_node_id": "cooling_works_start",
+          "assembly_node_id": "cooling_works_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "research",
+          "count": 6,
+          "start_node_id": "research_start",
+          "assembly_node_id": "research_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "village",
+          "count": 6,
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W5-M3-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 15
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "cooling_works",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "infrastructure_operational",
+          "params": {
+            "infrastructure_id": "cooling_works",
+            "operational": true
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "resource_remaining",
+          "params": {
+            "store_id": "coolant",
+            "minimum": 1
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 500,
+          "warning_at_scenario_tick": 400,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "drainage_basin",
+              "value": 30000000
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1700,
+          "warning_at_scenario_tick": 1600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "advance_lava",
+              "target_role": "coolant_delivery",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3100,
+          "warning_at_scenario_tick": 3000,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "advance_lava",
+              "target_role": "second_channel",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Secure drainage and power first, then cool the short route.",
+        "B": "Evacuate via the longer path and save cooling for the late channel."
+      },
+      "failure_explanation_brief": "Power loss stops production but does not erase stored coolant.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W5-M4",
+      "title": "Three Ways Out",
+      "world_id": "W5",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 24,
+      "minimum_rescues": 18,
+      "supply_budget": 27,
+      "default_loadout": {
+        "skiff": 2,
+        "crawler": 1,
+        "cooler": 2,
+        "shelter": 1,
+        "bridge": 1
+      },
+      "maximum_stock": {
+        "skiff": 2,
+        "crawler": 1,
+        "cooler": 2,
+        "shelter": 1,
+        "bridge": 1
+      },
+      "permitted_tools": [
+        "bridge",
+        "cooler",
+        "crawler",
+        "shelter",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "research_crew",
+          "count": 8,
+          "start_node_id": "research_crew_start",
+          "assembly_node_id": "research_crew_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "coast",
+          "count": 8,
+          "start_node_id": "coast_start",
+          "assembly_node_id": "coast_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "inland",
+          "count": 8,
+          "start_node_id": "inland_start",
+          "assembly_node_id": "inland_assembly",
+          "mobility_counts": {
+            "standard": 7,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W5-M4-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 18
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "research_crew",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_2",
+          "tier": "required",
+          "kind": "temporary_shelters_empty",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "group_evacuated",
+          "params": {
+            "group_id": "research_crew",
+            "minimum": 8
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "counter_at_least",
+          "params": {
+            "metric": "evacuated_by_mode",
+            "minimum": 1,
+            "group_id": null,
+            "mode": "ground"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_2",
+          "tier": "mastery",
+          "kind": "counter_at_least",
+          "params": {
+            "metric": "evacuated_by_mode",
+            "minimum": 1,
+            "group_id": null,
+            "mode": "water"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 700,
+          "warning_at_scenario_tick": 600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_route",
+              "target_role": "short_land_route",
+              "value": 1300
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 2000,
+          "warning_at_scenario_tick": 1900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "advance_lava",
+              "target_role": "land_channel",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 3300,
+          "warning_at_scenario_tick": 3200,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_edge_enabled",
+              "target_role": "sea_route",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4400,
+          "warning_at_scenario_tick": 4300,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "enable_cooler_socket",
+              "target_role": "crossing_b",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Ferry the coast early, then use crawler and cooling inland.",
+        "B": "Use shelter to stage inland groups while boats clear the receiving dock."
+      },
+      "failure_explanation_brief": "Overloading one final landing creates a queue; capacity indicators must predict it.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    },
+    {
+      "id": "W5-M5",
+      "title": "Every Little Life",
+      "world_id": "W5",
+      "release_scope": "full_release",
+      "status": "frozen_design_unimplemented",
+      "mission_revision": 1,
+      "rules_version": "resq-rules-1",
+      "duration_scenario_ticks": 5400,
+      "total_residents": 30,
+      "minimum_rescues": 23,
+      "supply_budget": 30,
+      "default_loadout": {
+        "skiff": 2,
+        "crawler": 1,
+        "cooler": 2,
+        "shelter": 1,
+        "generator": 1,
+        "pump": 1,
+        "barrier": 1
+      },
+      "maximum_stock": {
+        "skiff": 2,
+        "crawler": 1,
+        "cooler": 2,
+        "shelter": 1,
+        "generator": 1,
+        "pump": 1,
+        "barrier": 1
+      },
+      "permitted_tools": [
+        "barrier",
+        "cooler",
+        "crawler",
+        "generator",
+        "pump",
+        "shelter",
+        "skiff"
+      ],
+      "groups": [
+        {
+          "id": "orchard",
+          "count": 6,
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "station",
+          "count": 6,
+          "start_node_id": "station_start",
+          "assembly_node_id": "station_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "research",
+          "count": 6,
+          "start_node_id": "research_start",
+          "assembly_node_id": "research_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "waterfront",
+          "count": 6,
+          "start_node_id": "waterfront_start",
+          "assembly_node_id": "waterfront_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        },
+        {
+          "id": "high_village",
+          "count": 6,
+          "start_node_id": "high_village_start",
+          "assembly_node_id": "high_village_assembly",
+          "mobility_counts": {
+            "standard": 5,
+            "step_free": 1
+          }
+        }
+      ],
+      "layout_recipe_id": "W5-M5-layout-v1",
+      "objectives": [
+        {
+          "id": "rescue_minimum",
+          "tier": "required",
+          "kind": "rescue_count",
+          "params": {
+            "minimum": 23
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_1",
+          "tier": "required",
+          "kind": "temporary_shelters_empty",
+          "params": {},
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "required_2",
+          "tier": "required",
+          "kind": "route_available",
+          "params": {
+            "route_id": "final_ferry",
+            "traversal_class": "water"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "critical",
+          "tier": "critical",
+          "kind": "route_available",
+          "params": {
+            "route_id": "final_ferry",
+            "traversal_class": "water"
+          },
+          "temporal": {
+            "kind": "at_end"
+          }
+        },
+        {
+          "id": "mastery_1",
+          "tier": "mastery",
+          "kind": "equipment_losses_at_most",
+          "params": {
+            "maximum": 0
+          },
+          "temporal": {
+            "kind": "always",
+            "start_event": "operation_started",
+            "end_event": "operation_ended"
+          }
+        }
+      ],
+      "milestones": [],
+      "events": [
+        {
+          "id": "event_1",
+          "at_scenario_tick": 600,
+          "warning_at_scenario_tick": 500,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "drainage_basin",
+              "value": 30000000
+            },
+            {
+              "kind": "advance_lava",
+              "target_role": "orchard_channel",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "id": "event_2",
+          "at_scenario_tick": 1700,
+          "warning_at_scenario_tick": 1600,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "warn_route",
+              "target_role": "first_transport",
+              "value": 1200
+            }
+          ]
+        },
+        {
+          "id": "event_3",
+          "at_scenario_tick": 2900,
+          "warning_at_scenario_tick": 2800,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "set_source_rate",
+              "target_role": "power_basin",
+              "value": 40000000
+            }
+          ]
+        },
+        {
+          "id": "event_4",
+          "at_scenario_tick": 4000,
+          "warning_at_scenario_tick": 3900,
+          "known_at_start": true,
+          "operations": [
+            {
+              "kind": "advance_lava",
+              "target_role": "staging_channel",
+              "value": 1
+            }
+          ]
+        }
+      ],
+      "protection_objective_ids": [
+        "critical"
+      ],
+      "global_success_conditions": [
+        "minimum_and_required_objectives",
+        "all_vehicles_unloaded",
+        "temporary_shelters_empty"
+      ],
+      "reference_strategy_briefs": {
+        "A": "Stabilize the power/drainage spine, ferry coast groups, and cool the inland route just in time.",
+        "B": "Evacuate the most exposed groups first, use shelter for the high village, and dedicate late resources to the ferry connection."
+      },
+      "failure_explanation_brief": "A plan that protects scenery but delays evacuation cannot earn a successful outcome.",
+      "tutorial_policy": "none",
+      "base_rule_profiles": [
+        "standard",
+        "relaxed",
+        "command"
+      ],
+      "required_checks": [
+        "structural_compile",
+        "two_distinct_successes",
+        "no_input_failure",
+        "major_mistake_cause",
+        "save_resume_equivalence",
+        "tracking_and_anchor_recovery",
+        "device_input",
+        "final_art_audio"
+      ]
+    }
+  ]
+}

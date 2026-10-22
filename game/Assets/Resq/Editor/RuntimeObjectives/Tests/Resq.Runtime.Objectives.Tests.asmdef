@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Objectives.Tests","references":["Resq.Core","Resq.Simulation","Resq.Content","Resq.Progression","Resq.Runtime.Objectives.Editor"],"includePlatforms":["Editor"],"optionalUnityReferences":["TestAssemblies"],"autoReferenced":false,"noEngineReferences":false}

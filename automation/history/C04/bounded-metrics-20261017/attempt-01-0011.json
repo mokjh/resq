@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C04",
+  "event": "running",
+  "run_id": "bounded-metrics-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 11,
+  "previous_event_sha256": "3a68c6f8b28eb93d7f8890d6d058b236919b0027a21f5811719e93170aa77e24",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T21:49:10.376498+00:00"
+}

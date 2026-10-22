@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "failed",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-02",
+  "sequence": 5,
+  "previous_event_sha256": "2dcf4abecd2fd81f40f75fd2c665184c3cbce34749897d07f11ceb9484844702",
+  "result_path": "evidence/results/F03/bounded-host-20261016/attempt-02.json",
+  "result_sha256": "8a8014ce2a6f76325c12f08ebfa8264a687ed71ea6701f26a141e2113b991384",
+  "reason": "Actual Editor emitted no native report",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T17:32:48.349199+00:00"
+}

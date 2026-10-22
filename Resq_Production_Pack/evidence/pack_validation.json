@@ -1,0 +1,212 @@
+{
+  "status": "passed",
+  "evidence_level": "specification_consistency_only",
+  "checked_at_utc": "2026-10-14T23:04:50.489022+00:00",
+  "counts": {
+    "documents": 13,
+    "worlds": 5,
+    "mission_briefs": 25,
+    "equipment": 14,
+    "tasks": 38,
+    "json_files": 11
+  },
+  "mission_scope": {
+    "competition": 5,
+    "full_release": 20
+  },
+  "task_topological_order": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14",
+    "T15",
+    "T16",
+    "T17",
+    "T18",
+    "T19",
+    "T20",
+    "T21",
+    "T22",
+    "T23",
+    "T24",
+    "T25",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T35",
+    "T36",
+    "T37",
+    "T38"
+  ],
+  "file_manifest": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "7bc1781434acd01ceba14258172658590687e34168ef9feb60681693354a0b36"
+    },
+    {
+      "path": "CODEX_START_PROMPT.md",
+      "sha256": "09158ce1ea56bc475331d9f4b17fa31dc9339759d310d39671328df0ffddf1ea"
+    },
+    {
+      "path": "README.md",
+      "sha256": "0290d4a0c9cfb1d1106e35fad70d02186a1eb053e63da5ddac75578a1fb1de74"
+    },
+    {
+      "path": "RESQ_MASTER_SPEC.html",
+      "sha256": "10c8a11c0652aa1e5ad79721f70b317c5ed925c08c4317d5f1cb0e717b2ba217"
+    },
+    {
+      "path": "RESQ_MASTER_SPEC.md",
+      "sha256": "ede8332759246be567d48dce411d9be3f360548e5efa58098d98d1b9a56802b2"
+    },
+    {
+      "path": "automation/autonomy_policy.json",
+      "sha256": "547da7a8544580bbe2becdab634447f5a35695c4cda3d10e5724e02ff2da8928"
+    },
+    {
+      "path": "automation/tasks.json",
+      "sha256": "af78c3bc5b7c96a2da183d3abc197860a3861e346b235d56621506e64cb49aa5"
+    },
+    {
+      "path": "automation/toolchain.lock.template.json",
+      "sha256": "c2d819acc6f68e564337eb20892a933c2882431b29f5327c5e09a5fde4522fc0"
+    },
+    {
+      "path": "content/asset_manifest.template.json",
+      "sha256": "5ac9b6e199eec84b85fe630eb9be16d5473f7cf84e4e8f4a8f36254fbf91ec28"
+    },
+    {
+      "path": "content/equipment.json",
+      "sha256": "6068aa77436a997dd380a7b304df6576ef4af7af139ce2e5a939f1b3a2eead0a"
+    },
+    {
+      "path": "content/missions.json",
+      "sha256": "1df8df05b6f799dfe84e7496a8bbac4537ae80b4702c7dbf28c3333e33e923f3"
+    },
+    {
+      "path": "content/release_manifest.template.json",
+      "sha256": "00a04f7f1581bf0c76ba0f4558320feb1dd11748ea9d01052c735429a5df082a"
+    },
+    {
+      "path": "content/worlds.json",
+      "sha256": "1af6d25b4e2f908e0d2cf320ecdf5f24fac3d0af87441381648683174852ca14"
+    },
+    {
+      "path": "diagrams/game_data_erd.dot",
+      "sha256": "af4bb7e34d3a10a5492cfff937ffc45e95ecda8fdb96228a4c1a0a7f7156a446"
+    },
+    {
+      "path": "diagrams/game_data_erd.mmd",
+      "sha256": "16c06c55ba0eb0527c680a0ca76d0f0759485482f68aa135fa492467d6bcd616"
+    },
+    {
+      "path": "diagrams/game_data_erd.svg",
+      "sha256": "6af7df4f7834f3c5856035645735d320f3bacfdeaee31a73a4da111f31517876"
+    },
+    {
+      "path": "diagrams/runtime_flow.dot",
+      "sha256": "c1d6968f6c6b0999e83a4694d3849b39497e52f0931988234a037a8ccebab90f"
+    },
+    {
+      "path": "diagrams/runtime_flow.mmd",
+      "sha256": "eace14430117d62f53cbfa9793b097317c5f0ad839ee2883c920f6d3cd78bb5a"
+    },
+    {
+      "path": "diagrams/runtime_flow.svg",
+      "sha256": "4e2e905b005c137ac0aabe8d2636998d2a3698f7fa6298e5b755b3f2c28a0ee4"
+    },
+    {
+      "path": "docs/00_DECISIONS_AND_SOURCES.md",
+      "sha256": "9f8ec6a90e8037832053112a5fb9ebe6f6e27c5f6f4b0a067fafab279aeb13b4"
+    },
+    {
+      "path": "docs/01_PRODUCT_PRD.md",
+      "sha256": "db238528e7b3c9fbc106df031734cef5f5d6d6d4d03d35ace05aa07d94989bad"
+    },
+    {
+      "path": "docs/02_GAMEPLAY_SYSTEMS.md",
+      "sha256": "77776f2d3b6127a9ae835b74b4a977a6e0124b92b8c4136afef25b35ba546dbf"
+    },
+    {
+      "path": "docs/03_WORLD_MISSION_BIBLE.md",
+      "sha256": "e24a9659f23cf20b3b505bfcfd152ab3eb7f4effea95d82025a1b706ddcc84f5"
+    },
+    {
+      "path": "docs/04_UX_ACCESSIBILITY.md",
+      "sha256": "5c9de7abace19003db12942d29094ae3c13cefad0bca08d88145e382ef87fef3"
+    },
+    {
+      "path": "docs/05_TECHNICAL_SPEC.md",
+      "sha256": "cfb3ad8fff04a51c288e54e9a8c8530767d0a296c8143381ccf1978328bf627d"
+    },
+    {
+      "path": "docs/06_ERD_AND_DATA_CONTRACTS.md",
+      "sha256": "8635cc45814fc66b08c573fb9f5320011b1d15389783634d2dfc1e527938f8fb"
+    },
+    {
+      "path": "docs/07_ART_AND_ASSET_PIPELINE.md",
+      "sha256": "3b2a9a9a5a0973a58f39736196ab0baa3b8eaff5c48382c65b4d824bd139e281"
+    },
+    {
+      "path": "docs/08_CODEX_AUTOMATION_PLAN.md",
+      "sha256": "3ed8bf53c3fb3f152dae7852c49589acf0a4ec8206723aa1c84dc2fde0f3a217"
+    },
+    {
+      "path": "docs/09_QA_AND_RELEASE_GATES.md",
+      "sha256": "115e3f6228cf6a93550b521d95f5a1b8f27bf0914db89ec0ca4b19854bca05eb"
+    },
+    {
+      "path": "docs/10_MARKETING_WEBSITE_SPEC.md",
+      "sha256": "6aaf017afc7499834f67d42e8018e998222f9a9b837f34b57d93e9ed0d93fd1d"
+    },
+    {
+      "path": "docs/11_VIDEO_AND_DEVPOST_SPEC.md",
+      "sha256": "3253c3d6fd2109bf63d6316c8643a5368d7d6f661366ab5947790505e745a3d7"
+    },
+    {
+      "path": "docs/12_ROADMAP_AND_RISK_REGISTER.md",
+      "sha256": "0918a8b38a393eedab235b8a275ac29ce1223645851becb5e87893ae281729ba"
+    },
+    {
+      "path": "schemas/asset_manifest.schema.json",
+      "sha256": "e94941a9537d749df72cc5f6c287333356fd2ddc8650d281d778510c3c754332"
+    },
+    {
+      "path": "schemas/mission_briefs.schema.json",
+      "sha256": "68ab7d58f953708bc79764339f6d12305fef31bf93fc08f0155d194c1dee7ea1"
+    },
+    {
+      "path": "schemas/task_result.schema.json",
+      "sha256": "07aefc1a6f62f03b3d465d0cd249b7349efb18bd415aa2b58c85192a43eb1a3a"
+    },
+    {
+      "path": "tools/test_validate_pack.py",
+      "sha256": "899688de169ff5b67df2bdd640d34c603175a21112d3a680725f2afd7bdd74eb"
+    },
+    {
+      "path": "tools/validate_pack.py",
+      "sha256": "4ad2afbac986d0360cd9679f7e55943de4cf887b137913e40cf97d8cebf9075a"
+    }
+  ],
+  "limitations": [
+    "Not a full JSON Schema engine.",
+    "Does not compile Unity or validate runtime geometry, route solvability, asset quality, hardware, comfort, footage, or deployment.",
+    "All missions remain authored unimplemented briefs."
+  ]
+}

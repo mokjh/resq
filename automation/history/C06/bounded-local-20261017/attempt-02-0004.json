@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C06",
+  "event": "blocked",
+  "run_id": "bounded-local-20261017",
+  "attempt_id": "attempt-02",
+  "sequence": 4,
+  "previous_event_sha256": "21aa3493516231e8a054726357a2d8498cfc54af45db8c328c86a2e66b193d0c",
+  "result_path": "evidence/results/C06/bounded-local-20261017/attempt-02.json",
+  "result_sha256": "aca24c37b2741ca3ee26677717297023bca0856f5ae5784cf4d9148962460a86",
+  "reason": "UNITY_PROJECT_ALREADY_OPEN: use its supported explicit connection; do not seize it",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T21:52:30.676759+00:00"
+}

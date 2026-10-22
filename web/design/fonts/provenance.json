@@ -1,0 +1,35 @@
+{
+  "retrieved_utc": "2026-10-15T21:25:32.054489+00:00",
+  "font_family": "Atkinson Hyperlegible",
+  "weights": [
+    400,
+    700
+  ],
+  "license": "SIL OFL 1.1",
+  "files": [
+    {
+      "path": "web/design/fonts/OFL.txt",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/OFL.txt",
+      "bytes": 4352,
+      "sha256": "f32d22b3908fcad2c86a74000614ec22e6a7f66ea7e867e616026a27aebdc143"
+    },
+    {
+      "path": "web/design/fonts/METADATA.pb",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/METADATA.pb",
+      "bytes": 2242,
+      "sha256": "13d7f7361ca762420bc0b8a483fbcae6c94598b5a372aee4b8b6f4e382d3282f"
+    },
+    {
+      "path": "web/design/fonts/AtkinsonHyperlegible-Regular.ttf",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Regular.ttf",
+      "bytes": 54348,
+      "sha256": "7fb917c89019896d0b52ee84b7cbb3304c18cb90b19a62f5e32712bd23e97669"
+    },
+    {
+      "path": "web/design/fonts/AtkinsonHyperlegible-Bold.ttf",
+      "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Bold.ttf",
+      "bytes": 55256,
+      "sha256": "5a3b0c8cc8ca545155150b4512a1fa248298df121c50d6557e651e61fbdab92f"
+    }
+  ]
+}

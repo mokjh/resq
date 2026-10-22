@@ -1,0 +1,232 @@
+erDiagram
+    WORLD ||--|{ MISSION_VERSION : contains
+    MISSION_VERSION ||--|{ LAYOUT_VERSION : supports
+    MISSION_VERSION ||--|{ OBJECTIVE_DEF : evaluates
+    MISSION_VERSION ||--o{ EVENT_DEF : schedules
+    MISSION_VERSION ||--|{ MISSION_EQUIPMENT : permits
+    EQUIPMENT_DEF ||--o{ MISSION_EQUIPMENT : configures
+    LAYOUT_VERSION ||--|{ NAV_NODE : defines
+    LAYOUT_VERSION ||--|{ NAV_EDGE : defines
+    LAYOUT_VERSION ||--o{ HAZARD_CELL : defines
+    LAYOUT_VERSION ||--o{ HAZARD_LINK : defines
+    LAYOUT_VERSION ||--|{ RESIDENT_SPAWN : initializes
+    NAV_NODE ||--o{ NAV_EDGE : connects
+    PLAYER_SAVE ||--|| SETTINGS : stores
+    PLAYER_SAVE ||--o{ MISSION_PROGRESS : records
+    PLAYER_SAVE ||--o{ RUN_RECORD : owns
+    PLAYER_SAVE ||--o{ UNLOCK : earns
+    PLAYER_SAVE ||--o{ REWARD_RECEIPT : deduplicates
+    MISSION_VERSION ||--o{ MISSION_PROGRESS : measures
+    MISSION_VERSION ||--o{ RUN_RECORD : instantiates
+    LAYOUT_VERSION ||--o{ RUN_RECORD : fixes_layout
+    RUN_RECORD ||--o{ COMMAND_RECORD : orders
+    RUN_RECORD ||--o{ OBJECTIVE_RESULT : produces
+    OBJECTIVE_DEF ||--o{ OBJECTIVE_RESULT : measures
+    RUN_RECORD ||--o{ SNAPSHOT : checkpoints
+    SNAPSHOT ||--o{ RESIDENT_STATE : stores
+    SNAPSHOT ||--o{ VEHICLE_STATE : stores
+    SNAPSHOT ||--o{ EQUIPMENT_STATE : stores
+    EQUIPMENT_DEF ||--o{ EQUIPMENT_STATE : instantiates
+    WORLD {
+        string world_id PK
+        string slug
+        string title_key
+        int sort_order
+        string release_scope
+        string art_bundle_id
+    }
+    MISSION_VERSION {
+        string mission_version_id PK
+        string mission_id
+        string world_id FK
+        int revision
+        string rules_version
+        string content_hash
+        int duration_ticks
+        int minimum_rescues
+        int total_residents
+        int supply_budget
+    }
+    LAYOUT_VERSION {
+        string layout_version_id PK
+        string mission_version_id FK
+        string layout_class
+        string graph_hash
+        string allowed_dock_configuration
+    }
+    OBJECTIVE_DEF {
+        string objective_id PK
+        string mission_version_id FK
+        string kind
+        string params_json
+        bool required
+        string tier
+    }
+    EVENT_DEF {
+        string event_id PK
+        string mission_version_id FK
+        int at_tick
+        string kind
+        string typed_payload_json
+        int warning_lead_ticks
+    }
+    EQUIPMENT_DEF {
+        string equipment_id PK
+        int revision
+        int supply_cost
+        string placement_kind
+        int power_supply
+        int power_demand
+        int capacity
+        string prefab_id
+    }
+    MISSION_EQUIPMENT {
+        string mission_version_id PK,FK
+        string equipment_id PK,FK
+        int max_stock
+        int default_stock
+    }
+    NAV_NODE {
+        string node_id PK
+        string layout_version_id FK
+        string kind
+        int capacity
+        string hazard_region_id
+        string logical_position
+    }
+    NAV_EDGE {
+        string edge_id PK
+        string layout_version_id FK
+        string from_node_id FK
+        string to_node_id FK
+        string traversal_modes
+        int travel_ticks
+        int capacity
+        string condition_id
+    }
+    HAZARD_CELL {
+        string cell_id PK
+        string layout_version_id FK
+        int elevation_mm
+        int area_mm2
+        string hazard_kind
+        string initial_state_json
+    }
+    HAZARD_LINK {
+        string link_id PK
+        string layout_version_id FK
+        string from_cell_id FK
+        string to_cell_id FK
+        int conductance
+        string socket_id
+    }
+    RESIDENT_SPAWN {
+        string resident_id PK
+        string layout_version_id FK
+        string group_id
+        string start_node_id FK
+        string mobility_class
+    }
+    PLAYER_SAVE {
+        string local_profile_id PK
+        int schema_version
+        int generation
+        string payload_sha256
+        string created_at_utc
+    }
+    SETTINGS {
+        string local_profile_id PK,FK
+        string input_preset
+        string handedness
+        int dwell_ms
+        int text_scale_percent
+        bool reduced_effects
+        string audio_levels_json
+    }
+    MISSION_PROGRESS {
+        string local_profile_id PK,FK
+        string mission_version_id PK,FK
+        string comparison_partition PK
+        int best_stars
+        int best_score
+        bool completed
+    }
+    RUN_RECORD {
+        string run_id PK
+        string local_profile_id FK
+        string mission_version_id FK
+        string layout_version_id FK
+        string layout_signature
+        string input_preset
+        string modifiers_hash
+        int seed
+        int last_tick
+        string status
+        bool assisted
+    }
+    COMMAND_RECORD {
+        string run_id PK,FK
+        int sequence PK
+        string command_id
+        int requested_tick
+        int executed_tick
+        string kind
+        string typed_payload_json
+        string validation_result
+    }
+    OBJECTIVE_RESULT {
+        string run_id PK,FK
+        string objective_id PK,FK
+        bool completed
+        int completion_tick
+        int metric_value
+    }
+    SNAPSHOT {
+        string snapshot_id PK
+        string run_id FK
+        int simulation_tick
+        int last_command_sequence
+        string prng_state
+        string complete_hazard_state_json
+        string power_state_json
+        string event_cursor_json
+        int supplies_remaining
+        string state_hash
+    }
+    RESIDENT_STATE {
+        string snapshot_id PK,FK
+        string resident_id PK
+        string state
+        string node_id
+        string vehicle_id
+        string reservation_id
+    }
+    VEHICLE_STATE {
+        string snapshot_id PK,FK
+        string vehicle_id PK
+        string state
+        string route_node_ids
+        int route_progress_ticks
+        string occupant_ids
+    }
+    EQUIPMENT_STATE {
+        string snapshot_id PK,FK
+        string equipment_instance_id PK
+        string equipment_id FK
+        string socket_id
+        int orientation_step
+        int durability
+        string operating_state
+    }
+    UNLOCK {
+        string local_profile_id PK,FK
+        string unlock_id PK
+        string earned_from_run_id
+        string kind
+    }
+    REWARD_RECEIPT {
+        string local_profile_id PK,FK
+        string reward_id PK
+        string source_run_id
+        bool applied
+    }

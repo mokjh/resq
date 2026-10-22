@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "running",
+  "run_id": "foundation-audit-20261018",
+  "attempt_id": "attempt-01",
+  "sequence": 13,
+  "previous_event_sha256": "d77e21b3f271b12ec445fdb99302c12c384ff61384de28d8b2d655feda2cfdec",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-18T18:19:05.468389+00:00"
+}

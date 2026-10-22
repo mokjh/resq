@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F08",
+  "event": "pending",
+  "run_id": "native-preflight-20261016",
+  "attempt_id": "attempt-02",
+  "sequence": 6,
+  "previous_event_sha256": "e776a44b32b4626037346584a350c48b32c9339ea3b160be22f15ffdbff1d7c0",
+  "result_path": "evidence/results/F08/continuation-20261016/attempt-01.json",
+  "result_sha256": "188db0afeee8b37b6dc08fdc81723458ad0aac40713445bd9b31f833e5b0a47f",
+  "reason": "Accepted prerequisite head changed: F02; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T23:19:03.094697+00:00"
+}

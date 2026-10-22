@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "id": "resq-runtime-core-bounded-7",
+  "reserve_bytes": 2147483648,
+  "authority": "User continuation of ready tasks; accepted C01-C07; explicitly bounded C08 forecast and ordering host suites",
+  "stages": {
+    "runtime-commands": {
+      "task": "C02",
+      "growth": 134217728,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "runtime-water": {
+      "task": "C03",
+      "growth": 134217728,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "runtime-transport": {
+      "task": "C04",
+      "growth": 134217728,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "runtime-equipment": {
+      "task": "C05",
+      "growth": 134217728,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "runtime-objectives": {
+      "task": "C06",
+      "growth": 134217728,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "runtime-persistence": {
+      "task": "C07",
+      "growth": 268435456,
+      "buffer": 134217728,
+      "graphics": false
+    },
+    "runtime-forecast": {
+      "task": "C08",
+      "growth": 268435456,
+      "buffer": 134217728,
+      "graphics": false
+    }
+  },
+  "basis": "Same lean licensed host as accepted C01: measured positive growth2162946B. C02 isolated integer C# source and native fixtures receive enforced128MiB cap,128MiB overshoot and2GiB hard reserve; no package installation or full-game peak inference. Accepted C02 native growth212763B on same host. C03 pure water subsystem receives identical cancellable128MiBcap, not a full game peak estimate. Independently ready C04 pure integertransport receives identicalcappedattempt without packageinstallation. AcceptedC04nativegrowth524743B. Dependency-readyC05pureequipment/powerlogicgetsseparate128MiBcappedattemptwithoutpackageinstallation. Accepted C05 native growth1,617,652B. C06 objectives and units run sequentially, each with fresh2.25GiB admission and the same enforced128MiB attempt cap; aggregate complete-game peak unknown. Dependency-ready C07 snapshot/save/replay source and small actual save-file fixtures use the same lean licensed host with an enforced256MiB growth cap,128MiB cancellation margin and2GiB hard reserve: fresh2.375GiB admission. Fixture files stay under RESQ-owned monitored project/evidence/temp paths. No graphics or package installation; complete-game import/build/storage peaks remain unknown. Dependency-ready C08 forecast and runtime-ordering suites each run sequentially on the same lean licensed host after fresh2.375GiB admission, with separate enforced256MiB growth cap,128MiB cancellation margin and2GiB reserve. Accepted C07 measured4,133,432B positivegrowth. Forecast simulation is bounded to600 scenario ticks per request by frozen contract; fixture/output files stay in watched RESQ-owned paths. This is a cancellable attempt budget, not measured complete-game peak; no graphics, package installation, XR/Android build or physical qualification.",
+  "mission_count": 25,
+  "acceptance_checks_unchanged": true,
+  "full_peak_known": false
+}

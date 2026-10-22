@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "blocked",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 3,
+  "previous_event_sha256": "d4e5ccf3bb6e62d36709053ff43ce2d82b20d5294a5c753c5ec8dc81b688fcbd",
+  "result_path": "evidence/results/F03/bounded-host-20261016/attempt-01.json",
+  "result_sha256": "096f19f85710cc4b3c19defa4ea44a9d00416c89de31d52b4aaf4c5070915213",
+  "reason": "GATE_NOT_VERIFIED: host_working_storage — F03only: exact lean native-generated host packages, <=8MiBassets, measured192MiBgrowthcap +64MiBovershoot +2GiBhardreserve; fresh volume observation and owned cancellation. Does not admit Android/render/other tasks.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T17:26:30.080746+00:00"
+}

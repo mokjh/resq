@@ -1,0 +1,8 @@
+{
+  "name": "Resq.Probe.Tests",
+  "references": ["Resq.Probe", "Resq.Probe.Checks"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false,
+  "noEngineReferences": true
+}

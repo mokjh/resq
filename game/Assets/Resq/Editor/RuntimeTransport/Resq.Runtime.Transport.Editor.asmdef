@@ -1,0 +1,1 @@
+{"name":"Resq.Runtime.Transport.Editor","rootNamespace":"Resq.Editor.RuntimeTransport","references":["Resq.Content"],"includePlatforms":["Editor"],"autoReferenced":true,"noEngineReferences":true}

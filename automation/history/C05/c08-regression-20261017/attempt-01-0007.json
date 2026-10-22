@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C05",
+  "event": "running",
+  "run_id": "c08-regression-20261017",
+  "attempt_id": "attempt-01",
+  "sequence": 7,
+  "previous_event_sha256": "0a43dd9121ec8a926efcbbeba5eeb8eca8538ab12e57941492d874572b0c4609",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-17T20:55:11.820352+00:00"
+}

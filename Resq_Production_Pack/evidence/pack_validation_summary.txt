@@ -1,0 +1,62 @@
+{
+  "status": "passed",
+  "evidence_level": "specification_consistency_only",
+  "checked_at_utc": "2026-10-14T23:04:50.489022+00:00",
+  "counts": {
+    "documents": 13,
+    "worlds": 5,
+    "mission_briefs": 25,
+    "equipment": 14,
+    "tasks": 38,
+    "json_files": 11
+  },
+  "mission_scope": {
+    "competition": 5,
+    "full_release": 20
+  },
+  "task_topological_order": [
+    "T01",
+    "T02",
+    "T03",
+    "T04",
+    "T05",
+    "T06",
+    "T07",
+    "T08",
+    "T09",
+    "T10",
+    "T11",
+    "T12",
+    "T13",
+    "T14",
+    "T15",
+    "T16",
+    "T17",
+    "T18",
+    "T19",
+    "T20",
+    "T21",
+    "T22",
+    "T23",
+    "T24",
+    "T25",
+    "T26",
+    "T27",
+    "T28",
+    "T29",
+    "T30",
+    "T31",
+    "T32",
+    "T33",
+    "T34",
+    "T35",
+    "T36",
+    "T37",
+    "T38"
+  ],
+  "limitations": [
+    "Not a full JSON Schema engine.",
+    "Does not compile Unity or validate runtime geometry, route solvability, asset quality, hardware, comfort, footage, or deployment.",
+    "All missions remain authored unimplemented briefs."
+  ]
+}

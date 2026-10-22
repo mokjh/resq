@@ -1,0 +1,28 @@
+{
+  "profiles": [
+    {
+      "schema_version": 1,
+      "id": "f03-bounded-host-1",
+      "task_id": "F03",
+      "reserve_bytes": 2147483648,
+      "growth_limit_bytes": 67108864,
+      "overshoot_buffer_bytes": 67108864,
+      "max_assets_bytes": 8388608,
+      "exact_packages": {
+        "com.unity.test-framework": "1.6.0",
+        "com.unity.ext.nunit": "2.0.5"
+      },
+      "permitted_builtin_prefix": "com.unity.modules.",
+      "builtin_version": "1.0.0",
+      "project": "game",
+      "category": "host-bootstrap",
+      "no_android_build_modules_or_render": true,
+      "native_test_assertions_unchanged": true,
+      "measured_preparation": [
+        "evidence/foundation/f03-bounded-20261016/create-empty/measurements.json",
+        "evidence/foundation/f03-bounded-20261016/install-host-packages/measurements.json",
+        "evidence/foundation/f03-bounded-20261016/remove-template-extra/measurements.json"
+      ]
+    }
+  ]
+}

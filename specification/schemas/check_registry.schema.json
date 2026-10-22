@@ -1,0 +1,508 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "properties": {
+    "aliases": {
+      "type": "object",
+      "properties": {
+        "art-W1": {
+          "type": "string"
+        },
+        "art-W2": {
+          "type": "string"
+        },
+        "art-W3": {
+          "type": "string"
+        },
+        "art-W4": {
+          "type": "string"
+        },
+        "art-W5": {
+          "type": "string"
+        },
+        "art-shared": {
+          "type": "string"
+        },
+        "device-W1": {
+          "type": "string"
+        },
+        "device-W2": {
+          "type": "string"
+        },
+        "device-W3": {
+          "type": "string"
+        },
+        "device-W4": {
+          "type": "string"
+        },
+        "device-W5": {
+          "type": "string"
+        },
+        "human-W1": {
+          "type": "string"
+        },
+        "human-W2": {
+          "type": "string"
+        },
+        "human-W3": {
+          "type": "string"
+        },
+        "human-W4": {
+          "type": "string"
+        },
+        "human-W5": {
+          "type": "string"
+        },
+        "performance-W1": {
+          "type": "string"
+        },
+        "performance-W2": {
+          "type": "string"
+        },
+        "performance-W3": {
+          "type": "string"
+        },
+        "performance-W4": {
+          "type": "string"
+        },
+        "performance-W5": {
+          "type": "string"
+        },
+        "release-competition": {
+          "type": "string"
+        },
+        "release-full": {
+          "type": "string"
+        },
+        "video-full": {
+          "type": "string"
+        },
+        "video-local": {
+          "type": "string"
+        },
+        "video-public": {
+          "type": "string"
+        },
+        "web-local": {
+          "type": "string"
+        },
+        "web-preview": {
+          "type": "string"
+        },
+        "web-production": {
+          "type": "string"
+        },
+        "xr-command": {
+          "type": "string"
+        },
+        "xr-input": {
+          "type": "string"
+        },
+        "xr-placement": {
+          "type": "string"
+        },
+        "xr-states": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "art-W1",
+        "art-W2",
+        "art-W3",
+        "art-W4",
+        "art-W5",
+        "art-shared",
+        "device-W1",
+        "device-W2",
+        "device-W3",
+        "device-W4",
+        "device-W5",
+        "human-W1",
+        "human-W2",
+        "human-W3",
+        "human-W4",
+        "human-W5",
+        "performance-W1",
+        "performance-W2",
+        "performance-W3",
+        "performance-W4",
+        "performance-W5",
+        "release-competition",
+        "release-full",
+        "video-full",
+        "video-local",
+        "video-public",
+        "web-local",
+        "web-preview",
+        "web-production",
+        "xr-command",
+        "xr-input",
+        "xr-placement",
+        "xr-states"
+      ],
+      "additionalProperties": false
+    },
+    "checks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "assertions": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "description": {
+                  "type": "string"
+                },
+                "id": {
+                  "type": "string"
+                },
+                "required": {
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "description",
+                "id",
+                "required"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "case_contract_id": {
+            "type": "string"
+          },
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "execution_kind": {
+            "type": "string"
+          },
+          "expected_coverage": {
+            "type": "object",
+            "properties": {
+              "attempted_commands_per_seed": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "base_success_configurations": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "caption_variants": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "challenge_success_configurations": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "consenting_participants": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "five_minute_profiles": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "fuzzer_seeds_per_world": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "layout_count": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "mission_count": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "models": {
+                "type": "object",
+                "properties": {
+                  "set": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "set"
+                ],
+                "additionalProperties": false
+              },
+              "physical_full_mission_runs": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "repeats_per_target": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "required_page_outcomes": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "sidecar_formats": {
+                "type": "object",
+                "properties": {
+                  "set": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "set"
+                ],
+                "additionalProperties": false
+              },
+              "target_runtimes": {
+                "type": "object",
+                "properties": {
+                  "set": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": [
+                  "set"
+                ],
+                "additionalProperties": false
+              },
+              "thermal_minutes_per_model": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "thermal_soaks": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "three_star_configurations": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "minimum"
+                ],
+                "additionalProperties": false
+              },
+              "timeline_seconds": {
+                "type": "object",
+                "properties": {
+                  "exact": {
+                    "type": "integer"
+                  }
+                },
+                "required": [
+                  "exact"
+                ],
+                "additionalProperties": false
+              },
+              "widths_css_px": {
+                "type": "object",
+                "properties": {
+                  "set": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  }
+                },
+                "required": [
+                  "set"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [],
+            "additionalProperties": false
+          },
+          "failure_policy": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "identity_fields": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "implemented_by": {
+            "type": "string"
+          },
+          "report_path": {
+            "type": "string"
+          },
+          "required_evidence_kind": {
+            "type": "string"
+          },
+          "runner_status": {
+            "type": "string"
+          },
+          "task_id": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "assertions",
+          "case_contract_id",
+          "command",
+          "execution_kind",
+          "expected_coverage",
+          "failure_policy",
+          "id",
+          "identity_fields",
+          "implemented_by",
+          "report_path",
+          "required_evidence_kind",
+          "runner_status",
+          "task_id"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "commands_status": {
+      "type": "string"
+    },
+    "freeze_id": {
+      "type": "string"
+    },
+    "schema_version": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "aliases",
+    "checks",
+    "commands_status",
+    "freeze_id",
+    "schema_version"
+  ],
+  "additionalProperties": false
+}

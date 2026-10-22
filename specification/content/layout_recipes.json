@@ -1,0 +1,4111 @@
+{
+  "schema_version": 1,
+  "freeze_id": "resq-spec-freeze-1.1.0",
+  "layout_classes": [
+    {
+      "id": "wide",
+      "board_width_mm": 720,
+      "board_depth_mm": 540,
+      "usable_width_mm": 640,
+      "usable_depth_mm": 480
+    },
+    {
+      "id": "compact",
+      "board_width_mm": 600,
+      "board_depth_mm": 450,
+      "usable_width_mm_numerator": 1600,
+      "usable_depth_mm_numerator": 1200,
+      "denominator": 3
+    }
+  ],
+  "recipes": [
+    {
+      "id": "W1-M1-layout-v1",
+      "mission_id": "W1-M1",
+      "world_id": "W1",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          7,
+          12
+        ],
+        "east": [
+          23,
+          12
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          10
+        ],
+        "bridge_b": [
+          19,
+          10
+        ],
+        "upper": [
+          8,
+          19
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "bus",
+          "anchor": "west",
+          "start_node_id": "bus_start",
+          "assembly_node_id": "bus_assembly",
+          "pickup_node_id": "bus_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "bus_ground",
+          "water_route": "bus_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "low_dock",
+          "anchor": "east",
+          "start_node_id": "low_dock_start",
+          "assembly_node_id": "low_dock_assembly",
+          "pickup_node_id": "low_dock_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "low_dock_ground",
+          "water_route": "low_dock_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "boat_lane_inner",
+        "bus",
+        "depot_upper",
+        "east_lane",
+        "intermediate",
+        "low_basin",
+        "low_dock",
+        "lower_road",
+        "receiving_dock",
+        "receiving_station",
+        "reservoir",
+        "safe_receiving",
+        "short_road"
+      ],
+      "socket_counts": {
+        "bridge": 2,
+        "barrier": 3,
+        "skiff": 2,
+        "beacon": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 8,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 10000000
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W1-M1",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": true,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W1-M2-layout-v1",
+      "mission_id": "W1-M2",
+      "world_id": "W1",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          7,
+          12
+        ],
+        "east": [
+          23,
+          12
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          10
+        ],
+        "bridge_b": [
+          19,
+          10
+        ],
+        "upper": [
+          8,
+          19
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "orchard",
+          "anchor": "west",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "river_houses",
+          "anchor": "east",
+          "start_node_id": "river_houses_start",
+          "assembly_node_id": "river_houses_assembly",
+          "pickup_node_id": "river_houses_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "river_houses_ground",
+          "water_route": "river_houses_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "ferry_landing",
+          "anchor": "orchard",
+          "start_node_id": "ferry_landing_start",
+          "assembly_node_id": "ferry_landing_assembly",
+          "pickup_node_id": "ferry_landing_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "ferry_landing_ground",
+          "water_route": "ferry_landing_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "boat_lane_inner",
+        "depot_upper",
+        "east_lane",
+        "intermediate",
+        "lower_road",
+        "medical_station",
+        "orchard_assembly",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "short_road",
+        "upper_basin"
+      ],
+      "socket_counts": {
+        "pump": 2,
+        "generator": 2,
+        "skiff": 2,
+        "barrier": 3,
+        "beacon": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 12,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 10000000
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W1-M2",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W1-M3-layout-v1",
+      "mission_id": "W1-M3",
+      "world_id": "W1",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          7,
+          12
+        ],
+        "east": [
+          23,
+          12
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          10
+        ],
+        "bridge_b": [
+          19,
+          10
+        ],
+        "upper": [
+          8,
+          19
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "west_village",
+          "anchor": "west",
+          "start_node_id": "west_village_start",
+          "assembly_node_id": "west_village_assembly",
+          "pickup_node_id": "west_village_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "west_village_ground",
+          "water_route": "west_village_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "east_workshop",
+          "anchor": "east",
+          "start_node_id": "east_workshop_start",
+          "assembly_node_id": "east_workshop_assembly",
+          "pickup_node_id": "east_workshop_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "east_workshop_ground",
+          "water_route": "east_workshop_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "boat_lane_inner",
+        "central_basin",
+        "depot_upper",
+        "east_lane",
+        "east_workshop",
+        "intermediate",
+        "lower_road",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "short_road",
+        "west_village"
+      ],
+      "socket_counts": {
+        "bridge": 2,
+        "skiff": 3,
+        "barrier": 3,
+        "beacon": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 14,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 10000000
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W1-M3",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W1-M4-layout-v1",
+      "mission_id": "W1-M4",
+      "world_id": "W1",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          7,
+          12
+        ],
+        "east": [
+          23,
+          12
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          10
+        ],
+        "bridge_b": [
+          19,
+          10
+        ],
+        "upper": [
+          8,
+          19
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "clinic",
+          "anchor": "west",
+          "start_node_id": "clinic_start",
+          "assembly_node_id": "clinic_assembly",
+          "pickup_node_id": "clinic_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "clinic_ground",
+          "water_route": "clinic_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "tram",
+          "anchor": "east",
+          "start_node_id": "tram_start",
+          "assembly_node_id": "tram_assembly",
+          "pickup_node_id": "tram_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "tram_ground",
+          "water_route": "tram_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "riverside",
+          "anchor": "orchard",
+          "start_node_id": "riverside_start",
+          "assembly_node_id": "riverside_assembly",
+          "pickup_node_id": "riverside_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "riverside_ground",
+          "water_route": "riverside_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "boat_lane_inner",
+        "clinic_basin",
+        "clinic_power",
+        "depot_upper",
+        "east_lane",
+        "intermediate",
+        "lower_road",
+        "power_basin",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "second_basin",
+        "short_road",
+        "tram"
+      ],
+      "socket_counts": {
+        "pump": 3,
+        "generator": 3,
+        "barrier": 2,
+        "skiff": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 16,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 10000000
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W1-M4",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W1-M5-layout-v1",
+      "mission_id": "W1-M5",
+      "world_id": "W1",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          7,
+          12
+        ],
+        "east": [
+          23,
+          12
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          10
+        ],
+        "bridge_b": [
+          19,
+          10
+        ],
+        "upper": [
+          8,
+          19
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "upper_village",
+          "anchor": "west",
+          "start_node_id": "upper_village_start",
+          "assembly_node_id": "upper_village_assembly",
+          "pickup_node_id": "upper_village_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "upper_village_ground",
+          "water_route": "upper_village_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "orchard",
+          "anchor": "east",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "workshop",
+          "anchor": "orchard",
+          "start_node_id": "workshop_start",
+          "assembly_node_id": "workshop_assembly",
+          "pickup_node_id": "workshop_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "workshop_ground",
+          "water_route": "workshop_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "island",
+          "anchor": "upper",
+          "start_node_id": "island_start",
+          "assembly_node_id": "island_assembly",
+          "pickup_node_id": "island_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "island_ground",
+          "water_route": "island_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "boat_lane_inner",
+        "depot_upper",
+        "downstream_basin",
+        "east_lane",
+        "intermediate",
+        "lower_road",
+        "receiving_dock",
+        "receiving_station",
+        "reservoir",
+        "safe_receiving",
+        "short_road"
+      ],
+      "socket_counts": {
+        "bridge": 2,
+        "pump": 2,
+        "generator": 2,
+        "skiff": 2,
+        "barrier": 4,
+        "beacon": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 20,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 10000000
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W1-M5",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W2-M1-layout-v1",
+      "mission_id": "W2-M1",
+      "world_id": "W2",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          5,
+          20
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          6,
+          13
+        ],
+        "east": [
+          25,
+          13
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          24,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "campsite",
+          "anchor": "west",
+          "start_node_id": "campsite_start",
+          "assembly_node_id": "campsite_assembly",
+          "pickup_node_id": "campsite_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "campsite_ground",
+          "water_route": "campsite_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "lookout",
+          "anchor": "east",
+          "start_node_id": "lookout_start",
+          "assembly_node_id": "lookout_assembly",
+          "pickup_node_id": "lookout_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "lookout_ground",
+          "water_route": "lookout_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "central_route",
+        "dry_cluster",
+        "firebreak_approach",
+        "forest",
+        "intermediate",
+        "long_forest_route",
+        "lookout_path",
+        "orchard_assembly_route",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "short_forest_route",
+        "tank"
+      ],
+      "socket_counts": {
+        "firebreak": 3,
+        "sprinkler": 2,
+        "generator": 2,
+        "beacon": 4
+      },
+      "receiving": {
+        "total_permanent_capacity": 10,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W2-M1",
+      "fixed_sources": [],
+      "resource_stores": {
+        "tank": 600000000,
+        "pond": 1200000000
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W2-M2-layout-v1",
+      "mission_id": "W2-M2",
+      "world_id": "W2",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          5,
+          20
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          6,
+          13
+        ],
+        "east": [
+          25,
+          13
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          24,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "north_camp",
+          "anchor": "west",
+          "start_node_id": "north_camp_start",
+          "assembly_node_id": "north_camp_assembly",
+          "pickup_node_id": "north_camp_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "north_camp_ground",
+          "water_route": "north_camp_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "east_camp",
+          "anchor": "east",
+          "start_node_id": "east_camp_start",
+          "assembly_node_id": "east_camp_assembly",
+          "pickup_node_id": "east_camp_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "east_camp_ground",
+          "water_route": "east_camp_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "west_camp",
+          "anchor": "orchard",
+          "start_node_id": "west_camp_start",
+          "assembly_node_id": "west_camp_assembly",
+          "pickup_node_id": "west_camp_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "west_camp_ground",
+          "water_route": "west_camp_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "central_route",
+        "forest",
+        "intermediate",
+        "long_forest_route",
+        "lookout_path",
+        "orchard_assembly_route",
+        "receiving_dock",
+        "receiving_station",
+        "refill_station",
+        "refill_station_region",
+        "safe_receiving",
+        "short_forest_route",
+        "short_road_fuel"
+      ],
+      "socket_counts": {
+        "crawler": 3,
+        "firebreak": 3,
+        "sprinkler": 2,
+        "generator": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 18,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W2-M2",
+      "fixed_sources": [],
+      "resource_stores": {
+        "tank": 600000000,
+        "pond": 1200000000
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W2-M3-layout-v1",
+      "mission_id": "W2-M3",
+      "world_id": "W2",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          5,
+          20
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          6,
+          13
+        ],
+        "east": [
+          25,
+          13
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          24,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "orchard",
+          "anchor": "west",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "pond_houses",
+          "anchor": "east",
+          "start_node_id": "pond_houses_start",
+          "assembly_node_id": "pond_houses_assembly",
+          "pickup_node_id": "pond_houses_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "pond_houses_ground",
+          "water_route": "pond_houses_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "central_route",
+        "intermediate",
+        "long_forest_route",
+        "lookout_path",
+        "orchard_assembly_route",
+        "orchard_edge",
+        "pond",
+        "receiving_dock",
+        "receiving_station",
+        "return_road_fuel",
+        "safe_receiving",
+        "short_forest_route",
+        "tank"
+      ],
+      "socket_counts": {
+        "sprinkler": 3,
+        "generator": 2,
+        "pump": 2,
+        "crawler": 2,
+        "firebreak": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 16,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W2-M3",
+      "fixed_sources": [],
+      "resource_stores": {
+        "tank": 600000000,
+        "pond": 1200000000
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W2-M4-layout-v1",
+      "mission_id": "W2-M4",
+      "world_id": "W2",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          5,
+          20
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          6,
+          13
+        ],
+        "east": [
+          25,
+          13
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          24,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "lookout",
+          "anchor": "west",
+          "start_node_id": "lookout_start",
+          "assembly_node_id": "lookout_assembly",
+          "pickup_node_id": "lookout_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "lookout_ground",
+          "water_route": "lookout_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "east_camp",
+          "anchor": "east",
+          "start_node_id": "east_camp_start",
+          "assembly_node_id": "east_camp_assembly",
+          "pickup_node_id": "east_camp_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "east_camp_ground",
+          "water_route": "east_camp_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "west_camp",
+          "anchor": "orchard",
+          "start_node_id": "west_camp_start",
+          "assembly_node_id": "west_camp_assembly",
+          "pickup_node_id": "west_camp_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "west_camp_ground",
+          "water_route": "west_camp_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "central_route",
+        "firebreak",
+        "forest",
+        "intermediate",
+        "long_forest_route",
+        "lookout",
+        "lookout_path",
+        "orchard_assembly_route",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "short_forest_route"
+      ],
+      "socket_counts": {
+        "crawler": 3,
+        "firebreak": 4,
+        "sprinkler": 2,
+        "beacon": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 20,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W2-M4",
+      "fixed_sources": [
+        "dry_source_2_capacity"
+      ],
+      "resource_stores": {
+        "tank": 600000000,
+        "pond": 1200000000
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W2-M5-layout-v1",
+      "mission_id": "W2-M5",
+      "world_id": "W2",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          5,
+          20
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          6,
+          13
+        ],
+        "east": [
+          25,
+          13
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          24,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "campsite",
+          "anchor": "west",
+          "start_node_id": "campsite_start",
+          "assembly_node_id": "campsite_assembly",
+          "pickup_node_id": "campsite_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "campsite_ground",
+          "water_route": "campsite_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "orchard",
+          "anchor": "east",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "sawmill",
+          "anchor": "orchard",
+          "start_node_id": "sawmill_start",
+          "assembly_node_id": "sawmill_assembly",
+          "pickup_node_id": "sawmill_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "sawmill_ground",
+          "water_route": "sawmill_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "central_route",
+        "corridor_flank",
+        "forest",
+        "intermediate",
+        "long_forest_route",
+        "lookout_path",
+        "orchard_assembly_route",
+        "orchard_pump_house",
+        "outer_forest",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "sawmill_access",
+        "short_forest_route"
+      ],
+      "socket_counts": {
+        "crawler": 3,
+        "sprinkler": 3,
+        "generator": 2,
+        "firebreak": 4
+      },
+      "receiving": {
+        "total_permanent_capacity": 24,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W2-M5",
+      "fixed_sources": [],
+      "resource_stores": {
+        "tank": 600000000,
+        "pond": 1200000000
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W3-M1-layout-v1",
+      "mission_id": "W3-M1",
+      "world_id": "W3",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          12,
+          22
+        ],
+        "fork": [
+          15,
+          16
+        ],
+        "west": [
+          6,
+          18
+        ],
+        "east": [
+          25,
+          18
+        ],
+        "orchard": [
+          7,
+          9
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          26,
+          5
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          13
+        ],
+        "bridge_b": [
+          20,
+          13
+        ],
+        "upper": [
+          15,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "upper_station",
+          "anchor": "west",
+          "start_node_id": "upper_station_start",
+          "assembly_node_id": "upper_station_assembly",
+          "pickup_node_id": "upper_station_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "upper_station_ground",
+          "water_route": "upper_station_water",
+          "vertical_route": "upper_station_cable"
+        },
+        {
+          "group_id": "lower_station",
+          "anchor": "east",
+          "start_node_id": "lower_station_start",
+          "assembly_node_id": "lower_station_assembly",
+          "pickup_node_id": "lower_station_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "lower_station_ground",
+          "water_route": "lower_station_water",
+          "vertical_route": "lower_station_cable"
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "cable_support",
+        "debris_bypass",
+        "intermediate",
+        "lower_window",
+        "powered_cable",
+        "receiving_dock",
+        "receiving_station",
+        "rock_shelf_bypass",
+        "safe_receiving",
+        "upper_path",
+        "weak_support"
+      ],
+      "socket_counts": {
+        "brace": 4,
+        "winch": 2,
+        "generator": 2,
+        "beacon": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 10,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W3-M1",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W3-M2-layout-v1",
+      "mission_id": "W3-M2",
+      "world_id": "W3",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          12,
+          22
+        ],
+        "fork": [
+          15,
+          16
+        ],
+        "west": [
+          6,
+          18
+        ],
+        "east": [
+          25,
+          18
+        ],
+        "orchard": [
+          7,
+          9
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          26,
+          5
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          13
+        ],
+        "bridge_b": [
+          20,
+          13
+        ],
+        "upper": [
+          15,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "observatory",
+          "anchor": "west",
+          "start_node_id": "observatory_start",
+          "assembly_node_id": "observatory_assembly",
+          "pickup_node_id": "observatory_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "observatory_ground",
+          "water_route": "observatory_water",
+          "vertical_route": "observatory_cable"
+        },
+        {
+          "group_id": "station",
+          "anchor": "east",
+          "start_node_id": "station_start",
+          "assembly_node_id": "station_assembly",
+          "pickup_node_id": "station_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "station_ground",
+          "water_route": "station_water",
+          "vertical_route": "station_cable"
+        },
+        {
+          "group_id": "village",
+          "anchor": "orchard",
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "pickup_node_id": "village_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "village_ground",
+          "water_route": "village_water",
+          "vertical_route": "village_cable"
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "debris_bypass",
+        "intermediate",
+        "lower_window",
+        "observatory",
+        "powered_cable",
+        "receiving_dock",
+        "receiving_station",
+        "rock_shelf_bypass",
+        "safe_receiving",
+        "station",
+        "upper_path",
+        "upper_platform"
+      ],
+      "socket_counts": {
+        "winch": 3,
+        "generator": 3,
+        "brace": 3,
+        "beacon": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 14,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W3-M2",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W3-M3-layout-v1",
+      "mission_id": "W3-M3",
+      "world_id": "W3",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          12,
+          22
+        ],
+        "fork": [
+          15,
+          16
+        ],
+        "west": [
+          6,
+          18
+        ],
+        "east": [
+          25,
+          18
+        ],
+        "orchard": [
+          7,
+          9
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          26,
+          5
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          13
+        ],
+        "bridge_b": [
+          20,
+          13
+        ],
+        "upper": [
+          15,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "weather_crew",
+          "anchor": "west",
+          "start_node_id": "weather_crew_start",
+          "assembly_node_id": "weather_crew_assembly",
+          "pickup_node_id": "weather_crew_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "weather_crew_ground",
+          "water_route": "weather_crew_water",
+          "vertical_route": "weather_crew_cable"
+        },
+        {
+          "group_id": "rock_shelf",
+          "anchor": "east",
+          "start_node_id": "rock_shelf_start",
+          "assembly_node_id": "rock_shelf_assembly",
+          "pickup_node_id": "rock_shelf_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "rock_shelf_ground",
+          "water_route": "rock_shelf_water",
+          "vertical_route": "rock_shelf_cable"
+        },
+        {
+          "group_id": "village",
+          "anchor": "orchard",
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "pickup_node_id": "village_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "village_ground",
+          "water_route": "village_water",
+          "vertical_route": "village_cable"
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "debris_bypass",
+        "intermediate",
+        "lower_window",
+        "powered_cable",
+        "quiet_slope",
+        "receiving_dock",
+        "receiving_station",
+        "rock_shelf_bypass",
+        "safe_receiving",
+        "upper_path",
+        "weather_crew"
+      ],
+      "socket_counts": {
+        "brace": 4,
+        "crawler": 2,
+        "winch": 2,
+        "generator": 2,
+        "beacon": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 16,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W3-M3",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W3-M4-layout-v1",
+      "mission_id": "W3-M4",
+      "world_id": "W3",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          12,
+          22
+        ],
+        "fork": [
+          15,
+          16
+        ],
+        "west": [
+          6,
+          18
+        ],
+        "east": [
+          25,
+          18
+        ],
+        "orchard": [
+          7,
+          9
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          26,
+          5
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          13
+        ],
+        "bridge_b": [
+          20,
+          13
+        ],
+        "upper": [
+          15,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "upper_terrace",
+          "anchor": "west",
+          "start_node_id": "upper_terrace_start",
+          "assembly_node_id": "upper_terrace_assembly",
+          "pickup_node_id": "upper_terrace_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "upper_terrace_ground",
+          "water_route": "upper_terrace_water",
+          "vertical_route": "upper_terrace_cable"
+        },
+        {
+          "group_id": "cable_station",
+          "anchor": "east",
+          "start_node_id": "cable_station_start",
+          "assembly_node_id": "cable_station_assembly",
+          "pickup_node_id": "cable_station_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "cable_station_ground",
+          "water_route": "cable_station_water",
+          "vertical_route": "cable_station_cable"
+        },
+        {
+          "group_id": "lower_village",
+          "anchor": "orchard",
+          "start_node_id": "lower_village_start",
+          "assembly_node_id": "lower_village_assembly",
+          "pickup_node_id": "lower_village_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "lower_village_ground",
+          "water_route": "lower_village_water",
+          "vertical_route": "lower_village_cable"
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "busy_cable",
+        "debris_bypass",
+        "intermediate",
+        "lower_basin",
+        "lower_platform_a",
+        "lower_platform_b",
+        "lower_window",
+        "melt_basin",
+        "powered_cable",
+        "receiving_dock",
+        "receiving_station",
+        "rock_shelf_bypass",
+        "safe_receiving",
+        "upper_path"
+      ],
+      "socket_counts": {
+        "winch": 3,
+        "generator": 3,
+        "brace": 3,
+        "pump": 2,
+        "beacon": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 18,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W3-M4",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W3-M5-layout-v1",
+      "mission_id": "W3-M5",
+      "world_id": "W3",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          12,
+          22
+        ],
+        "fork": [
+          15,
+          16
+        ],
+        "west": [
+          6,
+          18
+        ],
+        "east": [
+          25,
+          18
+        ],
+        "orchard": [
+          7,
+          9
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          26,
+          5
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          13
+        ],
+        "bridge_b": [
+          20,
+          13
+        ],
+        "upper": [
+          15,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "observatory",
+          "anchor": "west",
+          "start_node_id": "observatory_start",
+          "assembly_node_id": "observatory_assembly",
+          "pickup_node_id": "observatory_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "observatory_ground",
+          "water_route": "observatory_water",
+          "vertical_route": "observatory_cable"
+        },
+        {
+          "group_id": "station",
+          "anchor": "east",
+          "start_node_id": "station_start",
+          "assembly_node_id": "station_assembly",
+          "pickup_node_id": "station_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "station_ground",
+          "water_route": "station_water",
+          "vertical_route": "station_cable"
+        },
+        {
+          "group_id": "village",
+          "anchor": "orchard",
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "pickup_node_id": "village_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "village_ground",
+          "water_route": "village_water",
+          "vertical_route": "village_cable"
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "debris_bypass",
+        "intermediate",
+        "lower_window",
+        "observatory",
+        "powered_cable",
+        "receiving_dock",
+        "receiving_station",
+        "rock_shelf_bypass",
+        "safe_receiving",
+        "station",
+        "upper_path",
+        "upper_support",
+        "valley_slope"
+      ],
+      "socket_counts": {
+        "winch": 3,
+        "generator": 3,
+        "brace": 4,
+        "crawler": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 22,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W3-M5",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W4-M1-layout-v1",
+      "mission_id": "W4-M1",
+      "world_id": "W4",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          16,
+          23
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          5,
+          15
+        ],
+        "east": [
+          26,
+          15
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          15,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "low_market",
+          "anchor": "west",
+          "start_node_id": "low_market_start",
+          "assembly_node_id": "low_market_assembly",
+          "pickup_node_id": "low_market_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "low_market_ground",
+          "water_route": "low_market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "outer_island",
+          "anchor": "east",
+          "start_node_id": "outer_island_start",
+          "assembly_node_id": "outer_island_assembly",
+          "pickup_node_id": "outer_island_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "outer_island_ground",
+          "water_route": "outer_island_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "high_causeway",
+        "intermediate",
+        "low_market",
+        "medical_landing_access",
+        "outer_loop",
+        "pontoon_channel",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "tidal_lane",
+        "tide"
+      ],
+      "socket_counts": {
+        "skiff": 3,
+        "bridge": 2,
+        "beacon": 3,
+        "relay": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 12,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W4-M1",
+      "fixed_sources": [
+        "dry_source_2_capacity"
+      ],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W4-M2-layout-v1",
+      "mission_id": "W4-M2",
+      "world_id": "W4",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          16,
+          23
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          5,
+          15
+        ],
+        "east": [
+          26,
+          15
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          15,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "west_island",
+          "anchor": "west",
+          "start_node_id": "west_island_start",
+          "assembly_node_id": "west_island_assembly",
+          "pickup_node_id": "west_island_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "west_island_ground",
+          "water_route": "west_island_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "market",
+          "anchor": "east",
+          "start_node_id": "market_start",
+          "assembly_node_id": "market_assembly",
+          "pickup_node_id": "market_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "market_ground",
+          "water_route": "market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "lighthouse",
+          "anchor": "orchard",
+          "start_node_id": "lighthouse_start",
+          "assembly_node_id": "lighthouse_assembly",
+          "pickup_node_id": "lighthouse_pickup",
+          "start_capacity": 4,
+          "assembly_capacity": 4,
+          "pickup_capacity": 6,
+          "ground_route": "lighthouse_ground",
+          "water_route": "lighthouse_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "high_causeway",
+        "intermediate",
+        "lighthouse",
+        "medical_landing_access",
+        "outer_loop",
+        "pontoon_channel",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "tidal_lane",
+        "tide"
+      ],
+      "socket_counts": {
+        "relay": 4,
+        "generator": 2,
+        "skiff": 3,
+        "beacon": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 16,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W4-M2",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W4-M3-layout-v1",
+      "mission_id": "W4-M3",
+      "world_id": "W4",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          16,
+          23
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          5,
+          15
+        ],
+        "east": [
+          26,
+          15
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          15,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "north_market",
+          "anchor": "west",
+          "start_node_id": "north_market_start",
+          "assembly_node_id": "north_market_assembly",
+          "pickup_node_id": "north_market_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "north_market_ground",
+          "water_route": "north_market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "east_market",
+          "anchor": "east",
+          "start_node_id": "east_market_start",
+          "assembly_node_id": "east_market_assembly",
+          "pickup_node_id": "east_market_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "east_market_ground",
+          "water_route": "east_market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "south_market",
+          "anchor": "orchard",
+          "start_node_id": "south_market_start",
+          "assembly_node_id": "south_market_assembly",
+          "pickup_node_id": "south_market_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "south_market_ground",
+          "water_route": "south_market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "west_market",
+          "anchor": "upper",
+          "start_node_id": "west_market_start",
+          "assembly_node_id": "west_market_assembly",
+          "pickup_node_id": "west_market_pickup",
+          "start_capacity": 5,
+          "assembly_capacity": 5,
+          "pickup_capacity": 6,
+          "ground_route": "west_market_ground",
+          "water_route": "west_market_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "high_causeway",
+        "intermediate",
+        "medical_landing_access",
+        "outer_loop",
+        "pontoon_channel",
+        "receiving_dock",
+        "receiving_harbor",
+        "receiving_station",
+        "safe_receiving",
+        "tidal_lane"
+      ],
+      "socket_counts": {
+        "skiff": 4,
+        "barrier": 3,
+        "beacon": 3,
+        "bridge": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 20,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W4-M3",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W4-M4-layout-v1",
+      "mission_id": "W4-M4",
+      "world_id": "W4",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          16,
+          23
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          5,
+          15
+        ],
+        "east": [
+          26,
+          15
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          15,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "medical_landing",
+          "anchor": "west",
+          "start_node_id": "medical_landing_start",
+          "assembly_node_id": "medical_landing_assembly",
+          "pickup_node_id": "medical_landing_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "medical_landing_ground",
+          "water_route": "medical_landing_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "market",
+          "anchor": "east",
+          "start_node_id": "market_start",
+          "assembly_node_id": "market_assembly",
+          "pickup_node_id": "market_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "market_ground",
+          "water_route": "market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "inland",
+          "anchor": "orchard",
+          "start_node_id": "inland_start",
+          "assembly_node_id": "inland_assembly",
+          "pickup_node_id": "inland_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "inland_ground",
+          "water_route": "inland_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "high_causeway",
+        "inland_basin",
+        "intermediate",
+        "market_basin",
+        "medical_landing_access",
+        "outer_loop",
+        "pontoon_channel",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "tidal_lane",
+        "tide"
+      ],
+      "socket_counts": {
+        "skiff": 3,
+        "pump": 3,
+        "generator": 2,
+        "relay": 3,
+        "barrier": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 22,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W4-M4",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W4-M5-layout-v1",
+      "mission_id": "W4-M5",
+      "world_id": "W4",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          16,
+          23
+        ],
+        "fork": [
+          15,
+          14
+        ],
+        "west": [
+          5,
+          15
+        ],
+        "east": [
+          26,
+          15
+        ],
+        "orchard": [
+          8,
+          7
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          11,
+          11
+        ],
+        "bridge_b": [
+          20,
+          11
+        ],
+        "upper": [
+          15,
+          20
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "low_market",
+          "anchor": "west",
+          "start_node_id": "low_market_start",
+          "assembly_node_id": "low_market_assembly",
+          "pickup_node_id": "low_market_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "low_market_ground",
+          "water_route": "low_market_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "middle_island",
+          "anchor": "east",
+          "start_node_id": "middle_island_start",
+          "assembly_node_id": "middle_island_assembly",
+          "pickup_node_id": "middle_island_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "middle_island_ground",
+          "water_route": "middle_island_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "lighthouse",
+          "anchor": "orchard",
+          "start_node_id": "lighthouse_start",
+          "assembly_node_id": "lighthouse_assembly",
+          "pickup_node_id": "lighthouse_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "lighthouse_ground",
+          "water_route": "lighthouse_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "outer_island",
+          "anchor": "upper",
+          "start_node_id": "outer_island_start",
+          "assembly_node_id": "outer_island_assembly",
+          "pickup_node_id": "outer_island_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "outer_island_ground",
+          "water_route": "outer_island_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "harbor_power",
+        "high_causeway",
+        "intermediate",
+        "lighthouse",
+        "medical_landing_access",
+        "outer_loop",
+        "pontoon_channel",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "tidal_lane",
+        "tide"
+      ],
+      "socket_counts": {
+        "skiff": 4,
+        "relay": 3,
+        "generator": 2,
+        "bridge": 2,
+        "barrier": 3
+      },
+      "receiving": {
+        "total_permanent_capacity": 26,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W4-M5",
+      "fixed_sources": [],
+      "resource_stores": {},
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 2,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W5-M1-layout-v1",
+      "mission_id": "W5-M1",
+      "world_id": "W5",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          5,
+          14
+        ],
+        "east": [
+          26,
+          14
+        ],
+        "orchard": [
+          7,
+          8
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          21,
+          11
+        ],
+        "upper": [
+          23,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "orchard",
+          "anchor": "west",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "research",
+          "anchor": "east",
+          "start_node_id": "research_start",
+          "assembly_node_id": "research_assembly",
+          "pickup_node_id": "research_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "research_ground",
+          "water_route": "research_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "crossing_a",
+        "final_ferry",
+        "first_channel",
+        "first_transport",
+        "high_landing_path",
+        "intermediate",
+        "outer_route",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "sea_route",
+        "short_land_route"
+      ],
+      "socket_counts": {
+        "cooler": 3,
+        "bridge": 2,
+        "beacon": 4,
+        "shelter": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 12,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W5-M1",
+      "fixed_sources": [],
+      "resource_stores": {
+        "coolant": 2
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W5-M2-layout-v1",
+      "mission_id": "W5-M2",
+      "world_id": "W5",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          5,
+          14
+        ],
+        "east": [
+          26,
+          14
+        ],
+        "orchard": [
+          7,
+          8
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          21,
+          11
+        ],
+        "upper": [
+          23,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "orchard",
+          "anchor": "west",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 9,
+          "assembly_capacity": 9,
+          "pickup_capacity": 9,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "village",
+          "anchor": "east",
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "pickup_node_id": "village_pickup",
+          "start_capacity": 9,
+          "assembly_capacity": 9,
+          "pickup_capacity": 9,
+          "ground_route": "village_ground",
+          "water_route": "village_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "assembly_channel",
+        "final_ferry",
+        "first_transport",
+        "high_landing_path",
+        "intermediate",
+        "outer_route",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "sea_route",
+        "shelter_a",
+        "short_land_route"
+      ],
+      "socket_counts": {
+        "shelter": 3,
+        "cooler": 3,
+        "crawler": 2,
+        "beacon": 5
+      },
+      "receiving": {
+        "total_permanent_capacity": 18,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W5-M2",
+      "fixed_sources": [],
+      "resource_stores": {
+        "coolant": 2
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W5-M3-layout-v1",
+      "mission_id": "W5-M3",
+      "world_id": "W5",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          5,
+          14
+        ],
+        "east": [
+          26,
+          14
+        ],
+        "orchard": [
+          7,
+          8
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          21,
+          11
+        ],
+        "upper": [
+          23,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "cooling_works",
+          "anchor": "west",
+          "start_node_id": "cooling_works_start",
+          "assembly_node_id": "cooling_works_assembly",
+          "pickup_node_id": "cooling_works_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "cooling_works_ground",
+          "water_route": "cooling_works_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "research",
+          "anchor": "east",
+          "start_node_id": "research_start",
+          "assembly_node_id": "research_assembly",
+          "pickup_node_id": "research_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "research_ground",
+          "water_route": "research_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "village",
+          "anchor": "orchard",
+          "start_node_id": "village_start",
+          "assembly_node_id": "village_assembly",
+          "pickup_node_id": "village_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "village_ground",
+          "water_route": "village_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "coolant",
+        "coolant_delivery",
+        "cooling_works",
+        "drainage_basin",
+        "final_ferry",
+        "first_transport",
+        "high_landing_path",
+        "intermediate",
+        "outer_route",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "sea_route",
+        "second_channel",
+        "short_land_route"
+      ],
+      "socket_counts": {
+        "cooler": 4,
+        "pump": 3,
+        "generator": 2,
+        "relay": 2,
+        "shelter": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 20,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W5-M3",
+      "fixed_sources": [],
+      "resource_stores": {
+        "coolant": 3
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W5-M4-layout-v1",
+      "mission_id": "W5-M4",
+      "world_id": "W5",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          5,
+          14
+        ],
+        "east": [
+          26,
+          14
+        ],
+        "orchard": [
+          7,
+          8
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          21,
+          11
+        ],
+        "upper": [
+          23,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "research_crew",
+          "anchor": "west",
+          "start_node_id": "research_crew_start",
+          "assembly_node_id": "research_crew_assembly",
+          "pickup_node_id": "research_crew_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "research_crew_ground",
+          "water_route": "research_crew_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "coast",
+          "anchor": "east",
+          "start_node_id": "coast_start",
+          "assembly_node_id": "coast_assembly",
+          "pickup_node_id": "coast_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "coast_ground",
+          "water_route": "coast_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "inland",
+          "anchor": "orchard",
+          "start_node_id": "inland_start",
+          "assembly_node_id": "inland_assembly",
+          "pickup_node_id": "inland_pickup",
+          "start_capacity": 8,
+          "assembly_capacity": 8,
+          "pickup_capacity": 8,
+          "ground_route": "inland_ground",
+          "water_route": "inland_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "crossing_b",
+        "final_ferry",
+        "first_transport",
+        "high_landing_path",
+        "intermediate",
+        "land_channel",
+        "outer_route",
+        "receiving_dock",
+        "receiving_station",
+        "research_crew",
+        "safe_receiving",
+        "sea_route",
+        "short_land_route"
+      ],
+      "socket_counts": {
+        "skiff": 3,
+        "crawler": 2,
+        "cooler": 3,
+        "shelter": 2,
+        "bridge": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 24,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W5-M4",
+      "fixed_sources": [],
+      "resource_stores": {
+        "coolant": 2
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    },
+    {
+      "id": "W5-M5-layout-v1",
+      "mission_id": "W5-M5",
+      "world_id": "W5",
+      "logical_grid": {
+        "width": 32,
+        "height": 24,
+        "cell_pitch_mm": 1000,
+        "cell_area_mm2": 1000000
+      },
+      "anchors": {
+        "source": [
+          15,
+          22
+        ],
+        "fork": [
+          15,
+          15
+        ],
+        "west": [
+          5,
+          14
+        ],
+        "east": [
+          26,
+          14
+        ],
+        "orchard": [
+          7,
+          8
+        ],
+        "depot": [
+          15,
+          3
+        ],
+        "high_landing": [
+          25,
+          4
+        ],
+        "outlet": [
+          16,
+          0
+        ],
+        "bridge_a": [
+          10,
+          11
+        ],
+        "bridge_b": [
+          21,
+          11
+        ],
+        "upper": [
+          23,
+          21
+        ]
+      },
+      "group_bindings": [
+        {
+          "group_id": "orchard",
+          "anchor": "west",
+          "start_node_id": "orchard_start",
+          "assembly_node_id": "orchard_assembly",
+          "pickup_node_id": "orchard_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "orchard_ground",
+          "water_route": "orchard_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "station",
+          "anchor": "east",
+          "start_node_id": "station_start",
+          "assembly_node_id": "station_assembly",
+          "pickup_node_id": "station_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "station_ground",
+          "water_route": "station_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "research",
+          "anchor": "orchard",
+          "start_node_id": "research_start",
+          "assembly_node_id": "research_assembly",
+          "pickup_node_id": "research_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "research_ground",
+          "water_route": "research_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "waterfront",
+          "anchor": "upper",
+          "start_node_id": "waterfront_start",
+          "assembly_node_id": "waterfront_assembly",
+          "pickup_node_id": "waterfront_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "waterfront_ground",
+          "water_route": "waterfront_water",
+          "vertical_route": null
+        },
+        {
+          "group_id": "high_village",
+          "anchor": "fork",
+          "start_node_id": "high_village_start",
+          "assembly_node_id": "high_village_assembly",
+          "pickup_node_id": "high_village_pickup",
+          "start_capacity": 6,
+          "assembly_capacity": 6,
+          "pickup_capacity": 6,
+          "ground_route": "high_village_ground",
+          "water_route": "high_village_water",
+          "vertical_route": null
+        }
+      ],
+      "required_roles": [
+        "alternate_pickup",
+        "drainage_basin",
+        "final_ferry",
+        "first_transport",
+        "high_landing_path",
+        "intermediate",
+        "orchard_channel",
+        "outer_route",
+        "power_basin",
+        "receiving_dock",
+        "receiving_station",
+        "safe_receiving",
+        "sea_route",
+        "short_land_route",
+        "staging_channel"
+      ],
+      "socket_counts": {
+        "skiff": 3,
+        "crawler": 2,
+        "cooler": 3,
+        "shelter": 2,
+        "generator": 2,
+        "pump": 2,
+        "barrier": 2
+      },
+      "receiving": {
+        "total_permanent_capacity": 30,
+        "berths_per_dock": 1,
+        "wide_primary": "depot",
+        "wide_secondary": "high_landing",
+        "compact_primary": "high_landing",
+        "compact_secondary": "depot"
+      },
+      "nav_defaults": {
+        "ground_edge_slots": 2,
+        "water_edge_slots": 2,
+        "dock_berths": 1,
+        "start_to_assembly_ticks": 20,
+        "assembly_to_pickup_ticks": 20,
+        "short_ground_ticks": 300,
+        "long_ground_ticks": 600,
+        "water_leg_ticks": 200,
+        "vertical_leg_ticks": 50,
+        "step_free_required": true
+      },
+      "terrain_profile": {
+        "channel_elevation_mm": 0,
+        "low_assembly_elevation_mm": 100,
+        "road_elevation_mm": 300,
+        "high_ground_elevation_mm": 1200,
+        "default_cell_volume_mm3": 0,
+        "default_conductance_mm2_per_s": 100000,
+        "outlet_capacity_mm3_per_s": 80000000,
+        "initial_source_mm3_per_s": 0
+      },
+      "mission_distinction_source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md#W5-M5",
+      "fixed_sources": [],
+      "resource_stores": {
+        "coolant": 2
+      },
+      "topology_contract": {
+        "alternative_rescue_corridors": 2,
+        "alternative_hazard_destinations": 0,
+        "no_input_auto_dispatch": false,
+        "blocked_short_route_has_safe_bypass": true,
+        "fixed_bus": false,
+        "room_dependent_dock_configuration": true,
+        "safe_receiving_reachable_for_each_spawn": true,
+        "runtime_generated_puzzles": false
+      },
+      "authoring_status": "recipe_requires_authored_runtime_geometry_and_solvability_proof"
+    }
+  ]
+}

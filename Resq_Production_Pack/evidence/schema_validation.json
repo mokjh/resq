@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "checks": [
+    {
+      "schema": "mission_briefs.schema.json",
+      "data": "missions.json",
+      "status": "passed"
+    },
+    {
+      "schema": "asset_manifest.schema.json",
+      "data": "asset_manifest.template.json",
+      "status": "passed"
+    },
+    {
+      "schema": "task_result.schema.json",
+      "data": null,
+      "status": "schema_valid_no_executed_task_result_to_validate"
+    }
+  ],
+  "limitation": "Schema and brief validation only, not runtime/game/device validation."
+}

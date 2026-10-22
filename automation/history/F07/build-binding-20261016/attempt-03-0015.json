@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "pending",
+  "run_id": "build-binding-20261016",
+  "attempt_id": "attempt-03",
+  "sequence": 15,
+  "previous_event_sha256": "40b36c7311ef2961dd779ea76da20ce79328d3a61035698b58f1b6a792c67e50",
+  "result_path": "evidence/results/F07/physical-last-20261016/attempt-01.json",
+  "result_sha256": "fabe9c53cc73f076b51216d93e1b33ae99416dd241be966183332445b6e48383",
+  "reason": "Accepted prerequisite head changed: F02; historical result retained, fresh checks required.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T00:44:58.132344+00:00"
+}

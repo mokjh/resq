@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F06",
+  "event": "blocked",
+  "run_id": "staged-local-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 2,
+  "previous_event_sha256": "f456e25d0d8e3bcd35ac502e6d10d97ce83be91216085c22b910e8c2f1b02fe2",
+  "result_path": "evidence/results/F06/staged-local-20261016/attempt-01.json",
+  "result_sha256": "fd25599874c725202c6dd14691bd4bda318bed5ea4883b4c0adff8941f546606",
+  "reason": "BACKEND_BLOCKED: backend exited75 without native success cases; see retained backend stdout/stderr",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T19:27:50.324012+00:00"
+}

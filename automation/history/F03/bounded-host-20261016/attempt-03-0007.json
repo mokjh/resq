@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F03",
+  "event": "failed",
+  "run_id": "bounded-host-20261016",
+  "attempt_id": "attempt-03",
+  "sequence": 7,
+  "previous_event_sha256": "0395bcffa662f63e2b278fbac68dfbbb9cb2e244030601c89cd95198aa80a416",
+  "result_path": "evidence/results/F03/bounded-host-20261016/attempt-03.json",
+  "result_sha256": "724ee6b3e79fef5391796f4656a6de79b4aed81f8c57be97f5c0d7f98edc1ed5",
+  "reason": "native counter contradiction: testcasecount",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-16T17:34:15.520488+00:00"
+}

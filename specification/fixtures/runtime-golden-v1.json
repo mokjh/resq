@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "freeze_id": "resq-spec-freeze-1.1.0",
+  "rules_version": "resq-rules-1",
+  "status": "expected_values_only_no_runtime_execution",
+  "notes": [
+    "These are hand-authored arithmetic and semantic golden cases for the future independent C# simulator tests.",
+    "Parsing this file or recalculating arithmetic in Python does not prove Unity, Android, mission solvability, performance or comfort.",
+    "All time fields use the named operation or scenario clock; no wall-clock time is involved."
+  ],
+  "cases": [
+    {
+      "id": "RU01-floor-negative",
+      "suite": "runtime-units",
+      "input": {"numerator": -100, "denominator": 3},
+      "expected": {"floor_div": -34, "ceil_div": -33}
+    },
+    {
+      "id": "RU03-score-once",
+      "suite": "runtime-units",
+      "input": {"rescued": 9, "population": 12, "required_complete": 2, "required_total": 3, "protection_complete": 1, "protection_total": 2, "remaining_supplies": 1, "budget": 16},
+      "expected": {"exact_numerator": 38375, "exact_denominator": 6, "rounded_score": 6396}
+    },
+    {
+      "id": "RO01-relaxed-four-steps",
+      "suite": "runtime-ordering",
+      "input": {"initial_operation_tick": 0, "initial_scenario_tick": 0, "initial_accumulator": 0, "scenario_numerator": 1, "scenario_denominator": 2, "operation_steps": 4},
+      "expected": {"scenario_ticks_after_each_step": [0, 1, 1, 2], "accumulator_after_each_step": [1, 0, 1, 0], "operation_tick": 4}
+    },
+    {
+      "id": "RO04-deadline-arrival",
+      "suite": "runtime-ordering",
+      "input": {"deadline_scenario_tick": 100, "arrival_completes_on_operation_tick": 100, "scenario_tick_on_that_step": 100, "destination_safe": true, "all_other_success_conditions": true},
+      "expected": {"arrival_counted_before_outcome": true, "success": true}
+    },
+    {
+      "id": "RW01-source-carry",
+      "suite": "runtime-water",
+      "input": {"rate_mm3_per_second": 3, "initial_remainder": 0, "hazard_pulses": 10},
+      "expected": {"injected_per_pulse_mm3": [0, 0, 0, 1, 0, 0, 1, 0, 0, 1], "remainder_after_each_pulse": [3, 6, 9, 2, 5, 8, 1, 4, 7, 0], "total_injected_mm3": 3}
+    },
+    {
+      "id": "RW03-largest-remainder-tie",
+      "suite": "runtime-water",
+      "input": {"available_mm3": 5, "requests": [{"id": "edge:a", "requested_mm3": 4}, {"id": "edge:b", "requested_mm3": 4}, {"id": "edge:c", "requested_mm3": 4}]},
+      "expected": {"grants_mm3": {"edge:a": 2, "edge:b": 2, "edge:c": 1}, "remaining_mm3": 0}
+    },
+    {
+      "id": "RW04-passive-pump-drain-compete",
+      "suite": "runtime-water",
+      "input": {
+        "water_nodes": [{"id": "a", "area_mm2": 10000, "elevation_mm": 100, "volume_mm3": 1000}, {"id": "b", "area_mm2": 10000, "elevation_mm": 0, "volume_mm3": 0}, {"id": "c", "area_mm2": 10000, "elevation_mm": 5095, "volume_mm3": 0}],
+        "source": {"id": "source:a", "destination_id": "a", "rate_mm3_per_second": 2000, "remainder": 0},
+        "passive_link": {"id": "edge:ab", "from_id": "a", "to_id": "b", "sill_mm": 0, "conductance_mm2_per_second": 200, "maximum_transfer_mm3": 100000000},
+        "pump": {"id": "pump:ac", "from_id": "a", "to_id": "c", "powered": true, "rate_mm3_per_second": 20000000, "maximum_lift_mm": 5000, "remainder": 0},
+        "sink": {"id": "sink:a", "from_id": "a", "rate_mm3_per_second": 20000, "remainder": 0}
+      },
+      "expected": {"after_source_available_a_mm3": 1200, "head_a_mm": 100, "head_c_mm": 5095, "requests_mm3": {"edge:ab": 2000, "pump:ac": 2000, "sink:a": 2000}, "grants_mm3": {"edge:ab": 400, "pump:ac": 400, "sink:a": 400}, "new_volumes_mm3": {"a": 0, "b": 400, "c": 400}, "old_total_mm3": 1000, "direct_source_mm3": 200, "drained_mm3": 400, "new_total_mm3": 800}
+    },
+    {
+      "id": "RW05-pump-head-derating",
+      "suite": "runtime-water",
+      "input": {"rate_mm3_per_second": 20000000, "maximum_lift_mm": 5000, "initial_remainder": 0, "lifts_mm": [0, 2500, 5000]},
+      "expected": {"requested_mm3_per_pulse": [2000000, 1000000, 0], "remainders": [0, 0, 0]}
+    },
+    {
+      "id": "RE05-barrier-thresholds",
+      "suite": "runtime-equipment",
+      "input": {"head_differences_mm": [599, 600, 800, 801], "initial_durability_each": 100},
+      "expected": {"warning": [false, true, true, true], "durability_after_one_pulse": [100, 100, 100, 99]}
+    },
+    {
+      "id": "RT03-closed-dock-final-boarding-tick",
+      "suite": "runtime-transport",
+      "input": {"boarding_progress_before_step": 9, "boarding_duration_operation_ticks": 10, "dock_closes_before_movement_this_step": true, "previous_resident_location": "node:pickup"},
+      "expected": {"boarding_completed": false, "resident_location": "node:pickup", "seat_reservation_released": true, "resident_duplicated": false}
+    },
+    {
+      "id": "RT04-return-without-teleport",
+      "suite": "runtime-transport",
+      "input": {"closure_operation_tick": 5, "progress_before_closure_operation_ticks": 4, "duration_operation_ticks": 10, "destination_safe": false, "origin_safe": true},
+      "expected": {"mode": "return", "return_steps_required": 4, "arrival_at_origin_operation_tick": 8, "instant_relocation": false}
+    },
+    {
+      "id": "RF01-downwind-heating",
+      "suite": "runtime-fire",
+      "input": {"recipient_heat": 290, "recipient_wetness": 100, "recipient_fuel": 1000, "recipient_state": "unburned", "spray_mm3": 0, "extra_cooling": 0, "old_burning_downwind_neighbors": 1, "scenario_tick": 1},
+      "expected": {"new_wetness": 99, "incoming_heat": 12, "heat_loss": 2, "new_heat": 300, "new_fuel": 1000, "new_state": "heating", "warning_started_tick": 1, "earliest_ignition_tick": 101}
+    },
+    {
+      "id": "RS01-stability-loss-carry",
+      "suite": "runtime-stability",
+      "input": {"initial_base_stability": 400, "static_load_points": 100, "resident_load": 0, "loss_points_per_second": 1, "initial_remainder": 0, "braces": 1, "hazard_pulses": 10},
+      "expected": {"total_loss_per_second": 2, "base_stability_after_ten_pulses": 398, "effective_stability": 498, "remainder": 0}
+    },
+    {
+      "id": "RI01-negative-tide-interpolation",
+      "suite": "runtime-tide",
+      "input": {"knots": [{"scenario_tick": 0, "level_mm": 100}, {"scenario_tick": 3, "level_mm": 0}], "sample_ticks": [0, 1, 2, 3]},
+      "expected": {"levels_mm": [100, 66, 33, 0]}
+    },
+    {
+      "id": "RI02-continuous-ramp-interruption",
+      "suite": "runtime-tide",
+      "input": {"first_ramp": {"start_tick": 100, "start_level_mm": 200, "end_tick": 200, "target_level_mm": 1000}, "interrupt_tick": 150, "second_target_level_mm": 0, "second_duration_ticks": 100, "sample_tick": 200},
+      "expected": {"level_at_interruption_mm": 600, "second_start_level_mm": 600, "sample_level_mm": 300}
+    },
+    {
+      "id": "RL02-cooling-boundaries",
+      "suite": "runtime-lava",
+      "input": {"activation_scenario_tick": 20, "cooling_ticks": 50, "crust_ticks": 200, "reheat_ticks": 50, "sample_ticks": [69, 70, 269, 270, 320]},
+      "expected": {"states": ["cooling", "crusted", "crusted", "reheating", "hot"], "new_admission_open": [false, true, true, false, false], "cooling_complete_tick": 70, "crust_expiry_tick": 270, "hot_again_tick": 320}
+    },
+    {
+      "id": "RL05-last-shelter-protection-pulse",
+      "suite": "runtime-lava",
+      "input": {"protection_remaining": 1, "occupied": true, "externally_hazardous": true, "hazard_pulses": 2},
+      "expected": {"protected_each_interval": [true, false], "remaining_after_each_interval": [0, 0], "exhaustions": 1}
+    },
+    {
+      "id": "RJ01-strict-before",
+      "suite": "runtime-objectives",
+      "input": {"first_true_operation_ticks": [9, 10], "closing_milestone_operation_tick": 10},
+      "expected": {"passes": [true, false]}
+    },
+    {
+      "id": "RJ05-end-before-future-milestone",
+      "suite": "runtime-objectives",
+      "input": {"first_true_operation_tick": 9, "closing_milestone_operation_tick": null, "operation_ended_tick": 10},
+      "expected": {"ever_before_passes": true, "must_wait_for_future_closure": false}
+    },
+    {
+      "id": "RP01-canonical-json",
+      "suite": "runtime-persistence",
+      "input": {"b": [true, null, "x"], "a": 1},
+      "expected": {"canonical_utf8_text": "{\"a\":1,\"b\":[true,null,\"x\"]}", "sha256": "eca8cfb31ab74533e1eb2f4c74d2d55dfe3c79ac704787e54be8647ea7777eb1"}
+    },
+    {
+      "id": "RP01-empty-modifiers-hash",
+      "suite": "runtime-persistence",
+      "input": [],
+      "expected": {"canonical_utf8_text": "[]", "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"}
+    },
+    {
+      "id": "RP01-xorshift32-seed-one",
+      "suite": "runtime-persistence",
+      "input": {"state": 1, "draws": 5},
+      "expected": {"outputs": [270369, 67634689, 2647435461, 307599695, 2398689233], "final_state": 2398689233, "draw_count": 5}
+    }
+  ]
+}

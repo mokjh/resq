@@ -1,0 +1,77 @@
+{
+  "F03": {
+    "profile": "f03-bounded-host-1",
+    "peak_bytes": 67108864,
+    "basis": "Actual native preparation growth <=9.53MB, actual gameAssets110679B, installed test payload ~1.5MiB. First host pass enforces64MiBgrowthcap,64MiBcancelbuffer,2GiBhardreserve. If cap is exceeded, it blocks without native acceptance; no completion assumed."
+  },
+  "F04": {
+    "profile": "resq-staged-local-1",
+    "stage": "android-probe-build",
+    "peak_bytes": 2147483648,
+    "basis": "Enforced attempt budget; full build peak unknown. Existing tools reused; no full-module install admission.",
+    "measured_preparation": {
+      "native_URP_positive_growth_bytes": 1253134002,
+      "native_URP_measurement": "evidence/resource-reassessment-20261016/render-packages-04/measurements.json",
+      "Meta_four_archive_compressed_bytes": 334923112,
+      "Meta_four_archive_regular_payload_bytes": 575802449,
+      "Meta_archive_measurement": "evidence/resource-reassessment-20261016/meta-archive-measurement/summary.json"
+    },
+    "full_package_import_and_APK_peak_known": false
+  },
+  "F06": {
+    "profile": "resq-staged-local-1",
+    "stage": "calibration-render",
+    "peak_bytes": 268435456,
+    "basis": "Enforced render attempt budget, four-view rawpixels4MiB; no claim shader peak known."
+  },
+  "C01": {
+    "profile": "resq-staged-local-1",
+    "stage": "runtime-content",
+    "peak_bytes": 134217728,
+    "basis": "Small typed source/fixtures on actual lean host; hard attempt cap; no game solvability inferred."
+  },
+  "C02": {
+    "profile": "resq-runtime-core-bounded-4",
+    "stage": "runtime-commands",
+    "peak_bytes": 134217728,
+    "basis": "Same lean licensed host as accepted C01: measured positive growth2162946B. C02 isolated integer C# source and native fixtures receive enforced128MiB cap,128MiB overshoot and2GiB hard reserve; no package installation or full-game peak inference."
+  },
+  "C03": {
+    "profile": "resq-runtime-core-bounded-4",
+    "stage": "runtime-water",
+    "peak_bytes": 134217728,
+    "basis": "Accepted C02 samehost212763Bpositivegrowth; pure integerwater subsystem128MiB enforced attemptcap+128MiBmargin+2GiBhardreserve. No packageinstall/fullgamepeak inferred."
+  },
+  "C04": {
+    "profile": "resq-runtime-core-bounded-4",
+    "stage": "runtime-transport",
+    "peak_bytes": 134217728,
+    "basis": "Sameleanhost acceptedC02growth212763B; puretransportcode/fixtures; enforced128MiBattemptcap,128MiBmargin,2GiBhardreserve. No fullbuildpeak inferred."
+  },
+  "C05": {
+    "profile": "resq-runtime-core-bounded-4",
+    "stage": "runtime-equipment",
+    "peak_bytes": 134217728,
+    "basis": "Sameleanhost acceptedC04growth524743B; pureinteger14tool/powerlogicandfixtures; enforced128MiBattemptcap+128MiBmargin+2GiBreserve. Unknownfullgamepeaknotinferred."
+  },
+  "C06": {
+    "profile": "resq-runtime-core-bounded-5",
+    "stage": "runtime-objectives",
+    "peak_bytes": 134217728,
+    "basis": "Pure objectives/progression and normative units C# suites on same lean host; accepted C05 grew1,617,652B. Each suite freshly admitted/capped, sequential; full game peak unknown."
+  },
+  "C07": {
+    "profile": "resq-runtime-core-bounded-6",
+    "stage": "runtime-persistence",
+    "peak_bytes": 268435456,
+    "basis": "Enforced attempt budget for actual snapshot/save/replay C# and small owned save-file fixtures on the existing lean licensed host:256MiB growth cap+128MiB cancellation margin+2GiB reserve=2.375GiB fresh admission. No graphics/package installation; all fixtures remain under monitored RESQ-owned paths. Full game peak remains unknown.",
+    "full_peak_known": false
+  },
+  "C08": {
+    "profile": "resq-runtime-core-bounded-7",
+    "stage": "runtime-forecast",
+    "peak_bytes": 268435456,
+    "basis": "Both C08 registered native suites, forecast and ordering, separately admitted on existing lean host. Explicit256MiB enforced growth+128MiB cancellation margin+2GiB reserve=2.375GiB per suite. Actual prior C07 growth4,133,432B is supporting observation, not C08/fullgame peak. Forecast horizon<=600S; small fixtures/output under watched ownedpaths. No graphics/packageinstall/device work.",
+    "full_peak_known": false
+  }
+}

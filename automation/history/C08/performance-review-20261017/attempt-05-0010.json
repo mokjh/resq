@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "C08",
+  "event": "blocked",
+  "run_id": "performance-review-20261017",
+  "attempt_id": "attempt-05",
+  "sequence": 10,
+  "previous_event_sha256": "2e775f89b61810ec4c58ccb177558e17f3aa9c3bd6a71ebe636a90ce95cb7288",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "FORECAST_FRAME_BUDGET_EXCEEDED: attempt05 passes all5 registered native cases, but135/135 Standard and275/275 Relaxed atomic steps exceed1ms; acceptance withheld. Three code repairs retained. Exact review evidence/runtime-forecast-20261017/milestone/c08-native-and-budget-review.json SHA256 a39f69407948f72a4b683904e72e613b52050b911a468abaead7d39f26df5b2c",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-17T20:58:10.902455+00:00"
+}

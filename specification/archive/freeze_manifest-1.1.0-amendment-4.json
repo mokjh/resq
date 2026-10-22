@@ -1,0 +1,467 @@
+{
+  "schema_version": 1,
+  "freeze_id": "resq-spec-freeze-1.1.0",
+  "status": "specification_frozen_implementation_unexecuted",
+  "sealed_utc": "2026-10-15T20:45:04.443326+00:00",
+  "counts": {
+    "worlds": 5,
+    "missions": 25,
+    "tasks": 229,
+    "acceptance_checks": 231,
+    "assertions": 942,
+    "required_case_records": 35784,
+    "production_inventory_rows": 487,
+    "challenges": 30,
+    "base_success_configurations": 300,
+    "challenge_success_configurations": 120,
+    "original_files_preserved": 41
+  },
+  "gate_definitions_sha256": "c167582bf70aba48b0bd627cadbcbbc093a582bbc3db5682c196ccc64f1e26bc",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "sha256": "0507ae571ebbbe4fe7895d7e5feed3ec8946b4b9b4c9b691bb2f626be93527a9",
+      "kind": "frozen_specification_input",
+      "byte_length": 3731
+    },
+    {
+      "path": "BUILD_PLAN.md",
+      "sha256": "dcc53f9266fc43c0efd0bbd7d7b81d9f7af91a4f565e11826e8bfae221598397",
+      "kind": "frozen_specification_input",
+      "byte_length": 12580
+    },
+    {
+      "path": "automation/checks.json",
+      "sha256": "0a5c78a80070bec9b1de41edf758591a31df13acd67772ab12ef37f89d1bdaf4",
+      "kind": "frozen_specification_input",
+      "byte_length": 411947
+    },
+    {
+      "path": "automation/tasks.json",
+      "sha256": "f5024359898547ca3c024fb95a9fdf5988a142f304bfb376e76a8c691b85f028",
+      "kind": "frozen_specification_input",
+      "byte_length": 257850
+    },
+    {
+      "path": "specification/00_FREEZE_INDEX.md",
+      "sha256": "e444b7a338011307774e0f4294abaa336d59d2c0708c217cb55b651b96517fe8",
+      "kind": "frozen_specification_input",
+      "byte_length": 3825
+    },
+    {
+      "path": "specification/01_SCOPE_AND_DECISIONS.md",
+      "sha256": "66a87e1cccc3fe5a9bf3c2f3ea5fb5f85edb8783b48c04a2e3bcb9312a78e13e",
+      "kind": "frozen_specification_input",
+      "byte_length": 6492
+    },
+    {
+      "path": "specification/02_RUNTIME_RULES.md",
+      "sha256": "5a5dea0f541650f1c20ba54ec167771c2d761edfd1ea797cf116e5383a6d9f95",
+      "kind": "frozen_specification_input",
+      "byte_length": 46656
+    },
+    {
+      "path": "specification/03_RUNTIME_CONTRACTS.md",
+      "sha256": "bbb8da696c0c5841c90ad4cdf8d613960446fbb5b6dc1e92f3cb497ce6921de5",
+      "kind": "frozen_specification_input",
+      "byte_length": 61730
+    },
+    {
+      "path": "specification/04_MISSION_AUTHORING.md",
+      "sha256": "ce643fbbdaa9659ed6176915100234436bf723e16c845509925dfdd3d77e4132",
+      "kind": "frozen_specification_input",
+      "byte_length": 17603
+    },
+    {
+      "path": "specification/05_PRODUCTION_ACCEPTANCE.md",
+      "sha256": "d439b6e56b93636e59191b28727e687b128664ec32387bc313966c5f18fe0692",
+      "kind": "frozen_specification_input",
+      "byte_length": 45761
+    },
+    {
+      "path": "specification/06_RELEASE_AND_OPERATIONS.md",
+      "sha256": "be23235d38a608971c6846f3b725e16c0ce948c6c690c0280a15d482af2d9bd3",
+      "kind": "frozen_specification_input",
+      "byte_length": 48890
+    },
+    {
+      "path": "specification/07_EVIDENCE_AND_EXECUTION.md",
+      "sha256": "88f0e3cbfcd48c0841d7abea0ede21e352dafea10f334690949b00e20f35ef0b",
+      "kind": "frozen_specification_input",
+      "byte_length": 29977
+    },
+    {
+      "path": "specification/baseline_manifest.json",
+      "sha256": "84048a7d8166451cefd6feaea29894e07da2303eabb170e7e1b5f0cb5dec18c3",
+      "kind": "frozen_specification_input",
+      "byte_length": 5881
+    },
+    {
+      "path": "specification/content/acceptance_cases.json",
+      "sha256": "997d379b766086a38bc15758a21da592cfc2823a097b6fdfc2db7bd5324fab2f",
+      "kind": "frozen_specification_input",
+      "byte_length": 16527957
+    },
+    {
+      "path": "specification/content/equipment_rules.json",
+      "sha256": "f5efcc8c68d0295bb8d5bcae8786a58b9f940935922cbd4d97b3171d0495b107",
+      "kind": "frozen_specification_input",
+      "byte_length": 4626
+    },
+    {
+      "path": "specification/content/layout_recipes.json",
+      "sha256": "ca939b98a9eba605944741930f03e4aacc3a3b79e5ded2ecd9ce8374ace8171b",
+      "kind": "frozen_specification_input",
+      "byte_length": 110486
+    },
+    {
+      "path": "specification/content/mission_contracts.json",
+      "sha256": "9ea0b58863a85b12b9f96f47200b86146889756c2abc2c4399fe0b25c2ecc700",
+      "kind": "frozen_specification_input",
+      "byte_length": 126745
+    },
+    {
+      "path": "specification/content/modes_and_challenges.json",
+      "sha256": "f3550b70612c7be3a2a52d18098b077d66ea9d426e47c631e122f5772aeefce6",
+      "kind": "frozen_specification_input",
+      "byte_length": 12641
+    },
+    {
+      "path": "specification/content/production_inventory.json",
+      "sha256": "cc840d57cd1b9a10b98eaf438841e1544d3a9841a50476017c059a1ae151758c",
+      "kind": "frozen_specification_input",
+      "byte_length": 301078
+    },
+    {
+      "path": "specification/fixtures/runtime-golden-v1.json",
+      "sha256": "413be4dcd097eaca6a09ff9c1a04b3a99c62f339b2c2be6b07572471e9459dc8",
+      "kind": "frozen_specification_input",
+      "byte_length": 8849
+    },
+    {
+      "path": "specification/schemas/acceptance_cases.schema.json",
+      "sha256": "1f0fe82dc8ec1717b1cc24e79277097802af28e3a64884af7d7f191ac87f6192",
+      "kind": "frozen_specification_input",
+      "byte_length": 28631
+    },
+    {
+      "path": "specification/schemas/asset_manifest.schema.json",
+      "sha256": "d423ee5a6f3ad3b4e0fa45da9fb373135e48a3665bbbfeffe4f23758aa776939",
+      "kind": "frozen_specification_input",
+      "byte_length": 19176
+    },
+    {
+      "path": "specification/schemas/authorization.schema.json",
+      "sha256": "bcc609671c64beef2c57f1edc61ddb6fd7f754c906e0fc763c4fc3c96f8e958b",
+      "kind": "frozen_specification_input",
+      "byte_length": 1359
+    },
+    {
+      "path": "specification/schemas/check_registry.schema.json",
+      "sha256": "83667b29c7a7949def7cbfa6b33fbde4a89d91c3c230de2848cf76264950913c",
+      "kind": "frozen_specification_input",
+      "byte_length": 12942
+    },
+    {
+      "path": "specification/schemas/check_report.schema.json",
+      "sha256": "8dba26fd174db6883b84f5634c6e59887859586249b81a756c8222a787627b8b",
+      "kind": "frozen_specification_input",
+      "byte_length": 22276
+    },
+    {
+      "path": "specification/schemas/equipment_rules.schema.json",
+      "sha256": "2feda3272eb422586a11db7e8bc093419b982b2899b419b6c39660abccf4eaa1",
+      "kind": "frozen_specification_input",
+      "byte_length": 4443
+    },
+    {
+      "path": "specification/schemas/gate_evidence.schema.json",
+      "sha256": "f9738c4f4c3317e65dbd4b2cb60d4ac3745e351e5d7c05e43b1c376928277bbf",
+      "kind": "frozen_specification_input",
+      "byte_length": 2021
+    },
+    {
+      "path": "specification/schemas/gates.schema.json",
+      "sha256": "7e109c8d4c757f7a8e7299e1056f4ab7f7ef175b42d14ba719185f0dab3bd6fe",
+      "kind": "frozen_specification_input",
+      "byte_length": 1780
+    },
+    {
+      "path": "specification/schemas/layout_recipes.schema.json",
+      "sha256": "3bceb44d49fe1b9165a40309d52aa38f7e72e344a1dd35bdc7bf8a77abcaab68",
+      "kind": "frozen_specification_input",
+      "byte_length": 13754
+    },
+    {
+      "path": "specification/schemas/mission_contracts.schema.json",
+      "sha256": "041f0215fab4b21b921edba30a4833df21bc245e935a6cd64e9258c7ccc07b58",
+      "kind": "frozen_specification_input",
+      "byte_length": 71101
+    },
+    {
+      "path": "specification/schemas/modes_and_challenges.schema.json",
+      "sha256": "3608ca3fc8d2a0beef24b45f80a03d1d61c7afff6de9ad2c9bff919aba065fb2",
+      "kind": "frozen_specification_input",
+      "byte_length": 5164
+    },
+    {
+      "path": "specification/schemas/production_inventory.schema.json",
+      "sha256": "c8365607f9723bddf94e799836649ce5b41a077403082e4767aff5af1a9fa0b6",
+      "kind": "frozen_specification_input",
+      "byte_length": 1323
+    },
+    {
+      "path": "specification/schemas/release_manifest.schema.json",
+      "sha256": "76a72352be2842bed28c16d7409ce28f55f43702083763d7600660a816c13c5b",
+      "kind": "frozen_specification_input",
+      "byte_length": 8211
+    },
+    {
+      "path": "specification/schemas/task_graph.schema.json",
+      "sha256": "2ecf66d8b3e53411f145a4cd5f8dde8ffb86523723506a756ae4ad548fa0fd9b",
+      "kind": "frozen_specification_input",
+      "byte_length": 3653
+    },
+    {
+      "path": "specification/schemas/task_result.schema.json",
+      "sha256": "f81e1a491bc1bb5c878b8d22a1a9144a0579dd2b5a98778afadd9a9819c828fb",
+      "kind": "frozen_specification_input",
+      "byte_length": 18745
+    },
+    {
+      "path": "specification/source_request.txt",
+      "sha256": "27af1344e439817f88c871d58e20caca05dff518fa6e38abb7fb94d298a728c7",
+      "kind": "frozen_specification_input",
+      "byte_length": 6110
+    },
+    {
+      "path": "tools/author_freeze_schemas.py",
+      "sha256": "05a37b1c589755fffae7df9ca33bfb5fcdcd4ab97bcdac2802958eabca7e6d2f",
+      "kind": "frozen_specification_input",
+      "byte_length": 15008
+    },
+    {
+      "path": "tools/author_specification_freeze.py",
+      "sha256": "192b65172fd1ac1a12d50493a8525aa57b9e9eebb91ffc18d1e8b81b3a6a29d5",
+      "kind": "frozen_specification_input",
+      "byte_length": 24994
+    },
+    {
+      "path": "tools/author_task_graph.py",
+      "sha256": "dd8e075ef93546f8896bdbe3c071d253c1e58a83c07af7dd12ee66a325e52809",
+      "kind": "frozen_specification_input",
+      "byte_length": 54325
+    },
+    {
+      "path": "tools/evidence_case_contracts.py",
+      "sha256": "9d2497ef15cd4259ab3aebf6278cc4dc7aab475e46120e0618dc0e7113164aa9",
+      "kind": "frozen_specification_input",
+      "byte_length": 10878
+    },
+    {
+      "path": "tools/seal_specification_freeze.py",
+      "sha256": "cadd69f958a15a397dc0a91842836af2a81aab42c6a59894cb30f21601ef41bf",
+      "kind": "frozen_specification_input",
+      "byte_length": 1729
+    },
+    {
+      "path": "tools/test_spec_freeze.py",
+      "sha256": "3e276be181131b310834b0cad8837c09035573d8fb420cc81995e00a11485c3d",
+      "kind": "frozen_specification_input",
+      "byte_length": 33508
+    },
+    {
+      "path": "tools/validate_spec_freeze.py",
+      "sha256": "ecd429caec706c90a63369ee36a41da44c7d5e32011ee1959e2085eb9ea68038",
+      "kind": "frozen_specification_input",
+      "byte_length": 44909
+    },
+    {
+      "path": "tools/verify_task_result.py",
+      "sha256": "0b74c18c3ddf8f57c91983fdcd6e12b4f3e93dd0fb905d4ef623bcb82ff95452",
+      "kind": "frozen_specification_input",
+      "byte_length": 928
+    },
+    {
+      "path": "specification/amendments/20261016-f02-evidence-harness.md",
+      "sha256": "6c3205b44b5520f28debfe206edcfc8a3e6b22fb14a63e6ae75c1c99fcb91216",
+      "kind": "frozen_specification_amendment",
+      "byte_length": 1871
+    },
+    {
+      "path": "specification/archive/freeze_manifest-1.1.0-original.json",
+      "sha256": "4eb1c12c318ac573bd82c84771c5e53036000d3511aac409962422be85f2f0f3",
+      "kind": "frozen_specification_amendment",
+      "byte_length": 10796
+    },
+    {
+      "path": "specification/amendments/20261016-isolated-gate-fixtures.md",
+      "sha256": "02b67035ce2bd883c4ddbf55338cc2c19571de8c4f9aacacf9139a93267ac485",
+      "kind": "frozen_specification_amendment",
+      "byte_length": 1532
+    },
+    {
+      "path": "specification/archive/freeze_manifest-1.1.0-amendment-1.json",
+      "sha256": "86ea80c4497f23beddc11f83bdf4c741df273acd129f1a45306f0e4103a41000",
+      "kind": "frozen_specification_amendment",
+      "byte_length": 12230
+    },
+    {
+      "path": "tools/deferred_device_schedule.py",
+      "sha256": "eef100c670935b1980683686c7ffb4a15f09b8b05aa7e732de163894414085d3",
+      "kind": "frozen_specification_input",
+      "byte_length": 3445
+    },
+    {
+      "path": "specification/amendments/20261016-physical-tests-last.md",
+      "sha256": "066f9f7f14f5f8d0d3845b18434abdbac14726fc3876266bba0d32ba7efb63f1",
+      "kind": "frozen_specification_input",
+      "byte_length": 4658
+    },
+    {
+      "path": "specification/archive/freeze_manifest-1.1.0-amendment-2.json",
+      "sha256": "c21773e2f59ecc299bd9f88aa4bc89d76e77d26b20c9bcc819400beb166438c3",
+      "kind": "frozen_specification_input",
+      "byte_length": 12985
+    },
+    {
+      "path": "automation/resource_profiles.json",
+      "sha256": "55b1d50faea0756b01fcd751b78ad9d13cbdffc0127f8ebe8bc241089d1e7cb3",
+      "kind": "frozen_specification_input",
+      "byte_length": 945
+    },
+    {
+      "path": "specification/amendments/20261016-bounded-f03-host.md",
+      "sha256": "d404c20d067241d623871e5ddc070d9341c424b9fab56441be94e4d93c087fca",
+      "kind": "frozen_specification_input",
+      "byte_length": 2926
+    }
+  ],
+  "mutable_exclusions": [
+    "STATUS.md",
+    "DECISIONS.md",
+    "BLOCKERS.md",
+    "HANDOFF.md",
+    "automation/task_state.json",
+    "automation/gates.json execution heads only",
+    "automation/autonomy_policy.json authorized updates",
+    "evidence/",
+    "releases/"
+  ],
+  "amendment_revision": 4,
+  "previous_manifest_sha256": "1a197b81bf4235d85feccbb6a8dec99cc63e7f7d5115f0f29a9c565a4b8e15b2",
+  "amended_utc": "2026-10-16T17:30:27.507631+00:00",
+  "amendment_changes": [
+    {
+      "path": "specification/schemas/check_report.schema.json",
+      "before_sha256": "0c32177bbcabc171b1bf4db7e49c34ec15b3345ce39d50193b45f65cd9254578",
+      "after_sha256": "8dba26fd174db6883b84f5634c6e59887859586249b81a756c8222a787627b8b"
+    },
+    {
+      "path": "tools/author_freeze_schemas.py",
+      "before_sha256": "a14478f232bf87aefd48719532e92c1d8be07bed1e42891ee6cc0cf1b0b5005b",
+      "after_sha256": "05a37b1c589755fffae7df9ca33bfb5fcdcd4ab97bcdac2802958eabca7e6d2f"
+    },
+    {
+      "path": "tools/test_spec_freeze.py",
+      "before_sha256": "23b409b31c6254e93060e846596dfc61c0d0c94d3f90e542627466d9404486d5",
+      "after_sha256": "91b9b30c023a2c3b018e839cb982cfe9f9e08398046eb22568d46a43b5a097ae"
+    },
+    {
+      "revision": 2,
+      "path": "tools/test_spec_freeze.py",
+      "before_sha256": "91b9b30c023a2c3b018e839cb982cfe9f9e08398046eb22568d46a43b5a097ae",
+      "after_sha256": "2476b648cb2070e3330c8f8ab01be053ed126429337d55412921c96049d36773"
+    },
+    {
+      "revision": 3,
+      "path": "BUILD_PLAN.md",
+      "before_sha256": "d45cdf9672d628928a3711b0ff5faefa01419c3ef3018e51d584606101aa2129",
+      "after_sha256": "e48d28ce167fb24fadaab5f0076ad73336399e16a38f36aaad4add8db25e7b84"
+    },
+    {
+      "revision": 3,
+      "path": "automation/tasks.json",
+      "before_sha256": "ae4d51e927ac590bdccd5b6d3016e0f109f3caa5da505364e37551bcbffe2f84",
+      "after_sha256": "4929535523d901d52713e04a04be0eb95bcb34f62f3f3ec48cb2de15f59b6713"
+    },
+    {
+      "revision": 3,
+      "path": "specification/00_FREEZE_INDEX.md",
+      "before_sha256": "94acc09397d248d8a4050db8dad30b71f3b5498722c7615b95f4a7806d0dd2fb",
+      "after_sha256": "acec4ac74cede53c8bca95341671302958e58c13fdc17ed6f67efca0030de859"
+    },
+    {
+      "revision": 3,
+      "path": "specification/01_SCOPE_AND_DECISIONS.md",
+      "before_sha256": "c5129a7ee8e36cdccfdd41dbf1592b15f91e897481c9c9dbc72b3a01f5731a6c",
+      "after_sha256": "66a87e1cccc3fe5a9bf3c2f3ea5fb5f85edb8783b48c04a2e3bcb9312a78e13e"
+    },
+    {
+      "revision": 3,
+      "path": "specification/05_PRODUCTION_ACCEPTANCE.md",
+      "before_sha256": "00bc10ea25bac1d49edb04caa53ef03d5c4df63c0ebc39774a085790d7596510",
+      "after_sha256": "d439b6e56b93636e59191b28727e687b128664ec32387bc313966c5f18fe0692"
+    },
+    {
+      "revision": 3,
+      "path": "specification/06_RELEASE_AND_OPERATIONS.md",
+      "before_sha256": "01debfba15ea99661b6bb7c1758bc39c0dfe398187eb4b9b9522417edf134cda",
+      "after_sha256": "6dda419b419ef782d8beceed28c0c59b195486b80aba4c13fc8591472a286295"
+    },
+    {
+      "revision": 3,
+      "path": "specification/07_EVIDENCE_AND_EXECUTION.md",
+      "before_sha256": "bd4b41c4f251870f53892cfda83c0cc46cce860f447b5e8a8540732c7c36e77e",
+      "after_sha256": "88f0e3cbfcd48c0841d7abea0ede21e352dafea10f334690949b00e20f35ef0b"
+    },
+    {
+      "revision": 3,
+      "path": "tools/author_task_graph.py",
+      "before_sha256": "1534719fbfe1e709e5316f6a73d83927080498f4f545a662fe453c604253929a",
+      "after_sha256": "d2bc9d3c3afa85f7331761c50c5a9a956c79db4f74ef4eaa5e89fd952b89c5ca"
+    },
+    {
+      "revision": 3,
+      "path": "tools/test_spec_freeze.py",
+      "before_sha256": "2476b648cb2070e3330c8f8ab01be053ed126429337d55412921c96049d36773",
+      "after_sha256": "3e276be181131b310834b0cad8837c09035573d8fb420cc81995e00a11485c3d"
+    },
+    {
+      "revision": 3,
+      "path": "tools/validate_spec_freeze.py",
+      "before_sha256": "908c044ec107047fde3f9f943559ae6e2ff5ffd595dd09c857ffeb66df552716",
+      "after_sha256": "ecd429caec706c90a63369ee36a41da44c7d5e32011ee1959e2085eb9ea68038"
+    },
+    {
+      "revision": 4,
+      "path": "BUILD_PLAN.md",
+      "before_sha256": "e48d28ce167fb24fadaab5f0076ad73336399e16a38f36aaad4add8db25e7b84",
+      "after_sha256": "dcc53f9266fc43c0efd0bbd7d7b81d9f7af91a4f565e11826e8bfae221598397"
+    },
+    {
+      "revision": 4,
+      "path": "specification/00_FREEZE_INDEX.md",
+      "before_sha256": "acec4ac74cede53c8bca95341671302958e58c13fdc17ed6f67efca0030de859",
+      "after_sha256": "e444b7a338011307774e0f4294abaa336d59d2c0708c217cb55b651b96517fe8"
+    },
+    {
+      "revision": 4,
+      "path": "specification/06_RELEASE_AND_OPERATIONS.md",
+      "before_sha256": "6dda419b419ef782d8beceed28c0c59b195486b80aba4c13fc8591472a286295",
+      "after_sha256": "be23235d38a608971c6846f3b725e16c0ce948c6c690c0280a15d482af2d9bd3"
+    },
+    {
+      "revision": 4,
+      "path": "automation/tasks.json",
+      "before_sha256": "4929535523d901d52713e04a04be0eb95bcb34f62f3f3ec48cb2de15f59b6713",
+      "after_sha256": "f5024359898547ca3c024fb95a9fdf5988a142f304bfb376e76a8c691b85f028"
+    },
+    {
+      "revision": 4,
+      "path": "tools/author_task_graph.py",
+      "before_sha256": "d2bc9d3c3afa85f7331761c50c5a9a956c79db4f74ef4eaa5e89fd952b89c5ca",
+      "after_sha256": "dd8e075ef93546f8896bdbe3c071d253c1e58a83c07af7dd12ee66a325e52809"
+    }
+  ]
+}

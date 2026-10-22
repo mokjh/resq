@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F02",
+  "event": "failed",
+  "run_id": "continuation-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 4,
+  "previous_event_sha256": "2bbe162b1a121175b6d3117a2577ae2449cce7b6fe3530c981ded443f0efe009",
+  "result_path": "evidence/results/F02/continuation-20261016/attempt-01.json",
+  "result_sha256": "ca9eb5317d054759e9a9ff04c3be4741d72f82c1c50a320c598684c640b99f61",
+  "reason": "Required test suite failed: test_spec_freeze.py",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T22:31:36.654507+00:00"
+}

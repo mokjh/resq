@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "task_id": "F07",
+  "event": "running",
+  "run_id": "native-preflight-20261016",
+  "attempt_id": "attempt-01",
+  "sequence": 7,
+  "previous_event_sha256": "5268d36186c38bde081b2c720ff24e4d3820bbf5104dd14a10246d6b5fe03eef",
+  "result_path": null,
+  "result_sha256": null,
+  "reason": "Backend admitted with exclusive ownership.",
+  "verifier": "admission_or_process_observation",
+  "recorded_utc": "2026-10-15T23:20:54.526648+00:00"
+}
