@@ -46,6 +46,7 @@ namespace Resq.Sim
             if (S.SocketInstance[socket] >= 0) return Reject.Occupied;
             if (S.C.EquipmentCount >= D.MaxEquipment) return Reject.CapacityFull;
             if (!SocketSafe(socket, tool)) return Reject.UnsafeTarget;
+            if (tool == ToolKind.Firebreak) { var fb = ValidateFirebreak(socket); if (fb != Reject.OK) return fb; }
             if (tool == ToolKind.Skiff || tool == ToolKind.Crawler)
             {
                 int node = D.SocketNode[socket];
@@ -105,6 +106,7 @@ namespace Resq.Sim
             S.SocketInstance[socket] = inst;
             S.Deployed[(int)tool]++;
             S.C.SupplySpent += D.ToolCost[(int)tool];
+            if (tool == ToolKind.Firebreak) { ActivateFirebreak(socket); S.EqActive[inst] = false; }
             if (tool == ToolKind.Skiff || tool == ToolKind.Crawler)
             {
                 var kind = tool == ToolKind.Skiff ? VehicleKind.Skiff : VehicleKind.Crawler;
@@ -269,7 +271,9 @@ namespace Resq.Sim
                     {
                         long depth = D.SocketCell[sock] >= 0 ? Depth(D.SocketCell[sock]) : 0;
                         if (tool == ToolKind.Generator || tool == ToolKind.Relay) depth = PlatformDepth(sock);
-                        if (depth > EquipmentRules.ElectronicDamageDepthMm)
+                        bool hot = D.FireEnabled && D.SocketCell[sock] >= 0 && S.FHeat[D.SocketCell[sock]] >= EquipmentRules.ElectronicDamageHeat;
+                        if (tool == ToolKind.Firebreak || tool == ToolKind.Beacon) hot = false;
+                        if (depth > EquipmentRules.ElectronicDamageDepthMm || hot)
                         {
                             S.EqDurability[inst]--;
                             broke = S.EqDurability[inst] <= 0;
@@ -383,6 +387,7 @@ namespace Resq.Sim
             {
                 bool op = S.InfraPowered[i];
                 if (op && D.InfraRegion[i] >= 0 && RegionDepth(D.InfraRegion[i]) > D.InfraMaxDepth[i]) op = false;
+                if (op && D.FireEnabled && D.InfraRegion[i] >= 0 && MaxRegionHeat(D.InfraRegion[i]) >= D.InfraMaxHeat[i]) op = false;
                 if (op && D.InfraRequiredNodes[i] != null)
                 {
                     foreach (int n in D.InfraRequiredNodes[i])

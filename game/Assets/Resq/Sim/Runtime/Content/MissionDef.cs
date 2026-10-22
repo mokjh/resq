@@ -204,6 +204,20 @@ namespace Resq.Sim
         public int[] BusAutoRoute;               // guided first play: {pickupGroup, pickupNode, destinationNode}
         public int MaxEquipment = 32;
 
+        // ---- finite water stores (tanks/ponds: extra water nodes after the grid cells) ----
+        public string[] StoreIds = Array.Empty<string>();
+        public int[] StoreNode = Array.Empty<int>();
+        public Dictionary<string, int> StoreIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+
+        // ---- fire (World 2, spec 02 §7); per grid cell ----
+        public bool FireEnabled;
+        public int[] CellFuel0, CellHeat0, CellWet0;
+        public bool[] CellBuilding;
+        public int[] CellWindRegion;          // region index whose wind applies to the cell, or -1 (calm)
+        public int[][] SocketCells;           // firebreak (<=8) / sprinkler (<=4) target cells
+        public int[] SocketStore;             // sprinkler source store index or -1
+        public int[] InfraMaxHeat = Array.Empty<int>();
+
         // ---- events / objectives ----
         public EventDef[] Events = Array.Empty<EventDef>();      // sorted by (AtTick, Id)
         public EventDef[] WarningOrder = Array.Empty<EventDef>(); // sorted by (WarningTick, Id)

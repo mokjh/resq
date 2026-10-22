@@ -84,6 +84,13 @@ namespace Resq.Sim
         public int[] VOccupants;              // VehicleCapacity * seatsMax flattened
         public int SeatsMax = 8;
 
+        // fire (World 2) — per grid cell, plus wind per region
+        public int[] FHeat, FFuel, FWet, FExtraCool;
+        public byte[] FState;
+        public long[] FWarnStart, FCoolStart, FSprayRem;
+        public bool[] FLatch;
+        public int[] WindCode;
+
         // events / milestones / objectives
         public bool[] Warned, Applied;
         public long[] MilestoneO, MilestoneS;
@@ -132,6 +139,12 @@ namespace Resq.Sim
             VTransferResident = new int[v]; VTransferProgress = new int[v];
             VEvacuate = new bool[v]; VReversing = new bool[v];
             VOccupantCount = new int[v]; VOccupants = new int[v * SeatsMax];
+
+            int cells = d.GridW * d.GridH;
+            FHeat = new int[cells]; FFuel = new int[cells]; FWet = new int[cells]; FExtraCool = new int[cells];
+            FState = new byte[cells]; FWarnStart = new long[cells]; FCoolStart = new long[cells]; FSprayRem = new long[cells];
+            FLatch = new bool[cells];
+            WindCode = new int[d.RegionIds.Length];
 
             Warned = new bool[d.Events.Length]; Applied = new bool[d.Events.Length];
             MilestoneO = new long[d.Milestones.Length]; MilestoneS = new long[d.Milestones.Length];

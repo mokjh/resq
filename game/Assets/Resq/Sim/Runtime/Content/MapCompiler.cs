@@ -55,6 +55,7 @@ namespace Resq.Sim
             ctx.CompileGrid();
             ctx.CompileRegions();
             ctx.CompileWater();
+            ctx.CompileFire();
             ctx.CompileNodes();
             ctx.CompileEdges();
             ctx.CompilePower();
@@ -200,8 +201,21 @@ namespace Resq.Sim
             public void CompileWater()
             {
                 int n = d.GridW * d.GridH;
-                d.WaterCount = n;
-                d.WElev = new long[n]; d.WArea = new long[n]; d.WInitVol = new long[n]; d.WIsTank = new bool[n];
+                var stores = m["stores"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                d.WaterCount = n + stores.Count;
+                d.WElev = new long[d.WaterCount]; d.WArea = new long[d.WaterCount]; d.WInitVol = new long[d.WaterCount]; d.WIsTank = new bool[d.WaterCount];
+                d.StoreIds = new string[stores.Count]; d.StoreNode = new int[stores.Count];
+                for (int k = 0; k < stores.Count; k++)
+                {
+                    int node = n + k;
+                    d.StoreIds[k] = stores[k].Str("id");
+                    d.StoreNode[k] = node;
+                    d.StoreIndex[d.StoreIds[k]] = k;
+                    d.WIsTank[node] = true;
+                    d.WElev[node] = stores[k].Long("elev", 0);
+                    d.WArea[node] = stores[k].Long("area", DefaultArea);
+                    d.WInitVol[node] = stores[k].Long("volume");
+                }
                 for (int c = 0; c < n; c++)
                 {
                     d.WElev[c] = d.CellElevation[c];
@@ -359,6 +373,29 @@ namespace Resq.Sim
                 return cells.Distinct().ToArray();
             }
 
+            public void CompileFire()
+            {
+                int n = d.GridW * d.GridH;
+                var fire = m["fire"];
+                d.FireEnabled = fire != null && fire.Flag("enabled", true);
+                d.CellFuel0 = new int[n]; d.CellHeat0 = new int[n]; d.CellWet0 = new int[n];
+                d.CellBuilding = new bool[n]; d.CellWindRegion = new int[n];
+                for (int c = 0; c < n; c++)
+                {
+                    var lg = _legend[_chars[c]];
+                    d.CellFuel0[c] = d.FireEnabled ? lg.Int("fuel", 1000) : 0; // spec 02 §7: default fuel 1000; roads/water author 0
+                    d.CellWet0[c] = lg.Int("wetness");
+                    d.CellBuilding[c] = lg.Flag("building");
+                    d.CellWindRegion[c] = -1;
+                }
+                if (fire?["wind_regions"] != null)
+                    foreach (var r in fire["wind_regions"].Elements())
+                    {
+                        if (!d.RegionIndex.TryGetValue(r.AsString(), out int ri)) throw new ContentException($"wind region {r.AsString()} not in regions");
+                        foreach (int c in d.RegionCells[ri]) if (c < n && d.CellWindRegion[c] < 0) d.CellWindRegion[c] = ri;
+                    }
+            }
+
             int NodeRef(string id)
             {
                 if (id == null || !d.NodeIndex.TryGetValue(id, out int i)) throw new ContentException($"unknown node '{id}'");
@@ -405,6 +442,7 @@ namespace Resq.Sim
                 d.SocketEdge = new int[k]; d.SocketIntake = new int[k]; d.SocketOutlet = new int[k]; d.SocketNode = new int[k];
                 d.SocketPowerNode = new int[k]; d.SocketDestination = new int[k]; d.SocketLinks = new int[k][];
                 d.SocketPlatformCells = new int[k][]; d.SocketOrientations = new byte[k];
+                d.SocketCells = new int[k][]; d.SocketStore = new int[k];
                 var zones = new List<string>();
                 for (int i = 0; i < k; i++)
                 {
@@ -425,6 +463,12 @@ namespace Resq.Sim
                     d.SocketPowerNode[i] = PowerRef(s.Str("power"));
                     d.SocketOrientations[i] = (byte)s.Int("orientations", 1);
                     d.SocketPlatformCells[i] = s["platform"] != null ? ResolveCells(s["platform"]) : null;
+                    d.SocketCells[i] = s["cells"] != null ? ResolveCells(s["cells"]) : Array.Empty<int>();
+                    d.SocketStore[i] = s.Str("store") != null ? StoreRef(s.Str("store")) : -1;
+                    if (tool == ToolKind.Firebreak && (d.SocketCells[i].Length == 0 || d.SocketCells[i].Length > 8))
+                        throw new ContentException($"firebreak socket {d.SocketIds[i]} needs 1..8 cells");
+                    if (tool == ToolKind.Sprinkler && (d.SocketCells[i].Length == 0 || d.SocketCells[i].Length > 4 || d.SocketStore[i] < 0))
+                        throw new ContentException($"sprinkler socket {d.SocketIds[i]} needs 1..4 cells and a store");
                     var links = new List<int>();
                     if (s["links"] != null)
                         foreach (var pair in s["links"].Elements()) links.Add(Link(Cell(pair[0]), Cell(pair[1])));
@@ -442,6 +486,12 @@ namespace Resq.Sim
                 }
             }
 
+            int StoreRef(string id)
+            {
+                if (!d.StoreIndex.TryGetValue(id, out int k)) throw new ContentException($"unknown store '{id}'");
+                return k;
+            }
+
             int EdgeRef(string id)
             {
                 if (!d.EdgeIndex.TryGetValue(id, out int e)) throw new ContentException($"unknown edge '{id}'");
@@ -456,6 +506,7 @@ namespace Resq.Sim
                 d.InfraIds = new string[k]; d.InfraPowerNode = new int[k]; d.InfraDemand0 = new int[k];
                 d.InfraPriority0 = new int[k]; d.InfraRegion = new int[k]; d.InfraMaxDepth = new long[k];
                 d.InfraRequiredNodes = new int[k][];
+                d.InfraMaxHeat = new int[k];
                 for (int i = 0; i < k; i++)
                 {
                     var x = list[i];
@@ -466,6 +517,7 @@ namespace Resq.Sim
                     d.InfraPriority0[i] = x.Int("priority");
                     d.InfraRegion[i] = x.Str("region") != null ? d.RegionIndex[x.Str("region")] : -1;
                     d.InfraMaxDepth[i] = x.Long("max_depth", 100);
+                    d.InfraMaxHeat[i] = x.Int("max_heat", 300);
                     var nodes = new List<int>();
                     if (x["nodes"] != null) foreach (var n in x["nodes"].Elements()) nodes.Add(NodeRef(n.AsString()));
                     d.InfraRequiredNodes[i] = nodes.ToArray();
@@ -564,6 +616,9 @@ namespace Resq.Sim
                         break;
                     case EventOpKind.ReleaseGroup:
                         foreach (var g in r["groups"].Elements()) list.Add(d.GroupIndex[g.AsString()]);
+                        break;
+                    case EventOpKind.WarnResource:
+                        foreach (var g in r["stores"].Elements()) list.Add(StoreRef(g.AsString()));
                         break;
                     case EventOpKind.SetInfrastructureDemand:
                     case EventOpKind.WarnSupport:
@@ -682,7 +737,7 @@ namespace Resq.Sim
                         c.Hazard = Array.IndexOf(new[] { "water", "fire", "lava", "runout" }, p.Str("hazard")); c.Value = p.Long("threshold"); break;
                     case "equipment_losses_at_most": c.Kind = ConditionKind.EquipmentLossesAtMost; c.Value = p.Long("maximum"); break;
                     case "supply_remaining_at_least": c.Kind = ConditionKind.SupplyRemainingAtLeast; c.Value = p.Long("minimum"); break;
-                    case "resource_remaining": c.Kind = ConditionKind.ResourceRemaining; c.Value = p.Long("minimum"); break;
+                    case "resource_remaining": c.Kind = ConditionKind.ResourceRemaining; c.A = StoreRef(p.Str("store_id")); c.Value = p.Long("minimum"); break;
                     case "all_vehicles_unloaded": c.Kind = ConditionKind.AllVehiclesUnloaded; break;
                     case "temporary_shelters_empty": c.Kind = ConditionKind.TemporaryShelterEmpty; break;
                     case "temporary_staging_empty": c.Kind = ConditionKind.TemporaryStagingEmpty; break;

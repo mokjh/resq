@@ -79,6 +79,7 @@ namespace Resq.Sim
             for (int i = 0; i < D.WaterCount; i++) S.Volume[i] = D.WInitVol[i];
             for (int i = 0; i < D.SourceNode.Length; i++) S.SourceRate[i] = D.SourceRate0[i];
             for (int i = 0; i < D.SinkNode.Length; i++) S.SinkRate[i] = D.SinkRate0[i];
+            InitFire();
             for (int i = 0; i < D.GateIds.Length; i++) S.GateOpen[i] = D.GateInitialOpen[i];
             for (int i = 0; i < S.SocketInstance.Length; i++) S.SocketInstance[i] = -1;
             for (int i = 0; i < D.InfraIds.Length; i++)
@@ -126,6 +127,7 @@ namespace Resq.Sim
                 if (ev.WarningTick != 0) continue;
                 int idx = Array.IndexOf(D.Events, ev);
                 S.Warned[idx] = true;
+                FireOnWarning(ev);
                 Emit(SimEventKind.Warning, idx);
             }
             if (!guided)
@@ -210,6 +212,7 @@ namespace Resq.Sim
                 if (!S.Warned[i] && ev.WarningTick == s)
                 {
                     S.Warned[i] = true;
+                    FireOnWarning(ev);
                     Emit(SimEventKind.Warning, i);
                 }
             }

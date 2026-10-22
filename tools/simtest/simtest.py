@@ -28,7 +28,7 @@ SCRIPTING = UNITY / "Contents/Resources/Scripting"
 DOTNET = SCRIPTING / "NetCoreRuntime/dotnet"
 CSC = SCRIPTING / "DotNetSdkRoslyn/csc.dll"
 FX_DIR = SCRIPTING / "NetCoreRuntime/shared/Microsoft.NETCore.App"
-CACHE = ROOT / "tools/.cache/simtest"
+CACHE = ROOT / "tools/.cache/simtest" / f"run-{os.getpid()}"  # per-process: parallel helpers never clobber each other
 
 SIM_RUNTIME = ROOT / "game/Assets/Resq/Sim/Runtime"
 SIM_TESTS = ROOT / "game/Assets/Resq/Sim/Tests"
@@ -141,12 +141,18 @@ def main(argv: list[str]) -> int:
         out = CACHE / "Resq.Golden.Tests.exe.dll"
         compile_cs(out, sources(SIM_RUNTIME) + sources(SIM_TESTS, exclude_parts=("NUnit",)) + sources(HARNESS)
                    + sources(ROOT / "tools/simtest/Golden"), "exe", extra_refs=[legacy])
-        import shutil
-        shutil.copy2(legacy, out.parent / legacy.name)
+        if legacy.parent != out.parent:
+            import shutil
+            shutil.copy2(legacy, out.parent / legacy.name)
         return run(out, ["--golden", *rest])
     print(__doc__)
     return 2
 
 
 if __name__ == "__main__":
-    sys.exit(main(sys.argv))
+    import shutil
+    try:
+        code = main(sys.argv)
+    finally:
+        shutil.rmtree(CACHE, ignore_errors=True)
+    sys.exit(code)

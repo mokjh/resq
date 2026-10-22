@@ -32,6 +32,7 @@ namespace Resq.Sim
             int n = D.NodeIds.Length;
             _pathDist = new int[n]; _pathPrevEdge = new int[n]; _pathEdgeCount = new int[n]; _pathDone = new bool[n];
             AllocateTransportScratch();
+            AllocateFireScratch();
         }
 
         bool BarrierIntact(int link)
@@ -97,6 +98,7 @@ namespace Resq.Sim
                     if (q <= 0) continue;
                     AddRequest(ref count, q, -1, 2, k);
                 }
+                AddSprinklerRequests(node, ref count);
                 if (count == 0) continue;
                 WaterRules.Allocate(_avail[node], new ReadOnlySpan<long>(_reqAmount, 0, count),
                                     new Span<long>(_reqGrant, 0, count), new Span<long>(_reqScratch, 0, count));
@@ -108,6 +110,7 @@ namespace Resq.Sim
                     int dst = _reqDest[r];
                     if (dst >= 0) _newVol[dst] = checked(_newVol[dst] + g);
                     if (_reqKind[r] == 1 && dst >= 0) RecordPumpedInto(dst, g);
+                    if (_reqKind[r] == 3) ApplySprayGrant(_reqRef[r], g);
                 }
             }
             for (int i = 0; i < wc; i++)

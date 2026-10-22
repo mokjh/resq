@@ -7,6 +7,8 @@
 - **Unity project:** URP, OpenXR, Meta XR 207.0.1 (Core, Interaction, MRUK), Quest settings (ARM64/IL2CPP, SDK 32/34, Vulkan, ASTC); Meta Setup Tool clean.
 - **First APK built:** `build/resq-smoke.apk`, 75 MB. INTERNET permission is now stripped (takes effect on the next build).
 - **Sim v2 engine:** water, power, equipment, transport, objectives, outcome. All 18 spec golden cases pass.
+- **World 2 fire module:** heat, fuel, wetness, wind, ignition warnings, firebreak, sprinkler from a finite tank, roads closed by heat. 9 fire tests; 32/32 sim tests pass.
+- **W1-M2, W1-M3:** 18/18 validation runs each.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
 - **Unity game layer:** First Crossing plays end-to-end in Unity on the real engine — board, water, actors, tool tray, goals and routing.
@@ -15,9 +17,10 @@
 
 ## In progress (helpers)
 - Blender look-dev quartet: cottage, bridge, skiff, resident.
-- Missions W1-M2 to W1-M5 with SimLab.
+- Missions W1-M4 and W1-M5 with SimLab.
 
 ## Next
+0. Remaining world modules (headless): stability/runout/winch (W3), tides/relay (W4), lava/cooler/shelter (W5).
 1. XR wiring: OVR rig, hands, passthrough and MRUK placement in the operation scene.
 2. Forecast preview overlay.
 3. Guided tutorial.
