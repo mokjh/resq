@@ -58,8 +58,10 @@ namespace Resq.Sim
             ctx.CompileFire();
             ctx.CompileNodes();
             ctx.CompileEdges();
+            ctx.CompileStability();
             ctx.CompilePower();
             ctx.CompileSockets();
+            ctx.CheckBraceCap();
             ctx.CompileInfrastructure();
             ctx.CompileGroups(contract);
             ctx.CompileVehicles();
@@ -396,6 +398,116 @@ namespace Resq.Sim
                     }
             }
 
+            int[] NodeList(JsonNode arr) => arr == null ? Array.Empty<int>() : arr.Elements().Select(n => NodeRef(n.AsString())).Distinct().OrderBy(x => x).ToArray();
+            int[] EdgeList(JsonNode arr) => arr == null ? Array.Empty<int>() : arr.Elements().Select(e => EdgeRef(e.AsString())).Distinct().OrderBy(x => x).ToArray();
+
+            /// <summary>World 3 supports and authored avalanche runout DAGs (spec 02 §8).</summary>
+            public void CompileStability()
+            {
+                var sup = m["supports"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                int k = sup.Count;
+                d.SupportIds = new string[k]; d.SupportBase0 = new int[k]; d.SupportStatic0 = new int[k];
+                d.SupportLoadNodes = new int[k][]; d.SupportLoadEdges = new int[k][];
+                d.SupportCollapseNodes = new int[k][]; d.SupportCollapseEdges = new int[k][];
+                for (int i = 0; i < k; i++)
+                {
+                    var x = sup[i];
+                    d.SupportIds[i] = x.Str("id");
+                    d.SupportIndex[d.SupportIds[i]] = i;
+                    d.SupportBase0[i] = x.Int("base_stability", 400);
+                    if (d.SupportBase0[i] < -1000 || d.SupportBase0[i] > 1000) throw new ContentException($"support {d.SupportIds[i]} base_stability out of -1000..1000");
+                    d.SupportStatic0[i] = x.Int("static_load");
+                    d.SupportLoadNodes[i] = NodeList(x["nodes"]);
+                    d.SupportLoadEdges[i] = EdgeList(x["edges"]);
+                    d.SupportCollapseNodes[i] = NodeList(x["collapse_nodes"]);
+                    d.SupportCollapseEdges[i] = EdgeList(x["collapse_edges"]);
+                }
+
+                int ne = d.EdgeIds.Length, nn = d.NodeIds.Length;
+                d.EdgeDebrisReopenable = new bool[ne];
+                int reopen = Array.IndexOf(d.TagIds, "debris_reopenable");
+                for (int e = 0; e < ne; e++) d.EdgeDebrisReopenable[e] = reopen >= 0 && Array.IndexOf(d.EdgeTags[e], reopen) >= 0;
+
+                var runs = m["runouts"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                d.RunoutIds = new string[runs.Count]; d.RunoutFirstSegment = new int[runs.Count]; d.RunoutSourceSupport = new int[runs.Count];
+                var segIds = new List<string>(); var delay = new List<int>(); var settle = new List<int>();
+                var segEdges = new List<int[]>(); var segNodes = new List<int[]>(); var segCells = new List<int[]>();
+                var nextNames = new List<string[]>(); var segRun = new List<int>();
+                for (int r = 0; r < runs.Count; r++)
+                {
+                    var x = runs[r];
+                    d.RunoutIds[r] = x.Str("id");
+                    d.RunoutIndex[d.RunoutIds[r]] = r;
+                    string src = x.Str("source_support");
+                    d.RunoutSourceSupport[r] = src == null ? -1 :
+                        d.SupportIndex.TryGetValue(src, out int si) ? si : throw new ContentException($"runout {d.RunoutIds[r]}: unknown support '{src}'");
+                    var segs = x["segments"]?.Elements().ToList() ?? new List<JsonNode>();
+                    if (segs.Count == 0) throw new ContentException($"runout {d.RunoutIds[r]} has no segments");
+                    d.RunoutFirstSegment[r] = segIds.Count; // the first listed segment starts the runout
+                    foreach (var sg in segs)
+                    {
+                        segIds.Add(d.RunoutIds[r] + "/" + sg.Str("id"));
+                        delay.Add(sg.Int("delay", 10));
+                        settle.Add(sg.Int("settle", 200));
+                        segEdges.Add(EdgeList(sg["edges"]));
+                        segNodes.Add(NodeList(sg["nodes"]));
+                        segCells.Add(sg["cells"] != null ? ResolveCells(sg["cells"]) : Array.Empty<int>());
+                        nextNames.Add(sg["next"]?.Elements().Select(n => d.RunoutIds[r] + "/" + n.AsString()).ToArray() ?? Array.Empty<string>());
+                        segRun.Add(r);
+                    }
+                }
+                int sc = segIds.Count;
+                d.SegmentIds = segIds.ToArray(); d.SegmentDelay = delay.ToArray(); d.SegmentSettle = settle.ToArray();
+                d.SegmentEdges = segEdges.ToArray(); d.SegmentNodes = segNodes.ToArray(); d.SegmentCells = segCells.ToArray();
+                d.SegmentNext = new int[sc][];
+                for (int i = 0; i < sc; i++)
+                {
+                    if (d.SegmentDelay[i] < 1 || d.SegmentSettle[i] < 1) throw new ContentException($"segment {d.SegmentIds[i]} needs positive delay and settle");
+                    d.SegmentNext[i] = nextNames[i].Select(n =>
+                    {
+                        int j = segIds.IndexOf(n);
+                        if (j < 0) throw new ContentException($"segment {d.SegmentIds[i]}: unknown successor '{n}'");
+                        return j;
+                    }).Distinct().OrderBy(j => j).ToArray();
+                }
+                // acyclic check (iterative three-colour DFS)
+                var colour = new byte[sc];
+                for (int root = 0; root < sc; root++)
+                {
+                    if (colour[root] != 0) continue;
+                    var stack = new Stack<(int node, int child)>();
+                    stack.Push((root, 0)); colour[root] = 1;
+                    while (stack.Count > 0)
+                    {
+                        var (u, ci) = stack.Pop();
+                        if (ci < d.SegmentNext[u].Length)
+                        {
+                            stack.Push((u, ci + 1));
+                            int w = d.SegmentNext[u][ci];
+                            if (colour[w] == 1) throw new ContentException($"runout graph has a cycle through {d.SegmentIds[w]}");
+                            if (colour[w] == 0) { colour[w] = 1; stack.Push((w, 0)); }
+                        }
+                        else colour[u] = 2;
+                    }
+                }
+                var es = new List<int>[ne]; var ns = new List<int>[nn];
+                for (int e = 0; e < ne; e++) es[e] = new List<int>();
+                for (int n = 0; n < nn; n++) ns[n] = new List<int>();
+                for (int i = 0; i < sc; i++)
+                {
+                    foreach (int e in d.SegmentEdges[i]) es[e].Add(i);
+                    foreach (int n in d.SegmentNodes[i]) ns[n].Add(i);
+                }
+                d.EdgeSegments = es.Select(l => l.ToArray()).ToArray();
+                d.NodeSegments = ns.Select(l => l.ToArray()).ToArray();
+            }
+
+            int SupportRef(string id)
+            {
+                if (!d.SupportIndex.TryGetValue(id, out int i)) throw new ContentException($"unknown support '{id}'");
+                return i;
+            }
+
             int NodeRef(string id)
             {
                 if (id == null || !d.NodeIndex.TryGetValue(id, out int i)) throw new ContentException($"unknown node '{id}'");
@@ -442,7 +554,7 @@ namespace Resq.Sim
                 d.SocketEdge = new int[k]; d.SocketIntake = new int[k]; d.SocketOutlet = new int[k]; d.SocketNode = new int[k];
                 d.SocketPowerNode = new int[k]; d.SocketDestination = new int[k]; d.SocketLinks = new int[k][];
                 d.SocketPlatformCells = new int[k][]; d.SocketOrientations = new byte[k];
-                d.SocketCells = new int[k][]; d.SocketStore = new int[k];
+                d.SocketCells = new int[k][]; d.SocketStore = new int[k]; d.SocketSupport = new int[k];
                 var zones = new List<string>();
                 for (int i = 0; i < k; i++)
                 {
@@ -465,6 +577,16 @@ namespace Resq.Sim
                     d.SocketPlatformCells[i] = s["platform"] != null ? ResolveCells(s["platform"]) : null;
                     d.SocketCells[i] = s["cells"] != null ? ResolveCells(s["cells"]) : Array.Empty<int>();
                     d.SocketStore[i] = s.Str("store") != null ? StoreRef(s.Str("store")) : -1;
+                    d.SocketSupport[i] = s.Str("support") != null ? SupportRef(s.Str("support")) : -1;
+                    if (tool == ToolKind.Brace && d.SocketSupport[i] < 0)
+                        throw new ContentException($"brace socket {d.SocketIds[i]} needs a structural support (slopes take no braces)");
+                    if (tool == ToolKind.Winch)
+                    {
+                        if (d.SocketNode[i] < 0 || d.SocketEdge[i] < 0 || d.EdgeClass[d.SocketEdge[i]] != Traversal.Cable)
+                            throw new ContentException($"winch socket {d.SocketIds[i]} needs a node and a cable edge");
+                        if (d.EdgeFrom[d.SocketEdge[i]] != d.SocketNode[i] && d.EdgeTo[d.SocketEdge[i]] != d.SocketNode[i])
+                            throw new ContentException($"winch socket {d.SocketIds[i]}: node is not an end of its cable");
+                    }
                     if (tool == ToolKind.Firebreak && (d.SocketCells[i].Length == 0 || d.SocketCells[i].Length > 8))
                         throw new ContentException($"firebreak socket {d.SocketIds[i]} needs 1..8 cells");
                     if (tool == ToolKind.Sprinkler && (d.SocketCells[i].Length == 0 || d.SocketCells[i].Length > 4 || d.SocketStore[i] < 0))
@@ -478,11 +600,21 @@ namespace Resq.Sim
                         if (d.LinkBarrierSocket[l] >= 0) throw new ContentException($"link {l} bound to two barrier sockets");
                         d.LinkBarrierSocket[l] = i;
                     }
-                    if (tool == ToolKind.Bridge && d.SocketEdge[i] >= 0) d.EdgeRequiredSocket[d.SocketEdge[i]] = i;
+                    if ((tool == ToolKind.Bridge || tool == ToolKind.Winch) && d.SocketEdge[i] >= 0) d.EdgeRequiredSocket[d.SocketEdge[i]] = i;
                     if (tool == ToolKind.Pump && (d.SocketIntake[i] < 0 || d.SocketOutlet[i] < 0))
                         throw new ContentException($"pump socket {d.SocketIds[i]} needs intake and outlet");
                     if ((tool == ToolKind.Skiff || tool == ToolKind.Crawler) && d.SocketNode[i] < 0)
                         throw new ContentException($"vehicle socket {d.SocketIds[i]} needs a node");
+                }
+            }
+
+            public void CheckBraceCap()
+            {
+                for (int sp = 0; sp < d.SupportIds.Length; sp++)
+                {
+                    int n = 0;
+                    for (int i = 0; i < d.SocketIds.Length; i++) if (d.SocketKind[i] == ToolKind.Brace && d.SocketSupport[i] == sp) n++;
+                    if (n > 3) throw new ContentException($"support {d.SupportIds[sp]} has {n} brace sockets (max 3)");
                 }
             }
 
@@ -506,7 +638,7 @@ namespace Resq.Sim
                 d.InfraIds = new string[k]; d.InfraPowerNode = new int[k]; d.InfraDemand0 = new int[k];
                 d.InfraPriority0 = new int[k]; d.InfraRegion = new int[k]; d.InfraMaxDepth = new long[k];
                 d.InfraRequiredNodes = new int[k][];
-                d.InfraMaxHeat = new int[k];
+                d.InfraMaxHeat = new int[k]; d.InfraSupport = new int[k];
                 for (int i = 0; i < k; i++)
                 {
                     var x = list[i];
@@ -518,6 +650,7 @@ namespace Resq.Sim
                     d.InfraRegion[i] = x.Str("region") != null ? d.RegionIndex[x.Str("region")] : -1;
                     d.InfraMaxDepth[i] = x.Long("max_depth", 100);
                     d.InfraMaxHeat[i] = x.Int("max_heat", 300);
+                    d.InfraSupport[i] = x.Str("support") != null ? SupportRef(x.Str("support")) : -1;
                     var nodes = new List<int>();
                     if (x["nodes"] != null) foreach (var n in x["nodes"].Elements()) nodes.Add(NodeRef(n.AsString()));
                     d.InfraRequiredNodes[i] = nodes.ToArray();
@@ -621,8 +754,19 @@ namespace Resq.Sim
                         foreach (var g in r["stores"].Elements()) list.Add(StoreRef(g.AsString()));
                         break;
                     case EventOpKind.SetInfrastructureDemand:
-                    case EventOpKind.WarnSupport:
                         foreach (var g in r["infrastructure"].Elements()) list.Add(d.InfraIndex[g.AsString()]);
+                        break;
+                    case EventOpKind.SetStabilityLoss:
+                    case EventOpKind.SetSupportLoad:
+                    case EventOpKind.Tremor:
+                    case EventOpKind.WarnSupport:
+                        if (r["supports"] != null) foreach (var g in r["supports"].Elements()) list.Add(SupportRef(g.AsString()));
+                        break;
+                    case EventOpKind.ReleaseAvalanche:
+                    case EventOpKind.WarnRunout:
+                        if (r["runouts"] != null)
+                            foreach (var g in r["runouts"].Elements())
+                                list.Add(d.RunoutIndex.TryGetValue(g.AsString(), out int ri) ? ri : throw new ContentException($"unknown runout '{g.AsString()}'"));
                         break;
                     default:
                         if (r["regions"] != null) foreach (var g in r["regions"].Elements()) list.Add(d.RegionIndex[g.AsString()]);
@@ -774,6 +918,12 @@ namespace Resq.Sim
                     case "generator_shutdowns": c.Metric = MetricKind.GeneratorShutdowns; break;
                     case "station_shutdowns": c.Metric = MetricKind.StationShutdowns; break;
                     case "shelter_exhaustions": c.Metric = MetricKind.ShelterExhaustions; break;
+                    case "max_node_dwell_scenario_ticks": c.Metric = MetricKind.MaxNodeDwell; c.MetricTarget = NodeRef(p.Str("node_id")); break;
+                    case "edge_transfers":
+                        c.Metric = MetricKind.EdgeTransfers;
+                        c.MetricMode = Array.IndexOf(d.TagIds, p.Str("edge_tag"));
+                        if (c.MetricMode < 0) throw new ContentException($"edge_transfers: no edge tagged '{p.Str("edge_tag")}'");
+                        break;
                     default: c.Metric = MetricKind.None; break; // world-specific metrics resolved by modules
                 }
             }

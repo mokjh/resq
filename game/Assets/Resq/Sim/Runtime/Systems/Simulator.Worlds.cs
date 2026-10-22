@@ -1,7 +1,7 @@
 namespace Resq.Sim
 {
     /// <summary>
-    /// Dispatch to World 2–5 hazard modules (fire/wind now; stability/runout, tides, lava/coolant/shelters next).
+    /// Dispatch to World 2–5 hazard modules (fire/wind and stability/runout/winch now; tides, lava/coolant/shelters next).
     /// Alder Valley content leaves them inert, so W1 behaviour is unchanged.
     /// </summary>
     public sealed partial class Simulator
@@ -9,6 +9,14 @@ namespace Resq.Sim
         void HazardModulesPulse()
         {
             FirePulse();
+            StabilityPulse();   // a collapse here may start its bound runout this pulse
+            RunoutPulse();
+        }
+
+        void WorldOnWarning(EventDef ev)
+        {
+            FireOnWarning(ev);
+            StabilityOnWarning(ev);
         }
 
         void ApplyWorldEventOp(EventOp op)
@@ -21,12 +29,23 @@ namespace Resq.Sim
                 case EventOpKind.SetRegionCooling:
                     ApplyFireOp(op);
                     break;
+                case EventOpKind.SetStabilityLoss:
+                case EventOpKind.SetSupportLoad:
+                case EventOpKind.Tremor:
+                case EventOpKind.WarnSupport:
+                case EventOpKind.ReleaseAvalanche:
+                    ApplyStabilityOp(op);
+                    break;
             }
         }
 
         Reject ExecuteWorldCommand(Command c) => Reject.UnknownKind;
 
-        bool WorldEdgeOpen(int edge)
+        bool WorldEdgeOpen(int edge) => FireEdgeOpen(edge) && StabilityEdgeOpen(edge);
+
+        bool WorldNodeSafe(int node) => FireNodeSafe(node) && StabilityNodeSafe(node);
+
+        bool FireEdgeOpen(int edge)
         {
             if (!D.FireEnabled) return true;
             var cells = D.EdgeSampleCells[edge];
@@ -35,7 +54,7 @@ namespace Resq.Sim
             return true;
         }
 
-        bool WorldNodeSafe(int node)
+        bool FireNodeSafe(int node)
         {
             if (!D.FireEnabled) return true;
             int c = D.NodeCell[node];
@@ -48,6 +67,14 @@ namespace Resq.Sim
 
         long WorldResource(int store) => store >= 0 && store < D.StoreNode.Length ? S.Volume[D.StoreNode[store]] : 0;
 
-        long WorldMetric(Condition c) => 0;
+        long WorldMetric(Condition c)
+        {
+            switch (c.Metric)
+            {
+                case MetricKind.MaxNodeDwell: return S.NodeMaxDwell[c.MetricTarget];
+                case MetricKind.EdgeTransfers: return EdgeTransfersTagged(c.MetricMode);
+                default: return 0;
+            }
+        }
     }
 }

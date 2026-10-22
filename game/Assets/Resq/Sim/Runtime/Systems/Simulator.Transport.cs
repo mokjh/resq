@@ -216,6 +216,7 @@ namespace Resq.Sim
             for (int r = 0; r < D.ResidentIds.Length; r++) ResidentLogic(r);
             for (int n = 0; n < D.NodeIds.Length; n++)
                 if (S.NodeOccupancy[n] > S.NodePeak[n]) S.NodePeak[n] = S.NodeOccupancy[n];
+            UpdateDwell();
             TutorialProgress();
         }
 
@@ -253,7 +254,7 @@ namespace Resq.Sim
             // arrive
             S.EdgeOccupancy[e]--;
             if (S.RReversing[r]) { S.NodeReserved[S.RNode[r]]--; }
-            else { S.NodeReserved[dest]--; S.NodeReserved[origin]--; }
+            else { S.NodeReserved[dest]--; S.NodeReserved[origin]--; S.EdgeTransfers[e]++; }
             int at = S.RNode[r];
             S.RState[r] = (byte)ResidentState.AtNode;
             S.REdge[r] = -1; S.RReversing[r] = false; S.RFrom[r] = -1;
@@ -337,10 +338,13 @@ namespace Resq.Sim
                     return;
                 }
             }
+            if ((VehicleKind)S.VKind[v] == VehicleKind.Winch && !WinchTravelTick(v)) return;
             S.VProgress[v]++;
             if (S.VProgress[v] < S.VDuration[v]) return;
             S.EdgeOccupancy[e] -= S.VSlots[v];
             int at = S.VNode[v];
+            if (!S.VReversing[v]) S.EdgeTransfers[e] += S.VOccupantCount[v];
+            S.VEmergency[v] = false; S.VBrake[v] = 0;
             S.VState[v] = (byte)VehicleState.Idle;
             S.VEdge[v] = -1; S.VReversing[v] = false; S.VFrom[v] = -1;
             if (UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0) S.NodeBerthUsed[at]++;
@@ -358,6 +362,8 @@ namespace Resq.Sim
             int e = NextEdge(at, target, cls, false);
             if (e < 0) return false;
             if (S.EdgeOccupancy[e] + S.VSlots[v] > D.EdgeSlots[e]) return false;
+            bool winch = (VehicleKind)S.VKind[v] == VehicleKind.Winch;
+            if (winch && !WinchCanDepart(v)) return false;
             int to = Other(D, e, at);
             if (UsesBerths(v) && (D.NodeFlags[to] & NodeFlags.Dock) != 0 && to == target && S.NodeBerthUsed[to] >= Math.Max(1, D.NodeBerths[to])) return false;
             S.EdgeOccupancy[e] += S.VSlots[v];
@@ -365,6 +371,7 @@ namespace Resq.Sim
             S.VState[v] = (byte)VehicleState.Moving;
             S.VEdge[v] = e; S.VFrom[v] = at; S.VNode[v] = to;
             S.VProgress[v] = 0; S.VDuration[v] = EdgeDuration(e);
+            if (winch) { S.VRest[v] = 0; S.VBrake[v] = 0; }
             return true;
         }
 
@@ -372,6 +379,7 @@ namespace Resq.Sim
         {
             var st = (VehicleState)S.VState[v];
             if (st == VehicleState.Moving || st == VehicleState.Failed) return;
+            if ((VehicleKind)S.VKind[v] == VehicleKind.Winch) WinchRest(v);
             var phase = (VehiclePhase)S.VPhase[v];
             int at = S.VNode[v];
             switch (phase)
@@ -457,6 +465,8 @@ namespace Resq.Sim
                 }
                 return;
             }
+            // a winch at its duty limit rests (empty) before anyone boards
+            if ((VehicleKind)S.VKind[v] == VehicleKind.Winch && S.VOccupantCount[v] == 0 && S.VDuty[v] >= WinchDutyTicks) return;
             bool full = S.VOccupantCount[v] >= S.VSeats[v];
             if (!full && g >= 0 && DockUsable(at) && GroupMemberWaitingAt(g, at, out int next))
             {
@@ -507,6 +517,7 @@ namespace Resq.Sim
                     {
                         S.RState[tr] = (byte)ResidentState.AtNode;
                         S.RNode[tr] = at;
+                        S.RDwellStart[tr] = S.C.S;
                         S.NodeOccupancy[at]++;
                         S.GroupTarget[D.ResidentGroup[tr]] = -1;
                     }

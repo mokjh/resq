@@ -218,6 +218,25 @@ namespace Resq.Sim
         public int[] SocketStore;             // sprinkler source store index or -1
         public int[] InfraMaxHeat = Array.Empty<int>();
 
+        // ---- structure stability and runout (World 3, spec 02 §8) ----
+        public string[] SupportIds = Array.Empty<string>();
+        public Dictionary<string, int> SupportIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        public int[] SupportBase0 = Array.Empty<int>(), SupportStatic0 = Array.Empty<int>();
+        public int[][] SupportLoadNodes, SupportLoadEdges;      // where residents load the structure
+        public int[][] SupportCollapseNodes, SupportCollapseEdges; // stations/edges lost for good on collapse
+        public int[] SocketSupport;                              // support a socket is attached to (braces, winches…) or -1
+        public int[] InfraSupport = Array.Empty<int>();          // infrastructure that needs a standing support, or -1
+
+        public string[] RunoutIds = Array.Empty<string>();
+        public Dictionary<string, int> RunoutIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        public int[] RunoutFirstSegment = Array.Empty<int>(), RunoutSourceSupport = Array.Empty<int>();
+        public string[] SegmentIds = Array.Empty<string>();
+        public int[] SegmentDelay = Array.Empty<int>(), SegmentSettle = Array.Empty<int>();
+        public int[][] SegmentEdges = Array.Empty<int[]>(), SegmentNodes = Array.Empty<int[]>(), SegmentCells = Array.Empty<int[]>();
+        public int[][] SegmentNext = Array.Empty<int[]>();       // successors (DAG, checked by the compiler)
+        public bool[] EdgeDebrisReopenable;
+        public int[][] EdgeSegments, NodeSegments;               // reverse lookups
+
         // ---- events / objectives ----
         public EventDef[] Events = Array.Empty<EventDef>();      // sorted by (AtTick, Id)
         public EventDef[] WarningOrder = Array.Empty<EventDef>(); // sorted by (WarningTick, Id)

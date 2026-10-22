@@ -47,6 +47,12 @@ namespace Resq.Sim
             if (S.C.EquipmentCount >= D.MaxEquipment) return Reject.CapacityFull;
             if (!SocketSafe(socket, tool)) return Reject.UnsafeTarget;
             if (tool == ToolKind.Firebreak) { var fb = ValidateFirebreak(socket); if (fb != Reject.OK) return fb; }
+            if (tool == ToolKind.Brace) { var br = ValidateBrace(socket); if (br != Reject.OK) return br; }
+            if (tool == ToolKind.Winch)
+            {
+                if (S.C.VehicleCount >= D.MaxVehicles) return Reject.CapacityFull;
+                if (D.SocketSupport[socket] >= 0 && S.SupCollapsed[D.SocketSupport[socket]]) return Reject.UnsafeTarget;
+            }
             if (tool == ToolKind.Skiff || tool == ToolKind.Crawler)
             {
                 int node = D.SocketNode[socket];
@@ -112,6 +118,7 @@ namespace Resq.Sim
                 var kind = tool == ToolKind.Skiff ? VehicleKind.Skiff : VehicleKind.Crawler;
                 SpawnVehicle(kind, D.SocketNode[socket], tool == ToolKind.Skiff ? 4 : 6, tool == ToolKind.Skiff ? 1 : 2, inst);
             }
+            if (tool == ToolKind.Winch) SpawnVehicle(VehicleKind.Winch, D.SocketNode[socket], WinchSeats, 1, inst);
             Emit(SimEventKind.EquipmentPlaced, inst, socket, (int)tool);
             return Reject.OK;
         }
@@ -163,6 +170,12 @@ namespace Resq.Sim
                 case ToolKind.Relay:
                     if (S.EqActive[inst]) return Reject.NotIdle;
                     break;
+                case ToolKind.Winch:
+                {
+                    var w = ValidateWinchMove(inst, dest);
+                    if (w != Reject.OK) return w;
+                    break;
+                }
             }
             if (!SocketSafe(dest, tool)) return Reject.UnsafeTarget;
             return Reject.OK;
@@ -176,6 +189,7 @@ namespace Resq.Sim
             S.EqSocket[inst] = dest;
             S.EqOrientation[inst] = orientation;
             S.SocketInstance[dest] = inst;
+            if ((ToolKind)S.EqKind[inst] == ToolKind.Winch) MoveWinchCabin(inst, dest);
             Emit(SimEventKind.EquipmentMoved, inst, dest);
             return Reject.OK;
         }
@@ -266,6 +280,7 @@ namespace Resq.Sim
                         break;
                     }
                     case ToolKind.Skiff:
+                    case ToolKind.Brace: // structural, not electronic
                         break;
                     default:
                     {
@@ -387,6 +402,7 @@ namespace Resq.Sim
             {
                 bool op = S.InfraPowered[i];
                 if (op && D.InfraRegion[i] >= 0 && RegionDepth(D.InfraRegion[i]) > D.InfraMaxDepth[i]) op = false;
+                if (op && D.InfraSupport[i] >= 0 && S.SupCollapsed[D.InfraSupport[i]]) op = false;
                 if (op && D.FireEnabled && D.InfraRegion[i] >= 0 && MaxRegionHeat(D.InfraRegion[i]) >= D.InfraMaxHeat[i]) op = false;
                 if (op && D.InfraRequiredNodes[i] != null)
                 {

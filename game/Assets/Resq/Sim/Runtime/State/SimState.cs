@@ -91,6 +91,20 @@ namespace Resq.Sim
         public bool[] FLatch;
         public int[] WindCode;
 
+        // stability / runout (World 3) — per support, per runout segment
+        public int[] SupBase, SupStatic, SupLoss, SupRem;
+        public long[] SupWarnTick;            // relevant warning tick or -1
+        public bool[] SupWarnEmergent, SupArmed, SupCollapsed, RunStarted;
+        public long[] SegStart;               // start tick or -1
+
+        // winch duty cycle / brake (per vehicle slot)
+        public int[] VDuty, VRest, VBrake;
+        public bool[] VEmergency;
+
+        // metrics
+        public int[] EdgeTransfers;           // resident traversals completed per edge
+        public long[] NodeMaxDwell;           // longest continuous scenario-tick wait per node
+
         // events / milestones / objectives
         public bool[] Warned, Applied;
         public long[] MilestoneO, MilestoneS;
@@ -145,6 +159,15 @@ namespace Resq.Sim
             FState = new byte[cells]; FWarnStart = new long[cells]; FCoolStart = new long[cells]; FSprayRem = new long[cells];
             FLatch = new bool[cells];
             WindCode = new int[d.RegionIds.Length];
+
+            int sp = d.SupportIds.Length;
+            SupBase = new int[sp]; SupStatic = new int[sp]; SupLoss = new int[sp]; SupRem = new int[sp];
+            SupWarnTick = new long[sp]; SupWarnEmergent = new bool[sp]; SupArmed = new bool[sp]; SupCollapsed = new bool[sp];
+            RunStarted = new bool[d.RunoutIds.Length];
+            SegStart = new long[d.SegmentIds.Length];
+            VDuty = new int[v]; VRest = new int[v]; VBrake = new int[v]; VEmergency = new bool[v];
+            EdgeTransfers = new int[e];
+            NodeMaxDwell = new long[n];
 
             Warned = new bool[d.Events.Length]; Applied = new bool[d.Events.Length];
             MilestoneO = new long[d.Milestones.Length]; MilestoneS = new long[d.Milestones.Length];

@@ -8,7 +8,8 @@ namespace Resq.Sim
     {
         CommandResolved, EquipmentPlaced, EquipmentMoved, EquipmentBroken, Warning, EventApplied, RouteBlocked,
         TransferStarted, TransferCompleted, TransferCancelled, ResidentEvacuated, ResidentBackup, MilestoneReached,
-        ObjectiveUpdated, OperationStarted, OperationEnded, PowerChanged, GeneratorShutdown, VehicleArrived
+        ObjectiveUpdated, OperationStarted, OperationEnded, PowerChanged, GeneratorShutdown, VehicleArrived,
+        SupportWarning, SupportCollapsed, RunoutStarted
     }
 
     public struct SimEvent
@@ -80,6 +81,7 @@ namespace Resq.Sim
             for (int i = 0; i < D.SourceNode.Length; i++) S.SourceRate[i] = D.SourceRate0[i];
             for (int i = 0; i < D.SinkNode.Length; i++) S.SinkRate[i] = D.SinkRate0[i];
             InitFire();
+            InitStability();
             for (int i = 0; i < D.GateIds.Length; i++) S.GateOpen[i] = D.GateInitialOpen[i];
             for (int i = 0; i < S.SocketInstance.Length; i++) S.SocketInstance[i] = -1;
             for (int i = 0; i < D.InfraIds.Length; i++)
@@ -127,7 +129,7 @@ namespace Resq.Sim
                 if (ev.WarningTick != 0) continue;
                 int idx = Array.IndexOf(D.Events, ev);
                 S.Warned[idx] = true;
-                FireOnWarning(ev);
+                WorldOnWarning(ev);
                 Emit(SimEventKind.Warning, idx);
             }
             if (!guided)
@@ -212,7 +214,7 @@ namespace Resq.Sim
                 if (!S.Warned[i] && ev.WarningTick == s)
                 {
                     S.Warned[i] = true;
-                    FireOnWarning(ev);
+                    WorldOnWarning(ev);
                     Emit(SimEventKind.Warning, i);
                 }
             }
@@ -249,7 +251,6 @@ namespace Resq.Sim
                 case EventOpKind.WarnResource:
                 case EventOpKind.WarnWindChange:
                 case EventOpKind.WarnRunout:
-                case EventOpKind.WarnSupport:
                 case EventOpKind.WarnReheat:
                     break; // advisory only
                 default:
