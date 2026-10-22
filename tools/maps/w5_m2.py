@@ -1,11 +1,11 @@
 """W5-M2 Borrowed Safety — authored layout (recipe W5-M2-layout-v1; anchors kept approximately).
 
 Story: one lava arm runs east-west across the board and cuts both villages off from the refuges. Its single crossing
-is a narrow crust stair (4 movement slots, 190 ticks): a crust window lets four walkers start across, or the crawler
+is a narrow crust stair (4 movement slots, 170 ticks): a crust window lets four walkers start across, or the crawler
 (two slots, six seats) plus two walkers. The crossing turns Hot at 60 s, before anyone can walk down to it, so every
 crossing is a cooled crossing, and a second window needs the same segment to reheat first (300 ticks after cooling).
 - Heat advances on the orchard first: its terraces turn unsafe at 70 s. The village terraces follow at 100 s.
-- The north bank is a tiny safe ledge (3 people). Beside it stand two temporary shelter sites: the orchard shelter
+- The north bank is a tiny safe ledge (4 people). Beside it stand two temporary shelter sites: the orchard shelter
   (shelter_a, safe ground until its external heat front starts at 180 s) and the village shelter (inside the village
   heat zone, hazardous from 100 s).
 - The quarry hut (6 places) and its track, behind the village, are far from any heat; the hut is a third shelter
@@ -42,7 +42,7 @@ m.regions = {"village_heat": rect(23, 17, 27, 18)}
 m.group_nodes("orchard", (5, 14), 9)
 m.group_nodes("village", (26, 14), 9)
 m.node("w_shelter", (13, 13), ["shelter"], capacity=6)
-m.node("n_bank", (15, 13), ["junction"], capacity=3)
+m.node("n_bank", (15, 13), ["junction"], capacity=4)
 m.node("e_shelter", (17, 13), ["shelter"], capacity=6)
 m.node("s_bank", (15, 9), ["junction"], capacity=9)
 m.node("quarry_track", (27, 16), ["junction"], capacity=9)
@@ -55,8 +55,8 @@ m.edge("g_orchard_road", "orchard_pickup", "w_shelter", 580, sample=[[5, 12], [1
 m.edge("g_w_bank", "w_shelter", "n_bank", 20, **ROAD)
 m.edge("g_village_road", "village_pickup", "e_shelter", 580, sample=[[26, 12], [19, 13]], **ROAD)
 m.edge("g_e_bank", "e_shelter", "n_bank", 20, **ROAD)
-m.edge("g_cross", "n_bank", "s_bank", 190, sample=[[15, 11], [15, 10]], tags=["crossing"], slots=4)
-m.edge("g_s_depot", "s_bank", "depot", 60, sample=[[15, 5], [15, 4]], **ROAD)
+m.edge("g_cross", "n_bank", "s_bank", 170, sample=[[15, 11], [15, 10]], tags=["crossing"], slots=4)
+m.edge("g_s_depot", "s_bank", "depot", 10, sample=[[15, 5], [15, 4]], **ROAD)
 m.edge("g_coast", "depot", "high_landing", 200, sample=[[16, 3], [23, 3]], **ROAD)
 m.edge("g_quarry_track", "village_start", "quarry_track", 30, **ROAD)
 m.edge("g_quarry", "quarry_track", "quarry", 10, **ROAD)

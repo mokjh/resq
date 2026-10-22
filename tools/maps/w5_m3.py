@@ -11,7 +11,7 @@ down the east side to crossing L on the second channel.
 - 170 s: the delivery channel turns Hot, closing crossing S, and its heat makes the plant terraces unsafe: residents
   still there need the plant shelter (six places; two more fit in the control room).
 - 310 s: the second channel turns Hot and closes crossing L.
-- Both crossings are narrow (2 slots, 100 ticks): a crust window passes four walkers.
+- Both crossings are narrow (2 slots, 90 ticks): a crust window passes four walkers (two start at +50, two at +140).
 - Finite coolant: three coolers (one charge each) and the works store (3 charges, capacity 8). The works turns six
   feedstock units into charges, one per 100 powered ticks, only while it is operational.
 """
@@ -70,7 +70,7 @@ m.node("high_landing", (20, 4), ["evacuation"], capacity=8)   # wide secondary
 m.edge("g_works_yard", "cooling_works_pickup", "works_yard", 20, **ROAD)
 m.edge("g_works_shelter", "works_yard", "works_shelter", 20, **ROAD)
 m.edge("g_causeway", "works_shelter", "d_bank", 100, sample=[[8, 12], [9, 12], [10, 12]], **ROAD)
-m.edge("g_cross_short", "d_bank", "short_south", 100, sample=[[13, 11], [14, 10]], tags=["crossing"], **NARROW)
+m.edge("g_cross_short", "d_bank", "short_south", 90, sample=[[13, 11], [14, 10]], tags=["crossing"], **NARROW)
 m.edge("g_short_depot", "short_south", "depot", 100, sample=[[15, 9], [15, 5]], **ROAD)
 m.edge("g_village_road", "village_pickup", "d_bank", 150, sample=[[9, 6], [11, 8], [12, 11]], **ROAD)
 m.edge("g_long_a", "cooling_works_pickup", "ridge_west", 600, sample=[[5, 18], [5, 21]], slots=8)
@@ -79,7 +79,7 @@ m.edge("g_ridge_hut", "ridge_east", "ridge_hut", 40, **ROAD)
 m.edge("g_long_c", "ridge_east", "east_strip", 800, sample=[[30, 20], [30, 12]], slots=8)
 m.edge("g_long_d", "east_strip", "late_bank", 300, sample=[[30, 10], [26, 10]], slots=8)
 m.edge("g_research_bank", "research_pickup", "late_bank", 150, sample=[[27, 12], [25, 10]], **ROAD)
-m.edge("g_cross_late", "late_bank", "late_south", 100, sample=[[24, 10], [23, 9]], tags=["crossing"], **NARROW)
+m.edge("g_cross_late", "late_bank", "late_south", 90, sample=[[24, 10], [23, 9]], tags=["crossing"], **NARROW)
 m.edge("g_late_landing", "late_south", "high_landing", 150, sample=[[22, 9], [21, 6]], **ROAD)
 
 # ---------------------------------------------------------------- power and the cooling works

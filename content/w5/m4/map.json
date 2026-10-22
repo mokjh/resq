@@ -18,8 +18,8 @@
   "####ooo=oo=ll##=##############SS",
   "####ooo=oo=ll##=##############SS",
   "####ooo=oo=ll===##############SS",
-  "####ooo=oo#ll##=##############SS",
-  "####oooooo#ll##=##############SS",
+  "####ooo=oo#ll##=######ll######SS",
+  "####oooooo#ll##=######ll######SS",
   "###########ll#DDDD######HHHH##SS",
   "#######qqq#ll#DDDD######HHHH##SS",
   "#######qqq#ll#DDDD######HHHH##SS",
@@ -1157,6 +1157,10 @@
      {
       "to": "inland_lobe",
       "delay": 1000
+     },
+     {
+      "to": "harbour_lobe",
+      "delay": 1840
      }
     ]
    },
@@ -1173,6 +1177,18 @@
      "inland_assembly",
      "inland_pickup",
      "pier_shelter"
+    ]
+   },
+   {
+    "id": "harbour_lobe",
+    "cells": {
+     "x0": 22,
+     "y0": 5,
+     "x1": 23,
+     "y1": 6
+    },
+    "nodes": [
+     "high_landing"
     ]
    }
   ],

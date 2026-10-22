@@ -454,7 +454,7 @@
    "id": "g_cross_short",
    "from": "d_bank",
    "to": "short_south",
-   "ticks": 100,
+   "ticks": 90,
    "class": "ground",
    "sample": [
     [
@@ -613,7 +613,7 @@
    "id": "g_cross_late",
    "from": "late_bank",
    "to": "late_south",
-   "ticks": 100,
+   "ticks": 90,
    "class": "ground",
    "sample": [
     [

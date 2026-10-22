@@ -169,7 +169,7 @@
    "flags": [
     "junction"
    ],
-   "capacity": 3
+   "capacity": 4
   },
   {
    "id": "e_shelter",
@@ -338,7 +338,7 @@
    "id": "g_cross",
    "from": "n_bank",
    "to": "s_bank",
-   "ticks": 190,
+   "ticks": 170,
    "class": "ground",
    "sample": [
     [
@@ -359,7 +359,7 @@
    "id": "g_s_depot",
    "from": "s_bank",
    "to": "depot",
-   "ticks": 60,
+   "ticks": 10,
    "class": "ground",
    "sample": [
     [

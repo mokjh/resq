@@ -15,8 +15,8 @@ Generator: `tools/maps/w5_m3.py` (with `tools/maps/w5_kit.py`), which writes `ma
   - `generator:02` on the dry ridge, which reaches the works grid only through a relay. `relay:01` sits on the same platform. `relay:02` sits beside the delivery channel, where the 170 s arrival destroys it.
 - **Routes.**
   - The long mountain path (3100 ticks, 8 slots) climbs north round both vents and comes down to crossing L on the second channel.
-  - The village and the research station have short routes that they finish long before any lava (S≤651).
-  - Both crossings are narrow (2 slots, 100 ticks), so a crust window passes four walkers.
+  - The village and the research station have short routes that they finish long before any lava (S≤621).
+  - Both crossings are narrow (2 slots, 90 ticks). Under the known-closure admission rule (engine a02c558), a walker may start only if they arrive before the crust's expiry (cool start + 250). Two walkers start at c+50 and two at c+140, so a window passes four. With the original 100-tick crossings only the first pair could start, and both plans fell to 1★ (16/20).
 
 ## How the map expresses the threat sequence (Standard)
 - **50 s.** The spring starts (`set_source_rate`).
@@ -27,13 +27,13 @@ Generator: `tools/maps/w5_m3.py` (with `tools/maps/w5_kit.py`), which writes `ma
 - **A** follows the brief "Secure drainage and power first, then cool the short route."
   - **Drainage and power.** At t=5 it places `generator:01` on the cutting platform and both pumps (the works waits for power).
   - **Staging.** The plant crew stages in the shelter (6) and the control room (2) and sits out the heat from S=1700. They used 452 of 600 protection.
-  - **The crossing.** Once the causeway is passable (S≈2140), the crew moves to the crossing bank. Crossing S is cooled twice, at S=2240 and 2545 (one refill from the store). The crew is out by S=2895.
+  - **The crossing.** Once the causeway is passable (S≈2140), the crew moves to the crossing bank. Crossing S is cooled twice, at S=2240 and 2545 (one refill from the store). The crew is out by S=2875.
   - **The works.** At t=4650 `pump:02` is switched off so the works runs; the cutting refills too slowly to matter. Store at the end: 3 (one refill out, one charge produced).
   - **Relaxed copy.** Steps from t=4250 repeat the crossing sequence for the Relaxed clock and do nothing in Standard.
 - **B** follows the brief "Evacuate via the longer path and save cooling for the late channel."
   - **Power.** It uses the dry ridge generator `generator:02` and `relay:01`. Both pumps hold the cutting below the platform.
   - **The long path.** The crew walks the long path at once and reaches crossing L at S=3145, just after the second channel arrives.
-  - **The late channel.** The saved cooler opens crossing L twice, at S=3146 and 3450. The crew is out by S=3850.
+  - **The late channel.** The saved cooler opens crossing L twice, at S=3146 and 3450. The crew is out by S=3830.
   - **The works.** At t=4650 the works is given priority 0, the first claim on power. Store at the end: 3.
 - **The difference.** They differ in route (short route with drainage and an early channel versus long path and the late channel), in generator site (cutting platform versus ridge and relay), in shelter use (A only), and in how power is handed back to the works (a pump switched off versus priority reordered).
 

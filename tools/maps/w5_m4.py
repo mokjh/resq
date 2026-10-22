@@ -11,7 +11,9 @@ sits on the east shore. Three ways out:
 - Crawler and cooling: the inland orchard's long track reaches crossing B after the lava; crossing B's cooler sockets
   are locked until the final cooling window at 440 s. Crossing B is a wide crust road (4 slots).
 - 300 s: the inland lobe makes the orchard terraces and the pier shelter unsafe.
-- The landings and the pier have one berth each. A skiff whose orders end at a landing stays docked there and keeps the berth.
+- 384 s: a southern lobe of the land channel reaches the high landing, which then closes for good (published with
+  the 190 s warning, so every capacity panel shows its closing time).
+- The landings and the pier have one berth each (a finished skiff moors aside and frees its berth).
 """
 from w5_kit import W5Map, ROAD, NARROW, rect
 
@@ -30,9 +32,10 @@ m.line("=", (5, 12), (9, 12), (9, 11), (15, 11), (15, 5))   # research short rou
 m.line("=", (7, 6), (7, 10), (10, 10), (10, 7), (14, 7))    # inland track to crossing B
 
 # ---------------------------------------------------------------- lava (role land_channel)
-m.segment("land", rect(11, 2, 12, 20), edges=["g_cross_a", "g_cross_b"], next=[("inland_lobe", 1000)])
+m.segment("land", rect(11, 2, 12, 20), edges=["g_cross_a", "g_cross_b"], next=[("inland_lobe", 1000), ("harbour_lobe", 1840)])
 m.segment("inland_lobe", rect(2, 10, 6, 11),
           nodes=["inland_start", "inland_assembly", "inland_pickup", "pier_shelter"])
+m.segment("harbour_lobe", rect(22, 5, 23, 6), nodes=["high_landing"])   # reaches the high landing at 384 s
 m.lava_sources = [{"id": "land_vent", "segment": "land"}]
 m.coolant = [{"id": "coolant", "charges": 2, "capacity": 8}]
 

@@ -48,14 +48,14 @@
    "vehicle": "skiff:02",
    "group": "inland",
    "pickup": "pier",
-   "to": "depot"
+   "to": "high_landing"
   },
   {
    "t": 3301,
    "vehicle": "skiff:03",
    "group": "inland",
    "pickup": "pier",
-   "to": "high_landing"
+   "to": "depot"
   }
  ]
 }

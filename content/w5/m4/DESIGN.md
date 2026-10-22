@@ -10,13 +10,15 @@ Generator: `tools/maps/w5_m4.py` (with `tools/maps/w5_kit.py`), which writes `ma
 - **Crawler and cooling, or sea (inland orchard).**
   - The long track (2000 ticks) reaches crossing B after the lava. Crossing B is a wide crust road (4 slots). Its cooler sockets (`crossing_b`: `cooler:02`, `cooler:03`) are locked until the final cooling window at 440 s.
   - The alternative is the orchard's tiny pier (one berth, 4 people) with a shelter beside it. The pier's channel to the south buoy is blocked by debris until 330 s (`sea_route`).
-- **Landings.** The high landing and depot each have one berth. A skiff whose job is done stays docked and keeps the berth.
+- **Landings.** The high landing and depot each have one berth. Since engine a02c558, a skiff whose job is done moors aside: it frees the berth, so an idle boat never blocks a loaded one.
+- **The harbour lobe.** A southern lobe of the land channel reaches the high landing at 384 s (land arrival + 1840). The landing then closes for good: its node is unsafe, so no boat can unload there. The arrival is published with the 190 s warning, so the closing time is known in advance.
 
 ## How the map expresses the threat sequence (Standard)
 - **70 s.** `warn_route` on `short_land_route` (crossing A) is advisory.
 - **200 s.** The land channel turns Hot and closes crossings A and B.
 - **300 s.** The inland lobe makes the orchard terraces and the pier shelter unsafe.
 - **330 s.** The pier channel opens (`set_edge_enabled`).
+- **384 s.** The harbour lobe closes the high landing.
 - **440 s.** Crossing B's cooler sockets unlock (`enable_cooler_socket`).
 
 ## Why A and B differ
@@ -27,17 +29,18 @@ Generator: `tools/maps/w5_m4.py` (with `tools/maps/w5_kit.py`), which writes `ma
 - **B** follows the brief "Use shelter to stage inland groups while boats clear the receiving dock."
   - **Research and coast.** Same research and coast moves as A.
   - **Staging at the pier.** The orchard stages at its pier: four on the pier and four in the pier shelter, which turns hazardous at 300 s.
-  - **The pickup.** When the pier channel clears (330 s), each skiff takes four from the pier back to its *own* landing, which is still free because nothing else is waiting there. The orchard is out by S=4031.
+  - **The pickup.** When the pier channel clears (330 s), the boat from the depot (`skiff:02`) is first at the pier. It takes four to the high landing, which they reach at S=3750, 50 ticks before the harbour lobe closes it at 3840. The boat from the high landing (`skiff:03`) takes the last four to the depot. The orchard is out by S=3871.
   - **Protection used.** 464 of the shelter's 600 units.
 - **The difference.** They differ in the inland group's mode (ground: crawler and cooled crossing, versus water: shelter and boats), in equipment (crawler and cooler versus shelter), and in timing (the final cooling window versus the debris clearing).
 - **Mastery.** Both reach 3★, with at least one ground evacuation and at least one water evacuation.
 
 ## A single major mistake
-- **`mistake.json`: overloading one final landing creates a queue.** This is plan A, but both coast skiffs are sent to the high landing.
-  - `skiff:03` unloads the first four and, its job done, stays on the landing's only berth.
-  - `skiff:02`, loaded with the last four coast residents, queues at the outer buoy for the rest of the operation; its state stays Waiting/ToDestination to the end, as the vehicle trace shows.
-  - Everyone else is safe, but a vehicle still holds passengers at the end.
-  - Result: **FAIL** in all six configurations, with 20 of 24 rescued and `all_vehicles_unloaded` failed.
+- **`mistake.json`: overloading one final landing creates a queue.** This is plan B, but both inland boats are sent to the high landing.
+  - The second boat queues at the pier behind the first and reaches the high landing at about S=3890. The harbour lobe closed it at 3840; the capacity panel showed that closing time from 190 s.
+  - The second boat sits at the closed landing with four orchard residents aboard to the end: a loaded closed-dock wait.
+  - Result: **FAIL** in Standard and Command (wide and compact), with 20 of 24 rescued and `all_vehicles_unloaded` failed.
+  - **Relaxed: the mistake succeeds** (3★). The boats' travel takes half as many scenario ticks, so the second boat lands at about S=3650, before the closure. As for W5-M1, the same operation-tick script is not the same decision on the Relaxed clock.
+- **The old mistake no longer fails.** It sent both coast skiffs to the high landing, which stranded the second boat behind a finished skiff that kept the berth. Since engine a02c558 finished skiffs moor aside, so that plan now succeeds (3★); the new mistake replaces it.
 - **No shelter (B without `shelter:01`).** Four orchard residents in the pier shelter go to AwaitingBackup at S=3019. Result: success, 1★ (20 of 24).
 - **No bridge (A without `bridge:01`).** The research crew reaches crossing A after the lava and has no cooler there. Result: **FAIL**, with 16 of 24 rescued and the required crew objective missed.
 - **No input: FAIL**, with 0 rescued.
@@ -50,11 +53,12 @@ ok   W5-M4 wide    Standard strategy B -> stars=3 score=9444 rescued=24/24 backu
 ok   ... identical for Relaxed and Command, wide and compact ...
 VALIDATION PASSED: 18/18 runs as expected
 ```
-Mistake: `RESULT W5-M4 {wide,compact} {Standard,Relaxed,Command} mistake: success=False stars=0 rescued=20/24` (loaded skiff at the end).
+Mistake: `RESULT W5-M4 {wide,compact} {Standard,Command} mistake: success=False stars=0 rescued=20/24` (loaded skiff at the closed high landing). In `{wide,compact} Relaxed` it gives `success=True stars=3`.
 
 ## Notes and open issues
-- **Berths and deadlock.** Berths are reserved at departure, and the origin berth is kept until arrival. A skiff that is waiting at a dock node holds that dock's berth. Water junctions between docks are therefore open-water buoys (`outer_buoy`, `south_buoy`). An earlier draft routed one skiff *through* the depot dock to reach the pier: both skiffs then waited on each other's berth (a deadlock). Routing through buoys removes it.
-- **Pickup behaviour.** A skiff with a pickup group keeps shuttling until every member has boarded. A berth is only held for good once the group is fully aboard. That is why the mistake needs the two coast skiffs to load in parallel (the two-berth coast dock).
+- **Berths and deadlock.** Berths are reserved at departure, and the origin berth is kept until arrival. Water junctions between docks are open-water buoys (`outer_buoy`, `south_buoy`), so a waiting boat never sits on a dock it is only passing through (an earlier draft deadlocked that way).
+- **Why the closure.** Under the a02c558 rules a queue at a one-berth landing costs a boat about 40 ticks (the time to unload four). A queue alone is never decisive. The harbour lobe gives that delay a real deadline.
+- **Margins (B, Standard).** The first boat reaches the high landing 50 ticks before the closure. In the mistake the second boat arrives about 50 ticks after it.
 - **Margins.**
   - B's shelter ends with 136 of 600 protection (218 in Relaxed).
   - A's crawler waits about 2300 ticks at crossing B. That bank is safe, and the staged group is the point of the final window.
