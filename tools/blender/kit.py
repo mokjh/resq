@@ -165,6 +165,7 @@ def sha256_file(path):
 # --------------------------------------------------------------------------
 def reset_scene():
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    bpy.context.preferences.filepaths.save_version = 0   # no .blend1 backups
     sc = bpy.context.scene
     sc.unit_settings.system = "METRIC"
     sc.unit_settings.scale_length = 1.0
@@ -400,6 +401,7 @@ class Builder:
         self.l_tone = fl.float.new("tone")
         self.l_bone = fl.int.new("bone")
         self.l_keep = fl.int.new("keep")
+        self.l_part = fl.int.new("part")
         self.parts = 0
 
     def add(self, tmp, role, tone=1.0, bone=0, smooth=False, bev=0.0, bev_seg=1,
@@ -423,6 +425,7 @@ class Builder:
             nf[self.l_tone] = t
             nf[self.l_bone] = bone
             nf[self.l_keep] = 1 if keep else 0
+            nf[self.l_part] = self.parts
             nf.smooth = smooth
         tmp.free()
         self.parts += 1
@@ -437,7 +440,7 @@ class Builder:
         """Cull hidden faces, triangulate, write 'Col' (RGB albedo x tone,
         A = geometric AO) and palette UVs; return the new object."""
         bm = self.bm
-        self.culled = cull_hidden(bm, self.l_keep, **(cull or {})) if cull is not False else 0
+        self.culled = cull_hidden(bm, self.l_keep, self.l_part, **(cull or {})) if cull is not False else 0
         bmesh.ops.triangulate(bm, faces=bm.faces[:], quad_method="BEAUTY", ngon_method="BEAUTY")
         # remove degenerate faces
         bad = [f for f in bm.faces if f.calc_area() < 1e-14]
@@ -485,18 +488,20 @@ class Builder:
             rn = PALETTE[f[self.l_role]][0]
             roles[rn] = roles.get(rn, 0) + 1
         ob["resq_roles"] = json.dumps(roles, sort_keys=True)
+        ob["resq_culled"] = self.culled
         bm.free()
         self.bm = None
         return ob
 
 
-def cull_hidden(bm, keep_layer, gap_mm=0.6, ground_z_mm=0.0, use_ground=True):
+def cull_hidden(bm, keep_layer, part_layer, gap_mm=0.6, ground_z_mm=0.0, use_ground=True):
     """Delete faces that can never be seen: every sample point on the face is
     covered within gap_mm along its normal by another surface (siding backs,
     wedge tops under the next course, ends against frames, bottoms on the
     ground). Parts added with keep=True are never deleted. Returns count."""
     bm.normal_update()
     bm.faces.index_update()
+    bm.faces.ensure_lookup_table()
     bvh = BVHTree.FromBMesh(bm)
     G = gap_mm * MM
     gz = ground_z_mm * MM
@@ -510,12 +515,24 @@ def cull_hidden(bm, keep_layer, gap_mm=0.6, ground_z_mm=0.0, use_ground=True):
         c = f.calc_center_median()
         pts = [c] + [c + (lp.vert.co - c) * t for lp in f.loops for t in (0.5, 0.9)]
         covered = True
+        me_part = f[part_layer]
         for p in pts:
-            o = p + n * (0.01 * MM)
             if use_ground and n.z < -0.99 and abs(p.z - gz) < 0.02 * MM:
                 continue
+            # face-to-face contact with another part (coplanar, opposing normals)
+            touch = False
+            for co, nn, idx, dist in bvh.find_nearest_range(p, 0.004 * MM):
+                if idx is None or idx == f.index:
+                    continue
+                g = bm.faces[idx]
+                if g[part_layer] != me_part and nn.dot(n) < -0.9:
+                    touch = True
+                    break
+            if touch:
+                continue
+            o = p + n * (0.01 * MM)
             hit = bvh.ray_cast(o, n, G)
-            if hit[0] is None or hit[2] == f.index:
+            if hit[0] is None or hit[2] == f.index or bm.faces[hit[2]][part_layer] == me_part:
                 covered = False
                 break
         if covered:
@@ -706,6 +723,10 @@ def bake_ao_cycles(ob, distance_mm=8.0, samples=16, ground_z_mm=None):
             g = bpy.data.objects.new("bake_ground", gm)
             sc.collection.objects.link(g)
             tmp_objs.append(g)
+        hidden_render = {o: o.hide_render for o in sc.objects}
+        for o in sc.objects:
+            if o is not ob and o not in tmp_objs:
+                o.hide_render = True
         me = ob.data
         tmp = me.color_attributes.new("AO_bake", "FLOAT_COLOR", "CORNER")
         me.color_attributes.active_color = tmp
@@ -734,6 +755,8 @@ def bake_ao_cycles(ob, distance_mm=8.0, samples=16, ground_z_mm=None):
         me.color_attributes.active_color = me.color_attributes["Col"]
         ob.hide_set(was_hidden)
         ob.select_set(False)
+        for o, h in hidden_render.items():
+            o.hide_render = h
         return ok
     finally:
         for g in tmp_objs:
@@ -855,10 +878,14 @@ def export_fbx(path, objects, preset=None):
         p.update(preset)
     for ob in bpy.context.scene.objects:
         ob.select_set(False)
+    was = {ob: ob.hide_get() for ob in objects}
     for ob in objects:
+        ob.hide_set(False)
         ob.select_set(True)
     bpy.context.view_layer.objects.active = objects[0]
     st = bpy.ops.export_scene.fbx(filepath=path, check_existing=False, **p)
+    for ob, h in was.items():
+        ob.hide_set(h)
     if st != {"FINISHED"} or not os.path.isfile(path):
         raise RuntimeError("FBX export failed: %s" % path)
     return {k: (sorted(v) if isinstance(v, set) else v) for k, v in p.items()}

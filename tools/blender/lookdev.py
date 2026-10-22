@@ -337,8 +337,8 @@ def build_skiff(lod, mat):
         # rubber rub-strake + grab-line loops on the collar
         for s in (-1, 1):
             for gx in ((-26.0, -6.0, 14.0) if full else (-16.0, 10.0)):
-                y = s * (half_w(gx) + 2.2)
-                z = _interp(gx, 2) + 2.6
+                y = s * (half_w(gx) + 1.0)
+                z = _interp(gx, 2) + 3.3
                 b.add(kit.tmp_sweep([V(gx - 3.0, y, z - 0.6), V(gx - 1.4, y + s * 0.5, z + 0.5),
                                      V(gx + 1.4, y + s * 0.5, z + 0.5), V(gx + 3.0, y, z - 0.6)],
                                     0.55, seg=5), "rubber", smooth=True)
@@ -378,7 +378,7 @@ def build_skiff(lod, mat):
     b.box(-38.4, -1.0, -4.0, -36.2, 1.0, 9.0, "metal_dark", tone=0.75)    # leg
     b.box(-39.2, -1.4, -6.0, -35.6, 1.4, -3.6, "metal_dark", tone=0.75, bev=0.4 if lod < 2 else 0.0)
     if lod < 2:
-        b.add(kit.tmp_cyl((-39.95, 0, -4.8), (-39.2, 0, -4.8), 1.6, 8), "metal_dark", tone=0.6)
+        b.add(kit.tmp_cyl((-39.95, 0, -4.3), (-39.2, 0, -4.3), 1.6, 8), "metal_dark", tone=0.6)
     kit.rail(b, (-33.6, 0, 14.0), (-24.5, 0, 12.6), 1.4, 1.4, "metal_dark", tone=0.85)
     b.add(kit.tmp_cyl((-27.5, 0, 13.06), (-23.8, 0, 12.5), 1.05, 8), "rubber", smooth=True)
     ob = b.finalize("skiff_LOD%d" % lod, mat,
@@ -781,6 +781,7 @@ def make_cottage():
         e["meaning"] = meaning
         m.append(e)
     meta = {"pivot": "ground centre: root at footprint centre, z=0 on the support surface",
+            "hidden_faces_culled": {o.name: o.get("resq_culled") for o in lods},
             "lod_method": "semantic rebuild per LOD (fewer courses/details), decimation only as top-up",
             "lod_notes": notes,
             "design": "cedar lap-siding wedge courses over a dark core (real shadow lines), cream gables, "
