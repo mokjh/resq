@@ -1,0 +1,10 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: ignoring the visible wind timeline makes the formerly safe flank dangerous). Plan A's west firebreak and lookout crawler are used, but the east flank is treated as safe because the wind blows west: no firebreak at the east hedge and no order for the east camp. The 200 s warning announces the eastward turn; after it the east hedge races to the camp, whose six go to backup at S=2443. 14 of 20 are rescued (minimum 15).",
+  "steps": [
+    {"t": 5, "place": "firebreak:01"},
+    {"t": 7, "place": "crawler:01"},
+    {"t": 8, "vehicle": "crawler:01", "group": "lookout", "pickup": "lookout_pickup", "to": "depot"},
+    {"t": 9, "group": "west_camp", "to": "depot"}
+  ]
+}

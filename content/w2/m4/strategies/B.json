@@ -1,0 +1,11 @@
+{
+  "id": "B",
+  "description": "Concentrate early rescues on the future downwind side, then retreat along the safe loop.",
+  "steps": [
+    {"t": 5, "place": "sprinkler:01"},
+    {"t": 6, "place": "crawler:02"},
+    {"t": 7, "vehicle": "crawler:02", "group": "east_camp", "pickup": "east_camp_pickup", "to": "high_landing"},
+    {"t": 8, "group": "west_camp", "to": "depot"},
+    {"t": 760, "vehicle": "crawler:02", "group": "lookout", "pickup": "lookout_pickup", "to": "depot"}
+  ]
+}

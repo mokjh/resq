@@ -15,7 +15,8 @@
 - **Frostline (W3) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; real compact layouts via `class_overrides`; mistake runs fail (W3-M3 Relaxed excepted).
 - **Tidemark (W4) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistakes fail in all profiles.
 - **Cinder Reach (W5) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistake runs fail (W5-M1 Relaxed excepted).
-- **Emberwood (W2):** M1, M2, M5 18/18 each; M3/M4 unblocked by engine fixes (pumps to stores, fires burning at S=0) and in progress.
+- **Emberwood (W2) greybox complete:** M1–M5 each 18/18 (90/90); M3/M4 use the new store pumps and fires burning at S=0. W2-M3 plan A has one Relaxed-only step (t=6000, after the Standard end).
+- **All 25 missions validated headlessly: 450/450 runs.**
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.

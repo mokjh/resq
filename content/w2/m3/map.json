@@ -1,0 +1,777 @@
+{
+ "mission_id": "W2-M3",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,oooo,,,,,,,,,~~~~~~~~,,,",
+  ",,,,,,,,oooo,,,,,,,,,~~~~~~~~,,,",
+  ",,,,,,,,oooo,,,,,,,,,~~~~~~~~,,,",
+  ",,,,,,,,oooo,,,,,,,,,~~~~~~~~,,,",
+  ",,,vvvvvoooo,,,,,,,,,,,vvvvv,,,,",
+  ",,,vvvvvoooo,,,,,,,,,,,vvvvv,,,,",
+  ",,,vvvvoooo,,bbb,,,,,,,vvvvv,,,,",
+  ",,,vvv==========b,,,,,,vvvvv,,,,",
+  ",,,vvvvv,,,,,,,=b,,,,,,vv=vv,,,,",
+  ",,,,,,,,,,,,,,,=b,,,,,,,,=,,,,,,",
+  ",,,,,,,,,,,,,,,=b,,,,,,,,=,,,,,,",
+  ",,,,,,,,,,,,,,,=b,,,,,,,,=,,,,,,",
+  ",,,,,,,,,,,,,,,=b,,,,,,,,=,,,,,,",
+  ",,,,,,,,,,,,,,,=b,,,,,,,,=,,,,,,",
+  ",,,,,,,,,,,,,,,=,TT,,,,,HHHH,,,,",
+  ",,,,,,,,,,,,,DDDDTT,,,,,HHHH,,,,",
+  ",,,,,,,,,,,,,DDDDD,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200,
+   "fuel": 0
+  },
+  ",": {
+   "terrain": "meadow",
+   "code": 13,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "T": {
+   "terrain": "forest",
+   "code": 14,
+   "elev": 1200,
+   "fuel": 1000
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300,
+   "fuel": 0
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100,
+   "fuel": 1000
+  },
+  "v": {
+   "terrain": "camp_ground",
+   "code": 11,
+   "elev": 300,
+   "fuel": 0
+  },
+  "~": {
+   "terrain": "pond",
+   "code": 0,
+   "elev": 0,
+   "fuel": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "b": {
+   "terrain": "cabin",
+   "code": 23,
+   "elev": 1200,
+   "fuel": 1000,
+   "building": true
+  }
+ },
+ "regions": {
+  "forest": {
+   "x0": 0,
+   "y0": 0,
+   "x1": 31,
+   "y1": 23
+  },
+  "orchard_edge": [
+   [
+    8,
+    14
+   ],
+   [
+    9,
+    14
+   ],
+   [
+    10,
+    14
+   ],
+   [
+    11,
+    14
+   ]
+  ],
+  "return_road_fuel": {
+   "x0": 17,
+   "y0": 3,
+   "x1": 18,
+   "y1": 4
+  },
+  "orchard_strip": [
+   [
+    7,
+    12
+   ],
+   [
+    8,
+    12
+   ],
+   [
+    9,
+    12
+   ],
+   [
+    10,
+    12
+   ]
+  ],
+  "timber_sheds": [
+   [
+    16,
+    5
+   ],
+   [
+    16,
+    6
+   ],
+   [
+    16,
+    7
+   ],
+   [
+    16,
+    8
+   ],
+   [
+    16,
+    9
+   ],
+   [
+    16,
+    10
+   ],
+   [
+    16,
+    11
+   ],
+   [
+    13,
+    12
+   ],
+   [
+    14,
+    12
+   ],
+   [
+    15,
+    12
+   ]
+  ]
+ },
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "orchard_start",
+   "at": [
+    6,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "orchard_assembly",
+   "at": [
+    6,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "orchard_pickup",
+   "at": [
+    6,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "pond_houses_start",
+   "at": [
+    25,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "pond_houses_assembly",
+   "at": [
+    25,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "pond_houses_pickup",
+   "at": [
+    25,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "orchard_junction",
+   "at": [
+    15,
+    11
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    25,
+    4
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 8
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_orchard_assembly",
+   "from": "orchard_start",
+   "to": "orchard_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_orchard_pickup",
+   "from": "orchard_assembly",
+   "to": "orchard_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_pond_houses_assembly",
+   "from": "pond_houses_start",
+   "to": "pond_houses_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_pond_houses_pickup",
+   "from": "pond_houses_assembly",
+   "to": "pond_houses_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_orchard_road",
+   "from": "orchard_pickup",
+   "to": "orchard_junction",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     6,
+     11
+    ],
+    [
+     7,
+     11
+    ],
+    [
+     8,
+     11
+    ],
+    [
+     9,
+     11
+    ],
+    [
+     10,
+     11
+    ],
+    [
+     11,
+     11
+    ],
+    [
+     12,
+     11
+    ],
+    [
+     13,
+     11
+    ],
+    [
+     14,
+     11
+    ],
+    [
+     15,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_return_road",
+   "from": "orchard_junction",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     3
+    ],
+    [
+     15,
+     4
+    ],
+    [
+     15,
+     5
+    ],
+    [
+     15,
+     6
+    ],
+    [
+     15,
+     7
+    ],
+    [
+     15,
+     8
+    ],
+    [
+     15,
+     9
+    ],
+    [
+     15,
+     10
+    ],
+    [
+     15,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_pond_road",
+   "from": "pond_houses_pickup",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     25,
+     4
+    ],
+    [
+     25,
+     5
+    ],
+    [
+     25,
+     6
+    ],
+    [
+     25,
+     7
+    ],
+    [
+     25,
+     8
+    ],
+    [
+     25,
+     9
+    ],
+    [
+     25,
+     10
+    ],
+    [
+     25,
+     11
+    ]
+   ]
+  }
+ ],
+ "sockets": [
+  {
+   "id": "pump:01",
+   "tool": "pump",
+   "at": [
+    19,
+    20
+   ],
+   "intake": "pond",
+   "outlet": "tank",
+   "power": "grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:02",
+   "tool": "pump",
+   "at": [
+    22,
+    19
+   ],
+   "intake": "pond",
+   "outlet": "tank",
+   "power": "grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "sprinkler:01",
+   "tool": "sprinkler",
+   "at": [
+    4,
+    12
+   ],
+   "cells": [
+    [
+     7,
+     12
+    ],
+    [
+     8,
+     12
+    ],
+    [
+     9,
+     12
+    ],
+    [
+     10,
+     12
+    ]
+   ],
+   "store": "tank",
+   "power": "grid",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "sprinkler:02",
+   "tool": "sprinkler",
+   "at": [
+    14,
+    6
+   ],
+   "cells": [
+    [
+     16,
+     5
+    ]
+   ],
+   "store": "tank",
+   "power": "grid",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "sprinkler:03",
+   "tool": "sprinkler",
+   "at": [
+    24,
+    9
+   ],
+   "cells": [
+    [
+     23,
+     14
+    ],
+    [
+     27,
+     14
+    ]
+   ],
+   "store": "pond",
+   "power": "grid",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "firebreak:01",
+   "tool": "firebreak",
+   "at": [
+    8,
+    11
+   ],
+   "cells": [
+    [
+     7,
+     12
+    ],
+    [
+     8,
+     12
+    ],
+    [
+     9,
+     12
+    ],
+    [
+     10,
+     12
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:02",
+   "tool": "firebreak",
+   "at": [
+    12,
+    14
+   ],
+   "cells": [
+    [
+     8,
+     13
+    ],
+    [
+     9,
+     13
+    ],
+    [
+     10,
+     13
+    ],
+    [
+     11,
+     13
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:03",
+   "tool": "firebreak",
+   "at": [
+    10,
+    19
+   ],
+   "cells": [
+    [
+     8,
+     18
+    ],
+    [
+     9,
+     18
+    ],
+    [
+     10,
+     18
+    ],
+    [
+     11,
+     18
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    20,
+    8
+   ],
+   "platform": [
+    [
+     20,
+     8
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    12,
+    15
+   ],
+   "platform": [
+    [
+     12,
+     15
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "orchard_junction",
+   "at": [
+    14,
+    10
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "orchard",
+   "start": "orchard_start",
+   "assembly": "orchard_assembly",
+   "pickup": "orchard_pickup"
+  },
+  {
+   "id": "pond_houses",
+   "start": "pond_houses_start",
+   "assembly": "pond_houses_assembly",
+   "pickup": "pond_houses_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "orchard_assembly_route",
+   "from": "depot",
+   "to": "orchard_assembly",
+   "class": "ground"
+  }
+ ],
+ "roles": {
+  "forest": {
+   "regions": [
+    "forest"
+   ]
+  },
+  "orchard_edge": {
+   "regions": [
+    "orchard_edge"
+   ]
+  },
+  "return_road_fuel": {
+   "regions": [
+    "return_road_fuel"
+   ]
+  },
+  "tank": {
+   "stores": [
+    "tank"
+   ]
+  },
+  "pond": {
+   "stores": [
+    "pond"
+   ]
+  },
+  "orchard_assembly_route": {
+   "edges": [
+    "g_orchard_assembly",
+    "g_orchard_pickup",
+    "g_orchard_road",
+    "g_return_road"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "edges": [
+    {
+     "id": "g_pond_road",
+     "ticks": 250
+    },
+    {
+     "id": "g_return_road",
+     "ticks": 350
+    }
+   ]
+  }
+ },
+ "fire": {
+  "enabled": true,
+  "wind_regions": [
+   "forest"
+  ]
+ },
+ "stores": [
+  {
+   "id": "tank",
+   "elev": 5600,
+   "volume": 600000000
+  },
+  {
+   "id": "pond",
+   "elev": 1200,
+   "volume": 1200000000
+  }
+ ]
+}
