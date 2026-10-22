@@ -359,13 +359,18 @@ namespace Resq.Sim
         {
             var cls = VehicleClass((VehicleKind)S.VKind[v]);
             int at = S.VNode[v];
+            _berthBlocked = false;
             int e = NextEdge(at, target, cls, false);
             if (e < 0) return false;
             if (S.EdgeOccupancy[e] + S.VSlots[v] > D.EdgeSlots[e]) return false;
             bool winch = (VehicleKind)S.VKind[v] == VehicleKind.Winch;
             if (winch && !WinchCanDepart(v)) return false;
             int to = Other(D, e, at);
-            if (UsesBerths(v) && (D.NodeFlags[to] & NodeFlags.Dock) != 0 && to == target && S.NodeBerthUsed[to] >= Math.Max(1, D.NodeBerths[to])) return false;
+            if (UsesBerths(v) && (D.NodeFlags[to] & NodeFlags.Dock) != 0 && to == target && S.NodeBerthUsed[to] >= Math.Max(1, D.NodeBerths[to]))
+            {
+                _berthBlocked = true;
+                return false;
+            }
             S.EdgeOccupancy[e] += S.VSlots[v];
             if (UsesBerths(v) && (D.NodeFlags[at] & NodeFlags.Dock) != 0) S.NodeBerthUsed[at]--;
             S.VState[v] = (byte)VehicleState.Moving;
@@ -386,7 +391,8 @@ namespace Resq.Sim
             {
                 case VehiclePhase.ToPickup:
                     if (at == S.VPickupNode[v]) { S.VPhase[v] = (byte)VehiclePhase.Loading; goto case VehiclePhase.Loading; }
-                    if (!TryMoveVehicle(v, S.VPickupNode[v])) S.VState[v] = (byte)VehicleState.Waiting;
+                    if (!TryMoveVehicle(v, S.VPickupNode[v])) { S.VState[v] = (byte)VehicleState.Waiting; QueueTick(v, S.VPickupNode[v]); }
+                    else S.VQueue[v] = 0;
                     break;
                 case VehiclePhase.Loading:
                     LoadingTick(v);
@@ -395,14 +401,26 @@ namespace Resq.Sim
                     if (at == S.VDestination[v]) { S.VPhase[v] = (byte)VehiclePhase.Unloading; goto case VehiclePhase.Unloading; }
                     if (!TryMoveVehicle(v, S.VDestination[v]))
                     {
+                        QueueTick(v, S.VDestination[v]);
                         S.VState[v] = (byte)VehicleState.Waiting;
                         if (S.VOccupantCount[v] > 0) S.C.LoadedClosedDockWait++;
                     }
+                    else S.VQueue[v] = 0;
                     break;
                 case VehiclePhase.Unloading:
                     UnloadingTick(v);
                     break;
             }
+        }
+
+        bool _berthBlocked;
+
+        /// <summary>Dock queue metric: consecutive operation ticks a vehicle waits because its target dock's berth is taken.</summary>
+        void QueueTick(int v, int target)
+        {
+            if (!_berthBlocked) { S.VQueue[v] = 0; return; }
+            S.VQueue[v]++;
+            if (S.VQueue[v] > S.NodeMaxQueue[target]) S.NodeMaxQueue[target] = S.VQueue[v];
         }
 
         bool GroupHasUnboardedMembers(int g)

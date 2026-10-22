@@ -90,6 +90,7 @@ namespace Resq.Sim
         public EventOpKind Kind;
         public int[] Targets;   // resolved target indices (meaning depends on kind)
         public long Value;
+        public bool TargetsInfrastructure; // warn_support bound to infrastructure (advisory only)
     }
 
     public sealed class EventDef
@@ -236,6 +237,16 @@ namespace Resq.Sim
         public int[][] SegmentNext = Array.Empty<int[]>();       // successors (DAG, checked by the compiler)
         public bool[] EdgeDebrisReopenable;
         public int[][] EdgeSegments, NodeSegments;               // reverse lookups
+
+        // ---- tides (World 4, spec 02 §9): sea boundaries with a prescribed head ----
+        public string[] TideIds = Array.Empty<string>();
+        public Dictionary<string, int> TideIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+        public long[] TideDatum = Array.Empty<long>(), TideInitialLevel = Array.Empty<long>();
+        public long[][] TideKnotTicks = Array.Empty<long[]>(), TideKnotLevels = Array.Empty<long[]>(); // null: event-ramp controller
+        public long[] TidePeriod = Array.Empty<long>();        // 0: nonrepeating
+        public int[] SeaCell = Array.Empty<int>(), SeaTide = Array.Empty<int>(); // boundary links: grid cell ↔ controller
+        public long[] SeaSill = Array.Empty<long>(), SeaCond = Array.Empty<long>(), SeaMax = Array.Empty<long>();
+        public int TideStartIndex = -1;                        // High Tide Start challenge: initial segment index, or -1
 
         // ---- events / objectives ----
         public EventDef[] Events = Array.Empty<EventDef>();      // sorted by (AtTick, Id)

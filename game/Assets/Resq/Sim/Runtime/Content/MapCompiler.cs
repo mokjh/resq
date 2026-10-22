@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Resq.Sim.Rules;
 
 namespace Resq.Sim
 {
@@ -55,6 +56,7 @@ namespace Resq.Sim
             ctx.CompileGrid();
             ctx.CompileRegions();
             ctx.CompileWater();
+            ctx.CompileTides();
             ctx.CompileFire();
             ctx.CompileNodes();
             ctx.CompileEdges();
@@ -62,6 +64,7 @@ namespace Resq.Sim
             ctx.CompilePower();
             ctx.CompileSockets();
             ctx.CheckBraceCap();
+            ctx.BindRelayLinks();
             ctx.CompileInfrastructure();
             ctx.CompileGroups(contract);
             ctx.CompileVehicles();
@@ -124,6 +127,7 @@ namespace Resq.Sim
             readonly Dictionary<string, JsonNode> _roles = new Dictionary<string, JsonNode>(StringComparer.Ordinal);
             readonly Dictionary<string, int> _sourceIndex = new Dictionary<string, int>(StringComparer.Ordinal);
             readonly Dictionary<string, int> _milestoneIndex = new Dictionary<string, int>(StringComparer.Ordinal);
+            readonly List<(int link, string socket)> _relayLinks = new List<(int link, string socket)>();
 
             public Ctx(MissionDef def, JsonNode map) { d = def; m = map; }
 
@@ -398,6 +402,44 @@ namespace Resq.Sim
                     }
             }
 
+            /// <summary>World 4 sea boundaries: one controller per boundary, either an event ramp or a fixed knot track.</summary>
+            public void CompileTides()
+            {
+                var tides = m["tides"]?.Elements().OrderBy(x => x.Str("id"), StringComparer.Ordinal).ToList() ?? new List<JsonNode>();
+                int k = tides.Count;
+                d.TideIds = new string[k]; d.TideDatum = new long[k]; d.TideInitialLevel = new long[k];
+                d.TideKnotTicks = new long[k][]; d.TideKnotLevels = new long[k][]; d.TidePeriod = new long[k];
+                var cell = new List<int>(); var tide = new List<int>(); var sill = new List<long>(); var cond = new List<long>(); var max = new List<long>();
+                for (int i = 0; i < k; i++)
+                {
+                    var x = tides[i];
+                    d.TideIds[i] = x.Str("id");
+                    d.TideIndex[d.TideIds[i]] = i;
+                    d.TideDatum[i] = x.Long("datum");
+                    d.TideInitialLevel[i] = x.Long("initial_level");
+                    if (x["track"] != null)
+                    {
+                        var knots = x["track"].Elements().ToList();
+                        if (knots.Count < 2) throw new ContentException($"tide {d.TideIds[i]} track needs two knots");
+                        d.TideKnotTicks[i] = knots.Select(kn => kn[0].AsLong()).ToArray();
+                        d.TideKnotLevels[i] = knots.Select(kn => kn[1].AsLong()).ToArray();
+                        for (int j = 1; j < knots.Count; j++)
+                            if (d.TideKnotTicks[i][j] <= d.TideKnotTicks[i][j - 1]) throw new ContentException($"tide {d.TideIds[i]} knots must strictly increase");
+                        d.TidePeriod[i] = x.Long("period");
+                        if (d.TidePeriod[i] > 0 && (d.TidePeriod[i] != d.TideKnotTicks[i][knots.Count - 1] || d.TideKnotTicks[i][0] != 0 ||
+                                                    d.TideKnotLevels[i][knots.Count - 1] != d.TideKnotLevels[i][0]))
+                            throw new ContentException($"tide {d.TideIds[i]}: a repeating track runs 0..period and ends at its first level");
+                    }
+                    long cnd = x.Long("conductance", 2_000_000), mx = x.Long("max_transfer", DefaultMaxTransfer);
+                    foreach (int c in ResolveCells(x["cells"]))
+                    {
+                        if (c >= d.GridW * d.GridH) throw new ContentException($"tide {d.TideIds[i]}: boundary must be grid cells");
+                        cell.Add(c); tide.Add(i); sill.Add(d.WElev[c]); cond.Add(cnd); max.Add(mx);
+                    }
+                }
+                d.SeaCell = cell.ToArray(); d.SeaTide = tide.ToArray(); d.SeaSill = sill.ToArray(); d.SeaCond = cond.ToArray(); d.SeaMax = max.ToArray();
+            }
+
             int[] NodeList(JsonNode arr) => arr == null ? Array.Empty<int>() : arr.Elements().Select(n => NodeRef(n.AsString())).Distinct().OrderBy(x => x).ToArray();
             int[] EdgeList(JsonNode arr) => arr == null ? Array.Empty<int>() : arr.Elements().Select(e => EdgeRef(e.AsString())).Distinct().OrderBy(x => x).ToArray();
 
@@ -535,7 +577,11 @@ namespace Resq.Sim
                 var lf = new List<int>(); var lt = new List<int>(); var lr = new List<int>();
                 if (p?["links"] != null)
                     foreach (var l in p["links"].Elements())
-                    { lf.Add(PowerRef(l[0].AsString())); lt.Add(PowerRef(l[1].AsString())); lr.Add(-1); }
+                    {
+                        if (l.Kind == JsonKind.Array) { lf.Add(PowerRef(l[0].AsString())); lt.Add(PowerRef(l[1].AsString())); lr.Add(-1); continue; }
+                        lf.Add(PowerRef(l.Str("from"))); lt.Add(PowerRef(l.Str("to"))); lr.Add(-1);
+                        if (l.Str("relay") != null) _relayLinks.Add((lf.Count - 1, l.Str("relay")));
+                    }
                 d.PowerLinkFrom = lf.ToArray(); d.PowerLinkTo = lt.ToArray(); d.PowerLinkRelaySocket = lr.ToArray();
             }
 
@@ -606,6 +652,20 @@ namespace Resq.Sim
                     if ((tool == ToolKind.Skiff || tool == ToolKind.Crawler) && d.SocketNode[i] < 0)
                         throw new ContentException($"vehicle socket {d.SocketIds[i]} needs a node");
                 }
+            }
+
+            public void BindRelayLinks()
+            {
+                foreach (var (link, socket) in _relayLinks)
+                {
+                    if (!d.SocketIndex.TryGetValue(socket, out int s) || d.SocketKind[s] != ToolKind.Relay)
+                        throw new ContentException($"power link relay '{socket}' is not a relay socket");
+                    if (d.PowerLinkRelaySocket.Contains(s)) throw new ContentException($"relay socket {socket} bound to two links");
+                    d.PowerLinkRelaySocket[link] = s;
+                }
+                for (int s = 0; s < d.SocketIds.Length; s++)
+                    if (d.SocketKind[s] == ToolKind.Relay && !d.PowerLinkRelaySocket.Contains(s))
+                        throw new ContentException($"relay socket {d.SocketIds[s]} creates no power link (decorative cables carry nothing)");
             }
 
             public void CheckBraceCap()
@@ -759,8 +819,20 @@ namespace Resq.Sim
                     case EventOpKind.SetStabilityLoss:
                     case EventOpKind.SetSupportLoad:
                     case EventOpKind.Tremor:
-                    case EventOpKind.WarnSupport:
                         if (r["supports"] != null) foreach (var g in r["supports"].Elements()) list.Add(SupportRef(g.AsString()));
+                        break;
+                    case EventOpKind.WarnSupport: // a structure, or (World 4) advisory on infrastructure
+                        if (r["supports"] != null) foreach (var g in r["supports"].Elements()) list.Add(SupportRef(g.AsString()));
+                        else if (r["infrastructure"] != null) foreach (var g in r["infrastructure"].Elements()) list.Add(InfraRef(g.AsString()));
+                        break;
+                    case EventOpKind.SetTideSegment:
+                        if (r["tides"] != null)
+                            foreach (var g in r["tides"].Elements())
+                            {
+                                if (!d.TideIndex.TryGetValue(g.AsString(), out int ti)) throw new ContentException($"unknown tide '{g.AsString()}'");
+                                if (d.TideKnotTicks[ti] != null) throw new ContentException($"tide {g.AsString()} uses a fixed track; event ramps need an event controller");
+                                list.Add(ti);
+                            }
                         break;
                     case EventOpKind.ReleaseAvalanche:
                     case EventOpKind.WarnRunout:
@@ -790,7 +862,13 @@ namespace Resq.Sim
                     foreach (var op in e["operations"].Elements())
                     {
                         var kind = ParseOp(op.Str("kind"));
-                        ops.Add(new EventOp { Kind = kind, Targets = RoleTargets(op.Str("target_role"), kind), Value = op.Long("value") });
+                        long value = op.Long("value");
+                        if (kind == EventOpKind.SetCurrentMultiplier && (value < 500 || value > 2000))
+                            throw new ContentException($"event {e.Str("id")}: current multiplier {value} outside 500..2000");
+                        if (kind == EventOpKind.SetTideSegment && (value < 0 || value >= TideRules.SegmentTargets.Length))
+                            throw new ContentException($"event {e.Str("id")}: tide segment {value} unknown");
+                        bool infra = kind == EventOpKind.WarnSupport && _roles.TryGetValue(op.Str("target_role"), out var rr) && rr["supports"] == null;
+                        ops.Add(new EventOp { Kind = kind, Targets = RoleTargets(op.Str("target_role"), kind), Value = value, TargetsInfrastructure = infra });
                     }
                     result.Add(new EventDef { Id = e.Str("id"), AtTick = at, WarningTick = warn, Ops = ops.ToArray(),
                                               WarningKey = $"{d.MissionId}.{e.Str("id")}" });
@@ -918,6 +996,7 @@ namespace Resq.Sim
                     case "generator_shutdowns": c.Metric = MetricKind.GeneratorShutdowns; break;
                     case "station_shutdowns": c.Metric = MetricKind.StationShutdowns; break;
                     case "shelter_exhaustions": c.Metric = MetricKind.ShelterExhaustions; break;
+                    case "max_dock_queue_operation_ticks": c.Metric = MetricKind.MaxDockQueue; c.MetricTarget = NodeRef(p.Str("node_id")); break;
                     case "max_node_dwell_scenario_ticks": c.Metric = MetricKind.MaxNodeDwell; c.MetricTarget = NodeRef(p.Str("node_id")); break;
                     case "edge_transfers":
                         c.Metric = MetricKind.EdgeTransfers;

@@ -34,3 +34,15 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | Winch duty | Duty counts powered travelling operation ticks. Departure needs duty < 100. A winch at its limit rests empty at a safe endpoint before anyone boards; 30 rest ticks reset duty to 0. |
 | Cable edges | Open while a winch is placed, unbroken and its support stands. Power governs movement (brake, then a one-time emergency return), not edge admission. |
 | Runout | Segments start at the release (or bound collapse) tick; successors start exactly `delay` ticks after their predecessor. Nodes are unsafe while a segment settles; `debris_reopenable` edges reopen after `settle`; other edges stay closed. |
+
+## 23 Oct 2026 — rule readings for the World 4 module (spec 02 §4, §5, §9)
+
+| Decision | Result |
+|---|---|
+| Sea boundary | A map `tides` entry names its boundary grid cells. Sea head = `datum` + level. Each boundary cell exchanges with the sea through a passive link (sill = cell bed, default conductance 2,000,000). Inflow is added independently; outflow competes with the cell's other outward requests. Per-controller `SeaIn`/`SeaOut` ledgers keep volume conservation exact. |
+| Controllers | One per boundary: an event ramp (`set_tide_segment`) or a fixed knot track (optional loop period). The compiler rejects event ramps on a track controller and segment indexes outside 0–3. |
+| High Tide Start | `MissionDef.TideStartIndex` sets the initial level with a degenerate ramp at S=0; events keep their authored ticks. |
+| Relay | A power link object `{from, to, relay}` binds a relay socket. The link carries power while the relay is placed, enabled, intact and connected. It drops above 50 mm and reconnects by itself at ≤ 40 mm. Relays start enabled on placement. Every relay socket must bind a link. |
+| `warn_support` in World 4 | When its role binds infrastructure rather than a support, the operation is advisory only. |
+| Dock queue metric | Longest run of consecutive operation ticks a vehicle waits because its target dock's only berth is taken. |
+| Known gap | Berths are checked at departure, not reserved, so two skiffs leaving together for a one-berth dock can both arrive. Mission content and strategies must avoid relying on this until berth reservation lands. |

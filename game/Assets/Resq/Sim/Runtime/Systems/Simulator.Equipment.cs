@@ -108,7 +108,8 @@ namespace Resq.Sim
             S.EqRemainder[inst] = 0;
             S.EqPriority[inst] = DefaultPriority(tool);
             // Pumps/sprinklers start enabled when they have a legal intake/outlet; generators start running.
-            S.EqActive[inst] = tool == ToolKind.Pump || tool == ToolKind.Generator || tool == ToolKind.Sprinkler || tool == ToolKind.Winch;
+            S.EqActive[inst] = tool == ToolKind.Pump || tool == ToolKind.Generator || tool == ToolKind.Sprinkler || tool == ToolKind.Winch ||
+                               tool == ToolKind.Relay;
             S.SocketInstance[socket] = inst;
             S.Deployed[(int)tool]++;
             S.C.SupplySpent += D.ToolCost[(int)tool];
@@ -342,7 +343,11 @@ namespace Resq.Sim
                 if (relay >= 0)
                 {
                     int inst = S.SocketInstance[relay];
-                    if (inst < 0 || S.EqBroken[inst] || PlatformDepth(relay) > EquipmentRules.GeneratorShutdownDepthMm) continue;
+                    if (inst < 0 || S.EqBroken[inst] || !S.EqActive[inst]) continue;
+                    // a low connection drops above 50 mm and reconnects by itself at <= 40 mm (hysteresis latch)
+                    long depth = PlatformDepth(relay);
+                    if (S.EqLatchedOff[inst]) { if (depth <= EquipmentRules.GeneratorRestartDepthMm) S.EqLatchedOff[inst] = false; else continue; }
+                    else if (depth > EquipmentRules.GeneratorShutdownDepthMm) { S.EqLatchedOff[inst] = true; continue; }
                 }
                 Union(D.PowerLinkFrom[l], D.PowerLinkTo[l]);
             }

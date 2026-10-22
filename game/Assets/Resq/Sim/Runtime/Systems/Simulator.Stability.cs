@@ -143,6 +143,7 @@ namespace Resq.Sim
             {
                 if (op.Kind != EventOpKind.SetStabilityLoss && op.Kind != EventOpKind.SetSupportLoad &&
                     op.Kind != EventOpKind.Tremor && op.Kind != EventOpKind.WarnSupport) continue;
+                if (op.TargetsInfrastructure) continue;
                 foreach (int t in op.Targets) StampSupportWarning(t);
             }
         }
@@ -156,6 +157,7 @@ namespace Resq.Sim
 
         void ApplyStabilityOp(EventOp op)
         {
+            if (op.TargetsInfrastructure) return; // advisory warning about infrastructure
             foreach (int t in op.Targets)
             {
                 switch (op.Kind)

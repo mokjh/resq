@@ -55,6 +55,7 @@ namespace Resq.Sim
             }
             for (int i = 0; i < wc; i++) _head[i] = WaterRules.Head(D.WElev[i], _avail[i], D.WArea[i]);
             Array.Copy(_avail, _newVol, wc);
+            SeaInflow();
 
             for (int node = 0; node < wc; node++)
             {
@@ -98,6 +99,7 @@ namespace Resq.Sim
                     if (q <= 0) continue;
                     AddRequest(ref count, q, -1, 2, k);
                 }
+                AddSeaRequests(node, ref count);
                 AddSprinklerRequests(node, ref count);
                 if (count == 0) continue;
                 WaterRules.Allocate(_avail[node], new ReadOnlySpan<long>(_reqAmount, 0, count),
@@ -111,6 +113,7 @@ namespace Resq.Sim
                     if (dst >= 0) _newVol[dst] = checked(_newVol[dst] + g);
                     if (_reqKind[r] == 1 && dst >= 0) RecordPumpedInto(dst, g);
                     if (_reqKind[r] == 3) ApplySprayGrant(_reqRef[r], g);
+                    if (_reqKind[r] == SeaRequestKind) RecordSeaOut(_reqRef[r], g);
                 }
             }
             for (int i = 0; i < wc; i++)

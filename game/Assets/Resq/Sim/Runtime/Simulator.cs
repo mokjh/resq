@@ -82,6 +82,7 @@ namespace Resq.Sim
             for (int i = 0; i < D.SinkNode.Length; i++) S.SinkRate[i] = D.SinkRate0[i];
             InitFire();
             InitStability();
+            InitTides();
             for (int i = 0; i < D.GateIds.Length; i++) S.GateOpen[i] = D.GateInitialOpen[i];
             for (int i = 0; i < S.SocketInstance.Length; i++) S.SocketInstance[i] = -1;
             for (int i = 0; i < D.InfraIds.Length; i++)
@@ -208,6 +209,7 @@ namespace Resq.Sim
         void ApplyScheduledEvents()
         {
             long s = S.C.S;
+            EvaluateTides(); // tide controllers first, so a new ramp captures the level at this exact S
             for (int i = 0; i < D.Events.Length; i++)
             {
                 var ev = D.Events[i];

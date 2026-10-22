@@ -1,7 +1,7 @@
 namespace Resq.Sim
 {
     /// <summary>
-    /// Dispatch to World 2–5 hazard modules (fire/wind and stability/runout/winch now; tides, lava/coolant/shelters next).
+    /// Dispatch to World 2–5 hazard modules (fire/wind and stability/runout/winch and tides/relays now; lava/coolant/shelters next).
     /// Alder Valley content leaves them inert, so W1 behaviour is unchanged.
     /// </summary>
     public sealed partial class Simulator
@@ -35,6 +35,9 @@ namespace Resq.Sim
                 case EventOpKind.WarnSupport:
                 case EventOpKind.ReleaseAvalanche:
                     ApplyStabilityOp(op);
+                    break;
+                case EventOpKind.SetTideSegment:
+                    ApplyTideOp(op);
                     break;
             }
         }
@@ -73,6 +76,7 @@ namespace Resq.Sim
             {
                 case MetricKind.MaxNodeDwell: return S.NodeMaxDwell[c.MetricTarget];
                 case MetricKind.EdgeTransfers: return EdgeTransfersTagged(c.MetricMode);
+                case MetricKind.MaxDockQueue: return S.NodeMaxQueue[c.MetricTarget];
                 default: return 0;
             }
         }

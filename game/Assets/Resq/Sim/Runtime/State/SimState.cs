@@ -101,7 +101,13 @@ namespace Resq.Sim
         public int[] VDuty, VRest, VBrake;
         public bool[] VEmergency;
 
+        // tides: ramp per controller, ledger per boundary
+        public long[] TideStartTick, TideStartLevel, TideEndTick, TideEndLevel, TideLevel;
+        public long[] SeaIn, SeaOut;
+
         // metrics
+        public int[] VQueue;                  // consecutive operation ticks a vehicle waited on a full dock berth
+        public long[] NodeMaxQueue;
         public int[] EdgeTransfers;           // resident traversals completed per edge
         public long[] NodeMaxDwell;           // longest continuous scenario-tick wait per node
 
@@ -166,6 +172,10 @@ namespace Resq.Sim
             RunStarted = new bool[d.RunoutIds.Length];
             SegStart = new long[d.SegmentIds.Length];
             VDuty = new int[v]; VRest = new int[v]; VBrake = new int[v]; VEmergency = new bool[v];
+            int td = d.TideIds.Length;
+            TideStartTick = new long[td]; TideStartLevel = new long[td]; TideEndTick = new long[td]; TideEndLevel = new long[td];
+            TideLevel = new long[td]; SeaIn = new long[td]; SeaOut = new long[td];
+            VQueue = new int[v]; NodeMaxQueue = new long[n];
             EdgeTransfers = new int[e];
             NodeMaxDwell = new long[n];
 
