@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "unity-resq": {
+      "type": "stdio",
+      "command": "unity",
+      "args": ["mcp", "--project-path", "/Users/dev/Desktop/Resq/game"]
+    }
+  }
+}

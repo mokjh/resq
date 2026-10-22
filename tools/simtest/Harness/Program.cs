@@ -12,6 +12,7 @@ namespace Resq.Sim.Headless
     {
         public static int Main(string[] args)
         {
+            if (args.Length > 0 && args[0] == "--lab") return Lab.Run(args.Skip(1).ToArray());
             string filter = args.FirstOrDefault(a => !a.StartsWith("--"));
             bool verbose = args.Contains("--verbose");
             var tests = typeof(Program).Assembly.GetTypes()

@@ -1,0 +1,11 @@
+{
+  "id": "A",
+  "description": "Bridge the bus crossing, divert water west, then skiff the dock group.",
+  "steps": [
+    {"t": 5, "place": "bridge:01"},
+    {"t": 6, "vehicle": "bus", "group": "bus", "pickup": "bus_pickup", "to": "depot"},
+    {"t": 60, "place": "barrier:01"},
+    {"t": 80, "place": "skiff:01"},
+    {"t": 81, "vehicle": "skiff:01", "group": "low_dock", "pickup": "low_dock", "to": "high_landing"}
+  ]
+}

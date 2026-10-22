@@ -1,0 +1,11 @@
+{
+  "id": "B",
+  "description": "Divert first, skiff the low dock, then build the bridge before the last surge.",
+  "steps": [
+    {"t": 5, "place": "barrier:02"},
+    {"t": 10, "place": "skiff:01"},
+    {"t": 11, "vehicle": "skiff:01", "group": "low_dock", "pickup": "low_dock", "to": "depot"},
+    {"t": 900, "place": "bridge:01"},
+    {"t": 901, "vehicle": "bus", "group": "bus", "pickup": "bus_pickup", "to": "depot"}
+  ]
+}

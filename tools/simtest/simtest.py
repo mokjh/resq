@@ -132,6 +132,10 @@ def main(argv: list[str]) -> int:
         out = CACHE / "Resq.Sim.Tests.exe.dll"
         compile_cs(out, sources(SIM_RUNTIME) + sources(SIM_TESTS, exclude_parts=("NUnit",)) + sources(HARNESS), "exe")
         return run(out, rest)
+    if suite == "lab":
+        out = CACHE / "Resq.Sim.Tests.exe.dll"
+        compile_cs(out, sources(SIM_RUNTIME) + sources(SIM_TESTS, exclude_parts=("NUnit",)) + sources(HARNESS), "exe")
+        return run(out, ["--lab", *rest])
     if suite == "golden":
         legacy = build_legacy()
         out = CACHE / "Resq.Golden.Tests.exe.dll"
