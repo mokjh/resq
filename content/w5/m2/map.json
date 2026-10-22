@@ -1,0 +1,705 @@
+{
+ "mission_id": "W5-M2",
+ "rows": [
+  "################################",
+  "################################",
+  "###############l################",
+  "###############l################",
+  "###############l################",
+  "##lllllll######l#######lllll####",
+  "##lllllll######l#######lllll====",
+  "##ooooooo######l########vvvvvvv=",
+  "##ooooooo######l########vvvvvvv=",
+  "##ooooooo######l########vvvvvvv=",
+  "##ooooooo##====l====####vvvvvvv=",
+  "#####=======###l###========####=",
+  "llllllllllllllllllllllllllllllll",
+  "llllllllllllllllllllllllllllllll",
+  "###############=###############=",
+  "###############=###############=",
+  "###############=###############=",
+  "###############=###############=",
+  "###############=########HHH=====",
+  "#############DDDD#######HHHH####",
+  "#############DDD========HHHH####",
+  "#############DDDD###############",
+  "################################",
+  "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "basalt",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "l": {
+   "terrain": "lava_channel",
+   "code": 13,
+   "elev": 0,
+   "solid": true
+  },
+  "S": {
+   "terrain": "sea",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 800,
+   "cond": 2000000,
+   "solid": true
+  }
+ },
+ "regions": {
+  "village_heat": {
+   "x0": 23,
+   "y0": 17,
+   "x1": 27,
+   "y1": 18
+  }
+ },
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "orchard_start",
+   "at": [
+    5,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "orchard_assembly",
+   "at": [
+    5,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "orchard_pickup",
+   "at": [
+    5,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "village_start",
+   "at": [
+    26,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "village_assembly",
+   "at": [
+    26,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "village_pickup",
+   "at": [
+    26,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "w_shelter",
+   "at": [
+    13,
+    13
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "n_bank",
+   "at": [
+    15,
+    13
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 3
+  },
+  {
+   "id": "e_shelter",
+   "at": [
+    17,
+    13
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "s_bank",
+   "at": [
+    15,
+    9
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "quarry_track",
+   "at": [
+    27,
+    16
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "quarry",
+   "at": [
+    28,
+    16
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "outer_gate",
+   "at": [
+    31,
+    12
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 9
+  },
+  {
+   "id": "depot",
+   "at": [
+    14,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 12
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    25,
+    4
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 6
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_orchard_start",
+   "from": "orchard_start",
+   "to": "orchard_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_orchard_pickup",
+   "from": "orchard_assembly",
+   "to": "orchard_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_village_start",
+   "from": "village_start",
+   "to": "village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_village_pickup",
+   "from": "village_assembly",
+   "to": "village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_orchard_road",
+   "from": "orchard_pickup",
+   "to": "w_shelter",
+   "ticks": 580,
+   "class": "ground",
+   "sample": [
+    [
+     5,
+     12
+    ],
+    [
+     11,
+     13
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_w_bank",
+   "from": "w_shelter",
+   "to": "n_bank",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_village_road",
+   "from": "village_pickup",
+   "to": "e_shelter",
+   "ticks": 580,
+   "class": "ground",
+   "sample": [
+    [
+     26,
+     12
+    ],
+    [
+     19,
+     13
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_e_bank",
+   "from": "e_shelter",
+   "to": "n_bank",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_cross",
+   "from": "n_bank",
+   "to": "s_bank",
+   "ticks": 190,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     11
+    ],
+    [
+     15,
+     10
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 4
+  },
+  {
+   "id": "g_s_depot",
+   "from": "s_bank",
+   "to": "depot",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     5
+    ],
+    [
+     15,
+     4
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_coast",
+   "from": "depot",
+   "to": "high_landing",
+   "ticks": 200,
+   "class": "ground",
+   "sample": [
+    [
+     16,
+     3
+    ],
+    [
+     23,
+     3
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_quarry_track",
+   "from": "village_start",
+   "to": "quarry_track",
+   "ticks": 30,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_quarry",
+   "from": "quarry_track",
+   "to": "quarry",
+   "ticks": 10,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_outer_a",
+   "from": "quarry",
+   "to": "outer_gate",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     28,
+     17
+    ],
+    [
+     31,
+     17
+    ],
+    [
+     31,
+     12
+    ]
+   ],
+   "enabled": false,
+   "slots": 6
+  },
+  {
+   "id": "g_outer_b",
+   "from": "outer_gate",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     31,
+     11
+    ],
+    [
+     31,
+     5
+    ],
+    [
+     27,
+     5
+    ]
+   ],
+   "slots": 6
+  }
+ ],
+ "sockets": [
+  {
+   "id": "cooler:01",
+   "tool": "cooler",
+   "at": [
+    14,
+    12
+   ],
+   "segment": "arm",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:02",
+   "tool": "cooler",
+   "at": [
+    16,
+    9
+   ],
+   "segment": "arm",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:03",
+   "tool": "cooler",
+   "at": [
+    14,
+    9
+   ],
+   "segment": "arm",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "shelter:01",
+   "tool": "shelter",
+   "node": "w_shelter",
+   "at": [
+    13,
+    14
+   ],
+   "zone": "shelters"
+  },
+  {
+   "id": "shelter:02",
+   "tool": "shelter",
+   "node": "e_shelter",
+   "at": [
+    17,
+    14
+   ],
+   "region": "village_heat",
+   "zone": "shelters"
+  },
+  {
+   "id": "shelter:03",
+   "tool": "shelter",
+   "node": "quarry",
+   "at": [
+    29,
+    16
+   ],
+   "zone": "shelters"
+  },
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    15,
+    4
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "s_bank",
+   "at": [
+    16,
+    8
+   ]
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    13,
+    3
+   ]
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    24,
+    4
+   ]
+  },
+  {
+   "id": "beacon:03",
+   "tool": "beacon",
+   "node": "n_bank",
+   "at": [
+    15,
+    14
+   ]
+  },
+  {
+   "id": "beacon:04",
+   "tool": "beacon",
+   "node": "s_bank",
+   "at": [
+    14,
+    8
+   ]
+  },
+  {
+   "id": "beacon:05",
+   "tool": "beacon",
+   "node": "quarry",
+   "at": [
+    28,
+    15
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "orchard",
+   "start": "orchard_start",
+   "assembly": "orchard_assembly",
+   "pickup": "orchard_pickup"
+  },
+  {
+   "id": "village",
+   "start": "village_start",
+   "assembly": "village_assembly",
+   "pickup": "village_pickup"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "assembly_channel": {
+   "lava_sources": [
+    "assembly_vent"
+   ]
+  },
+  "shelter_a": {
+   "shelters": [
+    "shelter:01"
+   ]
+  },
+  "outer_route": {
+   "edges": [
+    "g_outer_a"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 6
+    },
+    {
+     "id": "high_landing",
+     "capacity": 12
+    }
+   ]
+  }
+ },
+ "lava": {
+  "segments": [
+   {
+    "id": "arm",
+    "cells": {
+     "x0": 0,
+     "y0": 10,
+     "x1": 31,
+     "y1": 11
+    },
+    "edges": [
+     "g_cross"
+    ],
+    "next": [
+     {
+      "to": "orchard_lobe",
+      "delay": 100
+     },
+     {
+      "to": "village_lobe",
+      "delay": 400
+     }
+    ]
+   },
+   {
+    "id": "orchard_lobe",
+    "cells": {
+     "x0": 2,
+     "y0": 17,
+     "x1": 8,
+     "y1": 18
+    },
+    "nodes": [
+     "orchard_start",
+     "orchard_assembly",
+     "orchard_pickup"
+    ]
+   },
+   {
+    "id": "village_lobe",
+    "cells": {
+     "x0": 23,
+     "y0": 17,
+     "x1": 27,
+     "y1": 18
+    },
+    "nodes": [
+     "village_start",
+     "village_assembly",
+     "village_pickup",
+     "e_shelter"
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "id": "assembly_vent",
+    "segment": "arm"
+   }
+  ]
+ },
+ "coolant_stores": [
+  {
+   "id": "coolant",
+   "charges": 2,
+   "capacity": 8
+  }
+ ]
+}

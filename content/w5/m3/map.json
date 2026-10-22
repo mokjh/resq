@@ -1,0 +1,982 @@
+{
+ "mission_id": "W5-M3",
+ "rows": [
+  "################################",
+  "################################",
+  "#####==========================#",
+  "#####=########################=#",
+  "#####=#################ll#####=#",
+  "#####=#################ll#####=#",
+  "#cccc##################ll#####=#",
+  "#cccc########ll########ll#####=#",
+  "#ccc...######ll########ll#vvvv=#",
+  "#ccc...######ll########ll#vvvv=#",
+  "####...#PPP##ll########ll#vvvv=#",
+  "####...#fff##ll########ll#vvvv=#",
+  "########fff##ll########ll#####=#",
+  "#############ll########ll#=====#",
+  "#####oooow###ll=#####==ll#######",
+  "#####ooooo###ll=#####=#ll#######",
+  "#####ooooo###ll=#####=#ll#######",
+  "#####ooooo###ll=#####=#ll#######",
+  "#####ooooo###ll=###HHH#ll#######",
+  "#############llDDD#HHH#ll#######",
+  "#############llDDD#HHH#ll#######",
+  "#############llDDD#####ll#######",
+  "#############ll########ll#######",
+  "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "basalt",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  ".": {
+   "terrain": "terrace",
+   "code": 1,
+   "elev": 100
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "l": {
+   "terrain": "lava_channel",
+   "code": 13,
+   "elev": 0,
+   "solid": true
+  },
+  "c": {
+   "terrain": "cooling_works",
+   "code": 14,
+   "elev": 1200
+  },
+  "S": {
+   "terrain": "sea",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 800,
+   "cond": 2000000,
+   "solid": true
+  },
+  "P": {
+   "terrain": "cutting_platform",
+   "code": 2,
+   "elev": 900
+  },
+  "w": {
+   "terrain": "outfall",
+   "code": 12,
+   "elev": 0,
+   "cond": 2000000
+  },
+  "f": {
+   "terrain": "drainage_cutting",
+   "code": 6,
+   "elev": 0,
+   "init_depth": 700,
+   "cond": 1000000
+  }
+ },
+ "regions": {
+  "works": "c",
+  "cutting": "f",
+  "plant_heat": {
+   "x0": 13,
+   "y0": 12,
+   "x1": 14,
+   "y1": 16
+  }
+ },
+ "sources": [
+  {
+   "id": "drain_in",
+   "at": [
+    9,
+    12
+   ],
+   "rate": 0
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outfall",
+   "at": [
+    9,
+    9
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "cooling_works_start",
+   "at": [
+    5,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "cooling_works_assembly",
+   "at": [
+    5,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "cooling_works_pickup",
+   "at": [
+    5,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "village_start",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_assembly",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_pickup",
+   "at": [
+    7,
+    6
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "research_start",
+   "at": [
+    27,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "research_assembly",
+   "at": [
+    27,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "research_pickup",
+   "at": [
+    27,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "works_yard",
+   "at": [
+    6,
+    12
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 2
+  },
+  {
+   "id": "works_shelter",
+   "at": [
+    7,
+    13
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "d_bank",
+   "at": [
+    12,
+    11
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "short_south",
+   "at": [
+    15,
+    9
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "ridge_west",
+   "at": [
+    5,
+    21
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "ridge_east",
+   "at": [
+    30,
+    21
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "east_strip",
+   "at": [
+    30,
+    11
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "ridge_hut",
+   "at": [
+    18,
+    21
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "late_bank",
+   "at": [
+    25,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "late_south",
+   "at": [
+    22,
+    9
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "depot",
+   "at": [
+    16,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 12
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    20,
+    4
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 8
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_cooling_works_start",
+   "from": "cooling_works_start",
+   "to": "cooling_works_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_cooling_works_pickup",
+   "from": "cooling_works_assembly",
+   "to": "cooling_works_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_village_start",
+   "from": "village_start",
+   "to": "village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_village_pickup",
+   "from": "village_assembly",
+   "to": "village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_research_start",
+   "from": "research_start",
+   "to": "research_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_research_pickup",
+   "from": "research_assembly",
+   "to": "research_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_works_yard",
+   "from": "cooling_works_pickup",
+   "to": "works_yard",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_works_shelter",
+   "from": "works_yard",
+   "to": "works_shelter",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_causeway",
+   "from": "works_shelter",
+   "to": "d_bank",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     12
+    ],
+    [
+     9,
+     12
+    ],
+    [
+     10,
+     12
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_short",
+   "from": "d_bank",
+   "to": "short_south",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     13,
+     11
+    ],
+    [
+     14,
+     10
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 2
+  },
+  {
+   "id": "g_short_depot",
+   "from": "short_south",
+   "to": "depot",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     9
+    ],
+    [
+     15,
+     5
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_village_road",
+   "from": "village_pickup",
+   "to": "d_bank",
+   "ticks": 150,
+   "class": "ground",
+   "sample": [
+    [
+     9,
+     6
+    ],
+    [
+     11,
+     8
+    ],
+    [
+     12,
+     11
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_long_a",
+   "from": "cooling_works_pickup",
+   "to": "ridge_west",
+   "ticks": 600,
+   "class": "ground",
+   "sample": [
+    [
+     5,
+     18
+    ],
+    [
+     5,
+     21
+    ]
+   ],
+   "slots": 8
+  },
+  {
+   "id": "g_long_b",
+   "from": "ridge_west",
+   "to": "ridge_east",
+   "ticks": 1400,
+   "class": "ground",
+   "sample": [
+    [
+     6,
+     21
+    ],
+    [
+     29,
+     21
+    ]
+   ],
+   "slots": 8
+  },
+  {
+   "id": "g_ridge_hut",
+   "from": "ridge_east",
+   "to": "ridge_hut",
+   "ticks": 40,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_long_c",
+   "from": "ridge_east",
+   "to": "east_strip",
+   "ticks": 800,
+   "class": "ground",
+   "sample": [
+    [
+     30,
+     20
+    ],
+    [
+     30,
+     12
+    ]
+   ],
+   "slots": 8
+  },
+  {
+   "id": "g_long_d",
+   "from": "east_strip",
+   "to": "late_bank",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     30,
+     10
+    ],
+    [
+     26,
+     10
+    ]
+   ],
+   "slots": 8
+  },
+  {
+   "id": "g_research_bank",
+   "from": "research_pickup",
+   "to": "late_bank",
+   "ticks": 150,
+   "class": "ground",
+   "sample": [
+    [
+     27,
+     12
+    ],
+    [
+     25,
+     10
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_late",
+   "from": "late_bank",
+   "to": "late_south",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     24,
+     10
+    ],
+    [
+     23,
+     9
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 2
+  },
+  {
+   "id": "g_late_landing",
+   "from": "late_south",
+   "to": "high_landing",
+   "ticks": 150,
+   "class": "ground",
+   "sample": [
+    [
+     22,
+     9
+    ],
+    [
+     21,
+     6
+    ]
+   ],
+   "slots": 6
+  }
+ ],
+ "sockets": [
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    8,
+    13
+   ],
+   "platform": [
+    [
+     8,
+     13
+    ]
+   ],
+   "power": "works_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    6,
+    19
+   ],
+   "platform": [
+    [
+     6,
+     19
+    ]
+   ],
+   "power": "ridge_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "relay:01",
+   "tool": "relay",
+   "at": [
+    10,
+    13
+   ],
+   "platform": [
+    [
+     10,
+     13
+    ]
+   ],
+   "zone": "relays"
+  },
+  {
+   "id": "relay:02",
+   "tool": "relay",
+   "at": [
+    13,
+    13
+   ],
+   "platform": [
+    [
+     13,
+     13
+    ]
+   ],
+   "zone": "relays"
+  },
+  {
+   "id": "pump:01",
+   "tool": "pump",
+   "at": [
+    9,
+    13
+   ],
+   "intake": [
+    9,
+    12
+   ],
+   "outlet": [
+    9,
+    9
+   ],
+   "power": "works_grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:02",
+   "tool": "pump",
+   "at": [
+    11,
+    12
+   ],
+   "intake": [
+    10,
+    11
+   ],
+   "outlet": [
+    9,
+    9
+   ],
+   "power": "works_grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:03",
+   "tool": "pump",
+   "at": [
+    7,
+    11
+   ],
+   "intake": [
+    8,
+    11
+   ],
+   "outlet": [
+    9,
+    9
+   ],
+   "power": "works_grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "cooler:01",
+   "tool": "cooler",
+   "at": [
+    12,
+    12
+   ],
+   "segment": "delivery",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:02",
+   "tool": "cooler",
+   "at": [
+    25,
+    11
+   ],
+   "segment": "late",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:03",
+   "tool": "cooler",
+   "at": [
+    12,
+    10
+   ],
+   "segment": "delivery",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:04",
+   "tool": "cooler",
+   "at": [
+    25,
+    9
+   ],
+   "segment": "late",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "shelter:01",
+   "tool": "shelter",
+   "node": "works_shelter",
+   "at": [
+    7,
+    14
+   ],
+   "region": "plant_heat",
+   "zone": "shelters"
+  },
+  {
+   "id": "shelter:02",
+   "tool": "shelter",
+   "node": "ridge_hut",
+   "at": [
+    18,
+    22
+   ],
+   "zone": "shelters"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "works_grid",
+    "fixed_supply": 0
+   },
+   {
+    "id": "ridge_grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": [
+   {
+    "from": "ridge_grid",
+    "to": "works_grid",
+    "relay": "relay:01"
+   },
+   {
+    "from": "ridge_grid",
+    "to": "works_grid",
+    "relay": "relay:02"
+   }
+  ]
+ },
+ "infrastructure": [
+  {
+   "id": "cooling_works",
+   "power": "works_grid",
+   "demand": 1,
+   "priority": 40,
+   "region": "works",
+   "producer": {
+    "store": "coolant",
+    "feedstock": 6,
+    "ticks": 100
+   }
+  }
+ ],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "cooling_works",
+   "start": "cooling_works_start",
+   "assembly": "cooling_works_assembly",
+   "pickup": "cooling_works_pickup"
+  },
+  {
+   "id": "village",
+   "start": "village_start",
+   "assembly": "village_assembly",
+   "pickup": "village_pickup"
+  },
+  {
+   "id": "research",
+   "start": "research_start",
+   "assembly": "research_assembly",
+   "pickup": "research_pickup"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "drainage_basin": {
+   "sources": [
+    "drain_in"
+   ]
+  },
+  "coolant_delivery": {
+   "lava_sources": [
+    "delivery_vent"
+   ]
+  },
+  "second_channel": {
+   "lava_sources": [
+    "east_vent"
+   ]
+  },
+  "cooling_works": {
+   "infrastructure": [
+    "cooling_works"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 8
+    },
+    {
+     "id": "high_landing",
+     "capacity": 12
+    }
+   ]
+  }
+ },
+ "lava": {
+  "segments": [
+   {
+    "id": "delivery",
+    "cells": {
+     "x0": 13,
+     "y0": 1,
+     "x1": 14,
+     "y1": 16
+    },
+    "edges": [
+     "g_cross_short"
+    ],
+    "nodes": [
+     "cooling_works_start",
+     "cooling_works_assembly",
+     "cooling_works_pickup",
+     "works_shelter"
+    ]
+   },
+   {
+    "id": "late",
+    "cells": {
+     "x0": 23,
+     "y0": 1,
+     "x1": 24,
+     "y1": 19
+    },
+    "edges": [
+     "g_cross_late"
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "id": "delivery_vent",
+    "segment": "delivery"
+   },
+   {
+    "id": "east_vent",
+    "segment": "late"
+   }
+  ]
+ },
+ "coolant_stores": [
+  {
+   "id": "coolant",
+   "charges": 3,
+   "capacity": 8
+  }
+ ]
+}

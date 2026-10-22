@@ -1,0 +1,61 @@
+{
+ "id": "A",
+ "description": "Ferry the coast early, then use crawler and cooling inland: the bridge gets the research crew over crossing A before the lava; the coast village is ferried by two skiffs to two different landings (one launched at the coast dock, one from the high landing); the crawler loads six orchard residents and drives the long track with the last two walking behind, they wait at crossing B's safe bank, and crossing B is cooled in the final window (440 s).",
+ "steps": [
+  {
+   "t": 5,
+   "place": "bridge:01"
+  },
+  {
+   "t": 6,
+   "place": "crawler:01"
+  },
+  {
+   "t": 7,
+   "place": "skiff:03"
+  },
+  {
+   "t": 8,
+   "place": "skiff:02"
+  },
+  {
+   "t": 9,
+   "place": "cooler:02"
+  },
+  {
+   "t": 10,
+   "group": "research_crew",
+   "to": "depot"
+  },
+  {
+   "t": 11,
+   "vehicle": "skiff:03",
+   "group": "coast",
+   "pickup": "coast_dock",
+   "to": "high_landing"
+  },
+  {
+   "t": 12,
+   "vehicle": "skiff:02",
+   "group": "coast",
+   "pickup": "coast_dock",
+   "to": "depot"
+  },
+  {
+   "t": 13,
+   "vehicle": "crawler:01",
+   "group": "inland",
+   "pickup": "inland_pickup",
+   "to": "depot"
+  },
+  {
+   "t": 110,
+   "group": "inland",
+   "to": "depot"
+  },
+  {
+   "t": 4401,
+   "cool": "cooler:02"
+  }
+ ]
+}

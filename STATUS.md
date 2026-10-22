@@ -13,6 +13,8 @@
 - **World 5 module:** authored lava DAG with published arrivals, cooler cycle (50/200/50), finite coolant works, temporary shelters with exact protection accounting. 8 tests (RL01–RL06 and more); All five worlds' rules now run headlessly.
 - **Dock berths:** reserved at departure (origin held until arrival). 61/61 sim tests pass.
 - **Frostline (W3) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; real compact layouts via `class_overrides`; mistake runs fail (W3-M3 Relaxed excepted).
+- **Cinder Reach (W5) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistake runs fail (W5-M1 Relaxed excepted).
+- **Emberwood (W2):** M1, M2, M5 18/18 each; M3/M4 unblocked by engine fixes (pumps to stores, fires burning at S=0) and in progress.
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
@@ -45,5 +47,5 @@
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk:** 13 GB free. Please free about 25 GB more.
+- **Disk:** 7.8 GB free (other projects' temp files grew). Headless work is fine; Unity/Blender work needs ≥ 10 GB, and the plan needs ~40 GB by 11 Nov.
 - **Credits:** caps raised to Meshy 600 / Higgsfield 150. Higgsfield balance is 110, so top up if you want the full 150.

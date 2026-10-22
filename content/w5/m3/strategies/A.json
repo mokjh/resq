@@ -1,0 +1,23 @@
+{
+  "id": "A",
+  "description": "Secure drainage and power first, then cool the short route: generator on the cutting platform and both pumps at once (the works waits for power), the plant crew stages in the shelter and control room while the cutting drains; once the causeway is passable the crew moves to the crossing bank and crossing S is cooled twice (one refill). Late in the operation a pump is switched off so the works runs again. Steps from t=4250 repeat the crossing sequence for the Relaxed clock (no effect in Standard).",
+  "steps": [
+    {"t": 5, "place": "generator:01"},
+    {"t": 6, "place": "pump:01"},
+    {"t": 7, "place": "pump:02"},
+    {"t": 8, "place": "shelter:01"},
+    {"t": 9, "place": "cooler:01"},
+    {"t": 10, "group": "village", "to": "depot"},
+    {"t": 11, "group": "research", "to": "high_landing"},
+    {"t": 12, "group": "cooling_works", "to": "works_shelter", "evacuate": false},
+    {"t": 2125, "group": "cooling_works", "to": "d_bank", "evacuate": false},
+    {"t": 2240, "cool": "cooler:01"},
+    {"t": 2291, "group": "cooling_works", "to": "depot"},
+    {"t": 2500, "refill": "cooler:01", "store": "coolant"},
+    {"t": 2545, "cool": "cooler:01"},
+    {"t": 4250, "group": "cooling_works", "to": "d_bank", "evacuate": false},
+    {"t": 4480, "cool": "cooler:01"},
+    {"t": 4582, "group": "cooling_works", "to": "depot"},
+    {"t": 4650, "disable": "pump:02"}
+  ]
+}

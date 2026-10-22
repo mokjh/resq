@@ -1,0 +1,18 @@
+{
+  "id": "B",
+  "description": "Evacuate via the longer path and save cooling for the late channel: power comes from the dry ridge generator through relay:01, both pumps hold the cutting below the platform, and the plant crew walks the long mountain path at once; they reach crossing L just after the second channel arrives (310 s), and the saved coolers open it twice (one refill). At the end the works is given first claim on power.",
+  "steps": [
+    {"t": 5, "place": "generator:02"},
+    {"t": 6, "place": "relay:01"},
+    {"t": 7, "place": "pump:01"},
+    {"t": 8, "place": "pump:02"},
+    {"t": 9, "place": "cooler:02"},
+    {"t": 10, "group": "village", "to": "depot"},
+    {"t": 11, "group": "research", "to": "high_landing"},
+    {"t": 12, "group": "cooling_works", "to": "high_landing"},
+    {"t": 3146, "cool": "cooler:02"},
+    {"t": 3400, "refill": "cooler:02", "store": "coolant"},
+    {"t": 3450, "cool": "cooler:02"},
+    {"t": 4650, "priority": "cooling_works", "value": 0}
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "id": "A",
+  "description": "Cool a crossing only when residents are ready to move: walk both groups down the stair roads to the safe crossing banks, then cool crossings A and B together once crossing A's socket opens (210 s), so both groups cross in one crust window.",
+  "steps": [
+    {"t": 5, "place": "bridge:01"},
+    {"t": 6, "place": "cooler:01"},
+    {"t": 7, "place": "cooler:02"},
+    {"t": 8, "group": "orchard", "to": "depot"},
+    {"t": 9, "group": "research", "to": "high_landing"},
+    {"t": 2101, "cool": "cooler:01"},
+    {"t": 2101, "cool": "cooler:02"}
+  ]
+}

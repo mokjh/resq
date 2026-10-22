@@ -1,0 +1,55 @@
+{
+ "id": "mistake",
+ "description": "Single major mistake (bible: leaving residents in shelters fails the evacuation condition even if they remain safe). Plan A, but the village is never sent on along the outer route when it opens at 320 s: the quarry hut keeps them safe to the end, yet six residents are still in a temporary shelter (and three on the quarry track) when the operation ends.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "crawler:01"
+  },
+  {
+   "t": 6,
+   "place": "cooler:01"
+  },
+  {
+   "t": 7,
+   "group": "orchard",
+   "to": "n_bank",
+   "evacuate": false
+  },
+  {
+   "t": 8,
+   "vehicle": "crawler:01",
+   "group": "orchard",
+   "pickup": "n_bank",
+   "to": "depot"
+  },
+  {
+   "t": 9,
+   "group": "village",
+   "to": "quarry",
+   "evacuate": false
+  },
+  {
+   "t": 706,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 960,
+   "refill": "cooler:01",
+   "store": "coolant"
+  },
+  {
+   "t": 1070,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 1130,
+   "refill": "cooler:01",
+   "store": "coolant"
+  },
+  {
+   "t": 1395,
+   "cool": "cooler:01"
+  }
+ ]
+}

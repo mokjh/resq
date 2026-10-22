@@ -1,0 +1,61 @@
+{
+ "id": "mistake",
+ "description": "Single major mistake (bible: overloading one final landing creates a queue). Plan A, but both coast skiffs are sent to the high landing. skiff:03 unloads the first four there and, its job done, stays docked on the landing's only berth; skiff:02, loaded with the last four coast residents, queues at the outer buoy for the rest of the operation. A vehicle still holds passengers at the end, so the operation fails although everyone else is safe.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "bridge:01"
+  },
+  {
+   "t": 6,
+   "place": "crawler:01"
+  },
+  {
+   "t": 7,
+   "place": "skiff:03"
+  },
+  {
+   "t": 8,
+   "place": "skiff:02"
+  },
+  {
+   "t": 9,
+   "place": "cooler:02"
+  },
+  {
+   "t": 10,
+   "group": "research_crew",
+   "to": "depot"
+  },
+  {
+   "t": 11,
+   "vehicle": "skiff:03",
+   "group": "coast",
+   "pickup": "coast_dock",
+   "to": "high_landing"
+  },
+  {
+   "t": 12,
+   "vehicle": "skiff:02",
+   "group": "coast",
+   "pickup": "coast_dock",
+   "to": "high_landing"
+  },
+  {
+   "t": 13,
+   "vehicle": "crawler:01",
+   "group": "inland",
+   "pickup": "inland_pickup",
+   "to": "depot"
+  },
+  {
+   "t": 110,
+   "group": "inland",
+   "to": "depot"
+  },
+  {
+   "t": 4401,
+   "cool": "cooler:02"
+  }
+ ]
+}

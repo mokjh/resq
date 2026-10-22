@@ -1,0 +1,1193 @@
+{
+ "mission_id": "W5-M4",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  "###########ll###################",
+  "###########ll###################",
+  "###########ll###################",
+  "###########ll###################",
+  "###vvvvvv##ll###################",
+  "###vvvvvv##ll############vvvvvSS",
+  "###vvvvvv##ll############vvvvvSS",
+  "###vvvvvv##ll############vvvvvSS",
+  "#####=====#ll############vvvvvSS",
+  "##lllll##==ll===##############SS",
+  "##lllll====ll##=##############SS",
+  "####ooo=oo=ll##=##############SS",
+  "####ooo=oo=ll##=##############SS",
+  "####ooo=oo=ll===##############SS",
+  "####ooo=oo#ll##=##############SS",
+  "####oooooo#ll##=##############SS",
+  "###########ll#DDDD######HHHH##SS",
+  "#######qqq#ll#DDDD######HHHH##SS",
+  "#######qqq#ll#DDDD######HHHH##SS",
+  "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+  "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "basalt",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "l": {
+   "terrain": "lava_channel",
+   "code": 13,
+   "elev": 0,
+   "solid": true
+  },
+  "S": {
+   "terrain": "sea",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 800,
+   "cond": 2000000,
+   "solid": true
+  },
+  "q": {
+   "terrain": "quay",
+   "code": 2,
+   "elev": 1200
+  }
+ },
+ "regions": {},
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "research_crew_start",
+   "at": [
+    5,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "research_crew_assembly",
+   "at": [
+    5,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "research_crew_pickup",
+   "at": [
+    5,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "coast_start",
+   "at": [
+    27,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "coast_assembly",
+   "at": [
+    27,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "coast_pickup",
+   "at": [
+    27,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "inland_start",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "inland_assembly",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "inland_pickup",
+   "at": [
+    7,
+    6
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "ravine_w",
+   "at": [
+    8,
+    12
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "ravine_e",
+   "at": [
+    10,
+    12
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "a_bank",
+   "at": [
+    10,
+    11
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "a_east",
+   "at": [
+    13,
+    11
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "b_track",
+   "at": [
+    7,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "b_bank",
+   "at": [
+    10,
+    7
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "b_east",
+   "at": [
+    13,
+    7
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "pier_shelter",
+   "at": [
+    8,
+    4
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "pier",
+   "at": [
+    8,
+    3
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 4,
+   "water_at": [
+    8,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "coast_dock",
+   "at": [
+    29,
+    12
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 8,
+   "berths": 2,
+   "water_at": [
+    30,
+    12
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 16,
+   "water_at": [
+    15,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    25,
+    4
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 8,
+   "water_at": [
+    25,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "outer_buoy",
+   "at": [
+    29,
+    1
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "south_buoy",
+   "at": [
+    14,
+    1
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "b_shelter",
+   "at": [
+    9,
+    7
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_research_crew_start",
+   "from": "research_crew_start",
+   "to": "research_crew_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_research_crew_pickup",
+   "from": "research_crew_assembly",
+   "to": "research_crew_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_coast_start",
+   "from": "coast_start",
+   "to": "coast_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_coast_pickup",
+   "from": "coast_assembly",
+   "to": "coast_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_inland_start",
+   "from": "inland_start",
+   "to": "inland_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_inland_pickup",
+   "from": "inland_assembly",
+   "to": "inland_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_research_ravine",
+   "from": "research_crew_pickup",
+   "to": "ravine_w",
+   "ticks": 400,
+   "class": "ground",
+   "sample": [
+    [
+     5,
+     12
+    ],
+    [
+     8,
+     12
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_ravine_bridge",
+   "from": "ravine_w",
+   "to": "ravine_e",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     9,
+     12
+    ]
+   ],
+   "tags": [
+    "bridge"
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_ravine_bridge2",
+   "from": "ravine_w",
+   "to": "ravine_e",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     9,
+     13
+    ]
+   ],
+   "tags": [
+    "bridge"
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_ravine_round",
+   "from": "ravine_w",
+   "to": "ravine_e",
+   "ticks": 1600,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     13
+    ],
+    [
+     8,
+     16
+    ],
+    [
+     10,
+     16
+    ],
+    [
+     10,
+     13
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_ravine_bank",
+   "from": "ravine_e",
+   "to": "a_bank",
+   "ticks": 400,
+   "class": "ground",
+   "sample": [
+    [
+     10,
+     12
+    ],
+    [
+     10,
+     11
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_a",
+   "from": "a_bank",
+   "to": "a_east",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     11,
+     11
+    ],
+    [
+     12,
+     11
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 2
+  },
+  {
+   "id": "g_a_depot",
+   "from": "a_east",
+   "to": "depot",
+   "ticks": 150,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     11
+    ],
+    [
+     15,
+     5
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_inland_track",
+   "from": "inland_pickup",
+   "to": "b_track",
+   "ticks": 1000,
+   "class": "ground",
+   "sample": [
+    [
+     7,
+     9
+    ],
+    [
+     7,
+     10
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_track_bank",
+   "from": "b_track",
+   "to": "b_bank",
+   "ticks": 1000,
+   "class": "ground",
+   "sample": [
+    [
+     10,
+     10
+    ],
+    [
+     10,
+     7
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_b",
+   "from": "b_bank",
+   "to": "b_east",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     11,
+     7
+    ],
+    [
+     12,
+     7
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 4
+  },
+  {
+   "id": "g_b_depot",
+   "from": "b_east",
+   "to": "depot",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     14,
+     7
+    ],
+    [
+     15,
+     4
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_pier_shelter",
+   "from": "inland_pickup",
+   "to": "pier_shelter",
+   "ticks": 60,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_pier",
+   "from": "pier_shelter",
+   "to": "pier",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_coast_dock",
+   "from": "coast_pickup",
+   "to": "coast_dock",
+   "ticks": 40,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "w_outer",
+   "from": "coast_dock",
+   "to": "outer_buoy",
+   "ticks": 500,
+   "class": "water",
+   "sample": [
+    [
+     30,
+     2
+    ],
+    [
+     30,
+     3
+    ],
+    [
+     30,
+     4
+    ],
+    [
+     30,
+     5
+    ],
+    [
+     30,
+     6
+    ],
+    [
+     30,
+     7
+    ],
+    [
+     30,
+     8
+    ],
+    [
+     30,
+     9
+    ],
+    [
+     30,
+     10
+    ],
+    [
+     30,
+     11
+    ],
+    [
+     30,
+     12
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_buoy_landing",
+   "from": "outer_buoy",
+   "to": "high_landing",
+   "ticks": 100,
+   "class": "water",
+   "sample": [
+    [
+     25,
+     1
+    ],
+    [
+     26,
+     1
+    ],
+    [
+     27,
+     1
+    ],
+    [
+     28,
+     1
+    ],
+    [
+     29,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_buoy_south",
+   "from": "outer_buoy",
+   "to": "south_buoy",
+   "ticks": 230,
+   "class": "water",
+   "sample": [
+    [
+     14,
+     1
+    ],
+    [
+     15,
+     1
+    ],
+    [
+     16,
+     1
+    ],
+    [
+     17,
+     1
+    ],
+    [
+     18,
+     1
+    ],
+    [
+     19,
+     1
+    ],
+    [
+     20,
+     1
+    ],
+    [
+     21,
+     1
+    ],
+    [
+     22,
+     1
+    ],
+    [
+     23,
+     1
+    ],
+    [
+     24,
+     1
+    ],
+    [
+     25,
+     1
+    ],
+    [
+     26,
+     1
+    ],
+    [
+     27,
+     1
+    ],
+    [
+     28,
+     1
+    ],
+    [
+     29,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_depot_buoy",
+   "from": "south_buoy",
+   "to": "depot",
+   "ticks": 20,
+   "class": "water",
+   "sample": [
+    [
+     14,
+     1
+    ],
+    [
+     15,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_landing_buoy",
+   "from": "high_landing",
+   "to": "south_buoy",
+   "ticks": 180,
+   "class": "water",
+   "sample": [
+    [
+     14,
+     1
+    ],
+    [
+     15,
+     1
+    ],
+    [
+     16,
+     1
+    ],
+    [
+     17,
+     1
+    ],
+    [
+     18,
+     1
+    ],
+    [
+     19,
+     1
+    ],
+    [
+     20,
+     1
+    ],
+    [
+     21,
+     1
+    ],
+    [
+     22,
+     1
+    ],
+    [
+     23,
+     1
+    ],
+    [
+     24,
+     1
+    ],
+    [
+     25,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_pier_channel",
+   "from": "pier",
+   "to": "south_buoy",
+   "ticks": 100,
+   "class": "water",
+   "sample": [
+    [
+     8,
+     1
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     10,
+     1
+    ],
+    [
+     11,
+     1
+    ],
+    [
+     12,
+     1
+    ],
+    [
+     13,
+     1
+    ],
+    [
+     14,
+     1
+    ]
+   ],
+   "enabled": false,
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "g_b_shelter",
+   "from": "b_bank",
+   "to": "b_shelter",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  }
+ ],
+ "sockets": [
+  {
+   "id": "bridge:01",
+   "tool": "bridge",
+   "edge": "g_ravine_bridge",
+   "at": [
+    9,
+    12
+   ],
+   "zone": "bridges"
+  },
+  {
+   "id": "bridge:02",
+   "tool": "bridge",
+   "edge": "g_ravine_bridge2",
+   "at": [
+    9,
+    13
+   ],
+   "zone": "bridges"
+  },
+  {
+   "id": "cooler:01",
+   "tool": "cooler",
+   "at": [
+    10,
+    13
+   ],
+   "segment": "land",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:02",
+   "tool": "cooler",
+   "at": [
+    10,
+    6
+   ],
+   "segment": "land",
+   "enabled": false,
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:03",
+   "tool": "cooler",
+   "at": [
+    13,
+    6
+   ],
+   "segment": "land",
+   "enabled": false,
+   "zone": "coolers"
+  },
+  {
+   "id": "shelter:01",
+   "tool": "shelter",
+   "node": "pier_shelter",
+   "at": [
+    9,
+    4
+   ],
+   "zone": "shelters"
+  },
+  {
+   "id": "shelter:02",
+   "tool": "shelter",
+   "node": "b_shelter",
+   "at": [
+    9,
+    8
+   ],
+   "zone": "shelters"
+  },
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "inland_pickup",
+   "at": [
+    8,
+    6
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    16,
+    4
+   ]
+  },
+  {
+   "id": "skiff:01",
+   "tool": "skiff",
+   "node": "depot",
+   "at": [
+    15,
+    1
+   ]
+  },
+  {
+   "id": "skiff:02",
+   "tool": "skiff",
+   "node": "high_landing",
+   "at": [
+    25,
+    1
+   ]
+  },
+  {
+   "id": "skiff:03",
+   "tool": "skiff",
+   "node": "coast_dock",
+   "at": [
+    30,
+    12
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "research_crew",
+   "start": "research_crew_start",
+   "assembly": "research_crew_assembly",
+   "pickup": "research_crew_pickup"
+  },
+  {
+   "id": "coast",
+   "start": "coast_start",
+   "assembly": "coast_assembly",
+   "pickup": "coast_pickup"
+  },
+  {
+   "id": "inland",
+   "start": "inland_start",
+   "assembly": "inland_assembly",
+   "pickup": "inland_pickup"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "short_land_route": {
+   "edges": [
+    "g_cross_a"
+   ]
+  },
+  "land_channel": {
+   "lava_sources": [
+    "land_vent"
+   ]
+  },
+  "sea_route": {
+   "edges": [
+    "w_pier_channel"
+   ]
+  },
+  "crossing_b": {
+   "cooler_sockets": [
+    "cooler:02",
+    "cooler:03"
+   ]
+  },
+  "research_crew": {
+   "groups": [
+    "research_crew"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 8
+    },
+    {
+     "id": "high_landing",
+     "capacity": 16
+    }
+   ]
+  }
+ },
+ "lava": {
+  "segments": [
+   {
+    "id": "land",
+    "cells": {
+     "x0": 11,
+     "y0": 2,
+     "x1": 12,
+     "y1": 20
+    },
+    "edges": [
+     "g_cross_a",
+     "g_cross_b"
+    ],
+    "next": [
+     {
+      "to": "inland_lobe",
+      "delay": 1000
+     }
+    ]
+   },
+   {
+    "id": "inland_lobe",
+    "cells": {
+     "x0": 2,
+     "y0": 10,
+     "x1": 6,
+     "y1": 11
+    },
+    "nodes": [
+     "inland_start",
+     "inland_assembly",
+     "inland_pickup",
+     "pier_shelter"
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "id": "land_vent",
+    "segment": "land"
+   }
+  ]
+ },
+ "coolant_stores": [
+  {
+   "id": "coolant",
+   "charges": 2,
+   "capacity": 8
+  }
+ ]
+}
