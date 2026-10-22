@@ -1,0 +1,12 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): the pump outlet is laid into the orchard while the orchard group still waits for the skiff. The underpass water is transferred onto the orchard assembly point; the waiting residents are flooded out and need backup recovery.",
+  "steps": [
+    {"t": 5, "place": "generator:01"},
+    {"t": 6, "place": "pump:02"},
+    {"t": 8, "place": "skiff:02"},
+    {"t": 9, "vehicle": "skiff:02", "group": "ferry_landing", "pickup": "ferry_dock", "to": "depot"},
+    {"t": 10, "group": "river_houses", "to": "high_landing"},
+    {"t": 400, "vehicle": "skiff:02", "group": "orchard", "pickup": "orchard_dock", "to": "depot"}
+  ]
+}

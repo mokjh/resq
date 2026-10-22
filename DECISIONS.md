@@ -2,6 +2,13 @@
 
 Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archive/process-2026-10/DECISIONS.md`.
 
+## 22 Oct 2026 (late) — art pipeline and credit caps (user-approved)
+
+| Decision | Result |
+|---|---|
+| Art pipeline | Adopt the Waz-proven routing, re-authored in RESQ (no copied code): scripted Blender kits for buildings and simple props; Meshy-t2 for organic props; Tripo (via Higgsfield) or Meshy-7.1 for landmarks and vehicles; Higgsfield sheet, then Meshy, then a shared rig plus library clips for residents. RESQ Lit toon shader. |
+| Credit caps | Raised to **Meshy 600 / Higgsfield 150** for characters, landmarks and swatches. Every spend is logged in `docs/spend-log.md`. Current Higgsfield balance (110) is below the cap; a top-up is the user's call. |
+
 ## 22 Oct 2026 — studio reset and competition plan (user-approved)
 
 | Decision | Result |

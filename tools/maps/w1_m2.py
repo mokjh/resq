@@ -47,7 +47,7 @@ m.cell("c", 11, 6)
 m.rect("~", 11, 1, 12, 5)
 m.line("~", (13, 1), (15, 1))
 # west bank: orchard terrace (skiff only), empty basin, lower road with its flooded underpass
-m.rect("o", 4, 11, 8, 13)
+m.rect("o", 5, 11, 7, 13)
 m.rect("d", 1, 6, 4, 9)
 m.rect("v", 6, 3, 9, 5)            # ferry landing terrace
 m.cell("=", 8, 6)
@@ -83,8 +83,8 @@ m.regions = {
 
 # ---------------------------------------------------------------- navigation
 cap = dict(capacity=4)
-m.node("orchard_start", (7, 12), ["assembly"], **cap)
-m.node("orchard_assembly", (7, 11), ["assembly"], **cap)
+m.node("orchard_start", (6, 12), ["assembly"], **cap)
+m.node("orchard_assembly", (6, 11), ["assembly"], **cap)
 m.node("orchard_dock", (10, 10), ["dock"], capacity=6, water_at=[11, 10], dock_min_depth=100, dock_max_depth=800)
 m.node("ferry_landing_start", (7, 4), ["assembly"], **cap)
 m.node("ferry_landing_assembly", (8, 4), ["assembly"], **cap)
@@ -102,7 +102,7 @@ m.node("ridge_corner", (28, 11), ["junction"])
 m.node("high_landing", (20, 4), ["evacuation", "dock"], capacity=4, water_at=[19, 4], dock_min_depth=100, dock_max_depth=2500)
 
 m.edge("g_orchard_start", "orchard_start", "orchard_assembly", 20)
-m.edge("g_orchard_dock", "orchard_assembly", "orchard_dock", 30, sample=[[8, 11]])
+m.edge("g_orchard_dock", "orchard_assembly", "orchard_dock", 30, sample=[[6, 11], [7, 11]])
 m.edge("g_ferry_start", "ferry_landing_start", "ferry_landing_assembly", 20)
 m.edge("g_ferry_pickup", "ferry_landing_assembly", "ferry_landing_pickup", 20)
 m.edge("g_ferry_dock", "ferry_landing_pickup", "ferry_dock", 10)
@@ -125,7 +125,7 @@ m.edge("w_depot_landing", "depot", "high_landing", 200,
 
 # ---------------------------------------------------------------- sockets
 m.socket("pump:01", "pump", at=[6, 8], intake=[7, 8], outlet=[4, 8], power="grid", zone="pumps")
-m.socket("pump:02", "pump", at=[8, 10], intake=[8, 8], outlet=[8, 11], power="grid", zone="pumps")
+m.socket("pump:02", "pump", at=[8, 10], intake=[8, 8], outlet=[7, 11], power="grid", zone="pumps")
 m.socket("generator:01", "generator", at=[7, 6], platform=[[7, 6]], power="grid", zone="generators")
 m.socket("generator:02", "generator", at=[13, 10], platform=[[13, 10]], power="grid", zone="generators")
 m.socket("barrier:01", "barrier", at=[10, 7], links=[[[11, 7], [10, 7]]], zone="lips")

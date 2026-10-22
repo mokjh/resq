@@ -42,7 +42,7 @@ Ship RESQ to the Meta VR Start Developer Competition 2026 by **Tue 17 Nov 2026**
   - Do not push without the user's OK.
   - Never commit `Library/`, secrets, keystores, raw room captures or `evidence/`.
 - **External writes need the user's confirmation at the time:** store/channel uploads, Vercel deploys, YouTube, domain and DNS.
-- **Paid generation cap:** Meshy ≤ 300 credits, Higgsfield ≤ 60 credits. Log every spend and its license terms in `docs/spend-log.md`.
+- **Paid generation cap (raised by the user 22 Oct):** Meshy ≤ 600 credits, Higgsfield ≤ 150 credits. Log every spend and its license terms in `docs/spend-log.md`.
 - **Repair loops:** after three failed repairs of the same problem, record the blocker in `STATUS.md`, switch to an alternative approach and keep the other work moving.
 - **Docs:** keep `STATUS.md` and `HANDOFF.md` to one page each, current at every milestone. Append decisions to `DECISIONS.md`.
 

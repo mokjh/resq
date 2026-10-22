@@ -1,33 +1,31 @@
-# RESQ status — 22 Oct 2026 (day 0 of 26)
+# RESQ status — 22 Oct 2026, 23:50 (day 0 of 26)
 
-**Phase:** P0, reset and foundation (22–24 Oct). Plan: `BUILD_PLAN.md`.
+**Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
-## Done today
-- Approved the plan with all 25 missions, studio mode, a capped AI budget and exclusive use of the Mac.
-- Archived the old process docs verbatim with checksums in `docs/archive/process-2026-10/`. Wrote a lean `AGENTS.md`; `BUILD_PLAN.md` is now the approved plan.
+## Done
+- **Studio reset:** old process docs archived with checksums; commits are on local `main`.
+- **Unity project:** URP, OpenXR, Meta XR 207.0.1 (Core, Interaction, MRUK), Quest settings (ARM64/IL2CPP, SDK 32/34, Vulkan, ASTC); Meta Setup Tool clean.
+- **First APK built:** `build/resq-smoke.apk`, 75 MB. INTERNET permission is now stripped (takes effect on the next build).
+- **Sim v2 engine:** water, power, equipment, transport, objectives, outcome. All 18 spec golden cases pass.
+- **SimLab:** missions validate headlessly in seconds.
+- **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
+- **Unity game layer:** First Crossing plays end-to-end in Unity on the real engine — board, water, actors, tool tray, goals and routing.
+- **Input:** mouse, hand pinch/poke and head-dwell adapters, all on one command path.
+- **Art plan:** world-class pipeline adopted from the Waz techniques; see the `BUILD_PLAN.md` art section.
 
-## Inherited from the old regime
-- About 11k lines of rules-correct simulation code (too slow for runtime; it becomes the golden oracle).
-- Bootstrap tools.
-- A Mobbin reference lock and fonts.
-- The full design specification.
-- No scenes, art, audio, site or APK.
+## In progress (helpers)
+- Blender look-dev quartet: cottage, bridge, skiff, resident.
+- Missions W1-M2 to W1-M5 with SimLab.
 
-## Next (P0)
-1. Reclaim the 5.7 GB bootstrap `Library/` copy.
-2. Git baseline commit.
-3. Move the legacy simulation to `reference/` and build a headless C# runner.
-4. Unity packages and URP/XR/Android setup.
-5. MR hands smoke scene plus an APK build.
-6. Sim v2 skeleton.
-
-## Gate M0 (Sat 24 Oct)
-- Simulation tests pass.
-- The MR hands scene runs in the XR Simulator.
-- An APK builds.
-- The baseline is committed.
+## Next
+1. XR wiring: OVR rig, hands, passthrough and MRUK placement in the operation scene.
+2. Forecast preview overlay.
+3. Guided tutorial.
+4. RESQ Lit toon shader.
+5. Greybox → art kit import pipeline.
 
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- Pausing Waz's Unity work while RESQ is running.
+- **Disk:** 13 GB free. Please free about 25 GB more.
+- **Credits:** caps raised to Meshy 600 / Higgsfield 150. Higgsfield balance is 110, so top up if you want the full 150.
