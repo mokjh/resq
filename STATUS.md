@@ -78,5 +78,5 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk (23 Oct, 22:25):** 7.6 GB free. SpatialSim (9.3 GB) and the Android Emulator package (1.2 GB) are installed but can't run RESQ; removing them would bring back ~10.5 GB (`metavr ssim` can reinstall them). A rebuild needs ≥ 19 GB, and the plan needs ~40 GB by 11 Nov. The rest is project data (your call): Codex worktrees 6.7 GB, Egytric `.next-*` copies ~5 GB, `Waz Vr/game/Library` 2.9 GB, an orphaned Chrome Canary profile 1.5 GB.
+- **Disk (23 Oct, 22:30):** 19 GB free after removing SpatialSim and the Android Emulator package (they can't run RESQ; `metavr ssim download` reinstalls them). That's enough for one APK rebuild (≥ 19 GB). The plan needs ~40 GB by 11 Nov. The rest is project data (your call): Codex worktrees 6.7 GB, Egytric `.next-*` copies ~5 GB, `Waz Vr/game/Library` 2.9 GB, an orphaned Chrome Canary profile 1.5 GB.
 - **Credits:** spent so far: Meshy 585 of the 600 cap; Higgsfield 33 of 150, with a balance of 8.9. Top up Higgsfield if you want more concepts.
