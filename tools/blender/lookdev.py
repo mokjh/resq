@@ -487,6 +487,13 @@ def build_resident(variant, lod, mat):
     lseg = {0: 8, 1: 6, 2: 5}[lod]
     tseg = {0: 10, 1: 8, 2: 6}[lod]
     hseg = {0: (12, 8), 1: (10, 6), 2: (8, 5)}[lod]
+    # the chair carries ~550 extra triangles; the seated rider spends less on what the chair hides or the
+    # board's 0.6 m viewing distance can't resolve, keeping LOD0 inside the 1.2k resident budget
+    legseg = {0: 6, 1: 5, 2: 4}[lod] if seated else lseg
+    if seated:
+        hseg = {0: (10, 7), 1: (8, 6), 2: (8, 5)}[lod]
+        lseg = {0: 6, 1: 6, 2: 5}[lod]       # arms
+        tseg = {0: 8, 1: 8, 2: 6}[lod]       # torso
     stoop = math.radians(P.get("stoop", 0.0))
     piv = J["hip"]
     up = (Matrix.Translation(piv) @ Matrix.Rotation(stoop, 4, "X") @ Matrix.Translation(-piv)
@@ -523,9 +530,9 @@ def build_resident(variant, lod, mat):
     sw, sl, shh = P["shoe"]
     for side, s in (("Left", 1), ("Right", -1)):
         hp, kn, an = J[side + "UpLeg"], J[side + "Leg"], J[side + "Foot"]
-        b.add(tmp_capsule(hp + V(0, 0, 0.6 if not seated else 0.0), kn, P["leg_r"], lseg),
+        b.add(tmp_capsule(hp + V(0, 0, 0.6 if not seated else 0.0), kn, P["leg_r"], legseg),
               P["legs"], bone=bi(side + "UpLeg"), smooth=True)
-        b.add(tmp_capsule(kn, an + V(0, 0, 0.3), P["leg_r"] * 0.93, lseg), P["legs"], tone=0.95,
+        b.add(tmp_capsule(kn, an + V(0, 0, 0.3), P["leg_r"] * 0.93, legseg), P["legs"], tone=0.95,
               bone=bi(side + "Leg"), smooth=True)
         fz = 0.0 if not seated else 2.4
         fy = an.y
@@ -541,18 +548,18 @@ def build_resident(variant, lod, mat):
     if seated:
         C = bi("resq_Chair")
         seat_z = 10.6
-        bv = 0.4 if lod < 2 else 0.0
+        bv = 0.0  # 0.4 mm bevels on the seat/back read as nothing at 0.6 m; their triangles go to the rider
         b.box(-5.0, -6.4, seat_z - 1.0, 5.0, 2.4, seat_z, "cloth_slate", bone=C, bev=bv)
         b.box(-4.8, 2.9, seat_z - 0.6, 4.8, 3.8, seat_z + 9.5, "cloth_slate", tone=0.9, bone=C, bev=bv)
         b.box(-4.0, -12.0, 1.6, 4.0, -8.6, 2.4, "metal_dark", bone=C)          # footplate
-        wseg = {0: 16, 1: 12, 2: 10}[lod]
+        wseg = {0: 12, 1: 10, 2: 8}[lod]
         for side, wb, s in (("L", "resq_WheelL", 1), ("R", "resq_WheelR", -1)):
             wx = s * 7.0
             b.add(kit.tmp_cyl((wx - s * 0.7, 1.2, 7.4), (wx + s * 0.7, 1.2, 7.4), 7.4, wseg),
                   "rubber", bone=bi(wb))
             b.add(kit.tmp_cyl((wx - s * 0.9, 1.2, 7.4), (wx + s * 0.9, 1.2, 7.4), 6.1, wseg),
                   "mineral", bone=bi(wb))
-            b.add(kit.tmp_cyl((wx - s * 1.3, 1.2, 7.4), (wx + s * 1.3, 1.2, 7.4), 1.2, 8),
+            b.add(kit.tmp_cyl((wx - s * 1.3, 1.2, 7.4), (wx + s * 1.3, 1.2, 7.4), 1.2, 6),
                   "metal_dark", bone=bi(wb))
             fx = s * 5.4
             for p0, p1 in (((fx, 3.4, seat_z + 9.0), (fx, 3.4, 5.0)),
@@ -562,7 +569,7 @@ def build_resident(variant, lod, mat):
                 kit.rail(b, p0, p1, 0.9, 0.9, "metal_dark", bone=C)
             b.add(kit.tmp_cyl((fx, 5.0, seat_z + 9.3), (fx, 7.0, seat_z + 9.7), 0.75, 6), "rubber",
                   bone=C)
-            b.add(kit.tmp_cyl((fx - 0.5, -7.4, 2.0), (fx + 0.5, -7.4, 2.0), 2.0, 10), "rubber",
+            b.add(kit.tmp_cyl((fx - 0.5, -7.4, 2.0), (fx + 0.5, -7.4, 2.0), 2.0, 6), "rubber",
                   bone=C)
             kit.rail(b, (fx, -7.4, 2.0), (fx, -7.4, 4.8), 0.7, 0.7, "metal_dark", bone=C)
     ob = b.finalize("resident_%s_LOD%d" % (variant, lod), mat,

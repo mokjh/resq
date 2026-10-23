@@ -22,6 +22,7 @@
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
 - **Unity game layer:** First Crossing plays end-to-end in Unity on the real engine — board, water, actors, tool tray, goals and routing.
 - **Unity, all worlds (23 Oct, Editor only):** all 25 missions synced and loadable from a mission picker (layout and rules toggles). Per-world terrain palettes. Hazard overlay for fire, lava, avalanche debris and wetness; stability labels; tide gauge; cable lines; crawler and winch cabins; meshes for every W2–W5 tool. Tapping placed equipment cools, refills or switches it. Relay stops and staging nodes are pickable. Captures: `docs/progress-worlds-unity-20261023.png`.
+- **Art kit on the board (23 Oct):** `ActorKit` (Resources) swaps residents (adult/child/elder by a deterministic mix; step-free residents in the wheelchair), skiffs and bridges (length-fitted to their gap) to the art kit, with group-colour bases. Decorative cottages sit beside each group's start node on free flat ground, with no colliders, so picks are never blocked. Wheelchair LOD0 is now 1,200 triangles (was 1,614); the art validator passes every check. Contact sheet for the look review: `docs/look-review-contact-sheet-20261023.png`.
 - **Forecast preview:** with a tool armed over a legal socket, two isolated 300-tick forecasts (with/without) ghost cells kept dry (green), newly flooded (red) and still flooded (cyan), plus a rescue summary; 20.8 ms on the Mac (Quest needs the worker thread).
 - **Guided W1-M1:** only the bridge at first; bus delivered at 42.8 s; flood clock frozen until "Got it", then barrier/skiff unlock (Editor-verified).
 - **RESQ Lit shader + art import:** toon ramp, vertex AO, SH ambient, rim, atlas glint. The importer applies the kit contract (LODGroup, `_COL` colliders, one shared material). The validator writes `art/IMPORT_REPORT.md`; all sizes and triangle counts match Blender, and the wheelchair LOD0 (1,614) fails the 1,200 budget as expected. Look-dev scene: `docs/progress-lookdev-unity-20261023.png`.
@@ -44,7 +45,6 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Next
 0. W2–W5 mission content through SimLab (helpers per world).
 1. Forecast on a worker thread (Quest budget); fire/lava forecast layers.
-2. Swap greybox actors for the art kit (ActorKit) and fix the wheelchair budget.
 3. XR wiring: MRUK placement, anchors, ISDK gaze in the operation scene.
 4. Hub/briefing/debrief UX; per-world art kits.
 

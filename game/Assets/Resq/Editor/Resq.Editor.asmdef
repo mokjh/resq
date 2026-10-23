@@ -2,6 +2,7 @@
     "name": "Resq.Editor",
     "rootNamespace": "Resq.EditorTools",
     "references": [
+        "Resq.Game",
         "Resq.Sim",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Core.Runtime"

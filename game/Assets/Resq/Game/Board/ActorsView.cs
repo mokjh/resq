@@ -18,6 +18,10 @@ namespace Resq.Game
         readonly List<Transform> _vehicles = new List<Transform>();
         readonly Dictionary<int, Transform> _equipment = new Dictionary<int, Transform>();
         Mesh _residentMesh, _busMesh, _skiffMesh, _crawlerMesh, _cabinMesh;
+        ActorKit _kit;
+        float _kitScale = 1f;
+        readonly List<float> _vehicleYaw = new List<float>();
+        Vector3[] _residentPrev;
         Mesh[] _residentVariants;
 
         static readonly Color[] GroupColors =
@@ -31,8 +35,10 @@ namespace Resq.Game
         {
             _def = d;
             foreach (Transform child in transform) Destroy(child.gameObject);
-            _residents.Clear(); _vehicles.Clear(); _equipment.Clear();
+            _residents.Clear(); _vehicles.Clear(); _equipment.Clear(); _vehicleYaw.Clear();
             float s = BoardSpace.CellSize(d) / BoardSpace.WideCell; // compact scales down
+            _kit = ActorKit.Load();
+            _kitScale = s;
             _residentVariants = new Mesh[GroupColors.Length];
             for (int g = 0; g < GroupColors.Length; g++)
                 _residentVariants[g] = new MeshKit()
@@ -60,9 +66,24 @@ namespace Resq.Game
                 .Box(new Vector3(0, -0.008f, 0) * s, new Vector3(0.012f, 0.012f, 0.012f) * s, Rescue)
                 .Box(new Vector3(0, 0.0005f, 0) * s, new Vector3(0.002f, 0.006f, 0.002f) * s, TerrainBuilder.Hex(0x2B2B2B))
                 .Build("WinchCabin");
+            _residentPrev = new Vector3[d.ResidentIds.Length];
             for (int r = 0; r < d.ResidentIds.Length; r++)
-                _residents.Add(Spawn("Resident_" + r, _residentVariants[d.ResidentGroup[r] % GroupColors.Length]));
+            {
+                var model = _kit != null ? _kit.ResidentFor(r, d.ResidentStepFree[r]) : null;
+                if (model == null) { _residents.Add(Spawn("Resident_" + r, _residentVariants[d.ResidentGroup[r] % GroupColors.Length])); continue; }
+                var go = ActorKit.Spawn(model, transform, "Resident_" + r);
+                go.transform.localScale = Vector3.one * s;
+                // group identity stays readable: a thin coloured base under each resident
+                var disc = new GameObject("GroupBase");
+                disc.transform.SetParent(go.transform, false);
+                disc.AddComponent<MeshFilter>().sharedMesh = _groupBase[d.ResidentGroup[r] % GroupColors.Length]
+                    ?? (_groupBase[d.ResidentGroup[r] % GroupColors.Length] = new MeshKit()
+                        .Cylinder(Vector3.zero, 0.0068f, 0.0008f, 14, GroupColors[d.ResidentGroup[r] % GroupColors.Length]).Build("GroupBase"));
+                disc.AddComponent<MeshRenderer>().sharedMaterial = Material;
+                _residents.Add(go.transform);
+            }
             BuildCables(d);
+            BuildCottages(d);
         }
 
         Transform Spawn(string name, Mesh mesh)
@@ -86,9 +107,18 @@ namespace Resq.Game
             {
                 int v = _vehicles.Count;
                 var kind = (VehicleKind)S.VKind[v];
+                if (kind == VehicleKind.Skiff && _kit != null && _kit.Skiff != null)
+                {
+                    var go = ActorKit.Spawn(_kit.Skiff, transform, "Vehicle_" + v);
+                    go.transform.localScale = Vector3.one * _kitScale;
+                    _vehicles.Add(go.transform);
+                    _vehicleYaw.Add(_kit.SkiffYaw);
+                    continue;
+                }
                 var mesh = kind == VehicleKind.Skiff ? _skiffMesh : kind == VehicleKind.Crawler ? _crawlerMesh
                          : kind == VehicleKind.Winch ? _cabinMesh : _busMesh;
                 _vehicles.Add(Spawn("Vehicle_" + v, mesh));
+                _vehicleYaw.Add(0f);
             }
             for (int v = 0; v < S.C.VehicleCount; v++)
             {
@@ -100,11 +130,16 @@ namespace Resq.Game
                 if ((VehicleKind)S.VKind[v] == VehicleKind.Winch) { pos.y += CableHeight; fwd = Vector3.zero; }
                 var t = _vehicles[v];
                 t.localPosition = pos;
-                if (fwd.sqrMagnitude > 1e-6f) t.localRotation = Quaternion.Slerp(t.localRotation, Quaternion.LookRotation(fwd, Vector3.up), 0.25f);
+                if (fwd.sqrMagnitude > 1e-6f)
+                    t.localRotation = Quaternion.Slerp(t.localRotation, Quaternion.LookRotation(fwd, Vector3.up) * Quaternion.Euler(0, _vehicleYaw[v], 0), 0.25f);
                 t.gameObject.SetActive(S.VState[v] != (byte)VehicleState.Failed || true);
             }
             // residents
             var slot = _slot; slot.Clear(); // node -> residents drawn there this frame
+            // a parked vehicle owns the node centre; people stand around it, not on it
+            for (int v = 0; v < S.C.VehicleCount; v++)
+                if (S.VState[v] != (byte)VehicleState.Moving && (VehicleKind)S.VKind[v] != VehicleKind.Skiff && S.VNode[v] >= 0)
+                    slot[S.VNode[v]] = 3;
             for (int r = 0; r < _residents.Count; r++)
             {
                 var st = (ResidentState)S.RState[r];
@@ -125,6 +160,18 @@ namespace Resq.Game
                     pos = NodePos(node, false) + RingOffset(k);
                 }
                 if (st == ResidentState.Evacuated) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 4f + r)) * 0.002f; // gentle celebration
+                if (st == ResidentState.Walking) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 14f + r)) * 0.0008f; // walking bob
+                // face the way they move (kit models), easing so groups don't snap
+                if (_kit != null)
+                {
+                    var delta = pos - _residentPrev[r]; delta.y = 0;
+                    if (delta.sqrMagnitude > 1e-9f)
+                    {
+                        var target = Quaternion.LookRotation(delta.normalized, Vector3.up) * Quaternion.Euler(0, _kit.ResidentYaw, 0);
+                        t.localRotation = Quaternion.Slerp(t.localRotation, target, 0.2f);
+                    }
+                    _residentPrev[r] = pos;
+                }
                 t.localPosition = pos;
             }
             SyncEquipment(sim);
@@ -135,7 +182,7 @@ namespace Resq.Game
             float s = BoardSpace.CellSize(_def);
             if (k == 0) return Vector3.zero;
             float ang = k * 2.39996f; // golden angle spiral keeps groups compact
-            float rad = s * 0.22f * Mathf.Sqrt(k);
+            float rad = s * (_kit != null ? 0.52f : 0.22f) * Mathf.Sqrt(k); // kit residents are ~13 mm wide
             return new Vector3(Mathf.Cos(ang) * rad, 0, Mathf.Sin(ang) * rad);
         }
 
@@ -223,6 +270,90 @@ namespace Resq.Game
         }
 
         readonly List<Vector3> _scratchPts = new List<Vector3>(32);
+        readonly Mesh[] _groupBase = new Mesh[6];
+
+        /// <summary>
+        /// Decorative homes beside each group's starting point (presentation only). A cottage takes a 4×3-cell flat
+        /// block at or above the start node's elevation (a home on the slope above its people is fine) that touches no
+        /// node, path, socket, water or hazard cell, and faces the node.
+        /// </summary>
+        void BuildCottages(MissionDef d)
+        {
+            if (_kit == null || _kit.Cottage == null) return;
+            int w = d.GridW, h = d.GridH, n = w * h;
+            var blocked = new bool[n];
+            // nodes keep a one-cell margin: people waiting there stand around the node, not inside a wall
+            for (int i = 0; i < d.NodeIds.Length; i++)
+            {
+                int nc = d.NodeCell[i];
+                if (nc < 0) continue;
+                for (int oy = -1; oy <= 1; oy++)
+                    for (int ox = -1; ox <= 1; ox++)
+                    {
+                        int x = d.CellX(nc) + ox, y = d.CellY(nc) + oy;
+                        if (x >= 0 && y >= 0 && x < w && y < h) blocked[d.CellIndex(x, y)] = true;
+                    }
+            }
+            for (int e = 0; e < d.EdgeIds.Length; e++) if (d.EdgeSampleCells[e] != null) foreach (int c in d.EdgeSampleCells[e]) if (c < n) blocked[c] = true;
+            for (int s = 0; s < d.SocketIds.Length; s++)
+            {
+                if (d.SocketCell[s] >= 0) blocked[d.SocketCell[s]] = true;
+                if (d.SocketCells[s] != null) foreach (int c in d.SocketCells[s]) blocked[c] = true;
+                if (d.SocketPlatformCells[s] != null) foreach (int c in d.SocketPlatformCells[s]) blocked[c] = true;
+            }
+            for (int c = 0; c < n; c++)
+            {
+                if (d.WInitVol[c] > 0) blocked[c] = true;
+                if (d.CellLavaSeg != null && d.CellLavaSeg[c] >= 0) blocked[c] = true;
+            }
+            foreach (int c in d.SeaCell) blocked[c] = true;
+            foreach (var cells in d.SegmentCells) foreach (int c in cells) if (c < n) blocked[c] = true;
+            for (int i = 0; i < d.SourceNode.Length; i++) blocked[d.SourceNode[i]] = true;
+
+            int placed = 0;
+            for (int g = 0; g < d.GroupIds.Length && placed < _kit.MaxCottages; g++)
+            {
+                int start = d.NodeCell[d.GroupStart[g]];
+                if (start < 0) continue;
+                long elev = d.CellElevation[start];
+                int sx = d.CellX(start), sy = d.CellY(start);
+                bool done = false;
+                for (int radius = 1; radius <= 6 && !done; radius++)
+                    for (int oy = -radius; oy <= radius && !done; oy++)
+                        for (int ox = -radius; ox <= radius && !done; ox++)
+                        {
+                            if (Mathf.Max(Mathf.Abs(ox), Mathf.Abs(oy)) != radius) continue;
+                            foreach (bool wide in new[] { true, false })
+                            {
+                                int bw = wide ? 4 : 3, bh = wide ? 3 : 4;
+                                int x0 = sx + ox - bw / 2, y0 = sy + oy - bh / 2;
+                                if (x0 < 0 || y0 < 0 || x0 + bw > w || y0 + bh > h) continue;
+                                bool ok = true;
+                                long blockElev = d.CellElevation[d.CellIndex(x0, y0)];
+                                if (blockElev < elev) continue;
+                                for (int y = y0; y < y0 + bh && ok; y++)
+                                    for (int x = x0; x < x0 + bw && ok; x++)
+                                    {
+                                        int c = d.CellIndex(x, y);
+                                        if (blocked[c] || d.CellElevation[c] != blockElev) ok = false;
+                                    }
+                                if (!ok) continue;
+                                for (int y = y0; y < y0 + bh; y++) for (int x = x0; x < x0 + bw; x++) blocked[d.CellIndex(x, y)] = true;
+                                float cs = BoardSpace.CellSize(d);
+                                var centre = new Vector3((x0 + bw * 0.5f - w * 0.5f) * cs, BoardSpace.Height(d, blockElev), (y0 + bh * 0.5f - h * 0.5f) * cs);
+                                var toNode = BoardSpace.CellCenter(d, start) - centre; toNode.y = 0;
+                                // front faces the node, snapped to the axis the footprint allows
+                                float yaw = wide ? (toNode.z >= 0 ? 0f : 180f) : (toNode.x >= 0 ? 90f : -90f);
+                                var go = ActorKit.Spawn(_kit.Cottage, transform, "Cottage_" + d.GroupIds[g]);
+                                go.transform.localPosition = centre;
+                                go.transform.localRotation = Quaternion.Euler(0, yaw + _kit.CottageYaw, 0);
+                                go.transform.localScale = Vector3.one * _kitScale;
+                                placed++; done = true;
+                                break;
+                            }
+                        }
+            }
+        }
         readonly Dictionary<int, int> _slot = new Dictionary<int, int>();
 
         void SyncEquipment(Simulator sim)
@@ -232,16 +363,39 @@ namespace Resq.Game
             {
                 var tool = (ToolKind)S.EqKind[inst];
                 if (tool == ToolKind.Skiff || tool == ToolKind.Crawler) continue; // shown as vehicles
+                int sock = S.EqSocket[inst];
+                bool kitBridge = tool == ToolKind.Bridge && _kit != null && _kit.Bridge != null && _def.SocketEdge[sock] >= 0;
                 if (!_equipment.TryGetValue(inst, out var t))
                 {
-                    t = Spawn($"Equipment_{inst}_{tool}", EquipmentMesh(tool, S.EqSocket[inst]));
+                    t = kitBridge ? ActorKit.Spawn(_kit.Bridge, transform, $"Equipment_{inst}_{tool}").transform
+                                  : Spawn($"Equipment_{inst}_{tool}", EquipmentMesh(tool, sock));
                     _equipment[inst] = t;
                 }
-                int sock = S.EqSocket[inst];
+                if (kitBridge) { PoseKitBridge(t, sock, S.EqBroken[inst]); continue; }
                 t.localPosition = SocketPos(sock);
                 t.localRotation = SocketRotation(sock);
                 t.localScale = S.EqBroken[inst] ? new Vector3(1, 0.35f, 1) : Vector3.one;
             }
+        }
+
+        /// <summary>
+        /// The kit bridge's deck (origin = walking surface, length along local X) spans its edge between the two
+        /// bridgeheads at bank height; it is stretched only along its length (to 0.5–1.0 of authored) to suit the gap.
+        /// </summary>
+        void PoseKitBridge(Transform t, int sock, bool broken)
+        {
+            var d = _def;
+            int e = d.SocketEdge[sock];
+            int a = d.NodeCell[d.EdgeFrom[e]], b = d.NodeCell[d.EdgeTo[e]];
+            var pa = BoardSpace.CellCenter(d, a); var pb = BoardSpace.CellCenter(d, b);
+            var dir = pb - pa; dir.y = 0;
+            float span = dir.magnitude;
+            float bank = BoardSpace.Height(d, System.Math.Max(d.CellElevation[a], d.CellElevation[b]));
+            var mid = (pa + pb) * 0.5f; mid.y = bank;
+            t.localPosition = mid;
+            t.localRotation = dir.sqrMagnitude > 1e-8f ? Quaternion.FromToRotation(Vector3.right, dir.normalized) : Quaternion.identity;
+            float stretch = Mathf.Clamp((span + BoardSpace.CellSize(d) * 2f) / (_kit.BridgeLength * _kitScale), 0.5f, 1f);
+            t.localScale = new Vector3(stretch, broken ? 0.35f : 1f, 1f) * _kitScale;
         }
 
         public Transform EquipmentTransform(int inst) => _equipment.TryGetValue(inst, out var t) ? t : null;

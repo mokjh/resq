@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2210c824a41d49779d945b0b6f05f1a, type: 3}
+  m_Name: ResqActorKit
+  m_EditorClassIdentifier: Resq.Game::Resq.Game.ActorKit
+  ResidentAdult: {fileID: 919132149155446097, guid: 71e8b0e5fd3644a169de73ccc81c0a7e, type: 3}
+  ResidentChild: {fileID: 919132149155446097, guid: dfe71231e6de3480cb3a0458368ca8a6, type: 3}
+  ResidentElder: {fileID: 919132149155446097, guid: e3bf8b0a3dab345768ad29e0591ca7db, type: 3}
+  ResidentWheelchair: {fileID: 919132149155446097, guid: e8468778225374e1987bdfa77236dcf6, type: 3}
+  Skiff: {fileID: 919132149155446097, guid: d4e0eaf418f9b4142bc8917fa4894035, type: 3}
+  Bridge: {fileID: 919132149155446097, guid: f329f2b984b7e4c2781f5d81a88a64e3, type: 3}
+  Cottage: {fileID: 919132149155446097, guid: 883d3e1639b4645b7b41301ac4a68480, type: 3}
+  ResidentYaw: 180
+  SkiffYaw: -90
+  CottageYaw: 180
+  BridgeLength: 0.12
+  MaxCottages: 6
