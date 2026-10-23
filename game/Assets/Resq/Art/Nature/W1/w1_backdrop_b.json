@@ -1,0 +1,364 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w1_backdrop_b",
+  "world": "w1_alder",
+  "category": "backdrop",
+  "tags": [
+    "backdrop"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -160.0,
+      -60.0,
+      -0.5
+    ],
+    "max": [
+      160.0,
+      60.0,
+      114.438
+    ],
+    "size": [
+      320.0,
+      120.0,
+      114.938
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    320.0,
+    114.938,
+    120.0
+  ],
+  "footprint_radius_mm": 170.88,
+  "height_mm": 114.44,
+  "triangles": {
+    "w1_backdrop_b_LOD0": 2035,
+    "w1_backdrop_b_LOD1": 761,
+    "w1_backdrop_b_LOD2": 192
+  },
+  "budget_lod0": 3000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w1_backdrop_b_LOD0": 0.6599,
+    "w1_backdrop_b_LOD1": 0.6002,
+    "w1_backdrop_b_LOD2": 0.8794
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_sage": 446,
+    "foliage": 757,
+    "grass": 805,
+    "wood_deck": 27
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w1_backdrop_b_LOD0": {
+      "count": 49,
+      "floating": 0
+    },
+    "w1_backdrop_b_LOD1": {
+      "count": 23,
+      "floating": 0
+    },
+    "w1_backdrop_b_LOD2": {
+      "count": 3,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w1_backdrop_b_LOD0": {
+      "inside_other_parts_or_below_ground": 721,
+      "covered_contact": 0
+    },
+    "w1_backdrop_b_LOD1": {
+      "inside_other_parts_or_below_ground": 239,
+      "covered_contact": 0
+    },
+    "w1_backdrop_b_LOD2": {
+      "inside_other_parts_or_below_ground": 126,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w1_backdrop_b_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_backdrop_b_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_backdrop_b_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.1
+  },
+  "design": "rolling wooded hills: patchwork fields in front, wooded mid hills, hazy sage far hills (variant b)",
+  "placement": {
+    "min_spacing_mm": 0,
+    "cluster": "ring outside the board edge, end to end along local X at a 320 mm pitch, any order of variants",
+    "yaw": "local -Y (front) faces the board",
+    "scale_range": [
+      1.0,
+      1.0
+    ],
+    "keep_off": "the board itself and the 30 mm clear margin",
+    "tile_pitch_mm": 320,
+    "edge_profile": "identical at x = +-160 for every variant of this world"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.374,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.094,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "backdrop_envelope_320x120x160": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w1_backdrop_b": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w1_backdrop_b_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_backdrop_b"
+      },
+      "w1_backdrop_b_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_backdrop_b"
+      },
+      "w1_backdrop_b_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_backdrop_b"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w1_backdrop_b_LOD0": {
+        "min": [
+          -0.1600000113248825,
+          -0.0005000000237487257,
+          -0.06000000238418579
+        ],
+        "max": [
+          0.1600000113248825,
+          0.11443755030632019,
+          0.06000000238418579
+        ],
+        "count": 1220
+      },
+      "w1_backdrop_b_LOD1": {
+        "min": [
+          -0.1600000113248825,
+          -0.0005000000237487257,
+          -0.06000000238418579
+        ],
+        "max": [
+          0.1600000113248825,
+          0.10419829189777374,
+          0.06000000238418579
+        ],
+        "count": 479
+      },
+      "w1_backdrop_b_LOD2": {
+        "min": [
+          -0.1600000113248825,
+          -0.0005000000237487257,
+          -0.06000000238418579
+        ],
+        "max": [
+          0.1600000113248825,
+          0.10039737820625305,
+          0.06000000238418579
+        ],
+        "count": 135
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w1_alder/w1_backdrop_b.fbx",
+    "fbx_sha256": "6d9e6de4412ba5f6887582739f456d41d471eccecb705e99a6db2c84636c202b",
+    "fbx_bytes": 254796,
+    "blend": "art/nature/w1_alder/w1_alder_kit.blend",
+    "world_preview": "art/nature/w1_alder/w1_alder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.34,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w1_backdrop_b_LOD0": {
+        "min": [
+          -160.0,
+          -60.0,
+          -0.5
+        ],
+        "max": [
+          160.0,
+          60.0,
+          114.438
+        ],
+        "size": [
+          320.0,
+          120.0,
+          114.938
+        ]
+      },
+      "w1_backdrop_b_LOD1": {
+        "min": [
+          -160.0,
+          -60.0,
+          -0.5
+        ],
+        "max": [
+          160.0,
+          60.0,
+          104.198
+        ],
+        "size": [
+          320.0,
+          120.0,
+          104.698
+        ]
+      },
+      "w1_backdrop_b_LOD2": {
+        "min": [
+          -160.0,
+          -60.0,
+          -0.5
+        ],
+        "max": [
+          160.0,
+          60.0,
+          100.397
+        ],
+        "size": [
+          320.0,
+          120.0,
+          100.897
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w1_backdrop_b_LOD0": 0.66,
+      "w1_backdrop_b_LOD1": 0.6004,
+      "w1_backdrop_b_LOD2": 0.8797
+    },
+    "colour_attrs": {
+      "w1_backdrop_b_LOD0": [
+        "Col"
+      ],
+      "w1_backdrop_b_LOD1": [
+        "Col"
+      ],
+      "w1_backdrop_b_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

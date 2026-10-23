@@ -35,9 +35,9 @@ namespace Resq.Game
         };
         static readonly Dictionary<int, int> Frostline = new Dictionary<int, int>
         {
-            { 0, 0x4A6A7A }, { 2, 0x9AA3AA }, { 3, 0x6E747A }, { 6, 0x5C7A8A }, { 8, 0xD8D2C4 }, { 9, 0xD8D2C4 }, { 11, 0xB8B0A4 },
-            { 21, 0xF1F4F7 }, { 22, 0x8E959C }, { 23, 0xA88A6A }, { 24, 0xC9CCD0 }, { 25, 0xD9DEE3 }, { 26, 0xE6EBF0 },
-            { 27, 0xE9EEF2 }, { 28, 0xDCE3E8 }, { 29, 0x7D848B },
+            { 0, 0x4A6A7A }, { 2, 0xC4CCD3 }, { 3, 0xE6ECF0 }, { 6, 0x5C7A8A }, { 8, 0xDCD6C8 }, { 9, 0xDCD6C8 }, { 11, 0xC8BFB0 },
+            { 20, 0xF2F5F8 }, { 21, 0xF7F9FB }, { 22, 0x8E959C }, { 23, 0xA88A6A }, { 24, 0xD2D5D9 }, { 25, 0xDDE3E8 }, { 26, 0xEAEFF3 },
+            { 27, 0xF0F4F7 }, { 28, 0xE8EDF1 }, { 29, 0x8A9198 },
         };
         static readonly Dictionary<int, int> Tidemark = new Dictionary<int, int>
         {
@@ -46,8 +46,8 @@ namespace Resq.Game
         };
         static readonly Dictionary<int, int> CinderReach = new Dictionary<int, int>
         {
-            { 1, 0x6E7A4E }, { 2, 0x8E8579 }, { 3, 0x3B3836 }, { 4, 0x2E4E58 }, { 6, 0x4F4A44 }, { 8, 0xC2B596 }, { 9, 0xC2B596 },
-            { 10, 0x5E7A3E }, { 11, 0xB8A88A }, { 12, 0x5A5048 }, { 13, 0x2A2624 }, { 14, 0x9AA3AA },
+            { 1, 0x7E8450 }, { 2, 0x9A8A78 }, { 3, 0x574A42 }, { 4, 0x2E4E58 }, { 6, 0x5E5046 }, { 8, 0xCDB892 }, { 9, 0xCDB892 },
+            { 10, 0x6A7E3E }, { 11, 0xC2AC86 }, { 12, 0x6A5446 }, { 13, 0x3A2A24 }, { 14, 0xA8A49C },
         };
 
         /// <summary>Cliff strata per world, top to bottom of a repeating cycle.</summary>
@@ -56,14 +56,14 @@ namespace Resq.Game
             switch (world)
             {
                 case "W2": return new[] { Hex(0x8A5A3A), Hex(0x6E4630), Hex(0x9C7350), Hex(0x5E3E2C) };
-                case "W3": return new[] { Hex(0x8C949C), Hex(0x6E767E), Hex(0x9AA2A8), Hex(0x5E666E) };
+                case "W3": return new[] { Hex(0x9AA2AA), Hex(0x7E868E), Hex(0xB4BCC2), Hex(0x6E767E) };
                 case "W4": return new[] { Hex(0xC2A878), Hex(0xA88C62), Hex(0xD0B98C), Hex(0x8E7556) };
-                case "W5": return new[] { Hex(0x3A3532), Hex(0x2A2624), Hex(0x5A3A2E), Hex(0x463F3A) };
+                case "W5": return new[] { Hex(0x5A4436), Hex(0x46362C), Hex(0x7A4A32), Hex(0x543F33) };
                 default: return new[] { Hex(0x8C8577), Hex(0x7A6A58), Hex(0x9A8E7C), Hex(0x6A5A48) };
             }
         }
 
-        static Color Lip(string world) => world == "W3" ? Hex(0xF4F7FA) : world == "W5" ? Hex(0x5A524C) : world == "W4" ? Hex(0xD8C49A) : Hex(0x7E9A62);
+        static Color Lip(string world) => world == "W3" ? Hex(0xF4F7FA) : world == "W5" ? Hex(0x7A6452) : world == "W4" ? Hex(0xD8C49A) : Hex(0x7E9A62);
 
         static Dictionary<int, int> WorldPalette(string worldId)
         {

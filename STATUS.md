@@ -1,4 +1,4 @@
-# RESQ status — 23 Oct 2026, 09:00 (day 1 of 26)
+# RESQ status — 23 Oct 2026, 09:30 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -36,8 +36,9 @@
 - **Nature kits on the boards:** all 130 Blender assets pass every check; the six that failed (W3 marker pole and snow fence, W4 crate stack, W5 shrubs a/b and olive a) are fixed in `tools/blender/nature.py`. 115 non-backdrop assets are in Unity (100 kit entries). Scatter follows the natural terrain height.
 - **Residents (paid, logged):** three rigged Meshy figures (woman, man, elder; 105 Meshy + 4.5 Higgsfield credits, user-approved). Prepared by `tools/blender/resident_prep.py`: 32–35 mm, 1,192 triangles, 1K texture, a 1 s looping walk; the standing pose is the walk's feet-together frame. Children are the woman rig at 0.72 scale with a 1.28× head. Wheelchair residents are the woman rig posed seated, in the kit chair. A well-mixed hash varies each group.
 - **Crowds:** rescue crew stand at every evacuation landing (3 per landing, hi-vis orange jackets, white helmets, no group base). Rescued residents gather around them. Waiting groups stand in front of their own homes.
-- **Art validator:** 1,311 checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheets v2 and v3: `docs/look-review-contact-sheet-v2-20261023.png` and `-v3-20261023.png` (Editor captures, not device).
-- **Remaining gaps vs the concepts:** no golden-hour lighting yet; the PlayMode smoke test (a planned gate) isn't written yet; backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
+- **Golden hour and backdrops:** each world has its own low warm sun from the player's front-left, plus a matching trilight and ambient probe (`WorldLighting`). The Blender backdrop tiles ring the board: three along the far side and two down each side, flush with the player's edge and 80% height at the sides, with an earth plinth to the table. Frostline's ground is now bright snow (rock only on outcrops); Cinder Reach uses warm basalt browns.
+- **Art validator:** all checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheets v2–v4: `docs/look-review-contact-sheet-v{2,3,4}-20261023.png` (Editor captures, not device).
+- **Remaining gaps:** golden-hour lighting is untested on Quest (cost and how it looks over passthrough); the PlayMode smoke test (a planned gate) isn't written yet; backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)
 Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission, moored members. W4-M3 and W5-M2/M3/M4 retuned.

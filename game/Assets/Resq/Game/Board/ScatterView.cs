@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Resq.Game
 {
-    public enum DecorKind : byte { Broadleaf, Conifer, Shrub, Rock, Grass, Flower, Reed, Crop, Orchard, Drift, Column, Prop }
+    public enum DecorKind : byte { Broadleaf, Conifer, Shrub, Rock, Grass, Flower, Reed, Crop, Orchard, Drift, Column, Prop, Backdrop }
 
     /// <summary>
     /// World dressing (Look 2.0): trees, rocks, ground cover and small props scattered deterministically over every

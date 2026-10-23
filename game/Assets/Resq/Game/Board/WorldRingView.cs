@@ -33,6 +33,9 @@ namespace Resq.Game
 
         public void Build(Resq.Sim.MissionDef d)
         {
+            foreach (Transform child in transform) Destroy(child.gameObject);
+            var kitTiles = NatureKit.Load()?.Backdrops(d.WorldId);
+            if (kitTiles != null && kitTiles.Count > 0) { BuildBackdrops(d, kitTiles); return; }
             var look = LookFor(d.WorldId);
             var ext = BoardSpace.Extent(d) * 0.5f;
             _ext = ext;
@@ -80,6 +83,53 @@ namespace Resq.Game
             final.CombineMeshes(combine.ToArray(), true, true);
             final.RecalculateBounds();
             GetComponent<MeshFilter>().sharedMesh = final;
+        }
+
+        /// <summary>
+        /// Blender backdrop tiles (art/nature wN_backdrop_a..c, 320 mm, edges match across variants): three along the
+        /// far side and two down each side, 30 mm clear of the board, facing it; the player's side stays open. Side
+        /// tiles are 80% height so they never hide the board's outer columns from the seated view. A plinth under
+        /// each row carries them down to the table like the board's own cutaway block.
+        /// </summary>
+        void BuildBackdrops(Resq.Sim.MissionDef d, List<Mesh> tiles)
+        {
+            float s = BoardSpace.CellSize(d) / BoardSpace.WideCell;
+            var ext = BoardSpace.Extent(d) * 0.5f;
+            float pitch = 0.32f * s, half = 0.06f * s, gap = 0.03f * s;
+            var natureMat = NatureKit.Load().Material;
+            int seed = 0; foreach (char ch in d.MissionId) seed = seed * 31 + ch;
+            int k = 0;
+            void Tile(Vector3 pos, float yaw, float hScale, float lenScale = 1f)
+            {
+                var mesh = tiles[(int)((uint)(k + seed) % (uint)tiles.Count)];
+                var go = new GameObject("Backdrop_" + k++);
+                go.transform.SetParent(transform, false);
+                go.transform.localPosition = pos;
+                go.transform.localRotation = Quaternion.Euler(0, yaw, 0);
+                go.transform.localScale = new Vector3(s * lenScale, s * hScale, s);
+                go.AddComponent<MeshFilter>().sharedMesh = mesh;
+                var r = go.AddComponent<MeshRenderer>();
+                r.sharedMaterial = natureMat;
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // far scenery: no shadow pass cost
+            }
+            float farZ = ext.y + gap + half;
+            // imported tiles face -Z (verified in the Editor, 23 Oct): far row as is, sides turned toward the board
+            for (int i = -1; i <= 1; i++) Tile(new Vector3(i * pitch, 0, farZ), 0f, 1f);
+            float sideX = ext.x + gap + half;
+            // side rows run exactly from the player's edge to the far row: two tiles squeezed along their length
+            float zNear = -ext.y, zFar = ext.y + gap, sideLen = zFar - zNear, zc = (zNear + zFar) * 0.5f;
+            float squeeze = sideLen / (2f * pitch);
+            foreach (float sx in new[] { -1f, 1f })
+                for (int i = 0; i < 2; i++)
+                    Tile(new Vector3(sx * sideX, 0, zc + (i == 0 ? -0.25f : 0.25f) * sideLen), sx < 0 ? -90f : 90f, 0.8f, squeeze);
+            // plinth: solid earth from the tiles' ground line down to the table
+            var under = LookFor(d.WorldId).Under;
+            var kit = new MeshKit();
+            float bottom = -BoardSpace.BaseDepth, h = -bottom - 0.0006f;
+            kit.Box(new Vector3(0, bottom + h * 0.5f, farZ), new Vector3(pitch * 3f, h, half * 2f), under);
+            foreach (float sx in new[] { -1f, 1f })
+                kit.Box(new Vector3(sx * sideX, bottom + h * 0.5f, zc), new Vector3(half * 2f, h, sideLen), under);
+            GetComponent<MeshFilter>().sharedMesh = kit.Build("BackdropPlinth_" + d.MissionId);
         }
 
         static float Hash(int i, int salt)

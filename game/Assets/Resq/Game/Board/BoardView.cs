@@ -47,6 +47,7 @@ namespace Resq.Game
         public void Rebuild()
         {
             _def = Driver.Def;
+            WorldLighting.Apply(_def.WorldId, transform);
             if (_root != null) Destroy(_root.gameObject);
             _root = new GameObject("BoardRoot").transform;
             _root.SetParent(transform, false);

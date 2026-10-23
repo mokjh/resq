@@ -26,6 +26,18 @@ MonoBehaviour:
     Mesh: {fileID: 4004053852870772378, guid: e9245f9e560824560a957b415f98dbb0, type: 3}
     Charred: 0
   - World: W1
+    Kind: 12
+    Mesh: {fileID: 3957275802505486896, guid: 98d74e2e2a2f44842b3ed556d83494ba, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 12
+    Mesh: {fileID: -3578040901544907179, guid: 87db6238feea040828c065d9fc42fdb1, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 12
+    Mesh: {fileID: -2354990150004347031, guid: 1463914d351744633995639aefcccbf2, type: 3}
+    Charred: 0
+  - World: W1
     Kind: 3
     Mesh: {fileID: -4275122041249618193, guid: 36e85b05b4f2542b9bcbc221145b4063, type: 3}
     Charred: 0
@@ -146,6 +158,18 @@ MonoBehaviour:
     Mesh: {fileID: 3902425030358936365, guid: cd6fbb639a483496f9406f5b147d3c6f, type: 3}
     Charred: 0
   - World: W2
+    Kind: 12
+    Mesh: {fileID: -3775882905704532610, guid: 95a998c48cd9d4fd4aee857985b7e7aa, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 12
+    Mesh: {fileID: 1682149817695032739, guid: 608c2924b9aa445dc860ad4b536010ae, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 12
+    Mesh: {fileID: 6970304179964699917, guid: 6eb7062c77a1b48f3a340bbf02469a7b, type: 3}
+    Charred: 0
+  - World: W2
     Kind: 3
     Mesh: {fileID: 6101770430346601689, guid: 5a79a4554af644d5e875d961480c2939, type: 3}
     Charred: 0
@@ -218,6 +242,18 @@ MonoBehaviour:
     Mesh: {fileID: 1900839023220149034, guid: 62145af379b464bf5b7dc0eee34d1795, type: 3}
     Charred: 0
   - World: W3
+    Kind: 12
+    Mesh: {fileID: 6953735166630920933, guid: c8a9fe081b3d947cf92d10bbbf318cf1, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 12
+    Mesh: {fileID: -5593657164844525988, guid: 34b99c7afa0344b7792f9fd454e9c3d0, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 12
+    Mesh: {fileID: 3298155438251424300, guid: a0545fd138b834b37a27a51894f6437f, type: 3}
+    Charred: 0
+  - World: W3
     Kind: 3
     Mesh: {fileID: -3684549074268067735, guid: 6ae9b177303544487baf912d9eecd33e, type: 3}
     Charred: 0
@@ -272,6 +308,18 @@ MonoBehaviour:
   - World: W3
     Kind: 11
     Mesh: {fileID: -5761468781197435187, guid: 6125a2f94dd0e4f08825a559ab8fb054, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 12
+    Mesh: {fileID: 3454416891639597669, guid: f6538a914bf8e43fea41e41ef71ddd0c, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 12
+    Mesh: {fileID: 4723838764775636263, guid: 12aa385c334c143739e32c5401274108, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 12
+    Mesh: {fileID: -6856693982521786552, guid: be12ffdc884f143a19fa4d0c498f8649, type: 3}
     Charred: 0
   - World: W4
     Kind: 11
@@ -348,6 +396,18 @@ MonoBehaviour:
   - World: W5
     Kind: 9
     Mesh: {fileID: -559206135158406334, guid: d8311aa49e4f94471b819ab6781c349c, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 12
+    Mesh: {fileID: 2233912661640804174, guid: f62f62e2144a34f6fad18baf9f81282c, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 12
+    Mesh: {fileID: -6177620122218250119, guid: eb29aba01879c4499be561b934b45eed, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 12
+    Mesh: {fileID: 5703185052016025802, guid: 3cd815c174336453b805d7729220156c, type: 3}
     Charred: 0
   - World: W5
     Kind: 10

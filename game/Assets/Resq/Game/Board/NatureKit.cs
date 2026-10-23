@@ -31,6 +31,15 @@ namespace Resq.Game
             return _cached;
         }
 
+        /// <summary>Backdrop tiles for a world (320 mm, front = +Z after import), in a stable order.</summary>
+        public List<Mesh> Backdrops(string world)
+        {
+            var l = new List<Mesh>();
+            foreach (var e in Entries) if (e.World == world && e.Kind == DecorKind.Backdrop && e.Mesh != null) l.Add(e.Mesh);
+            l.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
+            return l;
+        }
+
         public int Fill(string world, Dictionary<DecorKind, Mesh[]> meshes, Dictionary<DecorKind, Mesh> charred)
         {
             var lists = new Dictionary<DecorKind, List<Mesh>>();

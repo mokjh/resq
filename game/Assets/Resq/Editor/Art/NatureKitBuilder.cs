@@ -52,6 +52,7 @@ namespace Resq.EditorTools
         static DecorKind? KindFor(string id)
         {
             string s = id.Substring(3); // drop "wN_"
+            if (s.StartsWith("backdrop")) return DecorKind.Backdrop;
             if (s.StartsWith("olive")) return DecorKind.Orchard;
             if (s.StartsWith("dead_charred")) return DecorKind.Conifer;
             if (s.Contains("pine") || s.Contains("conifer") || s.Contains("spruce") || s.Contains("fir") || s.Contains("larch")) return DecorKind.Conifer;
