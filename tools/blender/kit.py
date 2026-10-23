@@ -67,6 +67,8 @@ PALETTE = [
     ("hair_dark",      "#3A2C27", 0.90, 0.00, "hair"),
     ("hair_grey",      "#C3BDB1", 0.90, 0.00, "hair"),
     ("hair_auburn",    "#7A3F2A", 0.90, 0.00, "hair"),
+    # --- appended 23 Oct 2026 (nature kit, tools/blender/nature.py); append-only ---
+    ("snow",           "#E8F1EF", 0.88, 0.00, "snow"),      # W3 palette snow (world bible)
 ]
 ROLE_INDEX = {r[0]: i for i, r in enumerate(PALETTE)}
 ATLAS_W, ATLAS_H, ATLAS_CELL = 256, 16, 8

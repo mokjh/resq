@@ -109,6 +109,17 @@ namespace Resq.Game
             {
                 int v = _vehicles.Count;
                 var kind = (VehicleKind)S.VKind[v];
+                var heroKit = HeroKit.Load();
+                var heroBody = heroKit == null ? null : heroKit.Get(kind == VehicleKind.FixedBus ? heroKit.Bus : kind == VehicleKind.Skiff ? heroKit.Skiff
+                                                                   : kind == VehicleKind.Crawler ? heroKit.Crawler : null);
+                if (heroBody != null)
+                {
+                    var go = HeroKit.Spawn(heroBody, transform, "Vehicle_" + v);
+                    go.transform.localScale = Vector3.one * _kitScale;
+                    _vehicles.Add(go.transform);
+                    _vehicleYaw.Add(heroBody.Yaw);
+                    continue;
+                }
                 if (kind == VehicleKind.Skiff && _kit != null && _kit.Skiff != null)
                 {
                     var go = ActorKit.Spawn(_kit.Skiff, transform, "Vehicle_" + v);
@@ -281,7 +292,10 @@ namespace Resq.Game
         /// </summary>
         void BuildCottages(MissionDef d)
         {
-            if (_kit == null || _kit.Cottage == null) return;
+            var hero = HeroKit.Load();
+            var landmarks = hero != null ? hero.Landmarks(d.WorldId) : System.Array.Empty<string>();
+            bool generic = _kit != null && _kit.Cottage != null;
+            if (!generic && landmarks.Length == 0) return;
             int w = d.GridW, h = d.GridH, n = w * h;
             var blocked = new bool[n];
             // nodes keep a one-cell margin: people waiting there stand around the node, not inside a wall
@@ -312,48 +326,93 @@ namespace Resq.Game
             foreach (var cells in d.SegmentCells) foreach (int c in cells) if (c < n) blocked[c] = true;
             for (int i = 0; i < d.SourceNode.Length; i++) blocked[d.SourceNode[i]] = true;
 
-            int placed = 0;
-            for (int g = 0; g < d.GroupIds.Length && placed < _kit.MaxCottages; g++)
+            float cs = BoardSpace.CellSize(d);
+            bool Free(int x0, int y0, int bw, int bh, out long blockElev)
+            {
+                blockElev = 0;
+                if (x0 < 0 || y0 < 0 || x0 + bw > w || y0 + bh > h) return false;
+                blockElev = d.CellElevation[d.CellIndex(x0, y0)];
+                for (int y = y0; y < y0 + bh; y++)
+                    for (int x = x0; x < x0 + bw; x++)
+                    {
+                        int c = d.CellIndex(x, y);
+                        if (blocked[c] || d.CellElevation[c] != blockElev) return false;
+                    }
+                return true;
+            }
+            void Put(HeroKit.Entry e, int x0, int y0, int bw, int bh, long blockElev, Vector3 face, bool wide, string name)
+            {
+                for (int y = y0; y < y0 + bh; y++) for (int x = x0; x < x0 + bw; x++) { blocked[d.CellIndex(x, y)] = true; CottageCells.Add(d.CellIndex(x, y)); }
+                var centre = new Vector3((x0 + bw * 0.5f - w * 0.5f) * cs, BoardSpace.Height(d, blockElev), (y0 + bh * 0.5f - h * 0.5f) * cs);
+                var toward = face - centre; toward.y = 0;
+                // front faces the node (or the board centre), snapped to the axis the footprint allows
+                float yaw = wide ? (toward.z >= 0 ? 0f : 180f) : (toward.x >= 0 ? 90f : -90f);
+                var go = e != null ? HeroKit.Spawn(e, transform, name) : ActorKit.Spawn(_kit.Cottage, transform, name);
+                go.transform.localPosition = centre;
+                go.transform.localRotation = Quaternion.Euler(0, yaw + (e != null ? e.Yaw : _kit.CottageYaw), 0);
+                go.transform.localScale = Vector3.one * _kitScale;
+            }
+            // footprint in cells for a model: hero bounds (wide scale, 20 mm cells) with a little clearance, else 4×3
+            void Cells(HeroKit.Entry e, out int along, out int across)
+            {
+                if (e == null) { along = 4; across = 3; return; }
+                along = Mathf.Max(1, Mathf.CeilToInt(Mathf.Max(e.Footprint.x, e.Footprint.y) / BoardSpace.WideCell - 0.25f));
+                across = Mathf.Max(1, Mathf.CeilToInt(Mathf.Min(e.Footprint.x, e.Footprint.y) / BoardSpace.WideCell - 0.25f));
+            }
+            int placed = 0, next = 0;
+            int maxHomes = generic ? (_kit != null ? _kit.MaxCottages : 6) : landmarks.Length;
+            for (int g = 0; g < d.GroupIds.Length && placed < maxHomes; g++)
             {
                 int start = d.NodeCell[d.GroupStart[g]];
                 if (start < 0) continue;
+                // homes: the world's landmarks in order, then generic cottages
+                HeroKit.Entry e = next < landmarks.Length ? hero.Get(landmarks[next]) : null;
+                if (e == null && !generic) continue;
+                Cells(e, out int along, out int across);
+                bool xLong = e == null || e.Footprint.x >= e.Footprint.y;
                 long elev = d.CellElevation[start];
                 int sx = d.CellX(start), sy = d.CellY(start);
                 bool done = false;
-                for (int radius = 1; radius <= 6 && !done; radius++)
+                for (int radius = 1; radius <= 7 && !done; radius++)
                     for (int oy = -radius; oy <= radius && !done; oy++)
                         for (int ox = -radius; ox <= radius && !done; ox++)
                         {
                             if (Mathf.Max(Mathf.Abs(ox), Mathf.Abs(oy)) != radius) continue;
                             foreach (bool wide in new[] { true, false })
                             {
-                                int bw = wide ? 4 : 3, bh = wide ? 3 : 4;
+                                // "wide" = the model's long axis along board X
+                                int bw = wide == xLong ? along : across, bh = wide == xLong ? across : along;
+                                if (!wide && along == across) continue;
                                 int x0 = sx + ox - bw / 2, y0 = sy + oy - bh / 2;
-                                if (x0 < 0 || y0 < 0 || x0 + bw > w || y0 + bh > h) continue;
-                                bool ok = true;
-                                long blockElev = d.CellElevation[d.CellIndex(x0, y0)];
-                                if (blockElev < elev) continue;
-                                for (int y = y0; y < y0 + bh && ok; y++)
-                                    for (int x = x0; x < x0 + bw && ok; x++)
-                                    {
-                                        int c = d.CellIndex(x, y);
-                                        if (blocked[c] || d.CellElevation[c] != blockElev) ok = false;
-                                    }
-                                if (!ok) continue;
-                                for (int y = y0; y < y0 + bh; y++) for (int x = x0; x < x0 + bw; x++) { blocked[d.CellIndex(x, y)] = true; CottageCells.Add(d.CellIndex(x, y)); }
-                                float cs = BoardSpace.CellSize(d);
-                                var centre = new Vector3((x0 + bw * 0.5f - w * 0.5f) * cs, BoardSpace.Height(d, blockElev), (y0 + bh * 0.5f - h * 0.5f) * cs);
-                                var toNode = BoardSpace.CellCenter(d, start) - centre; toNode.y = 0;
-                                // front faces the node, snapped to the axis the footprint allows
-                                float yaw = wide ? (toNode.z >= 0 ? 0f : 180f) : (toNode.x >= 0 ? 90f : -90f);
-                                var go = ActorKit.Spawn(_kit.Cottage, transform, "Cottage_" + d.GroupIds[g]);
-                                go.transform.localPosition = centre;
-                                go.transform.localRotation = Quaternion.Euler(0, yaw + _kit.CottageYaw, 0);
-                                go.transform.localScale = Vector3.one * _kitScale;
+                                if (!Free(x0, y0, bw, bh, out long be) || be < elev) continue;
+                                Put(e, x0, y0, bw, bh, be, BoardSpace.CellCenter(d, start), wide, "Home_" + d.GroupIds[g]);
                                 placed++; done = true;
+                                if (e != null) next++;
                                 break;
                             }
                         }
+            }
+            // scenic landmarks left over (church, lighthouse, lookout): highest free ground, nearest the board edge
+            for (; next < landmarks.Length; next++)
+            {
+                var e = hero.Get(landmarks[next]);
+                if (e == null) continue;
+                Cells(e, out int along, out int across);
+                bool xLong = e.Footprint.x >= e.Footprint.y;
+                int bestX = -1, bestY = -1, bestW = 0, bestH = 0; long bestElev = long.MinValue; int bestEdge = int.MaxValue; bool bestWide = true;
+                foreach (bool wide in new[] { true, false })
+                {
+                    int bw = wide == xLong ? along : across, bh = wide == xLong ? across : along;
+                    for (int y0 = 0; y0 + bh <= h; y0++)
+                        for (int x0 = 0; x0 + bw <= w; x0++)
+                        {
+                            if (!Free(x0, y0, bw, bh, out long be)) continue;
+                            int edge = Mathf.Min(Mathf.Min(x0, y0), Mathf.Min(w - x0 - bw, h - y0 - bh));
+                            if (be > bestElev || (be == bestElev && edge < bestEdge))
+                            { bestElev = be; bestEdge = edge; bestX = x0; bestY = y0; bestW = bw; bestH = bh; bestWide = wide; }
+                        }
+                }
+                if (bestX >= 0) Put(e, bestX, bestY, bestW, bestH, bestElev, Vector3.zero, bestWide, "Landmark_" + e.Id);
             }
         }
         readonly Dictionary<int, int> _slot = new Dictionary<int, int>();

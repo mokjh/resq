@@ -20,6 +20,18 @@ namespace Resq.EditorTools
         public const string AtlasPath = ArtRoot + "Shared/palette_atlas.png";
 
         static bool IsArt(string path) => path.StartsWith(ArtRoot) && path.EndsWith(".fbx", System.StringComparison.OrdinalIgnoreCase);
+        /// <summary>Textured hero models (Meshy, prepared by hero_prep.py) keep their own Resq/Hero material and UVs.</summary>
+        public static bool IsHero(string path) => path.StartsWith(HeroKitBuilder.HeroRoot);
+
+        void OnPreprocessTexture()
+        {
+            if (!IsHero(assetPath)) return;
+            var ti = (TextureImporter)assetImporter;
+            ti.maxTextureSize = 1024;   // Quest budget: 1K per hero, ASTC by platform default
+            ti.sRGBTexture = true;
+            ti.mipmapEnabled = true;
+            ti.textureCompression = TextureImporterCompression.CompressedHQ;
+        }
 
         void OnPreprocessModel()
         {
@@ -45,7 +57,7 @@ namespace Resq.EditorTools
 
         void OnPostprocessModel(GameObject root)
         {
-            if (!IsArt(assetPath)) return;
+            if (!IsArt(assetPath) || IsHero(assetPath)) return;
             var shared = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
             var lods = new SortedDictionary<int, List<Renderer>>();
             foreach (var r in root.GetComponentsInChildren<Renderer>(true))
@@ -154,6 +166,21 @@ namespace Resq.EditorTools
                 string name = Path.GetFileNameWithoutExtension(path);
                 var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (go == null) continue;
+                if (IsHero(path))
+                {
+                    // hero contract: one textured mesh, ≤ 6k triangles, grounded pivot, footprint within 6 cells (120 mm)
+                    var hm = go.GetComponentsInChildren<MeshFilter>(true).Select(f => f.sharedMesh).Where(m => m != null).ToList();
+                    int htris = hm.Sum(m => m.triangles.Length / 3);
+                    bool uvs = hm.All(m => m.uv != null && m.uv.Length == m.vertexCount);
+                    var hb = hm.Count > 0 ? hm[0].bounds : new Bounds();
+                    void HRow(string check, bool ok, string detail) { if (!ok) failures++; sb.AppendLine($"| {name} | {check} | {(ok ? "ok" : "**FAIL**")} {detail} |"); }
+                    HRow("hero triangles ≤ 6000", htris <= 6000, $"({htris})");
+                    HRow("hero UVs present", uvs, "");
+                    HRow("hero pivot on ground (min y ≈ 0)", Mathf.Abs(hb.min.y) < 0.0005f, $"(min y {hb.min.y * 1000f:F2} mm)");
+                    HRow("hero footprint ≤ 120 mm", hb.size.x <= 0.1205f && hb.size.z <= 0.1205f, $"({hb.size.x * 1000f:F0}×{hb.size.z * 1000f:F0} mm)");
+                    HRow("hero base-colour texture", AssetDatabase.LoadAssetAtPath<Texture2D>(HeroKitBuilder.HeroRoot + name + "_base_color.png") != null, "");
+                    continue;
+                }
                 var sidecar = LoadSidecar(path);
                 void Row(string check, bool ok, string detail)
                 {

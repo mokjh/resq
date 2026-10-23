@@ -1,4 +1,4 @@
-# RESQ status — 22 Oct 2026, 23:50 (day 0 of 26)
+# RESQ status — 23 Oct 2026, 05:30 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -29,8 +29,11 @@
 - **Input:** mouse, hand pinch/poke and head-dwell adapters, all on one command path.
 - **Art plan:** world-class pipeline adopted from the Waz techniques; see the `BUILD_PLAN.md` art section.
 
-## In progress (helpers)
-- Blender look-dev quartet: cottage, bridge, skiff, resident.
+## Look 3 toward the concept art (23 Oct, Editor only)
+- **HUD:** glass objectives card, resource chips, glass tool cards, hint bar, hologram placement ghost, dashed cyan routes, Atkinson Hyperlegible.
+- **Terrain:** one natural heightfield (cell centres exact, rounded irregular cliffs), `Resq/Terrain` shader (grass speckle, rock striations), wooden diorama frame.
+- **Hero assets (paid, logged):** 16 textured Meshy models in `art/hero/` (480 Meshy + 28.5 Higgsfield credits). Boat logo painted out. `HeroKit`, the `Resq/Hero` shader, importer rules and landmark/vehicle placement are coded. **Blocked by disk:** the Blender prep (`tools/blender/hero_prep.py`: cut bases, scale, export) isn't run yet.
+- **Nature kits:** 130 assets in `art/nature/`; W1/W2 pass every check. W3–W5 need one rebuild (`tools/blender/nature.py`), also **blocked by disk**.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)
 Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission, moored members. W4-M3 and W5-M2/M3/M4 retuned.
@@ -51,5 +54,5 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk:** 7.8 GB free (other projects' temp files grew). Headless work is fine; Unity/Blender work needs ≥ 10 GB, and the plan needs ~40 GB by 11 Nov.
+- **Disk (blocker):** 6.1 GB free at 05:30, below the 10 GB floor. RESQ's new files are under 300 MB; another project's temp folder holds 6.6 GB, and an 8 GB swap. Both Blender jobs and Unity captures wait for ≥ 10 GB. The plan needs ~40 GB by 11 Nov.
 - **Credits:** caps raised to Meshy 600 / Higgsfield 150. Higgsfield balance is 110, so top up if you want the full 150.
