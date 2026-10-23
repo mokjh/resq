@@ -75,3 +75,4 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | Dock queue | Also counts waiting at the dock for receiving capacity. |
 | Finished skiffs | A skiff whose order is done moors aside: it frees its berth but stays at the node. It must reclaim a free berth before loading or unloading there again. A loaded boat is never blocked by an idle one. |
 | Hard-closure admission | Spec 02 §6: no traveller enters an edge if a known hard closure lands on it before the predicted arrival. Known closures are a warned `set_edge_enabled(0)`, a published lava arrival, a running crust's expiry, and a warned or started runout segment. Predicted depth/heat changes are not "known"; transit recovery handles them. |
+| Moored members (follow-up) | A resident moored at a transfer node is awaiting a new order. It no longer counts as heading to, or still to board at, another vehicle's pickup, so a loaded boat departs instead of waiting for it. |

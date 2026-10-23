@@ -526,8 +526,8 @@ namespace Resq.Sim
         /// </summary>
         bool GroupHasPendingMembers(int g, int v)
         {
-            if (GroupHasUnboardedMembers(g)) return true;
             int pickup = S.VPickupNode[v];
+            if (GroupHasUnboardedMembers(g, pickup)) return true;
             if (pickup < 0) return false;
             foreach (int r in D.GroupResidents[g])
             {
@@ -539,11 +539,13 @@ namespace Resq.Sim
             return false;
         }
 
-        bool GroupHasUnboardedMembers(int g)
+        /// <summary>Members not yet aboard or terminal. A member moored elsewhere awaits a new order, not this pickup.</summary>
+        bool GroupHasUnboardedMembers(int g, int pickup)
         {
             foreach (int r in D.GroupResidents[g])
             {
                 var st = (ResidentState)S.RState[r];
+                if (st == ResidentState.AtNode && S.RStay[r] && S.RNode[r] != pickup) continue;
                 if (st == ResidentState.AtNode || st == ResidentState.Walking || st == ResidentState.Boarding) return true;
             }
             return false;
@@ -565,7 +567,7 @@ namespace Resq.Sim
             foreach (int r in D.GroupResidents[g])
             {
                 var st = (ResidentState)S.RState[r];
-                if (st == ResidentState.Walking || (st == ResidentState.AtNode && S.RNode[r] != node)) return true;
+                if (st == ResidentState.Walking || (st == ResidentState.AtNode && S.RNode[r] != node && !S.RStay[r])) return true;
             }
             return false;
         }

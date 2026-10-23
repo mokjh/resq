@@ -16,7 +16,7 @@
 - **Tidemark (W4) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistakes fail in all profiles.
 - **Cinder Reach (W5) greybox complete:** M1–M5 each 18/18 (90/90), A and B 3★ everywhere; mistake runs fail (W5-M1 Relaxed excepted).
 - **Emberwood (W2) greybox complete:** M1–M5 each 18/18 (90/90); M3/M4 use the new store pumps and fires burning at S=0. W2-M3 plan A has one Relaxed-only step (t=6000, after the Standard end).
-- **All 25 missions validated headlessly: 450/450 runs** (stars and mistakes being retuned in four missions after the engine fixes).
+- **All 25 missions validated headlessly: 450/450 runs, A and B 3★ everywhere.**
 - **Alder Valley (W1) greybox complete:** M1–M5 each pass 18/18 (90/90). Each has strategies A and B (3★ on every layout and preset) plus a documented mistake run that fails.
 - **SimLab:** missions validate headlessly in seconds.
 - **W1-M1 First Crossing:** 18/18 validation runs pass. No-input fails; strategies A and B win 3★ on both layouts and all 3 presets.
@@ -28,7 +28,9 @@
 - Blender look-dev quartet: cottage, bridge, skiff, resident.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)
-Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission. All 25 still pass 18/18. W4-M3 retuned (A/B 3★, causal mistake). Retune in progress for W5-M2 (A 1★, B 2★), W5-M3 (1–2★) and W5-M4 (mistake now wins). Open: residents moored at a transfer node still count as "heading to" the pickup, so a boat can wait loaded for them (W4-M3 B works around it; fix after W5 reports). Relaxed-only mistake recoveries in W1-M3, W2-M2, W3-M3 and W5-M1 (strategy times are operation ticks); W4-M3 contract has no water events.
+Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission, moored members. W4-M3 and W5-M2/M3/M4 retuned.
+- **Full rerun:** 25/25 missions 18/18 (450/450), A and B 3★ in all 300 runs. Mistakes fail in all six configs except Relaxed in W1-M3, W2-M2, W3-M3, W5-M1 and W5-M4: strategy times are operation ticks and Relaxed halves hazard speed. Decide later whether mistakes should be scored per profile.
+- **Contract note:** W4-M3 has no tide or water events, so its critical harbor objective can't be threatened.
 
 ## Known W1 gaps
 - Compact layouts are still the wide graph; the recipe's compact dock swap needs `class_overrides`.

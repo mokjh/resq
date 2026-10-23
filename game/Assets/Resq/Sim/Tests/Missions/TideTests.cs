@@ -34,14 +34,15 @@ namespace Resq.Sim.Tests
                 "\"regions\":{\"harbor\":\"~\"}," +
                 "\"tides\":[{\"id\":\"tide\",\"datum\":300,\"cells\":[[0,10]]" + tideExtra + "}]," +
                 "\"nodes\":[" +
-                "{\"id\":\"dock_a\",\"at\":[3,11],\"flags\":[\"dock\"],\"water_at\":[3,10],\"capacity\":4}," +
-                "{\"id\":\"dock_b\",\"at\":[5,11],\"flags\":[\"dock\"],\"water_at\":[5,10],\"capacity\":4}," +
-                "{\"id\":\"dock_c\",\"at\":[18,11],\"flags\":[\"dock\",\"evacuation\"],\"water_at\":[18,10],\"capacity\":4,\"dock_max_depth\":320}," +
+                "{\"id\":\"dock_a\",\"at\":[3,11],\"flags\":[\"dock\"],\"water_at\":[3,10],\"capacity\":6}," +
+                "{\"id\":\"dock_b\",\"at\":[5,11],\"flags\":[\"dock\"],\"water_at\":[5,10],\"capacity\":6}," +
+                "{\"id\":\"dock_c\",\"at\":[18,11],\"flags\":[\"dock\",\"evacuation\"],\"water_at\":[18,10],\"capacity\":6,\"dock_max_depth\":320}," +
                 "{\"id\":\"land_w\",\"at\":[9,11]},{\"id\":\"land_e\",\"at\":[11,11]}," +
-                "{\"id\":\"harbor_start\",\"at\":[14,14],\"capacity\":4},{\"id\":\"harbor_assembly\",\"at\":[15,14],\"capacity\":4}," +
-                "{\"id\":\"harbor_pickup\",\"at\":[16,14],\"capacity\":4}]," +
+                "{\"id\":\"harbor_start\",\"at\":[14,14],\"capacity\":6},{\"id\":\"harbor_assembly\",\"at\":[15,14],\"capacity\":6}," +
+                "{\"id\":\"harbor_pickup\",\"at\":[16,14],\"capacity\":6}]," +
                 "\"edges\":[" +
                 "{\"id\":\"w_ac\",\"from\":\"dock_a\",\"to\":\"dock_c\",\"ticks\":100,\"class\":\"water\",\"sample\":{\"x0\":3,\"y0\":10,\"x1\":18,\"y1\":10}}," +
+                "{\"id\":\"w_ab\",\"from\":\"dock_a\",\"to\":\"dock_b\",\"ticks\":40,\"class\":\"water\",\"sample\":{\"x0\":3,\"y0\":10,\"x1\":5,\"y1\":10}}," +
                 "{\"id\":\"w_bc\",\"from\":\"dock_b\",\"to\":\"dock_c\",\"ticks\":100,\"class\":\"water\",\"sample\":{\"x0\":5,\"y0\":10,\"x1\":18,\"y1\":10}}," +
                 "{\"id\":\"g_causeway\",\"from\":\"land_w\",\"to\":\"land_e\",\"ticks\":40,\"sample\":[[10,11]]}," +
                 "{\"id\":\"g_h1\",\"from\":\"harbor_start\",\"to\":\"harbor_assembly\",\"ticks\":20}," +
@@ -58,11 +59,12 @@ namespace Resq.Sim.Tests
                 "}";
         }
 
-        static string Contract(string events) =>
+        static string Contract(string events, int people = 2) =>
             "{\"id\":\"W4-TEST\",\"world_id\":\"W4\",\"title\":\"Harbor fixture\",\"duration_scenario_ticks\":3000," +
-            "\"total_residents\":2,\"minimum_rescues\":1,\"supply_budget\":30,\"tutorial_policy\":\"world_mechanic_guidance\"," +
+            $"\"total_residents\":{people},\"minimum_rescues\":1," +
+            "\"supply_budget\":30,\"tutorial_policy\":\"world_mechanic_guidance\"," +
             "\"permitted_tools\":[\"relay\",\"skiff\"],\"maximum_stock\":{\"relay\":1,\"skiff\":2},\"default_loadout\":{\"relay\":1,\"skiff\":2}," +
-            "\"groups\":[{\"id\":\"harbor\",\"count\":2,\"start_node_id\":\"harbor_start\",\"assembly_node_id\":\"harbor_assembly\"}]," +
+            $"\"groups\":[{{\"id\":\"harbor\",\"count\":{people},\"start_node_id\":\"harbor_start\",\"assembly_node_id\":\"harbor_assembly\"}}]," +
             $"\"events\":[{events}],\"milestones\":[]," +
             "\"objectives\":[{\"id\":\"critical\",\"tier\":\"critical\",\"kind\":\"rescue_count\",\"params\":{\"minimum\":1},\"temporal\":{\"kind\":\"at_end\"}}]}";
 
@@ -70,10 +72,10 @@ namespace Resq.Sim.Tests
             $"{{\"id\":\"{id}\",\"at_scenario_tick\":{at},\"warning_at_scenario_tick\":{at - 100},\"known_at_start\":true," +
             $"\"operations\":[{{\"kind\":\"set_tide_segment\",\"target_role\":\"tide\",\"value\":{index}}}]}}";
 
-        static MissionDef Fixture(string events = "", string tideExtra = "")
+        static MissionDef Fixture(string events = "", string tideExtra = "", int people = 2)
         {
             var rules = JsonNode.Parse(File.ReadAllText(RepoPaths.Resolve("specification/content/equipment_rules.json")));
-            return MapCompiler.Compile(JsonNode.Parse(Map(tideExtra)), JsonNode.Parse(Contract(events)), rules, "wide");
+            return MapCompiler.Compile(JsonNode.Parse(Map(tideExtra)), JsonNode.Parse(Contract(events, people)), rules, "wide");
         }
 
         static void RunTo(Simulator sim, long tick, System.Action each = null)
@@ -275,6 +277,21 @@ namespace Resq.Sim.Tests
                     Check.Equal(0, sim.S.C.Evacuated, "nobody can unload at a closed dock");
                 }
             }
+        }
+
+        // Residents moored at a transfer dock await a new order; a boat at the pickup must not wait for them while loaded.
+        [SimTest("tide")]
+        public static void Boat_Does_Not_Wait_For_Moored_Group_Members()
+        {
+            var d = Fixture(people: 6);
+            var sim = new Simulator(d, RuleProfile.Standard);
+            sim.Submit(Command.Place(d.SocketIndex["skiff:01"], ToolKind.Skiff));
+            sim.Step();
+            int dockA = d.NodeIndex["dock_a"], dockB = d.NodeIndex["dock_b"];
+            sim.Submit(Command.VehicleRoute(0, d.GroupIndex["harbor"], dockA, dockB, false));
+            RunTo(sim, 1200);
+            Check.Equal(6, sim.S.NodeOccupancy[dockB], "all six ferried to the transfer dock in two trips");
+            Check.Equal(0, sim.S.VOccupantCount[0], "the boat did not sit loaded waiting for the four already moored");
         }
     }
 }
