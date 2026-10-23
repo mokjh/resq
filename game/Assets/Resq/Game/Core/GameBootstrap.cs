@@ -52,11 +52,41 @@ namespace Resq.Game
             Hud.enabled = false; Hud.enabled = true;
         }
 
-        void Start()
+        /// <summary>
+        /// Set by the XR assembly (Resq.XR, which knows MRUK and anchors): places the board in the room and then
+        /// calls <see cref="BeginRun"/> with the layout the table allows. Without it the board floats in front of the head.
+        /// </summary>
+        public static System.Func<GameBootstrap, System.Collections.IEnumerator> XrPlacement;
+        /// <summary>Set by the XR assembly: adds the headset pointer sources (Interaction SDK hands, head gaze).</summary>
+        public static System.Action<GameBootstrap, OVRCameraRig> XrPointers;
+        /// <summary>Dev/test: run <see cref="XrPlacement"/> in the Editor without a headset (MRUK prefab rooms).</summary>
+        public static bool XrPlacementWithoutDevice;
+
+        /// <summary>The transform that carries the whole diorama (board, HUD, tray).</summary>
+        public Transform BoardRoot => Driver.transform;
+        public bool XrActive { get; private set; }
+
+        System.Collections.IEnumerator Start()
         {
+            // OpenXR finishes starting a few frames after scene load: with a camera rig present, wait (up to 3 s)
+            // for the device before deciding desktop vs headset, or placement and hand input would be skipped
+            // (found in the Meta XR Simulator, 23 Oct)
+            if (FindFirstObjectByType<OVRCameraRig>() != null)
+                for (float t = 0; t < 3f && !XRSettings.isDeviceActive; t += Time.unscaledDeltaTime) yield return null;
             SetupPointers();
-            Driver.LoadRun(MissionId, LayoutClass, Profile, Guided);
-            if (XRSettings.isDeviceActive) StartCoroutine(PlaceInFrontOfHead());
+            if ((XrActive || XrPlacementWithoutDevice) && XrPlacement != null) StartCoroutine(XrPlacement(this));
+            else
+            {
+                Driver.LoadRun(MissionId, LayoutClass, Profile, Guided);
+                if (XrActive) StartCoroutine(PlaceInFrontOfHead());
+            }
+        }
+
+        /// <summary>Starts the run once placement has chosen the layout (wide or compact) the table can hold.</summary>
+        public void BeginRun(string layout)
+        {
+            LayoutClass = layout;
+            Driver.LoadRun(MissionId, layout, Profile, Guided);
         }
 
         /// <summary>
@@ -82,7 +112,13 @@ namespace Resq.Game
         {
             var rig = FindFirstObjectByType<OVRCameraRig>();
             bool xr = rig != null && XRSettings.isDeviceActive;
-            if (xr)
+            XrActive = xr;
+            if (xr && XrPointers != null)
+            {
+                XrPointers(this, rig);
+                if (Hud != null) Hud.HandsActive = true;
+            }
+            else if (xr)
             {
                 foreach (var hand in FindObjectsByType<OVRHand>(FindObjectsSortMode.None))
                 {

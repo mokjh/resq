@@ -1,7 +1,8 @@
 #!/bin/bash
 # PlayMode smoke gate (Assets/Resq/Tests/PlayMode/OperationSmokeTest.cs), in the open RESQ Editor:
 #   each world's M1: boot, board + art checks, render budget at step 300, win strategy A through real pointer presses;
-#   Command path: W1-M1 under Command rules through the head-dwell pointer only.
+#   Command path: W1-M1 under Command rules through the head-dwell pointer only;
+#   XR placement: table choice and fit in MRUK's 40 sample rooms (XrPlacementTest).
 # Exit 0 = pass, 1 = fail, 2 = could not run. Result JSON: tools/.cache/smoke_last.json. Evidence: automated (Editor PlayMode).
 ROOT=/Users/dev/Desktop/Resq
 UC="$ROOT/tools/unity/uc.py"
@@ -17,7 +18,7 @@ python3 "$UC" console_status 2>/dev/null | grep -q '"compilationFailed": true' &
 # the perf check reads render counters: the Game view must repaint every frame, so the Editor needs focus
 python3 "$UC" editor_focus > /dev/null 2>&1
 # PlayMode entry reloads the domain, so the run is asynchronous: start it, then poll test_status
-python3 "$UC" run_tests --mode playmode --filter OperationSmokeTest --async_tests true --timeout 1800 > /dev/null 2>&1
+python3 "$UC" run_tests --mode playmode --filter Resq.PlayMode.Tests --filter_type assembly --async_tests true --timeout 1800 > /dev/null 2>&1
 sleep 10
 mkdir -p "$ROOT/tools/.cache"
 for i in $(seq 1 360); do

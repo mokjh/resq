@@ -1,0 +1,20 @@
+{
+    "name": "Resq.XR",
+    "rootNamespace": "Resq.XR",
+    "references": [
+        "Resq.Game",
+        "Resq.Sim",
+        "Oculus.VR",
+        "Oculus.Interaction",
+        "meta.xr.mrutilitykit"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

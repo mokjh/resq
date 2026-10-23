@@ -121,3 +121,10 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Budget check:** worst frame over 60 rendered frames at step 300, shipping HUD, seated view; ≤150 draw calls and ≤300k triangles. The test fails if the Game view didn't render every frame, rather than passing on empty counters.
 - **Game fix: vehicle pickup.** `BoardInteraction.PickupNodeFor(group, vehicle)` uses the authored pickup when the vehicle can reach it. Otherwise it uses the nearest node that the vehicle reaches and the group can walk to (a winch serves only its cable stations). Before this, W3-M1's winch plan was impossible from the UI.
 - **Game fix: dwell picks.** `HeadDwellPointer` syncs physics transforms before its cast, matching `BoardInteraction.Pick`.
+
+## 23 Oct 2026 — XR wiring
+- **Assembly split:** XR lives in `Resq.XR` (Meta Core, Interaction SDK, MRUK); `Resq.Game` has no Meta SDK dependency. GameBootstrap exposes `XrPlacement`, `XrPointers` and `BeginRun(layout)`.
+- **Placement order:** saved anchor first, then the nearest fitting MRUK table, then a virtual table. Fit order: wide facing, wide turned, compact facing, compact turned (footprint includes the frame, plus a 2 cm margin). The scene uses device data only; a fallback prefab room would put the board on a table that isn't in the player's room. MRUK sample rooms load only through an Editor-only dev hook.
+- **Anchor:** one `OVRSpatialAnchor` per valley, saved with its layout and surface type. The board is parented to it. A stale anchor is forgotten and placement starts afresh.
+- **Input:** our own `IPointerSource` adapters over the Interaction SDK's `IHand`, not ISDK interactables, so every adapter feeds the one validated command path. Head-gaze dwell runs in the Command profile; gaze + pinch is an accessibility option.
+- **Picking:** casts take the nearest pickable hit and ignore non-game colliders (rig, room). `GameBootstrap` waits for OpenXR before choosing between desktop and headset.

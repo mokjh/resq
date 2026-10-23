@@ -92,9 +92,28 @@ namespace Resq.Game
                     if (p != null) return p;
                 }
             }
-            if (Physics.SphereCast(s.Ray, 0.004f, out var hit, 3f))
-                return hit.collider.GetComponentInParent<Pickable>();
-            return null;
+            return CastPickable(s.Ray, 0.004f, 3f);
+        }
+
+        static readonly RaycastHit[] _hits = new RaycastHit[24];
+
+        /// <summary>
+        /// Nearest pickable along a ray. Non-game colliders are skipped (the XR rig's own PlayerController capsule,
+        /// MRUK room geometry): taking the first hit let the player's body swallow head and hand rays (found in the
+        /// Meta XR Simulator, 23 Oct). Non-allocating.
+        /// </summary>
+        public static Pickable CastPickable(Ray ray, float radius, float maxDistance)
+        {
+            int n = Physics.SphereCastNonAlloc(ray, radius, _hits, maxDistance, Physics.DefaultRaycastLayers, QueryTriggerInteraction.Collide);
+            Pickable best = null; float bestD = float.MaxValue;
+            for (int i = 0; i < n; i++)
+            {
+                if (_hits[i].distance >= bestD) continue;
+                var p = _hits[i].collider.GetComponentInParent<Pickable>();
+                if (p == null) continue;
+                best = p; bestD = _hits[i].distance;
+            }
+            return best;
         }
 
         /// <summary>Legality of acting on a target in the current mode (drives red/amber/green feedback).</summary>

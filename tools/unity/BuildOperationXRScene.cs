@@ -19,6 +19,10 @@ public static class ResqOperationXRScene
         var manager = rig.GetComponent<OVRManager>() ?? rig.gameObject.AddComponent<OVRManager>();
         manager.isInsightPassthroughEnabled = true;
         manager.trackingOriginType = OVRManager.TrackingOrigin.FloorLevel;
+        // MRUK table placement needs the scene permission (Space Setup data); ask for it at startup
+        var mso = new SerializedObject(manager);
+        var scenePerm = mso.FindProperty("requestScenePermissionOnStartup");
+        if (scenePerm != null) { scenePerm.boolValue = true; mso.ApplyModifiedPropertiesWithoutUndo(); }
         rig.gameObject.AddComponent<OVRPassthroughLayer>();
         foreach (var cam in rig.GetComponentsInChildren<Camera>(true))
         {
@@ -46,6 +50,14 @@ public static class ResqOperationXRScene
         RenderSettings.ambientEquatorColor = new Color(0.33f, 0.32f, 0.29f);
         RenderSettings.ambientGroundColor = new Color(0.16f, 0.14f, 0.13f);
 
+        // MR Utility Kit: the room model from Space Setup (device data only: a fallback prefab room would put the
+        // board on a table that isn't in the player's room); Resq.XR.TablePlacement reads its tables
+        var mrukGo = new GameObject("MRUK");
+        var mruk = mrukGo.AddComponent<Meta.XR.MRUtilityKit.MRUK>();
+        if (mruk.SceneSettings == null) mruk.SceneSettings = new Meta.XR.MRUtilityKit.MRUK.MRUKSettings();
+        mruk.SceneSettings.DataSource = Meta.XR.MRUtilityKit.MRUK.SceneDataSource.Device;
+        mruk.SceneSettings.LoadSceneOnStartup = true;
+
         var boot = new GameObject("GameBootstrap").AddComponent<Resq.Game.GameBootstrap>();
         boot.TerrainMaterial = AssetDatabase.LoadAssetAtPath<Material>($"{MatDir}/Terrain.mat");
         boot.WaterMaterial = AssetDatabase.LoadAssetAtPath<Material>($"{MatDir}/Water.mat");
@@ -58,6 +70,6 @@ public static class ResqOperationXRScene
         var scenes = EditorBuildSettings.scenes.Where(s => s.path != ScenePath && !s.path.Contains("Smoke_MR")).ToList();
         scenes.Insert(0, new EditorBuildSettingsScene(ScenePath, true));
         EditorBuildSettings.scenes = scenes.ToArray();
-        return $"saved {ScenePath}; shadows off on {noShadow} rig renderers";
+        return $"saved {ScenePath}; shadows off on {noShadow} rig renderers; scene permission {(scenePerm != null ? "requested" : "field missing")}; MRUK device data";
     }
 }
