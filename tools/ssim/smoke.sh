@@ -2,17 +2,22 @@
 # SpatialSim smoke test for the Quest APK: install, permission flow, MRUK placement, spatial anchor restore.
 #   tools/ssim/smoke.sh [apk=build/resq-xr.apk]
 # Every result comes from the app's own "[RESQ XR]" log lines (logcat, tag Unity). Evidence kind: emulator.
-# Refuses to start below 15 GB free (emulator image + data disk). Never touches other apps or devices.
+# Disk (23 Oct): the SpatialSim image installs to ~8.7 GB (system-qemu.img 8 GB) under ~/Library/Application Support/metavr;
+# it also needs the Android SDK "emulator" package (~1 GB). Refuses to start below 15 GB free once SpatialSim is
+# installed, 24 GB before. Never touches other apps or devices.
 set -u
 ROOT=/Users/dev/Desktop/Resq
 APK=${1:-$ROOT/build/resq-xr.apk}
 PKG=com.playresq.resq
 ADB=${ADB:-$HOME/Library/Android/sdk/platform-tools/adb}
 FREE_GB=$(df -g / | awk 'NR==2{print $4}')
-if [ "$FREE_GB" -lt 15 ]; then echo "SSIM: refused, ${FREE_GB} GB free (need >= 15 GB)"; exit 2; fi
+NEED=15; metavr ssim status --format json | grep -q '"installed": *true' || NEED=24
+if [ "$FREE_GB" -lt "$NEED" ]; then echo "SSIM: refused, ${FREE_GB} GB free (need >= ${NEED} GB)"; exit 2; fi
 [ -f "$APK" ] || { echo "SSIM: no APK at $APK (run tools/unity/build_apk.sh)"; exit 2; }
 
 metavr ssim status --format json | grep -q '"installed": *true' || metavr ssim download || exit 2
+SDKM=$HOME/Library/Android/sdk/cmdline-tools/latest/bin/sdkmanager
+[ -x "$HOME/Library/Android/sdk/emulator/emulator" ] || yes | "$SDKM" --install emulator > /dev/null || { echo "SSIM: Android Emulator install failed"; exit 2; }
 metavr ssim status --format json | grep -q '"running": *true' || metavr ssim start || exit 2
 SERIAL=""
 for i in $(seq 1 60); do
