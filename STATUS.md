@@ -1,4 +1,4 @@
-# RESQ status — 23 Oct 2026, 11:30 (day 1 of 26)
+# RESQ status — 23 Oct 2026, 12:30 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -39,7 +39,11 @@
 - **Golden hour and backdrops:** each world has its own low warm sun from the player's front-left, plus a matching trilight and ambient probe (`WorldLighting`). The Blender backdrop tiles ring the board: three along the far side and two down each side, flush with the player's edge and 80% height at the sides, with an earth plinth to the table. Frostline's ground is now bright snow (rock only on outcrops); Cinder Reach uses warm basalt browns.
 - **Art validator:** all checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheets v2–v4: `docs/look-review-contact-sheet-v{2,3,4}-20261023.png` (Editor captures, not device).
 - **Render budget (automated, Editor):** all 25 missions on both layouts are within the Quest budgets: 87–144 draw calls (≤150) and 138–290k triangles (≤300k). Worst cases are W5-M5 (draws) and W1-M5 (triangles). Before the fixes: 175–264 draws and up to 649k triangles. Report: `docs/perf-budget-20261023.md`; tool: `tools/unity/perf.sh`. Garbage per frame needs a device development build to measure (the Editor alone makes ~14.8 KB).
-- **PlayMode smoke gate (automated, Editor):** `bash tools/unity/smoke.sh` boots the Operation scene, checks board and art (terrain, frame, scatter, hero homes and landmark, rigged residents, crew, 7 backdrop tiles, low sun), then wins W1-M1 strategy A at 3 stars through real pointer presses. Any logged error fails the run. It passes 6 of 6 runs. Four mutations each made it fail: placement not submitted, vehicle route not submitted, backdrops missing, error logged. It also found a real input bug: picks tested stale collider positions for moving handles. Fixed with `Physics.SyncTransforms()` before each pick.
+- **PlayMode smoke gate (automated, Editor):** `bash tools/unity/smoke.sh` runs 6 cases; it passed 4 of 4 full runs.
+  - For each world's M1: boot, board and art checks, render budget at step 300 (≤150 draw calls, ≤300k triangles, worst frame), then strategy A won at 3 stars. Every step is played through real pointer presses: place, vehicle route, walk route, enable/disable, cool.
+  - Command path: W1-M1 under Command rules, driven only by the head-dwell pointer with real 0.8 s dwells.
+  - Mutations caught: full-detail scatter (over budget), a 0.1 s dwell (fired too early), and the old pickup rule (W3-M1 lost), plus the four earlier ones.
+  - Real bugs it found: the winch pickup (the UI sent cable vehicles to ground pickups; W3-M1 couldn't be won from the UI) and stale collider picks (also fixed in the dwell pointer).
 - **Remaining gaps:** golden-hour lighting is untested on Quest (cost and how it looks over passthrough); backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)

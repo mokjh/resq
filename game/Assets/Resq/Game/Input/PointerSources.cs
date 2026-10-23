@@ -87,6 +87,7 @@ namespace Resq.Game
         {
             if (_head == null) return default;
             var ray = new Ray(_head.position, _head.forward);
+            Physics.SyncTransforms();   // moving handles: cast against this frame's positions (see BoardInteraction.Pick)
             Pickable hit = null;
             if (Physics.SphereCast(ray, 0.006f, out var info, 2f)) hit = info.collider.GetComponentInParent<Pickable>();
             if (hit != _target) { _target = hit; _held = 0; _fired = false; }

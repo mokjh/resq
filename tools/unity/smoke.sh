@@ -1,6 +1,7 @@
 #!/bin/bash
-# PlayMode smoke gate: boot the Operation scene, check board + art, win W1-M1 (strategy A) through the
-# input -> command layer (Assets/Resq/Tests/PlayMode/OperationSmokeTest.cs). Runs in the open RESQ Editor.
+# PlayMode smoke gate (Assets/Resq/Tests/PlayMode/OperationSmokeTest.cs), in the open RESQ Editor:
+#   each world's M1: boot, board + art checks, render budget at step 300, win strategy A through real pointer presses;
+#   Command path: W1-M1 under Command rules through the head-dwell pointer only.
 # Exit 0 = pass, 1 = fail, 2 = could not run. Result JSON: tools/.cache/smoke_last.json. Evidence: automated (Editor PlayMode).
 ROOT=/Users/dev/Desktop/Resq
 UC="$ROOT/tools/unity/uc.py"
@@ -13,11 +14,13 @@ for i in $(seq 1 80); do
   sleep 3
 done
 python3 "$UC" console_status 2>/dev/null | grep -q '"compilationFailed": true' && { echo "SMOKE: COMPILE FAILED"; exit 2; }
+# the perf check reads render counters: the Game view must repaint every frame, so the Editor needs focus
+python3 "$UC" editor_focus > /dev/null 2>&1
 # PlayMode entry reloads the domain, so the run is asynchronous: start it, then poll test_status
-python3 "$UC" run_tests --mode playmode --filter OperationSmokeTest --async_tests true --timeout 900 > /dev/null 2>&1
+python3 "$UC" run_tests --mode playmode --filter OperationSmokeTest --async_tests true --timeout 1800 > /dev/null 2>&1
 sleep 10
 mkdir -p "$ROOT/tools/.cache"
-for i in $(seq 1 180); do
+for i in $(seq 1 360); do
   out=$(python3 "$UC" test_status 2>/dev/null)
   echo "$out" | grep -q '"status": "completed"' && break
   sleep 5

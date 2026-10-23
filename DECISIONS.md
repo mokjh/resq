@@ -114,3 +114,10 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Shadows:** skinned figures, water, overlays, markers, routes and the ghost don't cast. The coloured group base is the figure's ground anchor.
 - **HUD:** `GlassBatcher` merges the static glass on each root into one mesh; moving bubbles are merged per frame without allocations. Chips and tool cards each use one text object. Text refreshes at 5 Hz. The dev picker shows only in the Editor and development builds (`OperationPanel.DevControlsOverride` overrides it).
 - **Measurement:** `perf.sh` measures the shipping HUD at strategy-A step 300 from the seated view. Editor numbers are a budget screen; device numbers come in P5.
+
+## 23 Oct 2026 — Smoke gate: every world's M1, the Command path, the render budget
+- **Strategy player:** the test plays each mission's validated strategy A through pointer gestures. The player acts at t−1 (when the replay submits); steps sharing a tick are all performed, one step applies them, then each is checked. The Start/Pause control is exercised first, and the run then restarts, so dwell time can't shift strategy ticks.
+- **Command path:** the game's own `HeadDwellPointer` fed by a test head transform. A selection that fires in under 0.75 s fails the test ("inspection must never activate").
+- **Budget check:** worst frame over 60 rendered frames at step 300, shipping HUD, seated view; ≤150 draw calls and ≤300k triangles. The test fails if the Game view didn't render every frame, rather than passing on empty counters.
+- **Game fix: vehicle pickup.** `BoardInteraction.PickupNodeFor(group, vehicle)` uses the authored pickup when the vehicle can reach it. Otherwise it uses the nearest node that the vehicle reaches and the group can walk to (a winch serves only its cable stations). Before this, W3-M1's winch plan was impossible from the UI.
+- **Game fix: dwell picks.** `HeadDwellPointer` syncs physics transforms before its cast, matching `BoardInteraction.Pick`.

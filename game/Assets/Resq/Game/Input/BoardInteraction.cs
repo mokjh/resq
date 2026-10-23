@@ -165,7 +165,7 @@ namespace Resq.Game
                     else if (Mode == InteractMode.VehicleDestination || Mode == InteractMode.VehiclePickup)
                     {
                         int g = PickupGroup;
-                        int pickup = g >= 0 ? PickupNodeFor(g) : -1;
+                        int pickup = g >= 0 ? PickupNodeFor(g, SelectedVehicle) : -1;
                         bool evac = (Driver.Def.NodeFlags[p.Index] & NodeFlags.Evacuation) != 0;
                         Driver.Submit(Command.VehicleRoute(SelectedVehicle, g, pickup, p.Index, evac));
                         Cancel();
@@ -194,6 +194,33 @@ namespace Resq.Game
         /// Where a vehicle should collect a group: members dropped part-way (a relay stop) are collected where they
         /// wait; otherwise the group's authored pickup.
         /// </summary>
+        /// <summary>
+        /// Pickup for a group and a chosen vehicle. The authored pickup suits the group's usual vehicle; when this
+        /// vehicle can't reach it (a cable winch only serves its stations), collect the group at the nearest node the
+        /// vehicle reaches and the group can walk to. Found by the smoke gate (W3-M1 23 Oct): the winch was sent to
+        /// the ground pickup, which no player could have fixed from the UI.
+        /// </summary>
+        public int PickupNodeFor(int g, int vehicle)
+        {
+            int authored = PickupNodeFor(g);
+            var sim = Driver.Sim; var d = Driver.Def;
+            if (vehicle < 0 || vehicle >= sim.S.C.VehicleCount || authored < 0) return authored;
+            var cls = Simulator.VehicleClass((VehicleKind)sim.S.VKind[vehicle]);
+            int from = sim.S.VNode[vehicle];
+            if (from < 0 || sim.Reachable(from, authored, cls, false, false)) return authored;
+            int at = CurrentNodeOfGroup(g);
+            if (at < 0) return authored;
+            var here = BoardSpace.CellCenter(d, d.NodeCell[at]);
+            int best = authored; float bestD = float.MaxValue;
+            for (int n = 0; n < d.NodeIds.Length; n++)
+            {
+                if (d.NodeCell[n] < 0 || !sim.Reachable(from, n, cls, false, false) || !sim.Reachable(at, n, Traversal.Ground, false, false)) continue;
+                float dist = (BoardSpace.CellCenter(d, d.NodeCell[n]) - here).sqrMagnitude;
+                if (dist < bestD) { bestD = dist; best = n; }
+            }
+            return best;
+        }
+
         public int PickupNodeFor(int g)
         {
             var S = Driver.Sim.S;

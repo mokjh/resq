@@ -15,6 +15,10 @@ namespace Resq.Game
         public int Frames = 120;
         public static string LastReport = "";
         public static bool Done;
+        /// <summary>Numeric results of the last window (for budget assertions).</summary>
+        public static float AvgDraw, AvgTris;
+        public static long MaxDraw, MaxTris;
+        public static int RenderedFrames;
 
         ProfilerRecorder _draw, _batches, _setPass, _tris, _verts, _shadowCasters, _main, _render, _gc;
         int _n;
@@ -23,7 +27,7 @@ namespace Resq.Game
 
         void OnEnable()
         {
-            Done = false; LastReport = "";
+            Done = false; LastReport = ""; RenderedFrames = 0;
             _draw = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Draw Calls Count");
             _batches = ProfilerRecorder.StartNew(ProfilerCategory.Render, "Batches Count");
             _setPass = ProfilerRecorder.StartNew(ProfilerCategory.Render, "SetPass Calls Count");
@@ -51,6 +55,7 @@ namespace Resq.Game
             _sTris += _tris.LastValue; _sVerts += _verts.LastValue; _sShadow += _shadowCasters.LastValue;
             _sMain += _main.LastValue * 1e-6; _sRender += _render.LastValue * 1e-6; _sGc += _gc.LastValue;
             _sDt += Time.unscaledDeltaTime * 1000.0;
+            if (_draw.LastValue > 0) RenderedFrames++;
             if (_draw.LastValue > _maxDraw) _maxDraw = _draw.LastValue;
             if (_tris.LastValue > _maxTris) _maxTris = _tris.LastValue;
             if (_n - 10 >= Frames)
@@ -61,6 +66,7 @@ namespace Resq.Game
                 sb.Append($"tris={_sTris / k / 1000:F1}k (max {_maxTris / 1000f:F1}k) verts={_sVerts / k / 1000:F1}k shadowCasters={_sShadow / k:F0} ");
                 sb.Append($"main={_sMain / k:F2}ms render={_sRender / k:F2}ms frame={_sDt / k:F2}ms gc={_sGc / k:F0}B");
                 LastReport = sb.ToString();
+                AvgDraw = (float)(_sDraw / k); AvgTris = (float)(_sTris / k); MaxDraw = _maxDraw; MaxTris = _maxTris;
                 Done = true;
             }
         }

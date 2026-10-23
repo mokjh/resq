@@ -24,7 +24,8 @@ Resume by reading `AGENTS.md`, `BUILD_PLAN.md` and `STATUS.md`. Older handoffs a
 - **Sim tests (headless):** `python3 tools/simtest/simtest.py sim`.
 - **Mission matrix:** `python3 tools/simtest/simtest.py lab validate|run MISSION ...`.
 - **Art import:** the Editor menu `RESQ/Art/Validate Art` writes `art/IMPORT_REPORT.md`; a pass means 0 FAIL rows.
-- **PlayMode smoke:** `bash tools/unity/smoke.sh` runs in the open RESQ Editor and exits 0 on a pass. It boots `Operation_Desktop`, checks the board and art, then wins W1-M1 with strategy A using real pointer presses through `BoardInteraction`. Any logged error fails it. The last result is in `tools/.cache/smoke_last.json`.
+- **PlayMode smoke:** `bash tools/unity/smoke.sh` runs in the open RESQ Editor (it focuses the Editor so the Game view renders) and exits 0 on a pass. For each world's M1 it checks the board and art, asserts the render budget at step 300, and wins strategy A through real pointer presses. A Command-path case wins W1-M1 through the head-dwell pointer. Any logged error fails it. The last result is in `tools/.cache/smoke_last.json`; perf lines are in the Editor log as `[RESQ smoke]`.
+- **Render budget, all missions:** `bash tools/unity/perf.sh wide|compact` (play mode running).
 
 ## Current step
 Look 3 (concept art direction) and P1 slice work. See `STATUS.md`.

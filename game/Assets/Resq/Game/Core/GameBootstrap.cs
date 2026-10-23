@@ -21,6 +21,7 @@ namespace Resq.Game
         public SimDriver Driver { get; private set; }
         public BoardView Board { get; private set; }
         public BoardInteraction Interaction { get; private set; }
+        public OperationPanel Panel { get; private set; }
         public HudView Hud { get; private set; }
 
         void Awake()
@@ -39,6 +40,7 @@ namespace Resq.Game
             var panelGo = new GameObject("OperationPanel");
             panelGo.transform.SetParent(boardGo.transform, false);
             var panel = panelGo.AddComponent<OperationPanel>();
+            Panel = panel;
             panel.Driver = Driver; panel.Interaction = Interaction; panel.CardMaterial = CardMaterial;
             var hudGo = new GameObject("Hud");
             hudGo.transform.SetParent(boardGo.transform, false);
