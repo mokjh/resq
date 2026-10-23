@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Resq.Sim;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ namespace Resq.Game
     /// simulator ahead in isolated clones, once without and once with the placement, and ghost the difference on the
     /// board — green where the placement keeps a cell dry, red where it floods it, cyan where water still reaches.
     /// The live run is never touched. Results also give a one-line people summary for the operation board.
+    /// The two runs step on a worker thread (Quest budget: a forecast costs ~10–20 ms on the Mac, far beyond a 13.9 ms
+    /// frame); the main thread only snapshots the state and paints the finished result.
     /// </summary>
     [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public sealed class ForecastView : MonoBehaviour
@@ -26,7 +29,14 @@ namespace Resq.Game
         MissionDef _def;
         Mesh _mesh;
         Color[] _colors;
-        readonly Forecaster _forecaster = new Forecaster();
+        readonly Forecaster _forecaster = new Forecaster();          // baseline: no new order
+        readonly Forecaster _forecasterPreview = new Forecaster();   // with the placement
+        Task _job;
+        int _jobSocket = -1;
+        long _jobO;
+        readonly Stopwatch _jobClock = new Stopwatch();
+        /// <summary>Dev/tests: run forecasts on the main thread (deterministic frame timing).</summary>
+        public static bool Synchronous;
         ForecastResult _baseline, _preview;
         int _hoverSocket = -1;
         ToolKind _hoverTool;
@@ -39,6 +49,7 @@ namespace Resq.Game
 
         public void Build(MissionDef d)
         {
+            if (_job != null) { _job.Wait(); _job = null; }   // a new board: let a running forecast finish first
             _def = d;
             _baseline = new ForecastResult(d);
             _preview = new ForecastResult(d);
@@ -79,6 +90,7 @@ namespace Resq.Game
         void LateUpdate()
         {
             if (Driver == null || Driver.Sim == null || Driver.Def != _def || Interaction == null) return;
+            if (_job != null && _job.IsCompleted) FinishJob();
             var hover = Interaction.Hover;
             bool armed = Interaction.Mode == InteractMode.ToolArmed && hover != null && hover.Kind == PickKind.Socket &&
                          Interaction.HoverVerdict == Reject.OK;
@@ -93,7 +105,36 @@ namespace Resq.Game
             var sim = Driver.Sim;
             // recompute when the hovered placement changes or the live run has moved on a second
             if (_computedSocket == _hoverSocket && sim.S.C.O - _computedAtO < 10) return;
-            Preview(_hoverSocket, _hoverTool);
+            if (_job != null) return;   // one forecast at a time; the next starts when this one is painted
+            if (Synchronous) Preview(_hoverSocket, _hoverTool);
+            else StartJob(_hoverSocket, _hoverTool);
+        }
+
+        void StartJob(int socket, ToolKind tool)
+        {
+            var sim = Driver.Sim;
+            _forecaster.Prepare(sim, null);
+            _forecasterPreview.Prepare(sim, Command.Place(socket, tool, 0));
+            _jobSocket = socket; _jobO = sim.S.C.O;
+            int horizon = HorizonTicks;
+            var baseline = _baseline; var preview = _preview;
+            _jobClock.Restart();
+            _job = Task.Run(() =>
+            {
+                _forecaster.Advance(horizon, baseline);
+                _forecasterPreview.Advance(horizon, preview);
+            });
+        }
+
+        void FinishJob()
+        {
+            var job = _job; _job = null;
+            LastMs = _jobClock.Elapsed.TotalMilliseconds;
+            if (job.IsFaulted) { UnityEngine.Debug.LogException(job.Exception); return; }
+            // the pointer may have moved on while it ran: only paint what is still hovered
+            if (_jobSocket != _hoverSocket) return;
+            _computedSocket = _jobSocket; _computedAtO = _jobO;
+            Paint();
         }
 
         /// <summary>Forecast one placement against doing nothing and paint the difference (also used by dev captures).</summary>
@@ -102,8 +143,9 @@ namespace Resq.Game
             _pinned = pin;
             var sim = Driver.Sim;
             var sw = Stopwatch.StartNew();
+            if (_job != null) { _job.Wait(); _job = null; }   // never share a clone with a running job
             _forecaster.Run(sim, null, HorizonTicks, _baseline);
-            _forecaster.Run(sim, Command.Place(socket, tool, 0), HorizonTicks, _preview);
+            _forecasterPreview.Run(sim, Command.Place(socket, tool, 0), HorizonTicks, _preview);
             LastMs = sw.Elapsed.TotalMilliseconds;
             _computedSocket = socket; _computedAtO = sim.S.C.O;
             Paint();

@@ -5,7 +5,8 @@
         "Resq.Game",
         "Resq.Sim",
         "Unity.RenderPipelines.Universal.Runtime",
-        "Unity.RenderPipelines.Core.Runtime"
+        "Unity.RenderPipelines.Core.Runtime",
+        "Oculus.VR.Editor"
     ],
     "includePlatforms": [
         "Editor"

@@ -30,6 +30,9 @@ namespace Resq.Game
         public System.Func<ToolKind, bool> ToolAllowed;
         /// <summary>Menus are open: only buttons respond; the board can't be changed behind a menu.</summary>
         public bool MenuOnly;
+        /// <summary>Presentation hooks (audio): a target was pressed; an action was refused with a reason.</summary>
+        public static event System.Action<Pickable> Pressed;
+        public static event System.Action Rejected;
         /// <summary>Head-dwell time from settings (0.5–1.5 s), applied to every head-dwell source.</summary>
         public float DwellSeconds = 0.8f;
         /// <summary>The head (XR centre eye, or the desktop camera) that a hands-free pointer follows.</summary>
@@ -170,6 +173,7 @@ namespace Resq.Game
         {
             if (p == null) return;
             if (MenuOnly && p.Kind != PickKind.Button) return;
+            Pressed?.Invoke(p);
             switch (p.Kind)
             {
                 case PickKind.Button:
@@ -228,7 +232,7 @@ namespace Resq.Game
         void TryPlace(int socket)
         {
             var verdict = Driver.Sim.ValidatePlace(socket, ArmedTool, 0);
-            if (verdict != Reject.OK) { Hint = Explain(verdict); return; }
+            if (verdict != Reject.OK) { Hint = Explain(verdict); Rejected?.Invoke(); return; }
             Driver.Submit(Command.Place(socket, ArmedTool, 0));
             Cancel();
         }

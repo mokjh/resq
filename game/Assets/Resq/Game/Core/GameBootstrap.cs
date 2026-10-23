@@ -24,6 +24,7 @@ namespace Resq.Game
         public OperationPanel Panel { get; private set; }
         public HudView Hud { get; private set; }
         public GameFlow Flow { get; private set; }
+        public AudioDirector Audio { get; private set; }
         bool FlowActive => Flow != null && !GameFlow.Disabled;
 
         void Awake()
@@ -54,6 +55,12 @@ namespace Resq.Game
             Hud.enabled = false; Hud.enabled = true;
             Flow = gameObject.AddComponent<GameFlow>();
             Flow.Init(this);
+            var audioGo = new GameObject("Audio");
+            audioGo.transform.SetParent(transform, false);
+            audioGo.SetActive(false);
+            Audio = audioGo.AddComponent<AudioDirector>();
+            Audio.Driver = Driver; Audio.Interaction = Interaction;
+            audioGo.SetActive(true);   // enable after wiring so OnEnable subscribes to the driver
         }
 
         /// <summary>
@@ -81,6 +88,13 @@ namespace Resq.Game
             bool placement = (XrActive || XrPlacementWithoutDevice) && XrPlacement != null;
             if (placement) StartCoroutine(XrPlacement(this));
             else if (XrActive) StartCoroutine(PlaceInFrontOfHead());
+            if (Autopilot.Requested)
+            {
+                // dev builds with the flag file: unattended reference runs for device perf/soak (no menus)
+                var ap = gameObject.AddComponent<Autopilot>();
+                ap.Boot = this;
+                yield break;
+            }
             if (FlowActive) Flow.Begin(placement);
             else if (!placement) Driver.LoadRun(MissionId, LayoutClass, Profile, Guided);
         }

@@ -49,29 +49,47 @@ namespace Resq.Sim
             }
         }
 
+        long _fromO, _fromS;
+
         public void Run(Simulator live, Command? preview, int horizonScenarioTicks, ForecastResult result)
         {
-            int horizon = Math.Max(1, Math.Min(MaxHorizon, horizonScenarioTicks));
+            Prepare(live, preview);
+            Advance(horizonScenarioTicks, result);
+        }
+
+        /// <summary>
+        /// Main thread: copy the live state into this forecaster's private clone and submit the previewed command.
+        /// After this the clone shares nothing mutable with the live run, so <see cref="Advance"/> may run on a
+        /// worker thread while the game keeps stepping.
+        /// </summary>
+        public void Prepare(Simulator live, Command? preview)
+        {
             if (_clone == null || _clone.D != live.D) _clone = new Simulator(live);
             else _clone.CopyStateFrom(live);
             _clone.Sink = _sink;
             _sink.WatchSequence = -1;
             _sink.Verdict = Reject.OK;
+            _fromO = live.S.C.O; _fromS = live.S.C.S;
             if (preview.HasValue)
             {
                 var r = _clone.Submit(preview.Value);
                 if (r != Reject.Pending) _sink.Verdict = r;
                 else _sink.WatchSequence = _clone.S.C.LastSequence;
             }
+        }
 
-            var d = live.D;
-            result.FromO = live.S.C.O;
-            result.FromS = live.S.C.S;
+        /// <summary>Any thread: step the prepared clone over the horizon and fill <paramref name="result"/>.</summary>
+        public void Advance(int horizonScenarioTicks, ForecastResult result)
+        {
+            int horizon = Math.Max(1, Math.Min(MaxHorizon, horizonScenarioTicks));
+            var d = _clone.D;
+            result.FromO = _fromO;
+            result.FromS = _fromS;
             Array.Clear(result.MaxDepth, 0, result.MaxDepth.Length);
             Array.Clear(result.EdgeEverClosed, 0, result.EdgeEverClosed.Length);
             Array.Clear(result.NodeEverUnsafe, 0, result.NodeEverUnsafe.Length);
             Sample(result, d);
-            long targetS = live.S.C.S + horizon;
+            long targetS = _fromS + horizon;
             int steps = 0;
             // A guided clock or Relaxed pacing advances S slower than O; bound by operation steps too.
             while (!_clone.IsOver && _clone.S.C.S < targetS && steps < MaxSteps)
