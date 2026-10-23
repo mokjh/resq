@@ -234,6 +234,10 @@ MonoBehaviour:
     Mesh: {fileID: 389887416571577630, guid: 2c012bdc8d9354af187da0ad91d8cdc8, type: 3}
     Charred: 0
   - World: W3
+    Kind: 11
+    Mesh: {fileID: -1175980723213351630, guid: 7be81ebef10ca4750a9cffdf47821e36, type: 3}
+    Charred: 0
+  - World: W3
     Kind: 1
     Mesh: {fileID: 2918587893127168481, guid: a17c3cb93ef0a4c46a57ca27db010c1f, type: 3}
     Charred: 0
@@ -265,6 +269,10 @@ MonoBehaviour:
     Kind: 9
     Mesh: {fileID: 2247623684582180560, guid: 596929f0d53c240cf9678ecfdf2fceb7, type: 3}
     Charred: 0
+  - World: W3
+    Kind: 11
+    Mesh: {fileID: -5761468781197435187, guid: 6125a2f94dd0e4f08825a559ab8fb054, type: 3}
+    Charred: 0
   - World: W4
     Kind: 11
     Mesh: {fileID: -8386870560896541479, guid: eb916d06747b6432d96ba5b66e2ca798, type: 3}
@@ -280,6 +288,10 @@ MonoBehaviour:
   - World: W4
     Kind: 11
     Mesh: {fileID: -3534748585616308970, guid: e27601fc4c96a4b1c9ed4d5cae3b31f8, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: 4272662741279342507, guid: ddb2a085bf2c646bd8728669d1522600, type: 3}
     Charred: 0
   - World: W4
     Kind: 11
@@ -371,6 +383,10 @@ MonoBehaviour:
     Charred: 0
   - World: W5
     Kind: 8
+    Mesh: {fileID: -8599198175475137552, guid: 4cffe7c3b224d4333a5864f4feecb2b8, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 8
     Mesh: {fileID: 8180734984092013629, guid: 9f69fd9c79e7a41e680b6114fa1bfbe0, type: 3}
     Charred: 1
   - World: W5
@@ -383,8 +399,16 @@ MonoBehaviour:
     Charred: 0
   - World: W5
     Kind: 2
+    Mesh: {fileID: 609714295521033902, guid: d25dbe6de89fa486cb1820758b1281f4, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 2
     Mesh: {fileID: 7316151182674771745, guid: 9e0d294207d354291b410147c3f99af8, type: 3}
     Charred: 1
+  - World: W5
+    Kind: 2
+    Mesh: {fileID: -6541020410384635321, guid: d8f071fa93d9146e587fec2c6aca4b34, type: 3}
+    Charred: 0
   - World: W5
     Kind: 3
     Mesh: {fileID: -4362900487023905159, guid: 077d32f8eb6bc46c8b2fde3edc63ce33, type: 3}

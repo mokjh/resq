@@ -595,11 +595,11 @@ def g_decid(b, lod, q, rng, P):
                leaf_fn(pal, h * 11.0, top=0.26), smooth=True)
     for role, n, r in P.get("dots", []):          # blossom / fruit / berry dots on the crown
         for k in range(n_of(n, q, 0)):
-            e = cl[k % len(cl)]
+            e = kept[k % len(kept)]
             a = rng.random() * TAU
             el = rng.uniform(0.0, 1.1)
             d = V(math.cos(a) * math.cos(el), math.sin(a) * math.cos(el), math.sin(el) * sq)
-            p = e[1] + d * (e[0] * grow * 0.84)
+            p = e[1] + d * (e[0] * grow * 0.7)
             b.add(kit.tmp_hull([p + V(r, 0, 0), p + V(-r * 0.5, r * 0.87, 0), p + V(-r * 0.5, -r * 0.87, 0),
                                 p + V(0, 0, r * 1.2)]), role[0], tone=role[1])
 
@@ -752,7 +752,10 @@ def g_bush(b, lod, q, rng, P):
     leaves = P.get("leaf", [("foliage", 0.9), ("grass", 0.85)])
     for cr, c, k in kept:
         lvl = clump_level(lod, cr * grow, R * 0.55)
-        b.addm(tmp_clump(c, cr * grow, cr * grow, cr * grow * P.get("sq", 0.82), lvl, k * 5.0 + P.get("seed", 0), jitter=0.2),
+        rz = cr * grow * P.get("sq", 0.82)
+        if k == 0:   # the raised centre clump reaches the ground, so outer clumps dropped at low LOD never strand it
+            rz = max(rz, c.z + 0.4)
+        b.addm(tmp_clump(c, cr * grow, cr * grow, rz, lvl, k * 5.0 + P.get("seed", 0), jitter=0.2),
                leaf_fn(leaves, k * 2.0, top=0.28), smooth=True)
     for role, n, r in (P.get("dots", []) if lod < 2 else []):
         for k in range(n_of(n, q, 0)):
@@ -760,7 +763,7 @@ def g_bush(b, lod, q, rng, P):
             a = rng.random() * TAU
             el = rng.uniform(0.15, 1.2)
             d = V(math.cos(a) * math.cos(el), math.sin(a) * math.cos(el), math.sin(el) * 0.8)
-            p = e[1] + d * (e[0] * grow * 0.84)
+            p = e[1] + d * (e[0] * grow * 0.7)
             b.add(kit.tmp_hull([p + V(r, 0, 0), p + V(-r * 0.5, r * 0.87, 0), p + V(-r * 0.5, -r * 0.87, 0),
                                 p + V(0, 0, r * 1.1)]), role[0], tone=role[1])
 
@@ -993,7 +996,7 @@ def g_fence(b, lod, q, rng, P):
             kit.rail(b, (s0, ry, Hh * zf), (s1, ry, Hh * zf + sag * (1 if s0 < 0 else -1) * (len(spans) - 1)), rw, rh,
                      P.get("rail_role", "wood_deck"), tone=rt[k % len(rt)] * (1.0 if s0 < 0 else 0.93),
                      bev=(min(rw, rh) * 0.22 if lod == 0 else 0.0))
-    if P.get("slats"):
+    if P.get("slats") and lod < 2:
         n = n_of(P["slats"], q, 4)
         for k in range(n):
             x = -L / 2 + L * (k + 0.5) / n
@@ -1009,10 +1012,11 @@ def g_fence(b, lod, q, rng, P):
                                     V(s1, 1.05, Hh * zf + 0.3), V(s0 + 1, 0.65, Hh * zf + 0.9),
                                     V(s1 - 1, 0.65, Hh * zf + 0.85)]), "snow", tone=0.98)
         secs = []
-        for i in range(7 if lod < 2 else 4):
-            x = -L / 2 + L * i / (6 if lod < 2 else 3)
+        nd = 5 if lod < 2 else 3     # drift sections - 1 (5 at LOD0/1 keeps the fence within its 400-tri budget)
+        for i in range(nd + 1):
+            x = -L / 2 + L * i / nd
             h = 1.2 + 2.2 * math.sin(i * 1.3 + 0.4) ** 2
-            if i in (0, (6 if lod < 2 else 3)):
+            if i in (0, nd):
                 h = 1.2
             secs.append([V(x, -2.4, -0.5), V(x, -1.2, h * 0.6), V(x, 0.4, h), V(x, 1.5, h * 0.5), V(x, 2.1, -0.5)])
         b.addm(kit.tmp_loft(secs), lambda c, n: ("snow", 0.96 + 0.04 * max(0.0, n.z)), smooth=True)
@@ -1215,7 +1219,7 @@ def g_drift(b, lod, q, rng, P):
 def g_marker(b, lod, q, rng, P):
     """Snow marker pole: banded pole, signal reflector cap, snow mound."""
     Hh = P.get("h", 13.0)
-    bm = kit.tmp_cyl((0, 0, -0.6), (0, 0, Hh), 0.45, (8, 6, 4)[lod])
+    bm = kit.tmp_cyl((0, 0, -0.6), (0, 0, Hh), 0.45, (8, 5, 3)[lod])
     cuts = ((0.45, 0.6, 0.75, 0.9), (0.45, 0.6, 0.75, 0.9), (0.75,))[lod]
     kit.slice_bm(bm, (0, 0, 1), [Hh * f for f in cuts])
     if lod < 2:
@@ -1223,8 +1227,9 @@ def g_marker(b, lod, q, rng, P):
     else:
         fn = lambda c, n: (("roof_tile", 0.98) if c.z > Hh * 0.75 else ("paper", 0.95))
     b.addm(bm, fn, smooth=True)
-    b.add(kit.tmp_hull([V(x, y, z) for x in (-0.75, 0.75) for y in (-0.3, 0.3) for z in (Hh - 1.6, Hh - 0.4)]),
-          "cloth_mustard", tone=1.15)
+    if lod < 2:   # the reflector is sub-millimetre at LOD2 distance
+        b.add(kit.tmp_hull([V(x, y, z) for x in (-0.75, 0.75) for y in (-0.3, 0.3) for z in (Hh - 1.6, Hh - 0.4)]),
+              "cloth_mustard", tone=1.15)
     b.addm(tmp_clump((0, 0, -0.2), 2.2, 2.0, 1.3, (2, 0, 0)[lod], 2.0, jitter=0.12, flat=1.0),
            lambda c, n: ("snow", 0.95 + 0.04 * n.z), smooth=True)
 
@@ -2100,7 +2105,7 @@ A(W, "w3_marker_pole", "prop", ["snow"], g_marker, dict(h=13.0),
   "snow marker pole: red/white bands, signal-yellow reflector, snow mound",
   place=dict(cluster="lines along routes at 30-40 mm spacing (decorative only)", min_spacing_mm=20))
 A(W, "w3_snow_fence", "prop", ["snow"], g_fence,
-  dict(len=40, h=11, rails=(0.3, 0.8), slats=14, snow=True, wood="cedar", tone=0.55),
+  dict(len=40, h=11, rails=(0.3, 0.8), slats=12, snow=True, wood="cedar", tone=0.55),
   "slatted snow fence segment with snow on the rails and a drift at its foot; 40 mm pitch",
   place=dict(cluster="lines across slopes", yaw="align local X to the contour", tile_pitch_mm=40, min_spacing_mm=0))
 A(W, "w3_larch_bare_a", "tree", ["snow", "forest", "rocky"], g_larch, dict(h=54, r=10.0, whorls=9, snow=0.35),
@@ -2156,7 +2161,7 @@ A(W, "w4_crate_single", "prop", ["village", "beach"], g_crates, dict(crates=[(0,
 A(W, "w4_crate_stack", "prop", ["village", "beach"], g_crates,
   dict(crates=[(-3.2, 0, -0.5, 6.0, 5.4, 0.08, 1.0), (3.0, 0.3, -0.5, 5.6, 5.4, -0.12, 0.92), (-2.6, 0.2, 4.9, 4.4, 4.0, 0.3, 1.06)]),
   "two crates with a small one on top (9.4 mm)")
-ASSETS[-1]["P"]["detail"] = (2, 1, 0)
+ASSETS[-1]["P"]["detail"] = (2, 0, 0)
 A(W, "w4_barrel_stack", "prop", ["village"], g_barrels, {}, "three standing barrels and one lying (6.5 mm)")
 A(W, "w4_net_rack", "prop", ["village", "beach"], g_netrack, {}, "net-drying rack with green net and floats (24 x 12 mm)",
   place=dict(yaw="align local X to the quay"))

@@ -12,10 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2210c824a41d49779d945b0b6f05f1a, type: 3}
   m_Name: ResqActorKit
   m_EditorClassIdentifier: Resq.Game::Resq.Game.ActorKit
-  ResidentAdult: {fileID: 919132149155446097, guid: 71e8b0e5fd3644a169de73ccc81c0a7e, type: 3}
-  ResidentChild: {fileID: 919132149155446097, guid: dfe71231e6de3480cb3a0458368ca8a6, type: 3}
-  ResidentElder: {fileID: 919132149155446097, guid: e3bf8b0a3dab345768ad29e0591ca7db, type: 3}
+  ResidentAdult: {fileID: 919132149155446097, guid: 2181bb8249121406d8c1bec4978168ce, type: 3}
+  ResidentChild: {fileID: 0}
+  ResidentElder: {fileID: 919132149155446097, guid: 6f61336bb29e74280a10d0442f0396db, type: 3}
   ResidentWheelchair: {fileID: 919132149155446097, guid: e8468778225374e1987bdfa77236dcf6, type: 3}
+  ResidentAdultB: {fileID: 919132149155446097, guid: 1311d18bd0b034f8483f853f8093b6bc, type: 3}
+  AdultMaterial: {fileID: 2100000, guid: 36260f4d28a3e47f3a18f1958578014e, type: 2}
+  AdultBMaterial: {fileID: 2100000, guid: 001aa8af9d8054048a44fd22c5c875b6, type: 2}
+  ElderMaterial: {fileID: 2100000, guid: 457c9087044a14d6cb959ee87aab18ee, type: 2}
+  AdultAnim: {fileID: 9100000, guid: b5d49b0ca56f74b3197c6f3ac57edc6c, type: 2}
+  AdultBAnim: {fileID: 9100000, guid: a26758fb0c761423d81b97acdbe5b0f8, type: 2}
+  ElderAnim: {fileID: 9100000, guid: d0ab4cbf9473e4c1b9721ecb1da0c342, type: 2}
+  CrewMaterial: {fileID: 2100000, guid: bf364a0667fd545cea1073674a3937ad, type: 2}
+  WheelchairChair: {fileID: 919132149155446097, guid: d710ac28b2096416bba16a37da222fe6, type: 3}
+  SeatedRider: {fileID: 919132149155446097, guid: 6c8d22f5a6cf74266b6faa7e506470f6, type: 3}
+  SeatedMaterial: {fileID: 2100000, guid: cdbe61a24f8b14b7d9e18cacec60cfa8, type: 2}
+  SeatedAnim: {fileID: 9100000, guid: a58ae6349af714089a39f7c78cb10f7c, type: 2}
+  IdleTime: 0
+  ChildScale: 0.72
+  ChildHead: 1.28
   Skiff: {fileID: 919132149155446097, guid: d4e0eaf418f9b4142bc8917fa4894035, type: 3}
   Bridge: {fileID: 919132149155446097, guid: f329f2b984b7e4c2781f5d81a88a64e3, type: 3}
   Cottage: {fileID: 919132149155446097, guid: 883d3e1639b4645b7b41301ac4a68480, type: 3}

@@ -22,10 +22,22 @@ namespace Resq.EditorTools
         static bool IsArt(string path) => path.StartsWith(ArtRoot) && path.EndsWith(".fbx", System.StringComparison.OrdinalIgnoreCase);
         /// <summary>Textured hero models (Meshy, prepared by hero_prep.py) keep their own Resq/Hero material and UVs.</summary>
         public static bool IsHero(string path) => path.StartsWith(HeroKitBuilder.HeroRoot);
+        public const string ResidentRoot = ArtRoot + "Residents/";
+        /// <summary>Rigged Meshy residents (prepared by resident_prep.py): textured, skinned, one looping walk clip.</summary>
+        public static bool IsResident(string path) => path.StartsWith(ResidentRoot);
+
+        void OnPreprocessAnimation()
+        {
+            if (!IsResident(assetPath)) return;
+            var mi = (ModelImporter)assetImporter;
+            var clips = mi.defaultClipAnimations;
+            foreach (var c in clips) { c.loopTime = true; c.name = "Walk"; }
+            mi.clipAnimations = clips;
+        }
 
         void OnPreprocessTexture()
         {
-            if (!IsHero(assetPath)) return;
+            if (!IsHero(assetPath) && !IsResident(assetPath)) return;
             var ti = (TextureImporter)assetImporter;
             ti.maxTextureSize = 1024;   // Quest budget: 1K per hero, ASTC by platform default
             ti.sRGBTexture = true;
@@ -57,7 +69,7 @@ namespace Resq.EditorTools
 
         void OnPostprocessModel(GameObject root)
         {
-            if (!IsArt(assetPath) || IsHero(assetPath)) return;
+            if (!IsArt(assetPath) || IsHero(assetPath) || IsResident(assetPath)) return;
             var shared = AssetDatabase.LoadAssetAtPath<Material>(SharedMaterialPath);
             var lods = new SortedDictionary<int, List<Renderer>>();
             foreach (var r in root.GetComponentsInChildren<Renderer>(true))
@@ -166,6 +178,21 @@ namespace Resq.EditorTools
                 string name = Path.GetFileNameWithoutExtension(path);
                 var go = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (go == null) continue;
+                if (IsResident(path))
+                {
+                    // resident contract: one skinned textured mesh ≤ 1,200 triangles, a looping walk clip, 30–36 mm tall
+                    var sk = go.GetComponentsInChildren<SkinnedMeshRenderer>(true).Where(r => r.sharedMesh != null).ToList();
+                    int rt = sk.Sum(r => r.sharedMesh.triangles.Length / 3);
+                    var clip = AssetDatabase.LoadAllAssetsAtPath(path).OfType<AnimationClip>().FirstOrDefault(c => !c.name.StartsWith("__preview"));
+                    float hgt = sk.Count > 0 ? sk[0].sharedMesh.bounds.size.y * sk[0].transform.lossyScale.y * 1000f : 0f;
+                    void RRow(string check, bool ok, string detail) { if (!ok) failures++; sb.AppendLine($"| {name} | {check} | {(ok ? "ok" : "**FAIL**")} {detail} |"); }
+                    RRow("resident skinned mesh", sk.Count == 1, $"({sk.Count})");
+                    RRow("resident triangles ≤ 1200", rt <= 1200, $"({rt})");
+                    RRow("resident walk clip loops", clip != null && clip.isLooping, clip != null ? $"({clip.length:F2} s)" : "(none)");
+                    RRow("resident height 30–36 mm at board scale", hgt >= 30f && hgt <= 36f, $"({hgt:F1} mm)");
+                    RRow("resident base-colour texture", AssetDatabase.LoadAssetAtPath<Texture2D>(ResidentRoot + name + "_base_color.png") != null, "");
+                    continue;
+                }
                 if (IsHero(path))
                 {
                     // hero contract: one textured mesh, ≤ 6k triangles, grounded pivot, footprint within 6 cells (120 mm)

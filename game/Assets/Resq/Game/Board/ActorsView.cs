@@ -37,6 +37,7 @@ namespace Resq.Game
         {
             _def = d;
             foreach (Transform child in transform) Destroy(child.gameObject);
+            _crewPending.Clear();
             _residents.Clear(); _vehicles.Clear(); _equipment.Clear(); _vehicleYaw.Clear(); CottageCells.Clear();
             float s = BoardSpace.CellSize(d) / BoardSpace.WideCell; // compact scales down
             _kit = ActorKit.Load();
@@ -69,12 +70,21 @@ namespace Resq.Game
                 .Box(new Vector3(0, 0.0005f, 0) * s, new Vector3(0.002f, 0.006f, 0.002f) * s, TerrainBuilder.Hex(0x2B2B2B))
                 .Build("WinchCabin");
             _residentPrev = new Vector3[d.ResidentIds.Length];
+            _anims = new Animator[d.ResidentIds.Length];
+            _childHeads = new Transform[d.ResidentIds.Length];
+            _walking = new bool[d.ResidentIds.Length];
             for (int r = 0; r < d.ResidentIds.Length; r++)
             {
+                if (d.ResidentStepFree[r] && _kit != null && _kit.SeatedRider != null && _kit.WheelchairChair != null)
+                {
+                    _residents.Add(SpawnWheelchair(r, s, d.ResidentGroup[r]));
+                    continue;
+                }
                 var model = _kit != null ? _kit.ResidentFor(r, d.ResidentStepFree[r]) : null;
                 if (model == null) { _residents.Add(Spawn("Resident_" + r, _residentVariants[d.ResidentGroup[r] % GroupColors.Length])); continue; }
                 var go = ActorKit.Spawn(model, transform, "Resident_" + r);
                 go.transform.localScale = Vector3.one * s;
+                RigResident(go, model, r, d.ResidentStepFree[r]);
                 // group identity stays readable: a thin coloured base under each resident
                 var disc = new GameObject("GroupBase");
                 disc.transform.SetParent(go.transform, false);
@@ -86,6 +96,7 @@ namespace Resq.Game
             }
             BuildCables(d);
             BuildCottages(d);
+            BuildCrew(d);
         }
 
         Transform Spawn(string name, Mesh mesh)
@@ -172,6 +183,7 @@ namespace Resq.Game
                     slot[node] = k + 1;
                     pos = NodePos(node, false) + RingOffset(k);
                 }
+                AnimateResident(r, st == ResidentState.Walking);
                 if (st == ResidentState.Evacuated) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 4f + r)) * 0.002f; // gentle celebration
                 if (st == ResidentState.Walking) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 14f + r)) * 0.0008f; // walking bob
                 // face the way they move (kit models), easing so groups don't snap
@@ -188,6 +200,169 @@ namespace Resq.Game
                 t.localPosition = pos;
             }
             SyncEquipment(sim);
+            LateUpdateChildHeads();
+            FitCrewHelmets();
+        }
+
+        /// <summary>
+        /// Rescue crew at every evacuation landing (Look 3 crowds): presentation-only figures in a hi-vis crew
+        /// uniform with white helmets and no group base, so they never read as people to rescue. They stand a cell
+        /// out from the landing, in the gaps between arrival paths, facing the landing where rescued residents gather.
+        /// </summary>
+        void BuildCrew(MissionDef d)
+        {
+            if (_kit == null || _kit.ResidentAdultB == null || _kit.AdultBAnim == null) return;
+            if (_crewMat == null) _crewMat = _kit.CrewMaterial;
+            if (_crewMat == null && _kit.AdultBMaterial != null)
+            {
+                _crewMat = new Material(_kit.AdultBMaterial) { name = "CrewUniform" };
+                _crewMat.SetColor("_Tint", new Color(1f, 0.6f, 0.32f, 1f));
+            }
+            var helmet = new MeshKit().Sphere(Vector3.zero, 1f, TerrainBuilder.Hex(0xF4F1EA)).Build("Helmet");
+            float cs = BoardSpace.CellSize(d);
+            int n = 0;
+            for (int i = 0; i < d.NodeIds.Length; i++)
+            {
+                if ((d.NodeFlags[i] & NodeFlags.Evacuation) == 0 || d.NodeCell[i] < 0) continue;
+                var centre = BoardSpace.CellCenter(d, d.NodeCell[i]);
+                // arrival directions from this landing to its neighbours
+                var dirs = new List<float>();
+                foreach (int e in d.NodeOutEdges[i])
+                {
+                    int other = d.EdgeFrom[e] == i ? d.EdgeTo[e] : d.EdgeFrom[e];
+                    if (other < 0 || d.NodeCell[other] < 0) continue;
+                    var v = BoardSpace.CellCenter(d, d.NodeCell[other]) - centre;
+                    dirs.Add(Mathf.Atan2(v.z, v.x));
+                }
+                var taken = new List<float>(dirs);
+                for (int k = 0; k < 3; k++)
+                {
+                    float best = 0, bestGap = -1;
+                    for (int c = 0; c < 24; c++)
+                    {
+                        float a = c * Mathf.PI * 2f / 24f, gap = Mathf.PI;
+                        foreach (float t in taken) gap = Mathf.Min(gap, Mathf.Abs(Mathf.DeltaAngle(a * Mathf.Rad2Deg, t * Mathf.Rad2Deg)) * Mathf.Deg2Rad);
+                        if (gap > bestGap) { bestGap = gap; best = a; }
+                    }
+                    taken.Add(best);
+                    var pos = centre + new Vector3(Mathf.Cos(best), 0, Mathf.Sin(best)) * cs * 1.05f;
+                    pos.y = TerrainBuilder.HeightAt(d, pos);
+                    var go = ActorKit.Spawn(_kit.ResidentAdultB, transform, $"Crew_{d.NodeIds[i]}_{k}");
+                    go.transform.localPosition = pos;
+                    var look = centre - pos; look.y = 0;
+                    go.transform.localRotation = Quaternion.LookRotation(look.normalized, Vector3.up) * Quaternion.Euler(0, _kit.ResidentYaw, 0);
+                    go.transform.localScale = Vector3.one * _kitScale;
+                    foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true)) smr.sharedMaterial = _crewMat;
+                    var an = go.GetComponent<Animator>(); if (an == null) an = go.AddComponent<Animator>();   // Unity null: no ?? on components
+                    an.runtimeAnimatorController = _kit.AdultBAnim;
+                    an.applyRootMotion = false;
+                    an.speed = 0f;
+                    an.Play(0, 0, _kit.IdleTime);
+                    _crewPending.Add((go.transform, helmet));
+                    n++;
+                }
+            }
+            CrewCount = n;
+        }
+
+        Material _crewMat;
+        readonly List<(Transform, Mesh)> _crewPending = new List<(Transform, Mesh)>();
+        public int CrewCount { get; private set; }
+
+        /// <summary>Helmets go on after the first animated pose so they sit on the posed head.</summary>
+        void FitCrewHelmets()
+        {
+            if (_crewPending.Count == 0) return;
+            foreach (var (root, mesh) in _crewPending)
+            {
+                Transform head = null;
+                foreach (var t in root.GetComponentsInChildren<Transform>(true)) if (t.name == "Head") { head = t; break; }
+                if (head == null) continue;
+                var h = new GameObject("Helmet");
+                h.transform.SetParent(head, false);
+                h.AddComponent<MeshFilter>().sharedMesh = mesh;
+                h.AddComponent<MeshRenderer>().sharedMaterial = Material;
+                float radius = 0.0027f * _kitScale;
+                // the Head bone sits at the base of the skull: the helmet crowns it ~4.6 mm higher on a 35 mm figure
+                h.transform.position = head.position + root.up * (0.0046f * _kitScale);
+                h.transform.localScale = new Vector3(radius, radius * 0.7f, radius) / Mathf.Max(1e-6f, head.lossyScale.x);
+            }
+            _crewPending.Clear();
+        }
+
+        /// <summary>Step-free resident: the kit chair with the seated rig in it, on the group's coloured base.</summary>
+        Transform SpawnWheelchair(int r, float s, int group)
+        {
+            var root = new GameObject("Resident_" + r);
+            root.transform.SetParent(transform, false);
+            root.transform.localScale = Vector3.one * s;
+            ActorKit.Spawn(_kit.WheelchairChair, root.transform, "Chair");
+            var rider = ActorKit.Spawn(_kit.SeatedRider, root.transform, "Rider");
+            _kit.RigFor(_kit.SeatedRider, out var mat, out var ctl);
+            foreach (var smr in rider.GetComponentsInChildren<SkinnedMeshRenderer>(true)) if (mat != null) smr.sharedMaterial = mat;
+            var an = rider.GetComponent<Animator>(); if (an == null) an = rider.AddComponent<Animator>();
+            an.runtimeAnimatorController = ctl;
+            an.applyRootMotion = false;
+            an.speed = 0f;                       // the sit clip is a single held pose; the chair rolls, the rider doesn't walk
+            an.Play(0, 0, 0f);
+            var disc = new GameObject("GroupBase");
+            disc.transform.SetParent(root.transform, false);
+            disc.AddComponent<MeshFilter>().sharedMesh = _groupBase[group % GroupColors.Length]
+                ?? (_groupBase[group % GroupColors.Length] = new MeshKit()
+                    .Cylinder(Vector3.zero, 0.0068f, 0.0008f, 14, GroupColors[group % GroupColors.Length]).Build("GroupBase"));
+            disc.AddComponent<MeshRenderer>().sharedMaterial = Material;
+            return root.transform;
+        }
+
+        Animator[] _anims;
+        Transform[] _childHeads;
+        bool[] _walking;
+
+        /// <summary>
+        /// Rigged residents: textured material, walk controller (paused on the feet-together frame when standing),
+        /// and children made from the adult rig, smaller with a larger head. Presentation only.
+        /// </summary>
+        void RigResident(GameObject go, GameObject model, int r, bool stepFree)
+        {
+            _kit.RigFor(model, out var mat, out var ctl);
+            if (ctl == null) return;
+            foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            {
+                if (mat != null) smr.sharedMaterial = mat;
+                smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+            }
+            var an = go.GetComponent<Animator>(); if (an == null) an = go.AddComponent<Animator>();   // Unity null: no ?? on components
+            an.runtimeAnimatorController = ctl;
+            an.applyRootMotion = false;
+            an.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+            an.speed = 0f;
+            an.Play(0, 0, _kit.IdleTime);
+            _anims[r] = an;
+            if (_kit.IsDerivedChild(r, stepFree))
+            {
+                go.transform.localScale *= _kit.ChildScale;
+                foreach (var t in go.GetComponentsInChildren<Transform>(true)) if (t.name == "Head") { _childHeads[r] = t; break; }
+            }
+        }
+
+        void AnimateResident(int r, bool walking)
+        {
+            var an = _anims[r];
+            if (an == null) return;
+            if (walking != _walking[r])
+            {
+                _walking[r] = walking;
+                // each resident starts the cycle at its own phase so a walking group doesn't march in step
+                an.Play(0, 0, walking ? (r * 0.37f) % 1f : _kit.IdleTime);
+                an.speed = walking ? 1.1f : 0f;
+            }
+        }
+
+        void LateUpdateChildHeads()
+        {
+            if (_childHeads == null) return;
+            for (int r = 0; r < _childHeads.Length; r++)
+                if (_childHeads[r] != null && _childHeads[r].gameObject.activeInHierarchy) _childHeads[r].localScale = Vector3.one * _kit.ChildHead;
         }
 
         Vector3 RingOffset(int k)

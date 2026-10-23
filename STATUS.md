@@ -1,4 +1,4 @@
-# RESQ status — 23 Oct 2026, 08:30 (day 1 of 26)
+# RESQ status — 23 Oct 2026, 09:00 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -33,9 +33,11 @@
 - **HUD:** glass objectives card, resource chips, glass tool cards, hint bar, hologram placement ghost, dashed cyan routes, Atkinson Hyperlegible.
 - **Terrain:** one natural heightfield (cell centres exact, rounded irregular cliffs), `Resq/Terrain` shader (grass speckle, rock striations), wooden diorama frame.
 - **Hero assets on the boards (paid, logged):** 16 textured Meshy models (480 Meshy + 28.5 Higgsfield credits). Prepared by `tools/blender/hero_prep.py`: bases cut, scaled to board mm, pivots grounded, boat logo painted out. Each world's houses are the residents' homes. Church, lighthouse and lookout stand on high ground toward the back. The bus, rescue boat and bulldozer replace the greybox vehicles; the tanker and snowcat are parked by the depot. All 80 hero import checks pass.
-- **Nature kits on the boards:** 124 of 130 Blender assets pass every check; 109 non-backdrop ones are in Unity (`RESQ/Art/Build Nature Kit`, 94 kit entries). Scatter follows the natural terrain height. Six assets still fail checks and are left out: W3 marker pole and snow fence, W4 crate stack, W5 shrub a/b and olive a.
-- **Art validator:** 1,227 checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheet v2: `docs/look-review-contact-sheet-v2-20261023.png` (Editor captures, not device).
-- **Remaining gaps vs the concepts:** residents are still simple low-poly figures; no golden-hour lighting or crowd density yet; backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
+- **Nature kits on the boards:** all 130 Blender assets pass every check; the six that failed (W3 marker pole and snow fence, W4 crate stack, W5 shrubs a/b and olive a) are fixed in `tools/blender/nature.py`. 115 non-backdrop assets are in Unity (100 kit entries). Scatter follows the natural terrain height.
+- **Residents (paid, logged):** three rigged Meshy figures (woman, man, elder; 105 Meshy + 4.5 Higgsfield credits, user-approved). Prepared by `tools/blender/resident_prep.py`: 32–35 mm, 1,192 triangles, 1K texture, a 1 s looping walk; the standing pose is the walk's feet-together frame. Children are the woman rig at 0.72 scale with a 1.28× head. Wheelchair residents are the woman rig posed seated, in the kit chair. A well-mixed hash varies each group.
+- **Crowds:** rescue crew stand at every evacuation landing (3 per landing, hi-vis orange jackets, white helmets, no group base). Rescued residents gather around them. Waiting groups stand in front of their own homes.
+- **Art validator:** 1,311 checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheets v2 and v3: `docs/look-review-contact-sheet-v2-20261023.png` and `-v3-20261023.png` (Editor captures, not device).
+- **Remaining gaps vs the concepts:** no golden-hour lighting yet; the PlayMode smoke test (a planned gate) isn't written yet; backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)
 Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission, moored members. W4-M3 and W5-M2/M3/M4 retuned.
@@ -57,4 +59,4 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
 - **Disk:** 11 GB free after your cleanup (23 Oct). The plan needs ~40 GB by 11 Nov; an 8 GB swap and other projects' temp folders still eat space.
-- **Credits:** caps raised to Meshy 600 / Higgsfield 150. Higgsfield balance is 110, so top up if you want the full 150.
+- **Credits:** spent so far: Meshy 585 of the 600 cap; Higgsfield 33 of 150, with a balance of 8.9. Top up Higgsfield if you want more concepts.
