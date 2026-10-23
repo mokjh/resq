@@ -14,6 +14,7 @@ namespace Resq.EditorTools
     {
         const string KitPath = "Assets/Resq/Content/Resources/ResqHeroKit.asset";
         public const string HeroRoot = "Assets/Resq/Art/Hero/";
+        static readonly string[] Vehicles = { "bus_city", "boat_rescue", "fishing_boat", "tanker_truck", "bulldozer", "snowcat" };
 
         [MenuItem("RESQ/Art/Build Hero Kit")]
         public static void Build()
@@ -41,7 +42,12 @@ namespace Resq.EditorTools
                 mat.enableInstancing = true;
                 EditorUtility.SetDirty(mat);
                 var e = kit.Entries.Find(x => x.Id == id);
-                if (e == null) { e = new HeroKit.Entry { Id = id }; kit.Entries.Add(e); }
+                if (e == null)
+                {
+                    // Meshy outputs (verified in the hero lineup, 23 Oct): buildings face -Z, vehicles point -X
+                    e = new HeroKit.Entry { Id = id, Yaw = Vehicles.Contains(id) ? 90f : 180f, Lift = id.Contains("boat") ? -0.004f : 0f };
+                    kit.Entries.Add(e);
+                }
                 e.Mesh = mesh; e.Material = mat;
                 e.Footprint = new Vector2(mesh.bounds.size.x, mesh.bounds.size.z);
             }

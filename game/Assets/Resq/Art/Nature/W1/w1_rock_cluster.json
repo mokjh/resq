@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w1_rock_cluster",
+  "world": "w1_alder",
+  "category": "rock",
+  "tags": [
+    "rocky",
+    "meadow",
+    "forest"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -2.641,
+      -3.554,
+      -0.6
+    ],
+    "max": [
+      4.631,
+      3.768,
+      2.607
+    ],
+    "size": [
+      7.272,
+      7.322,
+      3.207
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    7.272,
+    3.207,
+    7.322
+  ],
+  "footprint_radius_mm": 4.97,
+  "height_mm": 2.61,
+  "triangles": {
+    "w1_rock_cluster_LOD0": 186,
+    "w1_rock_cluster_LOD1": 99,
+    "w1_rock_cluster_LOD2": 20
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w1_rock_cluster_LOD0": 0.5883,
+    "w1_rock_cluster_LOD1": 0.5921,
+    "w1_rock_cluster_LOD2": 0.6649
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "foliage": 11,
+    "grass": 15,
+    "stone": 160
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w1_rock_cluster_LOD0": {
+      "count": 4,
+      "floating": 0
+    },
+    "w1_rock_cluster_LOD1": {
+      "count": 4,
+      "floating": 0
+    },
+    "w1_rock_cluster_LOD2": {
+      "count": 2,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w1_rock_cluster_LOD0": {
+      "inside_other_parts_or_below_ground": 14,
+      "covered_contact": 0
+    },
+    "w1_rock_cluster_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w1_rock_cluster_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w1_rock_cluster_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_rock_cluster_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_rock_cluster_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.45
+  },
+  "design": "cluster of four small stones (3-5 mm)",
+  "placement": {
+    "min_spacing_mm": 4,
+    "cluster": "scatter in 2-6s, larger pieces at slope feet and cell edges",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.532,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.108,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w1_rock_cluster": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w1_rock_cluster_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_rock_cluster"
+      },
+      "w1_rock_cluster_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_rock_cluster"
+      },
+      "w1_rock_cluster_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_rock_cluster"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w1_rock_cluster_LOD0": {
+        "min": [
+          -0.002640782156959176,
+          -0.0006000000284984708,
+          -0.003768007270991802
+        ],
+        "max": [
+          0.004631492309272289,
+          0.0026073113549500704,
+          0.003553532063961029
+        ],
+        "count": 107
+      },
+      "w1_rock_cluster_LOD1": {
+        "min": [
+          -0.0024218042381107807,
+          -0.0005261837504804134,
+          -0.003985475283116102
+        ],
+        "max": [
+          0.004219533875584602,
+          0.0024985906202346087,
+          0.003367600729689002
+        ],
+        "count": 58
+      },
+      "w1_rock_cluster_LOD2": {
+        "min": [
+          -0.002363709732890129,
+          -0.0006000000284984708,
+          -0.0031161957886070013
+        ],
+        "max": [
+          0.004284887574613094,
+          0.0024831362534314394,
+          0.002153420588001609
+        ],
+        "count": 14
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w1_alder/w1_rock_cluster.fbx",
+    "fbx_sha256": "1ea48a3dec5e412e810504b215fe326ceac787e303db10010ea03def91ecede0",
+    "fbx_bytes": 48524,
+    "blend": "art/nature/w1_alder/w1_alder_kit.blend",
+    "world_preview": "art/nature/w1_alder/w1_alder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.08,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w1_rock_cluster_LOD0": {
+        "min": [
+          -2.641,
+          -3.554,
+          -0.6
+        ],
+        "max": [
+          4.631,
+          3.768,
+          2.607
+        ],
+        "size": [
+          7.272,
+          7.322,
+          3.207
+        ]
+      },
+      "w1_rock_cluster_LOD1": {
+        "min": [
+          -2.422,
+          -3.368,
+          -0.526
+        ],
+        "max": [
+          4.22,
+          3.985,
+          2.499
+        ],
+        "size": [
+          6.641,
+          7.353,
+          3.025
+        ]
+      },
+      "w1_rock_cluster_LOD2": {
+        "min": [
+          -2.364,
+          -2.153,
+          -0.6
+        ],
+        "max": [
+          4.285,
+          3.116,
+          2.483
+        ],
+        "size": [
+          6.649,
+          5.27,
+          3.083
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w1_rock_cluster_LOD0": 0.5884,
+      "w1_rock_cluster_LOD1": 0.592,
+      "w1_rock_cluster_LOD2": 0.665
+    },
+    "colour_attrs": {
+      "w1_rock_cluster_LOD0": [
+        "Col"
+      ],
+      "w1_rock_cluster_LOD1": [
+        "Col"
+      ],
+      "w1_rock_cluster_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

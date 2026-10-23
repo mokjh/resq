@@ -75,6 +75,8 @@ namespace Resq.Game
                         float ox = (Rand(c, item * 17 + 3) * 2 - 1) * spread, oz = (Rand(c, item * 19 + 5) * 2 - 1) * spread;
                         if (kind == DecorKind.Orchard) { ox *= 0.3f; oz *= 0.3f; } // orchards stand in rows
                         var p = BoardSpace.CellCenter(d, c) + new Vector3(ox * cs, 0, oz * cs);
+                        // follow the natural terrain; a hair lower on slopes so bases never float
+                        p.y = TerrainBuilder.HeightAt(d, p) - 0.0006f * _scale;
                         float yaw = Rand(c, item * 23 + 11) * 360f;
                         float size = Mathf.Lerp(0.82f, 1.18f, Rand(c, item * 29 + 13)) * _scale;
                         Add(mesh, palette.Charred(kind), Matrix4x4.TRS(p, Quaternion.Euler(0, yaw, 0), Vector3.one * size),

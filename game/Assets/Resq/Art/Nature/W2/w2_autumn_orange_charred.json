@@ -1,0 +1,363 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_autumn_orange_charred",
+  "world": "w2_ember",
+  "category": "tree",
+  "tags": [
+    "forest",
+    "burnt"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -7.074,
+      -2.984,
+      -0.6
+    ],
+    "max": [
+      2.863,
+      3.512,
+      39.6
+    ],
+    "size": [
+      9.938,
+      6.496,
+      40.2
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    9.938,
+    40.2,
+    6.496
+  ],
+  "footprint_radius_mm": 7.07,
+  "height_mm": 39.6,
+  "triangles": {
+    "w2_autumn_orange_charred_LOD0": 223,
+    "w2_autumn_orange_charred_LOD1": 86,
+    "w2_autumn_orange_charred_LOD2": 46
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_autumn_orange_charred_LOD0": 0.5669,
+    "w2_autumn_orange_charred_LOD1": 0.6444,
+    "w2_autumn_orange_charred_LOD2": 0.6904
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "hair_dark": 10,
+    "metal_dark": 3,
+    "rubber": 210
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_autumn_orange_charred_LOD0": {
+      "count": 26,
+      "floating": 0
+    },
+    "w2_autumn_orange_charred_LOD1": {
+      "count": 6,
+      "floating": 0
+    },
+    "w2_autumn_orange_charred_LOD2": {
+      "count": 4,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_autumn_orange_charred_LOD0": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_autumn_orange_charred_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_autumn_orange_charred_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_autumn_orange_charred_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_autumn_orange_charred_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_autumn_orange_charred_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "charred twin: blackened trunk/stems, bare or remnant crown, ash ring",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "random",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)",
+    "swap_for": "w2_autumn_orange",
+    "note": "burnt twin of w2_autumn_orange: same pivot and footprint, swap in when fire burns the cell"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.386,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.206,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_autumn_orange_charred": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_autumn_orange_charred_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_autumn_orange_charred"
+      },
+      "w2_autumn_orange_charred_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_autumn_orange_charred"
+      },
+      "w2_autumn_orange_charred_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_autumn_orange_charred"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_autumn_orange_charred_LOD0": {
+        "min": [
+          -0.007074379827827215,
+          -0.0006000000284984708,
+          -0.0035117012448608875
+        ],
+        "max": [
+          0.002863329602405429,
+          0.03959999978542328,
+          0.002984140068292618
+        ],
+        "count": 187
+      },
+      "w2_autumn_orange_charred_LOD1": {
+        "min": [
+          -0.003144780872389674,
+          -0.0006000000284984708,
+          -0.0026501899119466543
+        ],
+        "max": [
+          0.002863329602405429,
+          0.03959999978542328,
+          0.0027988909278064966
+        ],
+        "count": 61
+      },
+      "w2_autumn_orange_charred_LOD2": {
+        "min": [
+          -0.0019297725521028042,
+          -0.0006000000284984708,
+          -0.001428942079655826
+        ],
+        "max": [
+          0.0016765459440648556,
+          0.03959999978542328,
+          0.0027988909278064966
+        ],
+        "count": 33
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_autumn_orange_charred.fbx",
+    "fbx_sha256": "109a8110f763992dd6794d038d4a5ea0694261104d47701a08755a9ef7b38223",
+    "fbx_bytes": 51692,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.07,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_autumn_orange_charred_LOD0": {
+        "min": [
+          -7.074,
+          -2.984,
+          -0.6
+        ],
+        "max": [
+          2.863,
+          3.512,
+          39.6
+        ],
+        "size": [
+          9.938,
+          6.496,
+          40.2
+        ]
+      },
+      "w2_autumn_orange_charred_LOD1": {
+        "min": [
+          -3.145,
+          -2.799,
+          -0.6
+        ],
+        "max": [
+          2.863,
+          2.65,
+          39.6
+        ],
+        "size": [
+          6.008,
+          5.449,
+          40.2
+        ]
+      },
+      "w2_autumn_orange_charred_LOD2": {
+        "min": [
+          -1.93,
+          -2.799,
+          -0.6
+        ],
+        "max": [
+          1.677,
+          1.429,
+          39.6
+        ],
+        "size": [
+          3.606,
+          4.228,
+          40.2
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_autumn_orange_charred_LOD0": 0.5668,
+      "w2_autumn_orange_charred_LOD1": 0.6444,
+      "w2_autumn_orange_charred_LOD2": 0.6905
+    },
+    "colour_attrs": {
+      "w2_autumn_orange_charred_LOD0": [
+        "Col"
+      ],
+      "w2_autumn_orange_charred_LOD1": [
+        "Col"
+      ],
+      "w2_autumn_orange_charred_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

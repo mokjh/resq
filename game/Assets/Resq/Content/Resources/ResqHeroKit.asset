@@ -1,0 +1,138 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7977871db736c420fb6b110ac90727c2, type: 3}
+  m_Name: ResqHeroKit
+  m_EditorClassIdentifier: Resq.Game::Resq.Game.HeroKit
+  Entries:
+  - Id: basalt_house
+    Mesh: {fileID: -708791098087687337, guid: c88183d55b41f494d98faba5f8332e3f, type: 3}
+    Material: {fileID: 2100000, guid: 50a5ca410d7a94c02bec4e15efdc4b60, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.06765981, y: 0.07000016}
+    Lift: 0
+  - Id: boat_rescue
+    Mesh: {fileID: -9212456376760867376, guid: 86919437bf15e404cabd1d6b0424d5d7, type: 3}
+    Material: {fileID: 2100000, guid: 96a807f7f7497496c91ef15bc7806861, type: 2}
+    Yaw: 90
+    Footprint: {x: 0.08000016, y: 0.033839982}
+    Lift: -0.004
+  - Id: bridge_stone
+    Mesh: {fileID: -1960203318937108915, guid: e983081a8f5aa4b6e8b7ab04ade53e6d, type: 3}
+    Material: {fileID: 2100000, guid: 45db69618f41e46a89aad9b377f24208, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.12000023, y: 0.043078758}
+    Lift: 0
+  - Id: bulldozer
+    Mesh: {fileID: -5047534130655914592, guid: 68ac6b2d10033472eb3619f1383dbe68, type: 3}
+    Material: {fileID: 2100000, guid: 5269bde37ca0c49c39c40a0e4e60166d, type: 2}
+    Yaw: 90
+    Footprint: {x: 0.050000098, y: 0.02678169}
+    Lift: 0
+  - Id: bus_city
+    Mesh: {fileID: 1932158229701919752, guid: de6353fb837e145b99cea9d4d727eacf, type: 3}
+    Material: {fileID: 2100000, guid: 8984b7a2749f3488d85a3e6e02f05f79, type: 2}
+    Yaw: 90
+    Footprint: {x: 0.070000134, y: 0.019700227}
+    Lift: 0
+  - Id: chalet_a
+    Mesh: {fileID: -4523721620124279515, guid: 8929f1a9ce0a7425fa3720a224761c22, type: 3}
+    Material: {fileID: 2100000, guid: 84673c659dea24e4ab5e60a473b61b78, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.07881973, y: 0.0800002}
+    Lift: 0
+  - Id: church
+    Mesh: {fileID: -7737008777139697126, guid: 6e9835a4f5d704b6e9059405b9e074a9, type: 3}
+    Material: {fileID: 2100000, guid: 29a4e0c44fba24c63aa5169c07f35839, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.05213922, y: 0.07000024}
+    Lift: 0
+  - Id: cottage_stone
+    Mesh: {fileID: 1244705833768583770, guid: 67cefedab60e645d3bb55e371df6ecec, type: 3}
+    Material: {fileID: 2100000, guid: 26ea7bd730886498081bc823474fe442, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.06469542, y: 0.07000019}
+    Lift: 0
+  - Id: fishing_boat
+    Mesh: {fileID: 7733420072633738129, guid: 6f74b59ec5824448cafa666699ffd82d, type: 3}
+    Material: {fileID: 2100000, guid: 001eec68165414bd39a43dcac2440b84, type: 2}
+    Yaw: 90
+    Footprint: {x: 0.06000014, y: 0.022242285}
+    Lift: -0.004
+  - Id: harbour_houses
+    Mesh: {fileID: 5592277973210223515, guid: 43da35520be754ec992f2370655a942d, type: 3}
+    Material: {fileID: 2100000, guid: aea7d335d092a46c189950502279b6e1, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.100000225, y: 0.052764617}
+    Lift: 0
+  - Id: lighthouse
+    Mesh: {fileID: -6532121272209714978, guid: af119797f6ff74282a572035421490a8, type: 3}
+    Material: {fileID: 2100000, guid: 9ed2130d6124e43db9ae5ee41a226ec1, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.035000186, y: 0.032080516}
+    Lift: 0
+  - Id: lookout_tower
+    Mesh: {fileID: 8106936222412688587, guid: f638a41e7868f4103b5c268337379b55, type: 3}
+    Material: {fileID: 2100000, guid: 7db379bf9d6634e6e8767e848a9766ac, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.040000252, y: 0.039320786}
+    Lift: 0
+  - Id: mountain_hut
+    Mesh: {fileID: 2119787710564132356, guid: 2881a5d5753294f4886ee7a02634dcd0, type: 3}
+    Material: {fileID: 2100000, guid: 7f211074654a24a1e9a1ba9b839c355d, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.061281398, y: 0.07000017}
+    Lift: 0
+  - Id: ranger_station
+    Mesh: {fileID: -1683738398671759916, guid: d3731d5a81a5842729404ecd92b185c8, type: 3}
+    Material: {fileID: 2100000, guid: 5c5a72cd0a74348a693dcaf2925ae987, type: 2}
+    Yaw: 180
+    Footprint: {x: 0.08000017, y: 0.07652073}
+    Lift: 0
+  - Id: snowcat
+    Mesh: {fileID: -8479523099349771052, guid: ac39b2f7d565945d08038afd3b98fc29, type: 3}
+    Material: {fileID: 2100000, guid: 03c3310f750d1455883f8e6af0fdb7cd, type: 2}
+    Yaw: 90
+    Footprint: {x: 0.050000098, y: 0.03066758}
+    Lift: 0
+  - Id: tanker_truck
+    Mesh: {fileID: 424404265484998480, guid: b338f618a91924b3c90b7dd4fa0e913b, type: 3}
+    Material: {fileID: 2100000, guid: 39e633af118ea42db89be521eae50dc9, type: 2}
+    Yaw: 90
+    Footprint: {x: 0.070000134, y: 0.0318843}
+    Lift: 0
+  W1:
+  - chalet_a
+  - cottage_stone
+  - church
+  W2:
+  - ranger_station
+  - lookout_tower
+  - tanker_truck
+  W3:
+  - mountain_hut
+  - snowcat
+  W4:
+  - harbour_houses
+  - lighthouse
+  W5:
+  - basalt_house
+  Scenic:
+  - church
+  - lookout_tower
+  - lighthouse
+  - tanker_truck
+  - snowcat
+  - bridge_stone
+  - fishing_boat
+  Bus: bus_city
+  Skiff: boat_rescue
+  Crawler: bulldozer

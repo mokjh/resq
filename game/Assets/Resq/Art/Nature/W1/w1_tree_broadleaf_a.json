@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w1_tree_broadleaf_a",
+  "world": "w1_alder",
+  "category": "tree",
+  "tags": [
+    "forest",
+    "meadow",
+    "village"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -10.675,
+      -12.555,
+      -0.6
+    ],
+    "max": [
+      11.253,
+      11.176,
+      54.228
+    ],
+    "size": [
+      21.928,
+      23.731,
+      54.828
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    21.928,
+    54.828,
+    23.731
+  ],
+  "footprint_radius_mm": 12.56,
+  "height_mm": 54.23,
+  "triangles": {
+    "w1_tree_broadleaf_a_LOD0": 850,
+    "w1_tree_broadleaf_a_LOD1": 466,
+    "w1_tree_broadleaf_a_LOD2": 253
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w1_tree_broadleaf_a_LOD0": 0.5792,
+    "w1_tree_broadleaf_a_LOD1": 0.5741,
+    "w1_tree_broadleaf_a_LOD2": 0.6475
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "foliage": 551,
+    "grass": 215,
+    "soil": 84
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w1_tree_broadleaf_a_LOD0": {
+      "count": 28,
+      "floating": 0
+    },
+    "w1_tree_broadleaf_a_LOD1": {
+      "count": 26,
+      "floating": 0
+    },
+    "w1_tree_broadleaf_a_LOD2": {
+      "count": 15,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w1_tree_broadleaf_a_LOD0": {
+      "inside_other_parts_or_below_ground": 154,
+      "covered_contact": 0
+    },
+    "w1_tree_broadleaf_a_LOD1": {
+      "inside_other_parts_or_below_ground": 54,
+      "covered_contact": 0
+    },
+    "w1_tree_broadleaf_a_LOD2": {
+      "inside_other_parts_or_below_ground": 16,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w1_tree_broadleaf_a_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_tree_broadleaf_a_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_tree_broadleaf_a_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "oak-like broadleaf: three crown tiers of foliage clumps, darker below, sunlit grass-green tops",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "random",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.548,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.298,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w1_tree_broadleaf_a": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w1_tree_broadleaf_a_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_tree_broadleaf_a"
+      },
+      "w1_tree_broadleaf_a_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_tree_broadleaf_a"
+      },
+      "w1_tree_broadleaf_a_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_tree_broadleaf_a"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w1_tree_broadleaf_a_LOD0": {
+        "min": [
+          -0.010675192810595036,
+          -0.0006000000284984708,
+          -0.01117569487541914
+        ],
+        "max": [
+          0.011253186501562595,
+          0.054228320717811584,
+          0.012555423192679882
+        ],
+        "count": 586
+      },
+      "w1_tree_broadleaf_a_LOD1": {
+        "min": [
+          -0.011251715011894703,
+          -0.0006000000284984708,
+          -0.011225584894418716
+        ],
+        "max": [
+          0.010950766503810883,
+          0.05425456166267395,
+          0.012766498140990734
+        ],
+        "count": 315
+      },
+      "w1_tree_broadleaf_a_LOD2": {
+        "min": [
+          -0.011694206856191158,
+          -0.0006000000284984708,
+          -0.006910617463290691
+        ],
+        "max": [
+          0.00966107752174139,
+          0.051723409444093704,
+          0.013223037123680115
+        ],
+        "count": 168
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w1_alder/w1_tree_broadleaf_a.fbx",
+    "fbx_sha256": "258b8b042c5cf35a7093fe347085baac5080cebe9a8d56dc87e18359165555a3",
+    "fbx_bytes": 156028,
+    "blend": "art/nature/w1_alder/w1_alder_kit.blend",
+    "world_preview": "art/nature/w1_alder/w1_alder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.34,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w1_tree_broadleaf_a_LOD0": {
+        "min": [
+          -10.675,
+          -12.555,
+          -0.6
+        ],
+        "max": [
+          11.253,
+          11.176,
+          54.228
+        ],
+        "size": [
+          21.928,
+          23.731,
+          54.828
+        ]
+      },
+      "w1_tree_broadleaf_a_LOD1": {
+        "min": [
+          -11.252,
+          -12.766,
+          -0.6
+        ],
+        "max": [
+          10.951,
+          11.226,
+          54.255
+        ],
+        "size": [
+          22.202,
+          23.992,
+          54.855
+        ]
+      },
+      "w1_tree_broadleaf_a_LOD2": {
+        "min": [
+          -11.694,
+          -13.223,
+          -0.6
+        ],
+        "max": [
+          9.661,
+          6.911,
+          51.723
+        ],
+        "size": [
+          21.355,
+          20.134,
+          52.323
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w1_tree_broadleaf_a_LOD0": 0.5793,
+      "w1_tree_broadleaf_a_LOD1": 0.5742,
+      "w1_tree_broadleaf_a_LOD2": 0.6476
+    },
+    "colour_attrs": {
+      "w1_tree_broadleaf_a_LOD0": [
+        "Col"
+      ],
+      "w1_tree_broadleaf_a_LOD1": [
+        "Col"
+      ],
+      "w1_tree_broadleaf_a_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

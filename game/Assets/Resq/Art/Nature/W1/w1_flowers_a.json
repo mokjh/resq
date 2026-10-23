@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w1_flowers_a",
+  "world": "w1_alder",
+  "category": "ground_cover",
+  "tags": [
+    "meadow",
+    "village",
+    "orchard"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -1.362,
+      -2.055,
+      -0.5
+    ],
+    "max": [
+      3.596,
+      3.489,
+      4.897
+    ],
+    "size": [
+      4.959,
+      5.544,
+      5.397
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    4.959,
+    5.397,
+    5.544
+  ],
+  "footprint_radius_mm": 3.79,
+  "height_mm": 4.9,
+  "triangles": {
+    "w1_flowers_a_LOD0": 69,
+    "w1_flowers_a_LOD1": 36,
+    "w1_flowers_a_LOD2": 15
+  },
+  "budget_lod0": 80,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w1_flowers_a_LOD0": 0.7278,
+    "w1_flowers_a_LOD1": 0.7367,
+    "w1_flowers_a_LOD2": 0.798
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_mustard": 12,
+    "grass": 33,
+    "paper": 24
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w1_flowers_a_LOD0": {
+      "count": 17,
+      "floating": 0
+    },
+    "w1_flowers_a_LOD1": {
+      "count": 9,
+      "floating": 0
+    },
+    "w1_flowers_a_LOD2": {
+      "count": 4,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w1_flowers_a_LOD0": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w1_flowers_a_LOD1": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w1_flowers_a_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w1_flowers_a_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_flowers_a_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_flowers_a_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.1
+  },
+  "design": "wildflower patch: white and yellow heads",
+  "placement": {
+    "min_spacing_mm": 3,
+    "cluster": "dense drifts of 6-30; may sit at cell edges and along routes",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines (edges are fine)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.522,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.217,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w1_flowers_a": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w1_flowers_a_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_flowers_a"
+      },
+      "w1_flowers_a_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_flowers_a"
+      },
+      "w1_flowers_a_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_flowers_a"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w1_flowers_a_LOD0": {
+        "min": [
+          -0.0013624654384329915,
+          -0.0005000000237487257,
+          -0.0034892710391432047
+        ],
+        "max": [
+          0.0035960704553872347,
+          0.004897215869277716,
+          0.0020549336913973093
+        ],
+        "count": 74
+      },
+      "w1_flowers_a_LOD1": {
+        "min": [
+          -0.001062465482391417,
+          -0.0005000000237487257,
+          -0.002411765744909644
+        ],
+        "max": [
+          0.0035960704553872347,
+          0.004897215869277716,
+          -0.00026668174541555345
+        ],
+        "count": 39
+      },
+      "w1_flowers_a_LOD2": {
+        "min": [
+          0.0004766893107444048,
+          -0.0005000000237487257,
+          -0.0014769838890060782
+        ],
+        "max": [
+          0.002996070310473442,
+          0.004897215869277716,
+          -0.00026668174541555345
+        ],
+        "count": 17
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w1_alder/w1_flowers_a.fbx",
+    "fbx_sha256": "0c539dda21070d76bec27e3dd354ae133cf9041ba205b35dd9ebe621ae63e456",
+    "fbx_bytes": 30796,
+    "blend": "art/nature/w1_alder/w1_alder_kit.blend",
+    "world_preview": "art/nature/w1_alder/w1_alder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.06,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w1_flowers_a_LOD0": {
+        "min": [
+          -1.362,
+          -2.055,
+          -0.5
+        ],
+        "max": [
+          3.596,
+          3.489,
+          4.897
+        ],
+        "size": [
+          4.959,
+          5.544,
+          5.397
+        ]
+      },
+      "w1_flowers_a_LOD1": {
+        "min": [
+          -1.062,
+          0.267,
+          -0.5
+        ],
+        "max": [
+          3.596,
+          2.412,
+          4.897
+        ],
+        "size": [
+          4.659,
+          2.145,
+          5.397
+        ]
+      },
+      "w1_flowers_a_LOD2": {
+        "min": [
+          0.477,
+          0.267,
+          -0.5
+        ],
+        "max": [
+          2.996,
+          1.477,
+          4.897
+        ],
+        "size": [
+          2.519,
+          1.21,
+          5.397
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w1_flowers_a_LOD0": 0.7279,
+      "w1_flowers_a_LOD1": 0.7369,
+      "w1_flowers_a_LOD2": 0.7978
+    },
+    "colour_attrs": {
+      "w1_flowers_a_LOD0": [
+        "Col"
+      ],
+      "w1_flowers_a_LOD1": [
+        "Col"
+      ],
+      "w1_flowers_a_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

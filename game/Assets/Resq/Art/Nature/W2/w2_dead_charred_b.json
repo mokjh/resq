@@ -1,0 +1,359 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_dead_charred_b",
+  "world": "w2_ember",
+  "category": "tree",
+  "tags": [
+    "burnt"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -2.398,
+      -2.399,
+      -0.718
+    ],
+    "max": [
+      4.859,
+      3.76,
+      30.4
+    ],
+    "size": [
+      7.257,
+      6.159,
+      31.118
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    7.257,
+    31.118,
+    6.159
+  ],
+  "footprint_radius_mm": 6.05,
+  "height_mm": 30.4,
+  "triangles": {
+    "w2_dead_charred_b_LOD0": 105,
+    "w2_dead_charred_b_LOD1": 42,
+    "w2_dead_charred_b_LOD2": 16
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_dead_charred_b_LOD0": 0.7863,
+    "w2_dead_charred_b_LOD1": 0.8282,
+    "w2_dead_charred_b_LOD2": 0.81
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "hair_dark": 6,
+    "rubber": 99
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_dead_charred_b_LOD0": {
+      "count": 6,
+      "floating": 0
+    },
+    "w2_dead_charred_b_LOD1": {
+      "count": 4,
+      "floating": 0
+    },
+    "w2_dead_charred_b_LOD2": {
+      "count": 2,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_dead_charred_b_LOD0": {
+      "inside_other_parts_or_below_ground": 2,
+      "covered_contact": 0
+    },
+    "w2_dead_charred_b_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_dead_charred_b_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_dead_charred_b_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_dead_charred_b_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_dead_charred_b_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "broken, leaning burnt trunk",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "random",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.4,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.152,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_dead_charred_b": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_dead_charred_b_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_dead_charred_b"
+      },
+      "w2_dead_charred_b_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_dead_charred_b"
+      },
+      "w2_dead_charred_b_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_dead_charred_b"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_dead_charred_b_LOD0": {
+        "min": [
+          -0.0023976615630090237,
+          -0.000717716699000448,
+          -0.0037599694915115833
+        ],
+        "max": [
+          0.004859072156250477,
+          0.030400000512599945,
+          0.00239923526532948
+        ],
+        "count": 75
+      },
+      "w2_dead_charred_b_LOD1": {
+        "min": [
+          -0.0019382344326004386,
+          -0.0007420823094435036,
+          -0.0037599694915115833
+        ],
+        "max": [
+          0.004733728244900703,
+          0.030400000512599945,
+          0.002282951958477497
+        ],
+        "count": 33
+      },
+      "w2_dead_charred_b_LOD2": {
+        "min": [
+          -0.0011943691642954946,
+          -0.0008322185603901744,
+          -0.0037599694915115833
+        ],
+        "max": [
+          0.004733728244900703,
+          0.028091387823224068,
+          0.0020794470328837633
+        ],
+        "count": 13
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_dead_charred_b.fbx",
+    "fbx_sha256": "11fc1ded8bf177ee073b1b4a757b7d08b270996aa5b5e037ea5f0cf31c04e0ed",
+    "fbx_bytes": 34396,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.04,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_dead_charred_b_LOD0": {
+        "min": [
+          -2.398,
+          -2.399,
+          -0.718
+        ],
+        "max": [
+          4.859,
+          3.76,
+          30.4
+        ],
+        "size": [
+          7.257,
+          6.159,
+          31.118
+        ]
+      },
+      "w2_dead_charred_b_LOD1": {
+        "min": [
+          -1.938,
+          -2.283,
+          -0.742
+        ],
+        "max": [
+          4.734,
+          3.76,
+          30.4
+        ],
+        "size": [
+          6.672,
+          6.043,
+          31.142
+        ]
+      },
+      "w2_dead_charred_b_LOD2": {
+        "min": [
+          -1.194,
+          -2.079,
+          -0.832
+        ],
+        "max": [
+          4.734,
+          3.76,
+          28.091
+        ],
+        "size": [
+          5.928,
+          5.839,
+          28.924
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_dead_charred_b_LOD0": 0.7865,
+      "w2_dead_charred_b_LOD1": 0.8284,
+      "w2_dead_charred_b_LOD2": 0.81
+    },
+    "colour_attrs": {
+      "w2_dead_charred_b_LOD0": [
+        "Col"
+      ],
+      "w2_dead_charred_b_LOD1": [
+        "Col"
+      ],
+      "w2_dead_charred_b_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

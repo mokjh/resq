@@ -1,0 +1,392 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24934190ddf0245039ee7b5037fff791, type: 3}
+  m_Name: ResqNatureKit
+  m_EditorClassIdentifier: Resq.Game::Resq.Game.NatureKit
+  Entries:
+  - World: W1
+    Kind: 0
+    Mesh: {fileID: -6850478515901019565, guid: 11e0a80269aa44ed8942470e74f3e285, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 0
+    Mesh: {fileID: 397026705153222122, guid: ee8af8217b99f4562b5aee9861ceea94, type: 3}
+    Charred: 1
+  - World: W1
+    Kind: 0
+    Mesh: {fileID: 4004053852870772378, guid: e9245f9e560824560a957b415f98dbb0, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 3
+    Mesh: {fileID: -4275122041249618193, guid: 36e85b05b4f2542b9bcbc221145b4063, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 2
+    Mesh: {fileID: 5687517303271833385, guid: 6ec9493c572a0450086671e0c00e6b11, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 2
+    Mesh: {fileID: 7479367229404482130, guid: ed7098e119a864dbb986869a3b6fc757, type: 3}
+    Charred: 1
+  - World: W1
+    Kind: 2
+    Mesh: {fileID: 5763023618829354593, guid: ea48c74455f15444dbbf6429c0b721bc, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 1
+    Mesh: {fileID: -2070345274575539238, guid: 85d99c01ba10e4b27b1f0c64d8898f9f, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 1
+    Mesh: {fileID: 6385878612412074478, guid: 9390a727383974101ae9b7bd0af7a753, type: 3}
+    Charred: 1
+  - World: W1
+    Kind: 1
+    Mesh: {fileID: 5864251641311927248, guid: 8c9e63ca924e84878bc3d40c8afeced5, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 11
+    Mesh: {fileID: -8450325495368956448, guid: 45b14d070e2ca428c8ac1b38da5db857, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 11
+    Mesh: {fileID: 736962593959167568, guid: cd9caf9e0060047de948bb6db7328a6d, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 11
+    Mesh: {fileID: -2916512186401655718, guid: 312d811ae79c04bdfa6d0e66cc47c71c, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 2
+    Mesh: {fileID: -501008625620003248, guid: 8fa9948c1ce0349298f2fbdf3de05534, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 5
+    Mesh: {fileID: 4811331742499646138, guid: 5c2d1cd18f17b4009aa5442248d9ab27, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 5
+    Mesh: {fileID: 6137056227704521795, guid: a8f804afa6eee4684966522f327392aa, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 4
+    Mesh: {fileID: -7049279189037782301, guid: 8da2ff71dd6d2441a836e5d65f4ca01c, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 4
+    Mesh: {fileID: -8296096316099152042, guid: 410f2a1690b3340df8562512b0fe13f7, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 7
+    Mesh: {fileID: 8629080899324477514, guid: 946ada8e790244f59864fe04d382df15, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 11
+    Mesh: {fileID: -3873214751301043440, guid: acacf07cf68e640ba89345567f5a60b6, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 6
+    Mesh: {fileID: 8349322792591474323, guid: c90a91e07c76f4921a08f903cd9fc029, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 6
+    Mesh: {fileID: 8870267283914027716, guid: f9c895a0275284189972bbab002fbf05, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 3
+    Mesh: {fileID: -3669126556007593828, guid: 1f3db5683860d47418dc4e7d9d6dcd53, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 3
+    Mesh: {fileID: 7900493577085749025, guid: 266fdeb65a70e455b87f3246a38dc30e, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 3
+    Mesh: {fileID: -8348178470232430718, guid: 275d203951b2d4385a2662b9c1049528, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 11
+    Mesh: {fileID: 1837819454572918121, guid: 18fe4c68014cd4957b3bbab04af9586e, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 0
+    Mesh: {fileID: 2341690643270713448, guid: c3f905b5567a94436bbcc38392aba728, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 0
+    Mesh: {fileID: -8104862012777399296, guid: 6d6b3ee684c85475785e573a51550940, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 0
+    Mesh: {fileID: -2954453522963070469, guid: 29011a676790d4be493e772e477082fe, type: 3}
+    Charred: 0
+  - World: W1
+    Kind: 7
+    Mesh: {fileID: 5503518890095709348, guid: 3e9cbf4ba9d204884a190672ecc49889, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 0
+    Mesh: {fileID: 3814632294568115053, guid: 5cebcfed4b15a4cd9862b825db757d6e, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 0
+    Mesh: {fileID: 1259339398321955618, guid: 5e35a02227bf94e9d892ee7950712e4d, type: 3}
+    Charred: 1
+  - World: W2
+    Kind: 0
+    Mesh: {fileID: 3902425030358936365, guid: cd6fbb639a483496f9406f5b147d3c6f, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 3
+    Mesh: {fileID: 6101770430346601689, guid: 5a79a4554af644d5e875d961480c2939, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 1
+    Mesh: {fileID: -7669741519004493035, guid: 286114cf26e8e4d089f0686ba35e0e8b, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 1
+    Mesh: {fileID: -7561050040267576830, guid: 5bd33c0c569804ad0a149ed3aafe940c, type: 3}
+    Charred: 1
+  - World: W2
+    Kind: 11
+    Mesh: {fileID: -8901082902195614946, guid: 7b1f0704f3dff43c18384a9f53b01c25, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 4
+    Mesh: {fileID: 3906574550453196667, guid: 51e35efbea9884679a201b8a2a3f498f, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 4
+    Mesh: {fileID: 4725043650001028924, guid: 93422daa12f264a0c9b4f903e556e01f, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 2
+    Mesh: {fileID: 2272098828358689230, guid: 27c4d6cc1915d414097eb904996676d8, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 2
+    Mesh: {fileID: 6096132479316314471, guid: 660fed7f3fe8c4b2faf1e494db486918, type: 3}
+    Charred: 1
+  - World: W2
+    Kind: 4
+    Mesh: {fileID: 5788322439538346903, guid: 76d739da4213b44eea3b5dbdeec9a52b, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 4
+    Mesh: {fileID: -2642771366317165916, guid: 832e2c095ad1b43cd97f0970fbc004fa, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 11
+    Mesh: {fileID: -1792043425845082777, guid: 03a9e0d9e42de4605b0b398acb11ae4d, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 1
+    Mesh: {fileID: -1724576082037198723, guid: d605ffb0583a442b490293637160e774, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 1
+    Mesh: {fileID: 1861856285851636905, guid: 3d96d4f129a3944fbbc25dd080628840, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 1
+    Mesh: {fileID: -8589711498686854064, guid: 5934ca1252dd34e5aaf65f3ee37151a2, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 3
+    Mesh: {fileID: -4142953724119945159, guid: b837f17c00e69421486f543d39a5f885, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 3
+    Mesh: {fileID: -4791147124046569826, guid: bf052f2b7c9ad4a889dbbd4a191445b3, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 11
+    Mesh: {fileID: 5784609781954617121, guid: 5e7cb9e4630a14a4a8be6d5b741cbfe1, type: 3}
+    Charred: 0
+  - World: W2
+    Kind: 11
+    Mesh: {fileID: 1900839023220149034, guid: 62145af379b464bf5b7dc0eee34d1795, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 3
+    Mesh: {fileID: -3684549074268067735, guid: 6ae9b177303544487baf912d9eecd33e, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 3
+    Mesh: {fileID: 1988526184098869421, guid: d99e95c44775247b5ad690701d20e4ea, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 1
+    Mesh: {fileID: 6167690614829663438, guid: 16db356736d1e4bdba1f192761ac947c, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 1
+    Mesh: {fileID: 389887416571577630, guid: 2c012bdc8d9354af187da0ad91d8cdc8, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 1
+    Mesh: {fileID: 2918587893127168481, guid: a17c3cb93ef0a4c46a57ca27db010c1f, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 1
+    Mesh: {fileID: -4601194646801867982, guid: 1487217c165f74284a042a0793cc6dc3, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 1
+    Mesh: {fileID: 4022246765765990890, guid: c30051ae773a344869ae6eb7ec9f9654, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 3
+    Mesh: {fileID: -1937476429660255252, guid: 082f7f0a9256a43418e47f28d02d339b, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 3
+    Mesh: {fileID: -5609951257250733545, guid: a2659135fd35b4f4b9b321915214482f, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 3
+    Mesh: {fileID: 7692921720560807630, guid: fff19dc8cdfac4697b6b96cc033f4363, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 9
+    Mesh: {fileID: 1075941986483781068, guid: a606be8ed9365422293a21a6e9369f7d, type: 3}
+    Charred: 0
+  - World: W3
+    Kind: 9
+    Mesh: {fileID: 2247623684582180560, guid: 596929f0d53c240cf9678ecfdf2fceb7, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: -8386870560896541479, guid: eb916d06747b6432d96ba5b66e2ca798, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: 8445540539591589612, guid: 9e0ea80fa755648c9821f7613a6d1049, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: 2398242541593780030, guid: ff28ddbf57b69496687cfe254b5e0187, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: -3534748585616308970, guid: e27601fc4c96a4b1c9ed4d5cae3b31f8, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: -1375644601714419250, guid: ff0acfe0581ce45f280d938c7a20af3c, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 4
+    Mesh: {fileID: -1254885124269608694, guid: fad398d26e9b6428c8656abbfa175e83, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 4
+    Mesh: {fileID: 194092685419331024, guid: 5615de4bc90b6450695126c9288ef598, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: -1210005642110480012, guid: 07cde8ad32e4b4ca6bbe6ec75b27e1c9, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: 900893968264325032, guid: f89eb9bc1915f41b2877d77946ddf763, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 11
+    Mesh: {fileID: -7591926283472056970, guid: 08a008223025a4a08bb2c0e06dda1fa4, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 1
+    Mesh: {fileID: -7012098373243722079, guid: 2dfceec64906e4a1f88d1364006fe6ad, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 1
+    Mesh: {fileID: -7059870953216925082, guid: c7ee009ccad6541b8b01e6efe6940fb8, type: 3}
+    Charred: 1
+  - World: W4
+    Kind: 1
+    Mesh: {fileID: 4096681731364197640, guid: f676f57e0064041279bb26498f0b2fb1, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 3
+    Mesh: {fileID: 3031062926746112297, guid: c37d94a3893bb4015be74f330f9e7081, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 3
+    Mesh: {fileID: 6538416156761012482, guid: 4e328cca5878c48a6ac879dbfae18e7c, type: 3}
+    Charred: 0
+  - World: W4
+    Kind: 3
+    Mesh: {fileID: -1634893847987117084, guid: 1203bde05d4a64d4dbbdf1816921b80e, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 9
+    Mesh: {fileID: -6833071932560057622, guid: 2580614462de9489a9006915b8ed09fc, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 9
+    Mesh: {fileID: -559206135158406334, guid: d8311aa49e4f94471b819ab6781c349c, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 10
+    Mesh: {fileID: -3087105078902701163, guid: 9f0ae124d49a44803a337c560be72793, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 10
+    Mesh: {fileID: 5490598633687170834, guid: b441e7f873bcf4b4e83aee682ca3f3dc, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 10
+    Mesh: {fileID: 1070914366892712306, guid: 119a45d5b344c48d7839fc418ae16f9f, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 4
+    Mesh: {fileID: -5103755753587308090, guid: f87a81ce5a5e64feda18048d544ceb0c, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 4
+    Mesh: {fileID: 948324079723405795, guid: b9bdb642bed424d65805b80ec1bc4f86, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 3
+    Mesh: {fileID: 4110911004011107903, guid: 44c16208e32ea4a27bbedaefd20f5c06, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 3
+    Mesh: {fileID: -4688815455040236694, guid: c2bd6e8202ceb4b9e8f015d940892835, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 3
+    Mesh: {fileID: 2716090800646362214, guid: 141b2214a4f164118b2f24795a86fcba, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 8
+    Mesh: {fileID: 8180734984092013629, guid: 9f69fd9c79e7a41e680b6114fa1bfbe0, type: 3}
+    Charred: 1
+  - World: W5
+    Kind: 8
+    Mesh: {fileID: 6800427416314843259, guid: 5d4937936c38f4301af94a4b04f9d576, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 3
+    Mesh: {fileID: 5630628795357730203, guid: e8aae3eda22c248b1bf6f858a5972a94, type: 3}
+    Charred: 0
+  - World: W5
+    Kind: 2
+    Mesh: {fileID: 7316151182674771745, guid: 9e0d294207d354291b410147c3f99af8, type: 3}
+    Charred: 1
+  - World: W5
+    Kind: 3
+    Mesh: {fileID: -4362900487023905159, guid: 077d32f8eb6bc46c8b2fde3edc63ce33, type: 3}
+    Charred: 0
+  Material: {fileID: 2100000, guid: 7f25382a3d3ef4b908ad0c1fda8eab67, type: 2}

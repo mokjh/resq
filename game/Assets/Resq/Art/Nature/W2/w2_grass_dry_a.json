@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_grass_dry_a",
+  "world": "w2_ember",
+  "category": "ground_cover",
+  "tags": [
+    "meadow",
+    "forest",
+    "burnt"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -3.401,
+      -3.135,
+      -0.5
+    ],
+    "max": [
+      3.644,
+      3.085,
+      5.587
+    ],
+    "size": [
+      7.045,
+      6.22,
+      6.087
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    7.045,
+    6.087,
+    6.22
+  ],
+  "footprint_radius_mm": 4.28,
+  "height_mm": 5.59,
+  "triangles": {
+    "w2_grass_dry_a_LOD0": 72,
+    "w2_grass_dry_a_LOD1": 39,
+    "w2_grass_dry_a_LOD2": 21
+  },
+  "budget_lod0": 80,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_grass_dry_a_LOD0": 0.594,
+    "w2_grass_dry_a_LOD1": 0.6499,
+    "w2_grass_dry_a_LOD2": 0.7026
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_mustard": 14,
+    "cloth_sage": 19,
+    "wood_deck": 39
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_grass_dry_a_LOD0": {
+      "count": 24,
+      "floating": 0
+    },
+    "w2_grass_dry_a_LOD1": {
+      "count": 13,
+      "floating": 0
+    },
+    "w2_grass_dry_a_LOD2": {
+      "count": 7,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_grass_dry_a_LOD0": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_grass_dry_a_LOD1": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_grass_dry_a_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_grass_dry_a_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_grass_dry_a_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_grass_dry_a_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.1
+  },
+  "design": "dry grass tuft",
+  "placement": {
+    "min_spacing_mm": 3,
+    "cluster": "dense drifts of 6-30; may sit at cell edges and along routes",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines (edges are fine)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.542,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.292,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_grass_dry_a": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_grass_dry_a_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_grass_dry_a"
+      },
+      "w2_grass_dry_a_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_grass_dry_a"
+      },
+      "w2_grass_dry_a_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_grass_dry_a"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_grass_dry_a_LOD0": {
+        "min": [
+          -0.003401277121156454,
+          -0.0005000000237487257,
+          -0.003084941068664193
+        ],
+        "max": [
+          0.003644076408818364,
+          0.0055869692005217075,
+          0.0031351486686617136
+        ],
+        "count": 96
+      },
+      "w2_grass_dry_a_LOD1": {
+        "min": [
+          -0.0029034067410975695,
+          -0.0005000000237487257,
+          -0.003084941068664193
+        ],
+        "max": [
+          0.003644076408818364,
+          0.0055869692005217075,
+          0.0031351486686617136
+        ],
+        "count": 52
+      },
+      "w2_grass_dry_a_LOD2": {
+        "min": [
+          -0.0029034067410975695,
+          -0.0005000000237487257,
+          -0.003084941068664193
+        ],
+        "max": [
+          0.003644076408818364,
+          0.0055869692005217075,
+          0.0005287426174618304
+        ],
+        "count": 28
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_grass_dry_a.fbx",
+    "fbx_sha256": "976c3cb6324c6ca36209feea8d994b3877436a544b09e40171addbc974cb0e44",
+    "fbx_bytes": 34428,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.06,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_grass_dry_a_LOD0": {
+        "min": [
+          -3.401,
+          -3.135,
+          -0.5
+        ],
+        "max": [
+          3.644,
+          3.085,
+          5.587
+        ],
+        "size": [
+          7.045,
+          6.22,
+          6.087
+        ]
+      },
+      "w2_grass_dry_a_LOD1": {
+        "min": [
+          -2.903,
+          -3.135,
+          -0.5
+        ],
+        "max": [
+          3.644,
+          3.085,
+          5.587
+        ],
+        "size": [
+          6.547,
+          6.22,
+          6.087
+        ]
+      },
+      "w2_grass_dry_a_LOD2": {
+        "min": [
+          -2.903,
+          -0.529,
+          -0.5
+        ],
+        "max": [
+          3.644,
+          3.085,
+          5.587
+        ],
+        "size": [
+          6.547,
+          3.614,
+          6.087
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_grass_dry_a_LOD0": 0.5941,
+      "w2_grass_dry_a_LOD1": 0.65,
+      "w2_grass_dry_a_LOD2": 0.7025
+    },
+    "colour_attrs": {
+      "w2_grass_dry_a_LOD0": [
+        "Col"
+      ],
+      "w2_grass_dry_a_LOD1": [
+        "Col"
+      ],
+      "w2_grass_dry_a_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

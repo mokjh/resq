@@ -1,0 +1,363 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_pine_dense_charred",
+  "world": "w2_ember",
+  "category": "tree",
+  "tags": [
+    "forest",
+    "burnt"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -9.028,
+      -9.062,
+      -0.6
+    ],
+    "max": [
+      9.9,
+      8.824,
+      59.17
+    ],
+    "size": [
+      18.928,
+      17.885,
+      59.77
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    18.928,
+    59.77,
+    17.885
+  ],
+  "footprint_radius_mm": 9.9,
+  "height_mm": 59.17,
+  "triangles": {
+    "w2_pine_dense_charred_LOD0": 654,
+    "w2_pine_dense_charred_LOD1": 138,
+    "w2_pine_dense_charred_LOD2": 54
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_pine_dense_charred_LOD0": 0.6248,
+    "w2_pine_dense_charred_LOD1": 0.5356,
+    "w2_pine_dense_charred_LOD2": 0.5615
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "hair_dark": 65,
+    "metal_dark": 14,
+    "rubber": 575
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_pine_dense_charred_LOD0": {
+      "count": 54,
+      "floating": 0
+    },
+    "w2_pine_dense_charred_LOD1": {
+      "count": 27,
+      "floating": 0
+    },
+    "w2_pine_dense_charred_LOD2": {
+      "count": 12,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_pine_dense_charred_LOD0": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_pine_dense_charred_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_pine_dense_charred_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_pine_dense_charred_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_pine_dense_charred_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_pine_dense_charred_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "charred twin: blackened trunk/stems, bare or remnant crown, ash ring",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "random",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)",
+    "swap_for": "w2_pine_dense",
+    "note": "burnt twin of w2_pine_dense: same pivot and footprint, swap in when fire burns the cell"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.211,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.083,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_pine_dense_charred": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_pine_dense_charred_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_pine_dense_charred"
+      },
+      "w2_pine_dense_charred_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_pine_dense_charred"
+      },
+      "w2_pine_dense_charred_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_pine_dense_charred"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_pine_dense_charred_LOD0": {
+        "min": [
+          -0.009028484113514423,
+          -0.0006000000284984708,
+          -0.008823813870549202
+        ],
+        "max": [
+          0.009899822063744068,
+          0.05917000025510788,
+          0.009061549790203571
+        ],
+        "count": 485
+      },
+      "w2_pine_dense_charred_LOD1": {
+        "min": [
+          -0.008343047462403774,
+          -0.0006000000284984708,
+          -0.007838337682187557
+        ],
+        "max": [
+          0.009349832311272621,
+          0.05917000025510788,
+          0.009326305240392685
+        ],
+        "count": 135
+      },
+      "w2_pine_dense_charred_LOD2": {
+        "min": [
+          -0.009336874820291996,
+          -0.0006000000284984708,
+          -0.0069274879060685635
+        ],
+        "max": [
+          0.009349832311272621,
+          0.05917000025510788,
+          0.006812194362282753
+        ],
+        "count": 57
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_pine_dense_charred.fbx",
+    "fbx_sha256": "6ae3088525a389e592813c3a9f5502f6ab22e1057f8df08c2b166b6118e69abf",
+    "fbx_bytes": 85164,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.14,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_pine_dense_charred_LOD0": {
+        "min": [
+          -9.028,
+          -9.062,
+          -0.6
+        ],
+        "max": [
+          9.9,
+          8.824,
+          59.17
+        ],
+        "size": [
+          18.928,
+          17.885,
+          59.77
+        ]
+      },
+      "w2_pine_dense_charred_LOD1": {
+        "min": [
+          -8.343,
+          -9.326,
+          -0.6
+        ],
+        "max": [
+          9.35,
+          7.838,
+          59.17
+        ],
+        "size": [
+          17.693,
+          17.165,
+          59.77
+        ]
+      },
+      "w2_pine_dense_charred_LOD2": {
+        "min": [
+          -9.337,
+          -6.812,
+          -0.6
+        ],
+        "max": [
+          9.35,
+          6.927,
+          59.17
+        ],
+        "size": [
+          18.687,
+          13.74,
+          59.77
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_pine_dense_charred_LOD0": 0.6246,
+      "w2_pine_dense_charred_LOD1": 0.5352,
+      "w2_pine_dense_charred_LOD2": 0.5612
+    },
+    "colour_attrs": {
+      "w2_pine_dense_charred_LOD0": [
+        "Col"
+      ],
+      "w2_pine_dense_charred_LOD1": [
+        "Col"
+      ],
+      "w2_pine_dense_charred_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

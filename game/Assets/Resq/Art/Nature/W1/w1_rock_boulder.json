@@ -1,0 +1,364 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w1_rock_boulder",
+  "world": "w1_alder",
+  "category": "rock",
+  "tags": [
+    "meadow",
+    "rocky",
+    "riverbank"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -6.061,
+      -3.802,
+      -0.6
+    ],
+    "max": [
+      7.898,
+      5.238,
+      5.668
+    ],
+    "size": [
+      13.959,
+      9.04,
+      6.268
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    13.959,
+    6.268,
+    9.04
+  ],
+  "footprint_radius_mm": 8.55,
+  "height_mm": 5.67,
+  "triangles": {
+    "w1_rock_boulder_LOD0": 212,
+    "w1_rock_boulder_LOD1": 111,
+    "w1_rock_boulder_LOD2": 17
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w1_rock_boulder_LOD0": 0.6498,
+    "w1_rock_boulder_LOD1": 0.661,
+    "w1_rock_boulder_LOD2": 0.8543
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_sage": 5,
+    "foliage": 15,
+    "grass": 27,
+    "mineral": 3,
+    "stone": 162
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w1_rock_boulder_LOD0": {
+      "count": 2,
+      "floating": 0
+    },
+    "w1_rock_boulder_LOD1": {
+      "count": 2,
+      "floating": 0
+    },
+    "w1_rock_boulder_LOD2": {
+      "count": 1,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w1_rock_boulder_LOD0": {
+      "inside_other_parts_or_below_ground": 44,
+      "covered_contact": 0
+    },
+    "w1_rock_boulder_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w1_rock_boulder_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w1_rock_boulder_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_rock_boulder_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_rock_boulder_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.45
+  },
+  "design": "mossy boulder (12 mm) with a small companion stone",
+  "placement": {
+    "min_spacing_mm": 4,
+    "cluster": "scatter in 2-6s, larger pieces at slope feet and cell edges",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.524,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.08,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w1_rock_boulder": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w1_rock_boulder_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_rock_boulder"
+      },
+      "w1_rock_boulder_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_rock_boulder"
+      },
+      "w1_rock_boulder_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_rock_boulder"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w1_rock_boulder_LOD0": {
+        "min": [
+          -0.006060712970793247,
+          -0.0006000000284984708,
+          -0.005237996578216553
+        ],
+        "max": [
+          0.0078983623534441,
+          0.005667949095368385,
+          0.0038019660860300064
+        ],
+        "count": 122
+      },
+      "w1_rock_boulder_LOD1": {
+        "min": [
+          -0.005354142282158136,
+          -0.0005948467878624797,
+          -0.0049911122769117355
+        ],
+        "max": [
+          0.00795706082135439,
+          0.005317904055118561,
+          0.003957019653171301
+        ],
+        "count": 60
+      },
+      "w1_rock_boulder_LOD2": {
+        "min": [
+          -0.005548903718590736,
+          -0.0006000000284984708,
+          -0.0039001917466521263
+        ],
+        "max": [
+          0.007131258025765419,
+          0.005561857484281063,
+          0.003944908268749714
+        ],
+        "count": 11
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w1_alder/w1_rock_boulder.fbx",
+    "fbx_sha256": "bd586155308326cdfcb6bcc6684d4e72b9f0d71780f669621e31f31ce75c5917",
+    "fbx_bytes": 50236,
+    "blend": "art/nature/w1_alder/w1_alder_kit.blend",
+    "world_preview": "art/nature/w1_alder/w1_alder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.09,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w1_rock_boulder_LOD0": {
+        "min": [
+          -6.061,
+          -3.802,
+          -0.6
+        ],
+        "max": [
+          7.898,
+          5.238,
+          5.668
+        ],
+        "size": [
+          13.959,
+          9.04,
+          6.268
+        ]
+      },
+      "w1_rock_boulder_LOD1": {
+        "min": [
+          -5.354,
+          -3.957,
+          -0.595
+        ],
+        "max": [
+          7.957,
+          4.991,
+          5.318
+        ],
+        "size": [
+          13.311,
+          8.948,
+          5.913
+        ]
+      },
+      "w1_rock_boulder_LOD2": {
+        "min": [
+          -5.549,
+          -3.945,
+          -0.6
+        ],
+        "max": [
+          7.131,
+          3.9,
+          5.562
+        ],
+        "size": [
+          12.68,
+          7.845,
+          6.162
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w1_rock_boulder_LOD0": 0.6498,
+      "w1_rock_boulder_LOD1": 0.6609,
+      "w1_rock_boulder_LOD2": 0.8543
+    },
+    "colour_attrs": {
+      "w1_rock_boulder_LOD0": [
+        "Col"
+      ],
+      "w1_rock_boulder_LOD1": [
+        "Col"
+      ],
+      "w1_rock_boulder_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

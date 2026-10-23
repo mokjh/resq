@@ -1,0 +1,397 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w1_log_jam",
+  "world": "w1_alder",
+  "category": "prop",
+  "tags": [
+    "riverbank",
+    "near_water"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -15.287,
+      -10.072,
+      -0.616
+    ],
+    "max": [
+      14.173,
+      10.762,
+      5.821
+    ],
+    "size": [
+      29.461,
+      20.834,
+      6.437
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    29.461,
+    6.437,
+    20.834
+  ],
+  "footprint_radius_mm": 17.55,
+  "height_mm": 5.82,
+  "triangles": {
+    "w1_log_jam_LOD0": 236,
+    "w1_log_jam_LOD1": 136,
+    "w1_log_jam_LOD2": 48
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w1_log_jam_LOD0": 0.7293,
+    "w1_log_jam_LOD1": 0.7411,
+    "w1_log_jam_LOD2": 0.8143
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "grass": 22,
+    "hair_dark": 24,
+    "soil": 36,
+    "stone": 73,
+    "wood_deck": 81
+  },
+  "markers": {
+    "w1_log_jam_mk_water_edge": {
+      "blender_mm": [
+        0.0,
+        -10.0,
+        0.0
+      ],
+      "unity_mm": [
+        -0.0,
+        0.0,
+        10.0
+      ],
+      "meaning": "place this line on the water's edge; logs reach into the water"
+    }
+  },
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w1_log_jam_LOD0": {
+      "count": 10,
+      "floating": 0
+    },
+    "w1_log_jam_LOD1": {
+      "count": 8,
+      "floating": 0
+    },
+    "w1_log_jam_LOD2": {
+      "count": 3,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w1_log_jam_LOD0": {
+      "inside_other_parts_or_below_ground": 4,
+      "covered_contact": 0
+    },
+    "w1_log_jam_LOD1": {
+      "inside_other_parts_or_below_ground": 4,
+      "covered_contact": 0
+    },
+    "w1_log_jam_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w1_log_jam_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_log_jam_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w1_log_jam_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.2
+  },
+  "design": "river log jam: six wet and bleached logs piled across each other (30 x 20 mm)",
+  "placement": {
+    "min_spacing_mm": 30,
+    "cluster": "single, or small vignettes of 2-3 related props",
+    "yaw": "random or aligned to the nearest cell edge",
+    "scale_range": [
+      0.95,
+      1.05
+    ],
+    "keep_off": "routes, nodes and sockets",
+    "edge": "water_edge: marker _mk_water_edge on the bank line, logs reaching into the water"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.576,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.203,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w1_log_jam": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w1_log_jam_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_log_jam"
+      },
+      "w1_log_jam_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_log_jam"
+      },
+      "w1_log_jam_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_log_jam"
+      },
+      "w1_log_jam_mk_water_edge": {
+        "type": "Null",
+        "lcl_translation": [
+          0.0,
+          0.0,
+          0.01
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w1_log_jam"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w1_log_jam_LOD0": {
+        "min": [
+          -0.01528726052492857,
+          -0.0006162833888083696,
+          -0.010761704295873642
+        ],
+        "max": [
+          0.014173327013850212,
+          0.00582081638276577,
+          0.010072012431919575
+        ],
+        "count": 146
+      },
+      "w1_log_jam_LOD1": {
+        "min": [
+          -0.014138054102659225,
+          -0.0005369517020881176,
+          -0.007880149409174919
+        ],
+        "max": [
+          0.013109761290252209,
+          0.005865748040378094,
+          0.009948864579200745
+        ],
+        "count": 92
+      },
+      "w1_log_jam_LOD2": {
+        "min": [
+          -0.014111688360571861,
+          -0.000521690642926842,
+          -0.007738894317299128
+        ],
+        "max": [
+          0.013112281449139118,
+          0.004351572599261999,
+          0.009023338556289673
+        ],
+        "count": 30
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w1_alder/w1_log_jam.fbx",
+    "fbx_sha256": "026e9140442f18c6958b3ebdc00da806b99ef54742df2003aa8b89e71d2f5b25",
+    "fbx_bytes": 54636,
+    "blend": "art/nature/w1_alder/w1_alder_kit.blend",
+    "world_preview": "art/nature/w1_alder/w1_alder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.1,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w1_log_jam_LOD0": {
+        "min": [
+          -15.287,
+          -10.072,
+          -0.616
+        ],
+        "max": [
+          14.173,
+          10.762,
+          5.821
+        ],
+        "size": [
+          29.461,
+          20.834,
+          6.437
+        ]
+      },
+      "w1_log_jam_LOD1": {
+        "min": [
+          -14.138,
+          -9.949,
+          -0.537
+        ],
+        "max": [
+          13.11,
+          7.88,
+          5.866
+        ],
+        "size": [
+          27.248,
+          17.829,
+          6.403
+        ]
+      },
+      "w1_log_jam_LOD2": {
+        "min": [
+          -14.112,
+          -9.023,
+          -0.522
+        ],
+        "max": [
+          13.112,
+          7.739,
+          4.352
+        ],
+        "size": [
+          27.224,
+          16.762,
+          4.873
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w1_log_jam_LOD0": 0.7295,
+      "w1_log_jam_LOD1": 0.7413,
+      "w1_log_jam_LOD2": 0.8144
+    },
+    "colour_attrs": {
+      "w1_log_jam_LOD0": [
+        "Col"
+      ],
+      "w1_log_jam_LOD1": [
+        "Col"
+      ],
+      "w1_log_jam_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

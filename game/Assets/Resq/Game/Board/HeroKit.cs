@@ -22,13 +22,18 @@ namespace Resq.Game
             public float Yaw;
             [Tooltip("Footprint in metres at wide scale (x, z), from the mesh bounds.")]
             public Vector2 Footprint;
+            [Tooltip("Vertical offset in metres (boats sit slightly into the water).")]
+            public float Lift;
         }
 
         public List<Entry> Entries = new List<Entry>();
 
         [Tooltip("Landmarks per world, in placement order (group homes first, then scenic spots).")]
-        public string[] W1 = { "chalet_a", "cottage_stone", "church" }, W2 = { "ranger_station", "lookout_tower" },
-                        W3 = { "mountain_hut" }, W4 = { "harbour_houses", "lighthouse" }, W5 = { "basalt_house" };
+        public string[] W1 = { "chalet_a", "cottage_stone", "church" }, W2 = { "ranger_station", "lookout_tower", "tanker_truck" },
+                        W3 = { "mountain_hut", "snowcat" }, W4 = { "harbour_houses", "lighthouse" }, W5 = { "basalt_house" };
+
+        [Tooltip("Landmarks that are never homes: they only stand at scenic spots, and homes never repeat them.")]
+        public string[] Scenic = { "church", "lookout_tower", "lighthouse", "tanker_truck", "snowcat", "bridge_stone", "fishing_boat" };
 
         public string Bus = "bus_city", Skiff = "boat_rescue", Crawler = "bulldozer";
 
@@ -51,12 +56,17 @@ namespace Resq.Game
         public string[] Landmarks(string world) =>
             world == "W1" ? W1 : world == "W2" ? W2 : world == "W3" ? W3 : world == "W4" ? W4 : world == "W5" ? W5 : Array.Empty<string>();
 
+        public bool IsScenic(string id) => Array.IndexOf(Scenic, id) >= 0;
+
         public static GameObject Spawn(Entry e, Transform parent, string name)
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
-            go.AddComponent<MeshFilter>().sharedMesh = e.Mesh;
-            go.AddComponent<MeshRenderer>().sharedMaterial = e.Material;
+            var body = new GameObject("Body");
+            body.transform.SetParent(go.transform, false);
+            body.transform.localPosition = new Vector3(0, e.Lift, 0);
+            body.AddComponent<MeshFilter>().sharedMesh = e.Mesh;
+            body.AddComponent<MeshRenderer>().sharedMaterial = e.Material;
             return go;
         }
     }

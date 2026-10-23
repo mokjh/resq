@@ -1,0 +1,365 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w4_pine_wind_a_charred",
+  "world": "w4_tide",
+  "category": "tree",
+  "tags": [
+    "beach",
+    "rocky",
+    "village",
+    "burnt"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -1.553,
+      -5.253,
+      -0.666
+    ],
+    "max": [
+      12.763,
+      4.314,
+      46.187
+    ],
+    "size": [
+      14.316,
+      9.567,
+      46.853
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    14.316,
+    46.853,
+    9.567
+  ],
+  "footprint_radius_mm": 13.53,
+  "height_mm": 46.19,
+  "triangles": {
+    "w4_pine_wind_a_charred_LOD0": 119,
+    "w4_pine_wind_a_charred_LOD1": 68,
+    "w4_pine_wind_a_charred_LOD2": 21
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w4_pine_wind_a_charred_LOD0": 0.809,
+    "w4_pine_wind_a_charred_LOD1": 0.8437,
+    "w4_pine_wind_a_charred_LOD2": 0.884
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "hair_dark": 6,
+    "metal_dark": 11,
+    "rubber": 102
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w4_pine_wind_a_charred_LOD0": {
+      "count": 13,
+      "floating": 0
+    },
+    "w4_pine_wind_a_charred_LOD1": {
+      "count": 5,
+      "floating": 0
+    },
+    "w4_pine_wind_a_charred_LOD2": {
+      "count": 3,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w4_pine_wind_a_charred_LOD0": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w4_pine_wind_a_charred_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w4_pine_wind_a_charred_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w4_pine_wind_a_charred_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w4_pine_wind_a_charred_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w4_pine_wind_a_charred_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "charred twin: blackened trunk/stems, bare or remnant crown, ash ring",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "rotate so local +X points away from the open sea (same for the whole board)",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)",
+    "swap_for": "w4_pine_wind_a",
+    "note": "burnt twin of w4_pine_wind_a: same pivot and footprint, swap in when fire burns the cell"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.571,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.176,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w4_pine_wind_a_charred": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w4_pine_wind_a_charred_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_pine_wind_a_charred"
+      },
+      "w4_pine_wind_a_charred_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_pine_wind_a_charred"
+      },
+      "w4_pine_wind_a_charred_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_pine_wind_a_charred"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w4_pine_wind_a_charred_LOD0": {
+        "min": [
+          -0.001553039182908833,
+          -0.0006658374913968146,
+          -0.0043138242326676846
+        ],
+        "max": [
+          0.012763353064656258,
+          0.046187158674001694,
+          0.005252947565168142
+        ],
+        "count": 98
+      },
+      "w4_pine_wind_a_charred_LOD1": {
+        "min": [
+          -0.001723743393085897,
+          -0.0006658374913968146,
+          -0.0031575749162584543
+        ],
+        "max": [
+          0.012763353064656258,
+          0.046187158674001694,
+          0.004503218457102776
+        ],
+        "count": 49
+      },
+      "w4_pine_wind_a_charred_LOD2": {
+        "min": [
+          -0.0008618716965429485,
+          -0.0006658374913968146,
+          -0.002009093761444092
+        ],
+        "max": [
+          0.012763353064656258,
+          0.037177298218011856,
+          0.004503218457102776
+        ],
+        "count": 18
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w4_tide/w4_pine_wind_a_charred.fbx",
+    "fbx_sha256": "5d125d1e7b3cad86f8c944aabdfe855e8ed66b6e97fde48b37ffc5a95f6396bf",
+    "fbx_bytes": 38828,
+    "blend": "art/nature/w4_tide/w4_tide_kit.blend",
+    "world_preview": "art/nature/w4_tide/w4_tide_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.04,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w4_pine_wind_a_charred_LOD0": {
+        "min": [
+          -1.553,
+          -5.253,
+          -0.666
+        ],
+        "max": [
+          12.763,
+          4.314,
+          46.187
+        ],
+        "size": [
+          14.316,
+          9.567,
+          46.853
+        ]
+      },
+      "w4_pine_wind_a_charred_LOD1": {
+        "min": [
+          -1.724,
+          -4.503,
+          -0.666
+        ],
+        "max": [
+          12.763,
+          3.158,
+          46.187
+        ],
+        "size": [
+          14.487,
+          7.661,
+          46.853
+        ]
+      },
+      "w4_pine_wind_a_charred_LOD2": {
+        "min": [
+          -0.862,
+          -4.503,
+          -0.666
+        ],
+        "max": [
+          12.763,
+          2.009,
+          37.177
+        ],
+        "size": [
+          13.625,
+          6.512,
+          37.843
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w4_pine_wind_a_charred_LOD0": 0.8092,
+      "w4_pine_wind_a_charred_LOD1": 0.8438,
+      "w4_pine_wind_a_charred_LOD2": 0.8843
+    },
+    "colour_attrs": {
+      "w4_pine_wind_a_charred_LOD0": [
+        "Col"
+      ],
+      "w4_pine_wind_a_charred_LOD1": [
+        "Col"
+      ],
+      "w4_pine_wind_a_charred_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

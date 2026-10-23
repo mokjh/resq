@@ -35,13 +35,13 @@ SCRATCH = os.environ.get("RESQ_SCRATCH", os.path.join(ROOT, "tools", ".cache", "
 # Height fraction (0..1 of the model's height) below which the fused base is cut away; None keeps everything.
 # Filled in from the survey renders (see docs: art/hero/PREP.md).
 CUT = {
-    "chalet_a": 0.06, "cottage_stone": 0.07, "church": 0.05, "bridge_stone": None, "bus_city": 0.05,
-    "boat_rescue": None, "ranger_station": 0.06, "lookout_tower": 0.06, "tanker_truck": 0.05, "bulldozer": 0.05,
-    "mountain_hut": 0.12, "snowcat": None, "lighthouse": 0.10, "harbour_houses": 0.07, "fishing_boat": None,
-    "basalt_house": 0.06,
+    "chalet_a": 0.05, "cottage_stone": 0.05, "church": 0.04, "bridge_stone": None, "bus_city": 0.075,
+    "boat_rescue": None, "ranger_station": 0.05, "lookout_tower": 0.03, "tanker_truck": 0.08, "bulldozer": 0.08,
+    "mountain_hut": 0.11, "snowcat": None, "lighthouse": None, "harbour_houses": 0.1, "fishing_boat": None,
+    "basalt_house": 0.05,
 }
 STRETCH = {"church": 1.25, "lookout_tower": 1.3, "lighthouse": 1.3}
-MIN_ISLAND = 40  # faces; smaller loose parts are dropped after the cut
+MIN_ISLAND = 150  # faces; smaller loose parts are dropped after the cut
 
 
 def assets():
@@ -118,7 +118,8 @@ def fit(ob, meta, aid):
     lo, hi = bounds(ob)
     size = hi - lo
     # footprint: longest horizontal side matches the larger of w/d, the other side follows uniformly
-    s = min(max(t["w"], t["d"]) / 1000.0 / max(size.x, size.y), min(t["w"], t["d"]) / 1000.0 / max(1e-6, min(size.x, size.y)))
+    # the longest horizontal side matches the longer target side; proportions stay the model's own
+    s = max(t["w"], t["d"]) / 1000.0 / max(size.x, size.y)
     sz = s
     if aid in STRETCH:
         want = t["h"] / 1000.0 / max(1e-6, size.z)
@@ -133,9 +134,9 @@ def fit(ob, meta, aid):
 
 def survey():
     os.makedirs(SCRATCH, exist_ok=True)
-    scene = bpy.context.scene
     for world, aid, adir, meta in assets():
         ob = load(adir, aid)
+        scene = bpy.context.scene
         lo, hi = bounds(ob)
         h = hi.z - lo.z
         # height grid every 5% so the cut fraction can be read off the render
@@ -160,6 +161,27 @@ def survey():
         print("SURVEY", world, aid, "h=%.3f" % h)
 
 
+def check_render(ob, world, aid):
+    """Three-quarter view of the prepared model on a ground plane (scratch only) to review base cuts."""
+    os.makedirs(SCRATCH, exist_ok=True)
+    scene = bpy.context.scene
+    lo, hi = bounds(ob)
+    size = max((hi - lo).x, (hi - lo).y, (hi - lo).z)
+    bpy.ops.mesh.primitive_plane_add(size=size * 3, location=(0, 0, 0))
+    cam_data = bpy.data.cameras.new("cam"); cam_data.type = "ORTHO"; cam_data.ortho_scale = size * 1.6
+    cam = bpy.data.objects.new("cam", cam_data); scene.collection.objects.link(cam)
+    d = Vector((1.0, -1.3, 0.9)).normalized() * size * 5
+    cam.location = d + Vector((0, 0, (hi.z - lo.z) * 0.4))
+    cam.rotation_euler = (-d).to_track_quat("-Z", "Y").to_euler()
+    scene.camera = cam
+    scene.render.engine = "BLENDER_WORKBENCH"
+    scene.display.shading.color_type = "TEXTURE"
+    scene.display.shading.light = "STUDIO"
+    scene.render.resolution_x = scene.render.resolution_y = 400
+    scene.render.filepath = os.path.join(SCRATCH, "%s_%s_prep.png" % (world, aid))
+    bpy.ops.render.render(write_still=True)
+
+
 def export():
     os.makedirs(OUT, exist_ok=True)
     report = {}
@@ -178,6 +200,7 @@ def export():
         shutil.copyfile(tex_src, os.path.join(OUT, aid + "_base_color.png"))
         report[aid] = info
         print("EXPORT", aid, json.dumps(info))
+        check_render(ob, world, aid)
     with open(os.path.join(HERO, "PREP_REPORT.json"), "w") as f:
         json.dump(report, f, indent=2, sort_keys=True)
 

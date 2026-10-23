@@ -1,0 +1,361 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w5_pumice_boulders",
+  "world": "w5_cinder",
+  "category": "rock",
+  "tags": [
+    "basalt",
+    "beach",
+    "rocky"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -5.486,
+      -4.062,
+      -0.6
+    ],
+    "max": [
+      8.146,
+      5.932,
+      4.803
+    ],
+    "size": [
+      13.633,
+      9.994,
+      5.403
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    13.633,
+    5.403,
+    9.994
+  ],
+  "footprint_radius_mm": 8.63,
+  "height_mm": 4.8,
+  "triangles": {
+    "w5_pumice_boulders_LOD0": 369,
+    "w5_pumice_boulders_LOD1": 127,
+    "w5_pumice_boulders_LOD2": 42
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w5_pumice_boulders_LOD0": 0.6596,
+    "w5_pumice_boulders_LOD1": 0.6825,
+    "w5_pumice_boulders_LOD2": 0.7093
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_slate": 76,
+    "stone": 293
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w5_pumice_boulders_LOD0": {
+      "count": 3,
+      "floating": 0
+    },
+    "w5_pumice_boulders_LOD1": {
+      "count": 2,
+      "floating": 0
+    },
+    "w5_pumice_boulders_LOD2": {
+      "count": 2,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w5_pumice_boulders_LOD0": {
+      "inside_other_parts_or_below_ground": 111,
+      "covered_contact": 0
+    },
+    "w5_pumice_boulders_LOD1": {
+      "inside_other_parts_or_below_ground": 17,
+      "covered_contact": 0
+    },
+    "w5_pumice_boulders_LOD2": {
+      "inside_other_parts_or_below_ground": 2,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w5_pumice_boulders_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w5_pumice_boulders_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w5_pumice_boulders_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.45
+  },
+  "design": "rounded pale pumice boulders (11 mm)",
+  "placement": {
+    "min_spacing_mm": 4,
+    "cluster": "scatter in 2-6s, larger pieces at slope feet and cell edges",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.344,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.114,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w5_pumice_boulders": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w5_pumice_boulders_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w5_pumice_boulders"
+      },
+      "w5_pumice_boulders_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w5_pumice_boulders"
+      },
+      "w5_pumice_boulders_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w5_pumice_boulders"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w5_pumice_boulders_LOD0": {
+        "min": [
+          -0.005486343055963516,
+          -0.0006000000284984708,
+          -0.005932498257607222
+        ],
+        "max": [
+          0.008146243169903755,
+          0.0048034219071269035,
+          0.004061894491314888
+        ],
+        "count": 216
+      },
+      "w5_pumice_boulders_LOD1": {
+        "min": [
+          -0.004380752332508564,
+          -0.0006000000284984708,
+          -0.005084187723696232
+        ],
+        "max": [
+          0.008133018389344215,
+          0.00457924185320735,
+          0.0035951281897723675
+        ],
+        "count": 75
+      },
+      "w5_pumice_boulders_LOD2": {
+        "min": [
+          -0.004701579455286264,
+          -0.0006000000284984708,
+          -0.004998940043151379
+        ],
+        "max": [
+          0.008173245936632156,
+          0.00469594169408083,
+          0.003951697144657373
+        ],
+        "count": 26
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w5_cinder/w5_pumice_boulders.fbx",
+    "fbx_sha256": "0113af5228d7fd4267d99f1967ad7f0809b6912e37cc60667a8f654f0085f71a",
+    "fbx_bytes": 61548,
+    "blend": "art/nature/w5_cinder/w5_cinder_kit.blend",
+    "world_preview": "art/nature/w5_cinder/w5_cinder_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.11,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w5_pumice_boulders_LOD0": {
+        "min": [
+          -5.486,
+          -4.062,
+          -0.6
+        ],
+        "max": [
+          8.146,
+          5.932,
+          4.803
+        ],
+        "size": [
+          13.633,
+          9.994,
+          5.403
+        ]
+      },
+      "w5_pumice_boulders_LOD1": {
+        "min": [
+          -4.381,
+          -3.595,
+          -0.6
+        ],
+        "max": [
+          8.133,
+          5.084,
+          4.579
+        ],
+        "size": [
+          12.514,
+          8.679,
+          5.179
+        ]
+      },
+      "w5_pumice_boulders_LOD2": {
+        "min": [
+          -4.702,
+          -3.952,
+          -0.6
+        ],
+        "max": [
+          8.173,
+          4.999,
+          4.696
+        ],
+        "size": [
+          12.875,
+          8.951,
+          5.296
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w5_pumice_boulders_LOD0": 0.6595,
+      "w5_pumice_boulders_LOD1": 0.6824,
+      "w5_pumice_boulders_LOD2": 0.7091
+    },
+    "colour_attrs": {
+      "w5_pumice_boulders_LOD0": [
+        "Col"
+      ],
+      "w5_pumice_boulders_LOD1": [
+        "Col"
+      ],
+      "w5_pumice_boulders_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

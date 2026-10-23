@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w4_buoy_ball",
+  "world": "w4_tide",
+  "category": "prop",
+  "tags": [
+    "near_water"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "waterline centre: z = 0 is the water surface; the hull extends below",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -3.51,
+      -3.6,
+      -2.2
+    ],
+    "max": [
+      3.51,
+      3.6,
+      6.15
+    ],
+    "size": [
+      7.019,
+      7.2,
+      8.35
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    7.019,
+    8.35,
+    7.2
+  ],
+  "footprint_radius_mm": 3.6,
+  "height_mm": 6.15,
+  "triangles": {
+    "w4_buoy_ball_LOD0": 284,
+    "w4_buoy_ball_LOD1": 112,
+    "w4_buoy_ball_LOD2": 48
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w4_buoy_ball_LOD0": 0.9529,
+    "w4_buoy_ball_LOD1": 0.9,
+    "w4_buoy_ball_LOD2": 0.9172
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_mustard": 154,
+    "metal_dark": 32,
+    "paper": 28,
+    "rubber": 70
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w4_buoy_ball_LOD0": {
+      "count": 3,
+      "floating": 0
+    },
+    "w4_buoy_ball_LOD1": {
+      "count": 2,
+      "floating": 0
+    },
+    "w4_buoy_ball_LOD2": {
+      "count": 2,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w4_buoy_ball_LOD0": {
+      "inside_other_parts_or_below_ground": 8,
+      "covered_contact": 0
+    },
+    "w4_buoy_ball_LOD1": {
+      "inside_other_parts_or_below_ground": 8,
+      "covered_contact": 0
+    },
+    "w4_buoy_ball_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w4_buoy_ball_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w4_buoy_ball_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w4_buoy_ball_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.2
+  },
+  "design": "yellow spherical mooring buoy with lifting ring; pivot = waterline",
+  "placement": {
+    "min_spacing_mm": 12,
+    "cluster": "single, or small vignettes of 2-3 related props",
+    "yaw": "random or aligned to the nearest cell edge",
+    "scale_range": [
+      0.95,
+      1.05
+    ],
+    "keep_off": "routes, nodes and sockets",
+    "edge": "on_water: set pivot Y to the water surface; hull extends 2.2 mm below"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.394,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.169,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w4_buoy_ball": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w4_buoy_ball_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_buoy_ball"
+      },
+      "w4_buoy_ball_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_buoy_ball"
+      },
+      "w4_buoy_ball_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_buoy_ball"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w4_buoy_ball_LOD0": {
+        "min": [
+          -0.0035097405780106783,
+          -0.0022000002209097147,
+          -0.0036000001709908247
+        ],
+        "max": [
+          0.0035097405780106783,
+          0.006150000263005495,
+          0.0036000001709908247
+        ],
+        "count": 170
+      },
+      "w4_buoy_ball_LOD1": {
+        "min": [
+          -0.0034000002779066563,
+          -0.0022000002209097147,
+          -0.0034000002779066563
+        ],
+        "max": [
+          0.0034000002779066563,
+          0.006150000263005495,
+          0.0034000002779066563
+        ],
+        "count": 70
+      },
+      "w4_buoy_ball_LOD2": {
+        "min": [
+          -0.0029444871470332146,
+          -0.0022000002209097147,
+          -0.0034000002779066563
+        ],
+        "max": [
+          0.0029444866813719273,
+          0.005600000265985727,
+          0.0034000005107373
+        ],
+        "count": 28
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w4_tide/w4_buoy_ball.fbx",
+    "fbx_sha256": "2a1de246d2d52e10b8ed3346cc6f852254befb40245a170beebfad5c21610d84",
+    "fbx_bytes": 40236,
+    "blend": "art/nature/w4_tide/w4_tide_kit.blend",
+    "world_preview": "art/nature/w4_tide/w4_tide_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.06,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w4_buoy_ball_LOD0": {
+        "min": [
+          -3.51,
+          -3.6,
+          -2.2
+        ],
+        "max": [
+          3.51,
+          3.6,
+          6.15
+        ],
+        "size": [
+          7.019,
+          7.2,
+          8.35
+        ]
+      },
+      "w4_buoy_ball_LOD1": {
+        "min": [
+          -3.4,
+          -3.4,
+          -2.2
+        ],
+        "max": [
+          3.4,
+          3.4,
+          6.15
+        ],
+        "size": [
+          6.8,
+          6.8,
+          8.35
+        ]
+      },
+      "w4_buoy_ball_LOD2": {
+        "min": [
+          -2.944,
+          -3.4,
+          -2.2
+        ],
+        "max": [
+          2.944,
+          3.4,
+          5.6
+        ],
+        "size": [
+          5.889,
+          6.8,
+          7.8
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w4_buoy_ball_LOD0": 0.9529,
+      "w4_buoy_ball_LOD1": 0.9,
+      "w4_buoy_ball_LOD2": 0.9174
+    },
+    "colour_attrs": {
+      "w4_buoy_ball_LOD0": [
+        "Col"
+      ],
+      "w4_buoy_ball_LOD1": [
+        "Col"
+      ],
+      "w4_buoy_ball_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

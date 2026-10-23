@@ -359,14 +359,22 @@ namespace Resq.Game
                 along = Mathf.Max(1, Mathf.CeilToInt(Mathf.Max(e.Footprint.x, e.Footprint.y) / BoardSpace.WideCell - 0.25f));
                 across = Mathf.Max(1, Mathf.CeilToInt(Mathf.Min(e.Footprint.x, e.Footprint.y) / BoardSpace.WideCell - 0.25f));
             }
+            landmarks = (string[])landmarks.Clone();
+            void Swap(string[] a, int i, int j) { var t = a[i]; a[i] = a[j]; a[j] = t; }
+            var homes = new List<HeroKit.Entry>();
             int placed = 0, next = 0;
-            int maxHomes = generic ? (_kit != null ? _kit.MaxCottages : 6) : landmarks.Length;
+            int maxHomes = _kit != null ? _kit.MaxCottages : 6;
             for (int g = 0; g < d.GroupIds.Length && placed < maxHomes; g++)
             {
                 int start = d.NodeCell[d.GroupStart[g]];
                 if (start < 0) continue;
-                // homes: the world's landmarks in order, then generic cottages
-                HeroKit.Entry e = next < landmarks.Length ? hero.Get(landmarks[next]) : null;
+                // homes: the world's house landmarks in order, then those houses again (never the generic cottage
+                // when the world has its own), scenic landmarks are left for the high ground below
+                HeroKit.Entry e = null;
+                bool fresh = false;
+                for (int k = next; k < landmarks.Length && e == null; k++)
+                    if (!hero.IsScenic(landmarks[k])) { e = hero.Get(landmarks[k]); fresh = e != null; if (fresh) Swap(landmarks, next, k); }
+                if (e == null && homes.Count > 0) e = homes[g % homes.Count];
                 if (e == null && !generic) continue;
                 Cells(e, out int along, out int across);
                 bool xLong = e == null || e.Footprint.x >= e.Footprint.y;
@@ -387,32 +395,41 @@ namespace Resq.Game
                                 if (!Free(x0, y0, bw, bh, out long be) || be < elev) continue;
                                 Put(e, x0, y0, bw, bh, be, BoardSpace.CellCenter(d, start), wide, "Home_" + d.GroupIds[g]);
                                 placed++; done = true;
-                                if (e != null) next++;
+                                if (fresh) { next++; homes.Add(e); }
                                 break;
                             }
                         }
             }
-            // scenic landmarks left over (church, lighthouse, lookout): highest free ground, nearest the board edge
+            // scenic landmarks left over: towers, church and lighthouse on the highest free ground toward the back of
+            // the board (away from the player's edge, never on the rim); parked vehicles beside the depot
+            int depot = -1;
+            for (int i = 0; i < d.NodeIds.Length && depot < 0; i++) if (d.NodeIds[i].ToLowerInvariant().Contains("depot") && d.NodeCell[i] >= 0) depot = d.NodeCell[i];
             for (; next < landmarks.Length; next++)
             {
                 var e = hero.Get(landmarks[next]);
                 if (e == null) continue;
+                bool parked = landmarks[next].Contains("truck") || landmarks[next].Contains("snowcat") || landmarks[next].Contains("bulldozer");
                 Cells(e, out int along, out int across);
                 bool xLong = e.Footprint.x >= e.Footprint.y;
-                int bestX = -1, bestY = -1, bestW = 0, bestH = 0; long bestElev = long.MinValue; int bestEdge = int.MaxValue; bool bestWide = true;
+                int bestX = -1, bestY = -1, bestW = 0, bestH = 0; long bestElev = 0; bool bestWide = true; float bestScore = float.MinValue;
                 foreach (bool wide in new[] { true, false })
                 {
                     int bw = wide == xLong ? along : across, bh = wide == xLong ? across : along;
-                    for (int y0 = 0; y0 + bh <= h; y0++)
-                        for (int x0 = 0; x0 + bw <= w; x0++)
+                    for (int y0 = 1; y0 + bh <= h - 1; y0++)
+                        for (int x0 = 1; x0 + bw <= w - 1; x0++)
                         {
                             if (!Free(x0, y0, bw, bh, out long be)) continue;
-                            int edge = Mathf.Min(Mathf.Min(x0, y0), Mathf.Min(w - x0 - bw, h - y0 - bh));
-                            if (be > bestElev || (be == bestElev && edge < bestEdge))
-                            { bestElev = be; bestEdge = edge; bestX = x0; bestY = y0; bestW = bw; bestH = bh; bestWide = wide; }
+                            float score;
+                            if (parked && depot >= 0)
+                            {
+                                float dx = x0 + bw * 0.5f - d.CellX(depot), dy = y0 + bh * 0.5f - d.CellY(depot);
+                                score = -(dx * dx + dy * dy);
+                            }
+                            else score = be * 0.01f + (y0 + bh * 0.5f) / h;
+                            if (score > bestScore) { bestScore = score; bestElev = be; bestX = x0; bestY = y0; bestW = bw; bestH = bh; bestWide = wide; }
                         }
                 }
-                if (bestX >= 0) Put(e, bestX, bestY, bestW, bestH, bestElev, Vector3.zero, bestWide, "Landmark_" + e.Id);
+                if (bestX >= 0) Put(e, bestX, bestY, bestW, bestH, bestElev, parked && depot >= 0 ? BoardSpace.CellCenter(d, depot) : Vector3.zero, bestWide, "Landmark_" + e.Id);
             }
         }
         readonly Dictionary<int, int> _slot = new Dictionary<int, int>();

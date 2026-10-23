@@ -1,0 +1,359 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_fern_b",
+  "world": "w2_ember",
+  "category": "ground_cover",
+  "tags": [
+    "forest"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -4.1,
+      -4.882,
+      -0.45
+    ],
+    "max": [
+      4.22,
+      5.137,
+      2.427
+    ],
+    "size": [
+      8.32,
+      10.019,
+      2.877
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    8.32,
+    2.877,
+    10.019
+  ],
+  "footprint_radius_mm": 5.15,
+  "height_mm": 2.43,
+  "triangles": {
+    "w2_fern_b_LOD0": 42,
+    "w2_fern_b_LOD1": 24,
+    "w2_fern_b_LOD2": 8
+  },
+  "budget_lod0": 80,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_fern_b_LOD0": 0.6595,
+    "w2_fern_b_LOD1": 0.6951,
+    "w2_fern_b_LOD2": 0.5114
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_mustard": 22,
+    "grass": 20
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_fern_b_LOD0": {
+      "count": 7,
+      "floating": 0
+    },
+    "w2_fern_b_LOD1": {
+      "count": 4,
+      "floating": 0
+    },
+    "w2_fern_b_LOD2": {
+      "count": 4,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_fern_b_LOD0": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_fern_b_LOD1": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_fern_b_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_fern_b_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_fern_b_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_fern_b_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.1
+  },
+  "design": "late-summer fern turning ochre",
+  "placement": {
+    "min_spacing_mm": 3,
+    "cluster": "dense drifts of 6-30; may sit at cell edges and along routes",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines (edges are fine)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.571,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.19,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_fern_b": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_fern_b_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fern_b"
+      },
+      "w2_fern_b_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fern_b"
+      },
+      "w2_fern_b_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fern_b"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_fern_b_LOD0": {
+        "min": [
+          -0.00409973319619894,
+          -0.0004500000213738531,
+          -0.005137144587934017
+        ],
+        "max": [
+          0.004220002796500921,
+          0.0024274869356304407,
+          0.0048818280920386314
+        ],
+        "count": 49
+      },
+      "w2_fern_b_LOD1": {
+        "min": [
+          -0.0034632112365216017,
+          -0.0004500000213738531,
+          -0.003808836219832301
+        ],
+        "max": [
+          0.00397535040974617,
+          0.0024274869356304407,
+          0.0036446102894842625
+        ],
+        "count": 28
+      },
+      "w2_fern_b_LOD2": {
+        "min": [
+          -0.0034632112365216017,
+          -0.0004500000213738531,
+          -0.003808836219832301
+        ],
+        "max": [
+          0.00397535040974617,
+          0.00016664183931425214,
+          0.0036446102894842625
+        ],
+        "count": 16
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_fern_b.fbx",
+    "fbx_sha256": "75f6ad7a2d8ecba9ad2ee2db08512d94736153b231b1f9ff158d61d29e53b5c9",
+    "fbx_bytes": 28668,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.04,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_fern_b_LOD0": {
+        "min": [
+          -4.1,
+          -4.882,
+          -0.45
+        ],
+        "max": [
+          4.22,
+          5.137,
+          2.427
+        ],
+        "size": [
+          8.32,
+          10.019,
+          2.877
+        ]
+      },
+      "w2_fern_b_LOD1": {
+        "min": [
+          -3.463,
+          -3.645,
+          -0.45
+        ],
+        "max": [
+          3.975,
+          3.809,
+          2.427
+        ],
+        "size": [
+          7.439,
+          7.453,
+          2.877
+        ]
+      },
+      "w2_fern_b_LOD2": {
+        "min": [
+          -3.463,
+          -3.645,
+          -0.45
+        ],
+        "max": [
+          3.975,
+          3.809,
+          0.167
+        ],
+        "size": [
+          7.439,
+          7.453,
+          0.617
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_fern_b_LOD0": 0.6599,
+      "w2_fern_b_LOD1": 0.6955,
+      "w2_fern_b_LOD2": 0.5111
+    },
+    "colour_attrs": {
+      "w2_fern_b_LOD0": [
+        "Col"
+      ],
+      "w2_fern_b_LOD1": [
+        "Col"
+      ],
+      "w2_fern_b_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

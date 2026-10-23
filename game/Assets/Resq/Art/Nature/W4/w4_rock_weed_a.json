@@ -1,0 +1,364 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w4_rock_weed_a",
+  "world": "w4_tide",
+  "category": "rock",
+  "tags": [
+    "beach",
+    "near_water",
+    "rocky"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -5.695,
+      -4.095,
+      -0.6
+    ],
+    "max": [
+      7.31,
+      5.496,
+      5.054
+    ],
+    "size": [
+      13.004,
+      9.591,
+      5.654
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    13.004,
+    5.654,
+    9.591
+  ],
+  "footprint_radius_mm": 7.97,
+  "height_mm": 5.05,
+  "triangles": {
+    "w4_rock_weed_a_LOD0": 202,
+    "w4_rock_weed_a_LOD1": 111,
+    "w4_rock_weed_a_LOD2": 17
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w4_rock_weed_a_LOD0": 0.6435,
+    "w4_rock_weed_a_LOD1": 0.6338,
+    "w4_rock_weed_a_LOD2": 0.8359
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_slate": 32,
+    "grass": 124,
+    "hair_auburn": 33,
+    "stone": 13
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w4_rock_weed_a_LOD0": {
+      "count": 2,
+      "floating": 0
+    },
+    "w4_rock_weed_a_LOD1": {
+      "count": 2,
+      "floating": 0
+    },
+    "w4_rock_weed_a_LOD2": {
+      "count": 1,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w4_rock_weed_a_LOD0": {
+      "inside_other_parts_or_below_ground": 54,
+      "covered_contact": 0
+    },
+    "w4_rock_weed_a_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w4_rock_weed_a_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w4_rock_weed_a_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w4_rock_weed_a_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w4_rock_weed_a_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.45
+  },
+  "design": "shore boulder with an algae/kelp foot and wet band",
+  "placement": {
+    "min_spacing_mm": 4,
+    "cluster": "scatter in 2-6s, larger pieces at slope feet and cell edges",
+    "yaw": "random",
+    "scale_range": [
+      0.8,
+      1.2
+    ],
+    "keep_off": "route centre lines",
+    "edge": "near_water: on the tide line or 0-6 mm into the water"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.55,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.084,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w4_rock_weed_a": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w4_rock_weed_a_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_rock_weed_a"
+      },
+      "w4_rock_weed_a_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_rock_weed_a"
+      },
+      "w4_rock_weed_a_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w4_rock_weed_a"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w4_rock_weed_a_LOD0": {
+        "min": [
+          -0.005694708786904812,
+          -0.0006000000284984708,
+          -0.005495901685208082
+        ],
+        "max": [
+          0.007309732027351856,
+          0.005053984001278877,
+          0.004095457494258881
+        ],
+        "count": 118
+      },
+      "w4_rock_weed_a_LOD1": {
+        "min": [
+          -0.005221618339419365,
+          -0.0006000000284984708,
+          -0.005378437228500843
+        ],
+        "max": [
+          0.007218126207590103,
+          0.004738199524581432,
+          0.0042137810960412025
+        ],
+        "count": 60
+      },
+      "w4_rock_weed_a_LOD2": {
+        "min": [
+          -0.005263602826744318,
+          -0.0006000000284984708,
+          -0.0040852706879377365
+        ],
+        "max": [
+          0.007206923794001341,
+          0.004920104518532753,
+          0.00399391446262598
+        ],
+        "count": 11
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w4_tide/w4_rock_weed_a.fbx",
+    "fbx_sha256": "0426cf6ea617bc7e45fa65c81d31f6eba76f34ff2846a08552b25af947978e39",
+    "fbx_bytes": 42588,
+    "blend": "art/nature/w4_tide/w4_tide_kit.blend",
+    "world_preview": "art/nature/w4_tide/w4_tide_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.07,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w4_rock_weed_a_LOD0": {
+        "min": [
+          -5.695,
+          -4.095,
+          -0.6
+        ],
+        "max": [
+          7.31,
+          5.496,
+          5.054
+        ],
+        "size": [
+          13.004,
+          9.591,
+          5.654
+        ]
+      },
+      "w4_rock_weed_a_LOD1": {
+        "min": [
+          -5.222,
+          -4.214,
+          -0.6
+        ],
+        "max": [
+          7.218,
+          5.378,
+          4.738
+        ],
+        "size": [
+          12.44,
+          9.592,
+          5.338
+        ]
+      },
+      "w4_rock_weed_a_LOD2": {
+        "min": [
+          -5.264,
+          -3.994,
+          -0.6
+        ],
+        "max": [
+          7.207,
+          4.085,
+          4.92
+        ],
+        "size": [
+          12.471,
+          8.079,
+          5.52
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w4_rock_weed_a_LOD0": 0.6435,
+      "w4_rock_weed_a_LOD1": 0.6337,
+      "w4_rock_weed_a_LOD2": 0.8357
+    },
+    "colour_attrs": {
+      "w4_rock_weed_a_LOD0": [
+        "Col"
+      ],
+      "w4_rock_weed_a_LOD1": [
+        "Col"
+      ],
+      "w4_rock_weed_a_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

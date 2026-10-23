@@ -243,6 +243,23 @@ namespace Resq.Game
             return mesh;
         }
 
+        static MissionDef _hDef;
+        static float[] _hCellY;
+
+        /// <summary>Terrain surface height (board-local metres) under a board-local point, matching the built mesh.</summary>
+        public static float HeightAt(MissionDef d, Vector3 local)
+        {
+            if (_hDef != d)
+            {
+                _hDef = d;
+                _hCellY = new float[d.GridW * d.GridH];
+                for (int c = 0; c < _hCellY.Length; c++) _hCellY[c] = BoardSpace.CellCenter(d, c).y;
+            }
+            float s = BoardSpace.CellSize(d);
+            float gx = Mathf.Clamp(local.x / s + d.GridW * 0.5f, 0, d.GridW), gy = Mathf.Clamp(local.z / s + d.GridH * 0.5f, 0, d.GridH);
+            return Sample(d, _hCellY, gx, gy);
+        }
+
         /// <summary>Height at a grid-space point: Gaussian blend of nearby cell elevations with a light domain warp.</summary>
         static float Sample(MissionDef d, float[] cellY, float gx, float gy)
         {

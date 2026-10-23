@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w3_pine_snow_a",
+  "world": "w3_frost",
+  "category": "tree",
+  "tags": [
+    "snow",
+    "forest"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -9.813,
+      -10.815,
+      -0.6
+    ],
+    "max": [
+      10.214,
+      10.411,
+      59.971
+    ],
+    "size": [
+      20.027,
+      21.226,
+      60.571
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    20.027,
+    60.571,
+    21.226
+  ],
+  "footprint_radius_mm": 11.35,
+  "height_mm": 59.97,
+  "triangles": {
+    "w3_pine_snow_a_LOD0": 714,
+    "w3_pine_snow_a_LOD1": 340,
+    "w3_pine_snow_a_LOD2": 112
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w3_pine_snow_a_LOD0": 0.6098,
+    "w3_pine_snow_a_LOD1": 0.6921,
+    "w3_pine_snow_a_LOD2": 0.5367
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "evergreen": 193,
+    "foliage": 372,
+    "snow": 125,
+    "soil": 24
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w3_pine_snow_a_LOD0": {
+      "count": 10,
+      "floating": 0
+    },
+    "w3_pine_snow_a_LOD1": {
+      "count": 9,
+      "floating": 0
+    },
+    "w3_pine_snow_a_LOD2": {
+      "count": 7,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w3_pine_snow_a_LOD0": {
+      "inside_other_parts_or_below_ground": 68,
+      "covered_contact": 0
+    },
+    "w3_pine_snow_a_LOD1": {
+      "inside_other_parts_or_below_ground": 2,
+      "covered_contact": 0
+    },
+    "w3_pine_snow_a_LOD2": {
+      "inside_other_parts_or_below_ground": 2,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w3_pine_snow_a_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w3_pine_snow_a_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w3_pine_snow_a_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "tall snow-laden spruce",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "random",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.476,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.157,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w3_pine_snow_a": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w3_pine_snow_a_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w3_pine_snow_a"
+      },
+      "w3_pine_snow_a_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w3_pine_snow_a"
+      },
+      "w3_pine_snow_a_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w3_pine_snow_a"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w3_pine_snow_a_LOD0": {
+        "min": [
+          -0.009813046082854271,
+          -0.0006000000284984708,
+          -0.010411418043076992
+        ],
+        "max": [
+          0.010214122012257576,
+          0.059970758855342865,
+          0.010814951732754707
+        ],
+        "count": 412
+      },
+      "w3_pine_snow_a_LOD1": {
+        "min": [
+          -0.00988971907645464,
+          -0.0006000000284984708,
+          -0.00931872334331274
+        ],
+        "max": [
+          0.010230887681245804,
+          0.05990835651755333,
+          0.009817981161177158
+        ],
+        "count": 191
+      },
+      "w3_pine_snow_a_LOD2": {
+        "min": [
+          -0.011008881032466888,
+          -0.0006000000284984708,
+          -0.00932605192065239
+        ],
+        "max": [
+          0.010256967507302761,
+          0.06031554564833641,
+          0.009573926217854023
+        ],
+        "count": 72
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w3_frost/w3_pine_snow_a.fbx",
+    "fbx_sha256": "ae6408d46709076ce68a5f26d42832c54d9933dad82e4efeb212916ac44aa676",
+    "fbx_bytes": 114812,
+    "blend": "art/nature/w3_frost/w3_frost_kit.blend",
+    "world_preview": "art/nature/w3_frost/w3_frost_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.19,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w3_pine_snow_a_LOD0": {
+        "min": [
+          -9.813,
+          -10.815,
+          -0.6
+        ],
+        "max": [
+          10.214,
+          10.411,
+          59.971
+        ],
+        "size": [
+          20.027,
+          21.226,
+          60.571
+        ]
+      },
+      "w3_pine_snow_a_LOD1": {
+        "min": [
+          -9.89,
+          -9.818,
+          -0.6
+        ],
+        "max": [
+          10.231,
+          9.319,
+          59.908
+        ],
+        "size": [
+          20.121,
+          19.137,
+          60.508
+        ]
+      },
+      "w3_pine_snow_a_LOD2": {
+        "min": [
+          -11.009,
+          -9.574,
+          -0.6
+        ],
+        "max": [
+          10.257,
+          9.326,
+          60.316
+        ],
+        "size": [
+          21.266,
+          18.9,
+          60.916
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w3_pine_snow_a_LOD0": 0.6099,
+      "w3_pine_snow_a_LOD1": 0.6922,
+      "w3_pine_snow_a_LOD2": 0.5366
+    },
+    "colour_attrs": {
+      "w3_pine_snow_a_LOD0": [
+        "Col"
+      ],
+      "w3_pine_snow_a_LOD1": [
+        "Col"
+      ],
+      "w3_pine_snow_a_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w3_larch_bare_a",
+  "world": "w3_frost",
+  "category": "tree",
+  "tags": [
+    "snow",
+    "forest",
+    "rocky"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -10.752,
+      -10.656,
+      -0.826
+    ],
+    "max": [
+      10.753,
+      10.708,
+      54.0
+    ],
+    "size": [
+      21.505,
+      21.364,
+      54.826
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    21.505,
+    54.826,
+    21.364
+  ],
+  "footprint_radius_mm": 10.75,
+  "height_mm": 54.0,
+  "triangles": {
+    "w3_larch_bare_a_LOD0": 517,
+    "w3_larch_bare_a_LOD1": 214,
+    "w3_larch_bare_a_LOD2": 112
+  },
+  "budget_lod0": 1000,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w3_larch_bare_a_LOD0": 0.7028,
+    "w3_larch_bare_a_LOD1": 0.637,
+    "w3_larch_bare_a_LOD2": 0.6162
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "hair_auburn": 294,
+    "snow": 175,
+    "soil": 48
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w3_larch_bare_a_LOD0": {
+      "count": 46,
+      "floating": 0
+    },
+    "w3_larch_bare_a_LOD1": {
+      "count": 35,
+      "floating": 0
+    },
+    "w3_larch_bare_a_LOD2": {
+      "count": 19,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w3_larch_bare_a_LOD0": {
+      "inside_other_parts_or_below_ground": 6,
+      "covered_contact": 0
+    },
+    "w3_larch_bare_a_LOD1": {
+      "inside_other_parts_or_below_ground": 6,
+      "covered_contact": 0
+    },
+    "w3_larch_bare_a_LOD2": {
+      "inside_other_parts_or_below_ground": 6,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w3_larch_bare_a_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w3_larch_bare_a_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w3_larch_bare_a_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "bare winter larch, drooping up-turned branches, snow in the forks",
+  "placement": {
+    "min_spacing_mm": 16,
+    "cluster": "groups of 3-7 at 10-16 mm spacing, or single specimens",
+    "yaw": "random",
+    "scale_range": [
+      0.9,
+      1.1
+    ],
+    "keep_off": "routes, nodes, equipment sockets and rescue targets; prefer non-interactive cells and the board margin (tall: can hide residents from the seated view)"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.414,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.217,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w3_larch_bare_a": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w3_larch_bare_a_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w3_larch_bare_a"
+      },
+      "w3_larch_bare_a_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w3_larch_bare_a"
+      },
+      "w3_larch_bare_a_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w3_larch_bare_a"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w3_larch_bare_a_LOD0": {
+        "min": [
+          -0.010752042755484581,
+          -0.0008256881264969707,
+          -0.010708088986575603
+        ],
+        "max": [
+          0.010753029957413673,
+          0.05400000140070915,
+          0.010655599646270275
+        ],
+        "count": 372
+      },
+      "w3_larch_bare_a_LOD1": {
+        "min": [
+          -0.010623393580317497,
+          -0.0008256881264969707,
+          -0.010579966008663177
+        ],
+        "max": [
+          0.010624369606375694,
+          0.05400000140070915,
+          0.010528105311095715
+        ],
+        "count": 194
+      },
+      "w3_larch_bare_a_LOD2": {
+        "min": [
+          -0.008502024225890636,
+          -0.0008256881264969707,
+          -0.008526158519089222
+        ],
+        "max": [
+          0.010391661897301674,
+          0.05400000140070915,
+          0.009069030173122883
+        ],
+        "count": 104
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w3_frost/w3_larch_bare_a.fbx",
+    "fbx_sha256": "b0b2400bcf770e956d26928937ed3b0c2a3a0bc524d7eb0e582c46b63bd872b4",
+    "fbx_bytes": 80284,
+    "blend": "art/nature/w3_frost/w3_frost_kit.blend",
+    "world_preview": "art/nature/w3_frost/w3_frost_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.13,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w3_larch_bare_a_LOD0": {
+        "min": [
+          -10.752,
+          -10.656,
+          -0.826
+        ],
+        "max": [
+          10.753,
+          10.708,
+          54.0
+        ],
+        "size": [
+          21.505,
+          21.364,
+          54.826
+        ]
+      },
+      "w3_larch_bare_a_LOD1": {
+        "min": [
+          -10.623,
+          -10.528,
+          -0.826
+        ],
+        "max": [
+          10.624,
+          10.58,
+          54.0
+        ],
+        "size": [
+          21.248,
+          21.108,
+          54.826
+        ]
+      },
+      "w3_larch_bare_a_LOD2": {
+        "min": [
+          -8.502,
+          -9.069,
+          -0.826
+        ],
+        "max": [
+          10.392,
+          8.526,
+          54.0
+        ],
+        "size": [
+          18.894,
+          17.595,
+          54.826
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w3_larch_bare_a_LOD0": 0.7028,
+      "w3_larch_bare_a_LOD1": 0.6369,
+      "w3_larch_bare_a_LOD2": 0.616
+    },
+    "colour_attrs": {
+      "w3_larch_bare_a_LOD0": [
+        "Col"
+      ],
+      "w3_larch_bare_a_LOD1": [
+        "Col"
+      ],
+      "w3_larch_bare_a_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

@@ -1,0 +1,360 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_fern_clump",
+  "world": "w2_ember",
+  "category": "shrub",
+  "tags": [
+    "forest"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -7.616,
+      -7.677,
+      -0.45
+    ],
+    "max": [
+      6.818,
+      6.95,
+      3.963
+    ],
+    "size": [
+      14.434,
+      14.627,
+      4.413
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    14.434,
+    4.413,
+    14.627
+  ],
+  "footprint_radius_mm": 7.8,
+  "height_mm": 3.96,
+  "triangles": {
+    "w2_fern_clump_LOD0": 130,
+    "w2_fern_clump_LOD1": 72,
+    "w2_fern_clump_LOD2": 16
+  },
+  "budget_lod0": 250,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_fern_clump_LOD0": 0.5374,
+    "w2_fern_clump_LOD1": 0.5299,
+    "w2_fern_clump_LOD2": 0.5188
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cloth_mustard": 26,
+    "foliage": 71,
+    "grass": 33
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_fern_clump_LOD0": {
+      "count": 13,
+      "floating": 0
+    },
+    "w2_fern_clump_LOD1": {
+      "count": 12,
+      "floating": 0
+    },
+    "w2_fern_clump_LOD2": {
+      "count": 8,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_fern_clump_LOD0": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_fern_clump_LOD1": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_fern_clump_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_fern_clump_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_fern_clump_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_fern_clump_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.15
+  },
+  "design": "bracken clump with a few fronds turning",
+  "placement": {
+    "min_spacing_mm": 8,
+    "cluster": "loose groups of 2-5",
+    "yaw": "random",
+    "scale_range": [
+      0.85,
+      1.15
+    ],
+    "keep_off": "routes and nodes"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.554,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.123,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_fern_clump": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_fern_clump_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fern_clump"
+      },
+      "w2_fern_clump_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fern_clump"
+      },
+      "w2_fern_clump_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fern_clump"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_fern_clump_LOD0": {
+        "min": [
+          -0.007616162300109863,
+          -0.0004500000213738531,
+          -0.006949900183826685
+        ],
+        "max": [
+          0.0068179233931005,
+          0.003963323310017586,
+          0.0076773460023105145
+        ],
+        "count": 130
+      },
+      "w2_fern_clump_LOD1": {
+        "min": [
+          -0.007616162300109863,
+          -0.0004500000213738531,
+          -0.006438746117055416
+        ],
+        "max": [
+          0.007452352903783321,
+          0.004234218038618565,
+          0.007354241795837879
+        ],
+        "count": 84
+      },
+      "w2_fern_clump_LOD2": {
+        "min": [
+          -0.007616162300109863,
+          -0.0004500000213738531,
+          -0.007452352903783321
+        ],
+        "max": [
+          0.007672919426113367,
+          0.0006953802076168358,
+          0.006568761542439461
+        ],
+        "count": 32
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_fern_clump.fbx",
+    "fbx_sha256": "3d03c39fb738d761cf41eaed9c982324df31d36a0e966b09692d836506742732",
+    "fbx_bytes": 40780,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.06,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_fern_clump_LOD0": {
+        "min": [
+          -7.616,
+          -7.677,
+          -0.45
+        ],
+        "max": [
+          6.818,
+          6.95,
+          3.963
+        ],
+        "size": [
+          14.434,
+          14.627,
+          4.413
+        ]
+      },
+      "w2_fern_clump_LOD1": {
+        "min": [
+          -7.616,
+          -7.354,
+          -0.45
+        ],
+        "max": [
+          7.452,
+          6.439,
+          4.234
+        ],
+        "size": [
+          15.069,
+          13.793,
+          4.684
+        ]
+      },
+      "w2_fern_clump_LOD2": {
+        "min": [
+          -7.616,
+          -6.569,
+          -0.45
+        ],
+        "max": [
+          7.673,
+          7.452,
+          0.695
+        ],
+        "size": [
+          15.289,
+          14.021,
+          1.145
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_fern_clump_LOD0": 0.5372,
+      "w2_fern_clump_LOD1": 0.5298,
+      "w2_fern_clump_LOD2": 0.5188
+    },
+    "colour_attrs": {
+      "w2_fern_clump_LOD0": [
+        "Col"
+      ],
+      "w2_fern_clump_LOD1": [
+        "Col"
+      ],
+      "w2_fern_clump_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

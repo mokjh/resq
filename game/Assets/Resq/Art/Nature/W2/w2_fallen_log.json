@@ -1,0 +1,360 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_fallen_log",
+  "world": "w2_ember",
+  "category": "prop",
+  "tags": [
+    "forest"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -14.278,
+      -2.445,
+      -0.598
+    ],
+    "max": [
+      14.071,
+      2.83,
+      5.52
+    ],
+    "size": [
+      28.349,
+      5.276,
+      6.118
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    28.349,
+    6.118,
+    5.276
+  ],
+  "footprint_radius_mm": 14.44,
+  "height_mm": 5.52,
+  "triangles": {
+    "w2_fallen_log_LOD0": 92,
+    "w2_fallen_log_LOD1": 50,
+    "w2_fallen_log_LOD2": 26
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_fallen_log_LOD0": 0.7718,
+    "w2_fallen_log_LOD1": 0.7618,
+    "w2_fallen_log_LOD2": 0.7729
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "foliage": 6,
+    "soil": 76,
+    "wood_deck": 10
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_fallen_log_LOD0": {
+      "count": 4,
+      "floating": 0
+    },
+    "w2_fallen_log_LOD1": {
+      "count": 3,
+      "floating": 0
+    },
+    "w2_fallen_log_LOD2": {
+      "count": 1,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_fallen_log_LOD0": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    },
+    "w2_fallen_log_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_fallen_log_LOD2": {
+      "inside_other_parts_or_below_ground": 0,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_fallen_log_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_fallen_log_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_fallen_log_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.2
+  },
+  "design": "fallen mossy log with branch stubs",
+  "placement": {
+    "min_spacing_mm": 10,
+    "cluster": "single, or small vignettes of 2-3 related props",
+    "yaw": "random or aligned to the nearest cell edge",
+    "scale_range": [
+      0.95,
+      1.05
+    ],
+    "keep_off": "routes, nodes and sockets"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.543,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.283,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_fallen_log": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_fallen_log_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fallen_log"
+      },
+      "w2_fallen_log_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fallen_log"
+      },
+      "w2_fallen_log_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_fallen_log"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_fallen_log_LOD0": {
+        "min": [
+          -0.01427840068936348,
+          -0.0005983273149468005,
+          -0.002830438781529665
+        ],
+        "max": [
+          0.014070698991417885,
+          0.00551978312432766,
+          0.00244511547498405
+        ],
+        "count": 57
+      },
+      "w2_fallen_log_LOD1": {
+        "min": [
+          -0.01416793093085289,
+          -0.00036035312223248184,
+          -0.0027901791036128998
+        ],
+        "max": [
+          0.01414733100682497,
+          0.00551978312432766,
+          0.0021985950879752636
+        ],
+        "count": 34
+      },
+      "w2_fallen_log_LOD2": {
+        "min": [
+          -0.014112141914665699,
+          -0.0005472686607390642,
+          -0.002707434119656682
+        ],
+        "max": [
+          0.014008813537657261,
+          0.0036467905156314373,
+          0.001781573868356645
+        ],
+        "count": 15
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_fallen_log.fbx",
+    "fbx_sha256": "4e9401205cbeedfe810bc7ed03e5368535eb41e42fd961d825b6ab96663b1509",
+    "fbx_bytes": 34380,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.04,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_fallen_log_LOD0": {
+        "min": [
+          -14.278,
+          -2.445,
+          -0.598
+        ],
+        "max": [
+          14.071,
+          2.83,
+          5.52
+        ],
+        "size": [
+          28.349,
+          5.276,
+          6.118
+        ]
+      },
+      "w2_fallen_log_LOD1": {
+        "min": [
+          -14.168,
+          -2.199,
+          -0.36
+        ],
+        "max": [
+          14.147,
+          2.79,
+          5.52
+        ],
+        "size": [
+          28.315,
+          4.989,
+          5.88
+        ]
+      },
+      "w2_fallen_log_LOD2": {
+        "min": [
+          -14.112,
+          -1.782,
+          -0.547
+        ],
+        "max": [
+          14.009,
+          2.707,
+          3.647
+        ],
+        "size": [
+          28.121,
+          4.489,
+          4.194
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_fallen_log_LOD0": 0.772,
+      "w2_fallen_log_LOD1": 0.762,
+      "w2_fallen_log_LOD2": 0.7731
+    },
+    "colour_attrs": {
+      "w2_fallen_log_LOD0": [
+        "Col"
+      ],
+      "w2_fallen_log_LOD1": [
+        "Col"
+      ],
+      "w2_fallen_log_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

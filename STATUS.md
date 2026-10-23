@@ -1,4 +1,4 @@
-# RESQ status — 23 Oct 2026, 05:30 (day 1 of 26)
+# RESQ status — 23 Oct 2026, 08:30 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -32,8 +32,10 @@
 ## Look 3 toward the concept art (23 Oct, Editor only)
 - **HUD:** glass objectives card, resource chips, glass tool cards, hint bar, hologram placement ghost, dashed cyan routes, Atkinson Hyperlegible.
 - **Terrain:** one natural heightfield (cell centres exact, rounded irregular cliffs), `Resq/Terrain` shader (grass speckle, rock striations), wooden diorama frame.
-- **Hero assets (paid, logged):** 16 textured Meshy models in `art/hero/` (480 Meshy + 28.5 Higgsfield credits). Boat logo painted out. `HeroKit`, the `Resq/Hero` shader, importer rules and landmark/vehicle placement are coded. **Blocked by disk:** the Blender prep (`tools/blender/hero_prep.py`: cut bases, scale, export) isn't run yet.
-- **Nature kits:** 130 assets in `art/nature/`; W1/W2 pass every check. W3–W5 need one rebuild (`tools/blender/nature.py`), also **blocked by disk**.
+- **Hero assets on the boards (paid, logged):** 16 textured Meshy models (480 Meshy + 28.5 Higgsfield credits). Prepared by `tools/blender/hero_prep.py`: bases cut, scaled to board mm, pivots grounded, boat logo painted out. Each world's houses are the residents' homes. Church, lighthouse and lookout stand on high ground toward the back. The bus, rescue boat and bulldozer replace the greybox vehicles; the tanker and snowcat are parked by the depot. All 80 hero import checks pass.
+- **Nature kits on the boards:** 124 of 130 Blender assets pass every check; 109 non-backdrop ones are in Unity (`RESQ/Art/Build Nature Kit`, 94 kit entries). Scatter follows the natural terrain height. Six assets still fail checks and are left out: W3 marker pole and snow fence, W4 crate stack, W5 shrub a/b and olive a.
+- **Art validator:** 1,227 checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheet v2: `docs/look-review-contact-sheet-v2-20261023.png` (Editor captures, not device).
+- **Remaining gaps vs the concepts:** residents are still simple low-poly figures; no golden-hour lighting or crowd density yet; backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
 
 ## Engine gaps fixed 23 Oct (see DECISIONS)
 Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside, known-closure admission, moored members. W4-M3 and W5-M2/M3/M4 retuned.
@@ -54,5 +56,5 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk (blocker):** 6.1 GB free at 05:30, below the 10 GB floor. RESQ's new files are under 300 MB; another project's temp folder holds 6.6 GB, and an 8 GB swap. Both Blender jobs and Unity captures wait for ≥ 10 GB. The plan needs ~40 GB by 11 Nov.
+- **Disk:** 11 GB free after your cleanup (23 Oct). The plan needs ~40 GB by 11 Nov; an 8 GB swap and other projects' temp folders still eat space.
 - **Credits:** caps raised to Meshy 600 / Higgsfield 150. Higgsfield balance is 110, so top up if you want the full 150.

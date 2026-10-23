@@ -1,0 +1,361 @@
+{
+  "schema": "resq-nature-asset-1",
+  "asset": "w2_stump_cut",
+  "world": "w2_ember",
+  "category": "prop",
+  "tags": [
+    "forest",
+    "burnt"
+  ],
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender/nature.py (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "pivot": "ground centre: root at the footprint centre, z = 0 on the support surface, base sunk ~0.5 mm",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -5.455,
+      -4.796,
+      -0.6
+    ],
+    "max": [
+      5.158,
+      5.579,
+      3.46
+    ],
+    "size": [
+      10.613,
+      10.375,
+      4.06
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    10.613,
+    4.06,
+    10.375
+  ],
+  "footprint_radius_mm": 5.6,
+  "height_mm": 3.46,
+  "triangles": {
+    "w2_stump_cut_LOD0": 200,
+    "w2_stump_cut_LOD1": 42,
+    "w2_stump_cut_LOD2": 23
+  },
+  "budget_lod0": 400,
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "w2_stump_cut_LOD0": 0.5865,
+    "w2_stump_cut_LOD1": 0.6629,
+    "w2_stump_cut_LOD2": 0.8037
+  },
+  "colliders": {},
+  "material_roles_faces_lod0": {
+    "cedar": 34,
+    "soil": 156,
+    "wood_deck": 10
+  },
+  "markers": {},
+  "lod_method": "semantic rebuild per LOD (fewer clumps/blades/segments) with an automatic density search; no decimation",
+  "lod_density": 1.0,
+  "lod_notes": [],
+  "islands": {
+    "w2_stump_cut_LOD0": {
+      "count": 7,
+      "floating": 0
+    },
+    "w2_stump_cut_LOD1": {
+      "count": 4,
+      "floating": 0
+    },
+    "w2_stump_cut_LOD2": {
+      "count": 1,
+      "floating": 0
+    }
+  },
+  "hidden_faces_culled": {
+    "w2_stump_cut_LOD0": {
+      "inside_other_parts_or_below_ground": 2,
+      "covered_contact": 0
+    },
+    "w2_stump_cut_LOD1": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    },
+    "w2_stump_cut_LOD2": {
+      "inside_other_parts_or_below_ground": 1,
+      "covered_contact": 0
+    }
+  },
+  "ao_bake": {
+    "w2_stump_cut_LOD0": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_stump_cut_LOD1": "cycles_ao_16spp floored at geometric-0.25",
+    "w2_stump_cut_LOD2": "cycles_ao_16spp floored at geometric-0.25",
+    "contrast_gamma": 1.2
+  },
+  "design": "sawn stump with root flare and ring face",
+  "placement": {
+    "min_spacing_mm": 10,
+    "cluster": "single, or small vignettes of 2-3 related props",
+    "yaw": "random or aligned to the nearest cell edge",
+    "scale_range": [
+      0.95,
+      1.05
+    ],
+    "keep_off": "routes, nodes and sockets"
+  },
+  "checks": {
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.21,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.115,
+    "lod2_le_30pct": true,
+    "no_floating_parts": true,
+    "grounded_base_sunk": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "w2_stump_cut": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "w2_stump_cut_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_stump_cut"
+      },
+      "w2_stump_cut_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_stump_cut"
+      },
+      "w2_stump_cut_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "w2_stump_cut"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "w2_stump_cut_LOD0": {
+        "min": [
+          -0.00545467110350728,
+          -0.0006000000284984708,
+          -0.005579380784183741
+        ],
+        "max": [
+          0.005157941486686468,
+          0.003460000269114971,
+          0.004796020220965147
+        ],
+        "count": 129
+      },
+      "w2_stump_cut_LOD1": {
+        "min": [
+          -0.004467549733817577,
+          -0.0006000000284984708,
+          -0.003376537235453725
+        ],
+        "max": [
+          0.005157941486686468,
+          0.0034000002779066563,
+          0.005557280033826828
+        ],
+        "count": 33
+      },
+      "w2_stump_cut_LOD2": {
+        "min": [
+          -0.0028315596282482147,
+          -0.0006000000284984708,
+          -0.0031955500598996878
+        ],
+        "max": [
+          0.0035000001080334187,
+          0.0034000002779066563,
+          0.0031955500598996878
+        ],
+        "count": 15
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/nature/w2_ember/w2_stump_cut.fbx",
+    "fbx_sha256": "10d271d893e71d71426138895ca3144776e3b0dedfbf23c4705a79ffb041b24c",
+    "fbx_bytes": 38252,
+    "blend": "art/nature/w2_ember/w2_ember_kit.blend",
+    "world_preview": "art/nature/w2_ember/w2_ember_preview.png"
+  },
+  "generator_sha256": {
+    "nature.py": "61b04be927864d56abd388561ed5348b17736ed5e696ff50988f778a86539d10",
+    "kit.py": "29a730fb5d076738258380724bf0bd6875d0a271364f9ad0933834edad326a45"
+  },
+  "build_seconds": 0.05,
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "w2_stump_cut_LOD0": {
+        "min": [
+          -5.455,
+          -4.796,
+          -0.6
+        ],
+        "max": [
+          5.158,
+          5.579,
+          3.46
+        ],
+        "size": [
+          10.613,
+          10.375,
+          4.06
+        ]
+      },
+      "w2_stump_cut_LOD1": {
+        "min": [
+          -4.468,
+          -5.557,
+          -0.6
+        ],
+        "max": [
+          5.158,
+          3.377,
+          3.4
+        ],
+        "size": [
+          9.625,
+          8.934,
+          4.0
+        ]
+      },
+      "w2_stump_cut_LOD2": {
+        "min": [
+          -2.832,
+          -3.196,
+          -0.6
+        ],
+        "max": [
+          3.5,
+          3.196,
+          3.4
+        ],
+        "size": [
+          6.332,
+          6.391,
+          4.0
+        ]
+      }
+    },
+    "mean_ao_alpha": {
+      "w2_stump_cut_LOD0": 0.5866,
+      "w2_stump_cut_LOD1": 0.6633,
+      "w2_stump_cut_LOD2": 0.8044
+    },
+    "colour_attrs": {
+      "w2_stump_cut_LOD0": [
+        "Col"
+      ],
+      "w2_stump_cut_LOD1": [
+        "Col"
+      ],
+      "w2_stump_cut_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

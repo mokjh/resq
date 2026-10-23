@@ -14,9 +14,9 @@ Shader "Resq/Terrain"
         _RimStrength ("Rim Strength", Range(0, 1)) = 0.12
         _Speckle ("Flat Speckle", Range(0, 0.5)) = 0.16
         _SpeckleScale ("Speckle Scale (per metre)", Float) = 900
-        _Strata ("Slope Striations", Range(0, 0.6)) = 0.22
-        _StrataScale ("Striations per metre", Float) = 520
-        _Bump ("Slope Bump", Range(0, 1)) = 0.35
+        _Strata ("Slope Striations", Range(0, 0.6)) = 0.1
+        _StrataScale ("Striations per metre", Float) = 300
+        _Bump ("Slope Bump", Range(0, 1)) = 0.12
     }
     SubShader
     {
