@@ -76,3 +76,11 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | Finished skiffs | A skiff whose order is done moors aside: it frees its berth but stays at the node. It must reclaim a free berth before loading or unloading there again. A loaded boat is never blocked by an idle one. |
 | Hard-closure admission | Spec 02 §6: no traveller enters an edge if a known hard closure lands on it before the predicted arrival. Known closures are a warned `set_edge_enabled(0)`, a published lava arrival, a running crust's expiry, and a warned or started runout segment. Predicted depth/heat changes are not "known"; transit recovery handles them. |
 | Moored members (follow-up) | A resident moored at a transfer node is awaiting a new order. It no longer counts as heading to, or still to board at, another vehicle's pickup, so a loaded boat departs instead of waiting for it. |
+
+## 23 Oct 2026 — art direction: miniature realism (user concepts)
+
+| Decision | Result |
+|---|---|
+| Target look | The user's four concept frames (Alder Valley ×2, Tidemark, Emberwood) are the style target: model-railway miniature realism at golden hour, dense life, textured hero buildings and vehicles, whitewater, lit windows, glass HUD chips, cyan holographic placement ghosts, contextual "Pinch to place · Rotate with wrist" tips. They are concept art (AI-generated), never presented as gameplay footage. |
+| Quest-achievable path | Textured terrain with natural rounded cliffs over the unchanged sim grid; textured hero assets (paid generation within caps); scattered vegetation, crowds and props via instancing; whitewater driven by the simulated flow; per-world golden-hour lighting with emissive windows and cheap particles; the concept HUD rebuilt in-engine. Not reproduced: photographic depth of field, volumetric smoke, ray-traced reflections. |
+| Status | Look 2.0 step 1 (procedural terrain, scatter, backdrop ring, foam) is the foundation; the vertex-colour faceted placeholders are interim. |
