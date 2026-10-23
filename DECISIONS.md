@@ -128,3 +128,11 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Anchor:** one `OVRSpatialAnchor` per valley, saved with its layout and surface type. The board is parented to it. A stale anchor is forgotten and placement starts afresh.
 - **Input:** our own `IPointerSource` adapters over the Interaction SDK's `IHand`, not ISDK interactables, so every adapter feeds the one validated command path. Head-gaze dwell runs in the Command profile; gaze + pinch is an accessibility option.
 - **Picking:** casts take the nearest pickable hit and ignore non-game colliders (rig, room). `GameBootstrap` waits for OpenXR before choosing between desktop and headset.
+
+## 23 Oct 2026 — First XR APK, build disk budget
+- `evidence/` (2.0 GB, untracked, process-era records) was deleted with the user's approval to make room for the build.
+- **Build disk budget:** an IL2CPP ARM64 build grows `game/Library/Bee` by ~8.6 GB at peak, even from a warm Editor cache. `build_apk.sh` therefore:
+  - needs ≥ 19 GB free to start;
+  - watches the disk and stops only the RESQ Editor's build child processes below 5 GB;
+  - deletes the regenerable Android intermediates afterwards. A rebuild is slower but leaves the disk as it found it.
+- **Output path:** passed as an absolute path; Unity resolves relative output paths against the project folder (`game/`).

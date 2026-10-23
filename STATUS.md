@@ -1,4 +1,4 @@
-# RESQ status — 23 Oct 2026, 14:00 (day 1 of 26)
+# RESQ status — 23 Oct 2026, 15:30 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -39,6 +39,12 @@
 - **Golden hour and backdrops:** each world has its own low warm sun from the player's front-left, plus a matching trilight and ambient probe (`WorldLighting`). The Blender backdrop tiles ring the board: three along the far side and two down each side, flush with the player's edge and 80% height at the sides, with an earth plinth to the table. Frostline's ground is now bright snow (rock only on outcrops); Cinder Reach uses warm basalt browns.
 - **Art validator:** all checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheets v2–v4: `docs/look-review-contact-sheet-v{2,3,4}-20261023.png` (Editor captures, not device).
 - **Render budget (automated, Editor):** all 25 missions on both layouts are within the Quest budgets: 87–144 draw calls (≤150) and 138–290k triangles (≤300k). Worst cases are W5-M5 (draws) and W1-M5 (triangles). Before the fixes: 175–264 draws and up to 649k triangles. Report: `docs/perf-budget-20261023.md`; tool: `tools/unity/perf.sh`. Garbage per frame needs a device development build to measure (the Editor alone makes ~14.8 KB).
+- **Quest APK (automated build, not run):** `build/resq-xr.apk`, 107 MB, built 23 Oct from `Operation_XR` (IL2CPP ARM64, release, debug keystore). Manifest checked with aapt:
+  - Identity: `com.playresq.resq` 0.1.0 (code 1), minSdk 32 / targetSdk 34, Horizon OS SDK 60/207.
+  - Permissions: hand tracking, anchors, scene, boundary visibility; no INTERNET.
+  - Quest features: passthrough, `quest3|quest3s`, VR launch category, focus-aware; not debuggable.
+
+  Not yet run on SpatialSim or a device. During the build, free disk fell to ~2.7 GB: the Android cache grew ~8.6 GB, and the watchdog's process match missed. Both are fixed in `tools/unity/build_apk.sh` (19 GB guard, kills only the RESQ Editor's build children, clears intermediates afterwards).
 - **XR wiring (simulator, macOS):** see `docs/xr-sim-verification-20261023.md`.
   - Table placement (MRUK; wide, compact or virtual table) is verified in 40 sample rooms (automated) and in the Meta XR Simulator.
   - The spatial anchor saves and restores.
@@ -72,5 +78,5 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk (blocker for the APK + SpatialSim step):** 9.1 GB free on 23 Oct. `tools/unity/build_apk.sh` needs ≥ 13 GB (an IL2CPP build adds ~2.4 GB) and `tools/ssim/smoke.sh` needs ≥ 15 GB (emulator image and data disk). Both are ready; build settings dry-run clean. The plan needs ~40 GB by 11 Nov.
+- **Disk:** about 8 GB free after the build, below the 10 GB floor (swap holds a few GB). The SpatialSim step waits for you to free more: `tools/ssim/smoke.sh` needs ≥ 15 GB, and a rebuild needs ≥ 19 GB. The plan needs ~40 GB by 11 Nov.
 - **Credits:** spent so far: Meshy 585 of the 600 cap; Higgsfield 33 of 150, with a balance of 8.9. Top up Higgsfield if you want more concepts.

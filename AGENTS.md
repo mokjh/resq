@@ -3,7 +3,7 @@
 Read `BUILD_PLAN.md` first, then `STATUS.md` and `HANDOFF.md`.
 
 - **Design reference:** `specification/` (rules, contracts, layout recipes, challenges, inventory) and `Resq_Production_Pack/` (the original pack, kept byte-for-byte).
-- **Archived history:** everything before 22 Oct 2026 lives in `docs/archive/process-2026-10/` and `evidence/` (frozen, untracked). Do not resume the old task-graph/evidence-packet regime; the user replaced it on 22 Oct 2026.
+- **Archived history:** everything before 22 Oct 2026 lives in `docs/archive/process-2026-10/`. The frozen, untracked `evidence/` folder was deleted on 23 Oct with the user's approval to free disk. Do not resume the old task-graph/evidence-packet regime; the user replaced it on 22 Oct 2026.
 
 ## Goal
 
