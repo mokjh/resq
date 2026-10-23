@@ -72,5 +72,5 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk:** 11 GB free after your cleanup (23 Oct). The plan needs ~40 GB by 11 Nov; an 8 GB swap and other projects' temp folders still eat space.
+- **Disk (blocker for the APK + SpatialSim step):** 9.1 GB free on 23 Oct. `tools/unity/build_apk.sh` needs ≥ 13 GB (an IL2CPP build adds ~2.4 GB) and `tools/ssim/smoke.sh` needs ≥ 15 GB (emulator image and data disk). Both are ready; build settings dry-run clean. The plan needs ~40 GB by 11 Nov.
 - **Credits:** spent so far: Meshy 585 of the 600 cap; Higgsfield 33 of 150, with a balance of 8.9. Top up Higgsfield if you want more concepts.
