@@ -23,6 +23,7 @@ namespace Resq.Game
         sealed class Batch
         {
             public Mesh Mesh, Charred;
+            public Mesh Draw, Shadow, CharredDraw, CharredShadow;   // kit LOD1 draws, LOD2 casts (budget, 23 Oct)
             public bool Shadows, Burnable;
             public readonly List<Matrix4x4> Local = new List<Matrix4x4>();
             public readonly List<int> Cells = new List<int>();
@@ -38,6 +39,26 @@ namespace Resq.Game
         float _scale = 1f;
         Bounds _bounds;
         public int InstanceCount { get; private set; }
+
+        /// <summary>Diagnostic: triangles drawn per frame (visible pass, shadow pass) and the top meshes by cost.</summary>
+        public string TriangleReport()
+        {
+            long vis = 0, sh = 0;
+            var rows = new List<(long, string)>();
+            foreach (var b in _batches)
+            {
+                long tv = (long)(b.Live) * Tris(b.Draw) + (long)b.Burnt * Tris(b.CharredDraw);
+                long ts = b.Shadows ? (long)b.Live * Tris(b.Shadow) + (long)b.Burnt * Tris(b.CharredShadow) : 0;
+                vis += tv; sh += ts;
+                rows.Add((tv + ts, $"{(b.Mesh != null ? b.Mesh.name : "?")} x{b.Live} {Tris(b.Draw)}t"));
+            }
+            rows.Sort((a, c) => c.Item1.CompareTo(a.Item1));
+            var sb = new System.Text.StringBuilder($"scatter visible={vis / 1000f:F1}k shadow={sh / 1000f:F1}k; ");
+            for (int i = 0; i < Mathf.Min(8, rows.Count); i++) sb.Append($"{rows[i].Item2}={rows[i].Item1 / 1000f:F1}k; ");
+            return sb.ToString();
+        }
+
+        static long Tris(Mesh m) { if (m == null) return 0; long t = 0; for (int i = 0; i < m.subMeshCount; i++) t += m.GetIndexCount(i) / 3; return t; }
         public int BatchCount => _batches.Count;
 
         // ------------------------------------------------------------------ build
@@ -96,6 +117,9 @@ namespace Resq.Game
             if (!_byMesh.TryGetValue(mesh, out var b))
             {
                 b = new Batch { Mesh = mesh, Charred = charred, Shadows = shadows, Burnable = burnable && charred != null };
+                var kit = NatureKit.Load();
+                if (kit != null) { kit.LodsFor(mesh, out b.Draw, out b.Shadow); kit.LodsFor(charred, out b.CharredDraw, out b.CharredShadow); }
+                else { b.Draw = b.Shadow = mesh; b.CharredDraw = b.CharredShadow = charred; }
                 _byMesh[mesh] = b;
                 _batches.Add(b);
             }
@@ -161,17 +185,27 @@ namespace Resq.Game
                 foreach (var b in _batches) Compose(b, board);
             }
             var bounds = new Bounds(board.MultiplyPoint3x4(Vector3.zero), _bounds.size);
+            // the visible pass draws the kit's LOD1 and the shadow pass its LOD2: same draw count, far fewer triangles
+            var rp = new RenderParams(Material)
+            {
+                shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off,
+                receiveShadows = true,
+                layer = gameObject.layer,
+                worldBounds = bounds,
+            };
+            var rpShadow = rp; rpShadow.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
             foreach (var b in _batches)
             {
-                var rp = new RenderParams(Material)
+                if (b.Live > 0)
                 {
-                    shadowCastingMode = b.Shadows ? UnityEngine.Rendering.ShadowCastingMode.On : UnityEngine.Rendering.ShadowCastingMode.Off,
-                    receiveShadows = true,
-                    layer = gameObject.layer,
-                    worldBounds = bounds,
-                };
-                if (b.Live > 0) Graphics.RenderMeshInstanced(rp, b.Mesh, 0, b.World, b.Live);
-                if (b.Burnt > 0 && b.Charred != null) Graphics.RenderMeshInstanced(rp, b.Charred, 0, b.WorldCharred, b.Burnt);
+                    Graphics.RenderMeshInstanced(rp, b.Draw, 0, b.World, b.Live);
+                    if (b.Shadows) Graphics.RenderMeshInstanced(rpShadow, b.Shadow, 0, b.World, b.Live);
+                }
+                if (b.Burnt > 0 && b.Charred != null)
+                {
+                    Graphics.RenderMeshInstanced(rp, b.CharredDraw, 0, b.WorldCharred, b.Burnt);
+                    if (b.Shadows) Graphics.RenderMeshInstanced(rpShadow, b.CharredShadow, 0, b.WorldCharred, b.Burnt);
+                }
             }
         }
 
@@ -218,7 +252,8 @@ namespace Resq.Game
     /// <summary>Biome recipes: (kind, expected items per cell) by world and terrain code.</summary>
     public static class Biome
     {
-        static readonly (DecorKind, float)[] Woods = { (DecorKind.Broadleaf, 0.45f), (DecorKind.Conifer, 0.3f), (DecorKind.Shrub, 0.3f), (DecorKind.Rock, 0.12f), (DecorKind.Grass, 0.9f) };
+        // triangle budget (23 Oct): fewer broadleaf crowns (≈400 tris each), a few more conifers (≈250)
+        static readonly (DecorKind, float)[] Woods = { (DecorKind.Broadleaf, 0.32f), (DecorKind.Conifer, 0.36f), (DecorKind.Shrub, 0.24f), (DecorKind.Rock, 0.12f), (DecorKind.Grass, 0.9f) };
         static readonly (DecorKind, float)[] Meadow = { (DecorKind.Grass, 1.7f), (DecorKind.Flower, 0.4f), (DecorKind.Shrub, 0.08f), (DecorKind.Rock, 0.05f) };
         static readonly (DecorKind, float)[] Field = { (DecorKind.Crop, 1.0f), (DecorKind.Grass, 0.3f) };
         static readonly (DecorKind, float)[] OrchardRows = { (DecorKind.Orchard, 0.9f), (DecorKind.Grass, 0.7f) };

@@ -21,7 +21,11 @@ namespace Resq.Game
         public string Toast { get; private set; } = "";
 
         TextMeshPro _banner, _coach;
-        Transform _ackButton, _coachPanel, _controls;
+        Transform _ackButton, _coachPanel, _controls, _tray;
+        readonly List<(int left, int cost, bool usable)> _cardState = new List<(int, int, bool)>();
+        /// <summary>Set false to measure or ship without the dev picker (default: Editor and development builds only).</summary>
+        public static bool? DevControlsOverride;
+        static bool ShowDevControls => DevControlsOverride ?? (Application.isEditor || Debug.isDebugBuild);
         List<string> _missions;
         readonly List<(ToolKind tool, TextMeshPro name, TextMeshPro stock, Transform root, Transform glow, Transform icon)> _cards =
             new List<(ToolKind, TextMeshPro, TextMeshPro, Transform, Transform, Transform)>();
@@ -42,6 +46,9 @@ namespace Resq.Game
             var ext = BoardSpace.Extent(_def) * 0.5f;
             BuildTray(ext);
             BuildControls(ext);
+            // draw-call budget: tool cards and run controls draw their glass as one mesh per root
+            if (_tray != null) GlassBatcher.Attach(_tray, _glass);   // direct reference: the old tray is still pending Destroy
+            if (_controls != null) GlassBatcher.Attach(_controls, _glass);
 
             _banner = UiKit.Text(transform, "", new Vector3(0, 0.1f, 0), 0.5f, UiKit.Ink, true, 0.5f, 0.08f, TextAlignmentOptions.Center);
             _banner.outlineWidth = 0.2f; _banner.outlineColor = TerrainBuilder.Hex(0x132B2A);
@@ -63,7 +70,7 @@ namespace Resq.Game
         // ------------------------------------------------------------------ tool tray
         void BuildTray(Vector2 ext)
         {
-            var tray = new GameObject("ToolTray").transform;
+            var tray = _tray = new GameObject("ToolTray").transform;
             tray.SetParent(transform, false);
             tray.localPosition = new Vector3(0, 0.012f, -ext.y - 0.06f);
             var tools = new List<ToolKind>();
@@ -80,9 +87,11 @@ namespace Resq.Game
                 glow.gameObject.SetActive(false);
                 UiKit.Panel(root, "Face", Vector3.zero, w, h, _glass, 0.01f);
                 var icon = UiKit.IconObj(root, HudView.ToolIcon(tools[i]), new Vector3(0, 0.011f, 0), 0.02f, UiKit.Accent, _glass);
-                var name = UiKit.Text(root, HudView.ToolLabel(tools[i]), new Vector3(0, -0.006f, 0), 0.1f, UiKit.Ink, true, w - 0.006f, 0.014f, TextAlignmentOptions.Center);
-                name.enableAutoSizing = true; name.fontSizeMax = 0.1f; name.fontSizeMin = 0.06f;
-                var stock = UiKit.Text(root, "", new Vector3(0, -0.018f, 0), 0.08f, UiKit.InkSoft, false, w - 0.006f, 0.012f, TextAlignmentOptions.Center);
+                // name and stock share one text object (one draw); its text changes only when stock or usability does
+                var name = UiKit.Text(root, HudView.ToolLabel(tools[i]), new Vector3(0, -0.0115f, 0), 0.1f, UiKit.Ink, false, w - 0.006f, 0.027f, TextAlignmentOptions.Center);
+                name.enableAutoSizing = true; name.fontSizeMax = 0.1f; name.fontSizeMin = 0.05f;
+                name.lineSpacing = -10f;
+                var stock = name;
                 var col = root.gameObject.AddComponent<BoxCollider>(); col.size = new Vector3(w, h, 0.012f); col.isTrigger = true;
                 var pick = root.gameObject.AddComponent<Pickable>(); pick.Kind = PickKind.Tool; pick.Index = (int)tools[i]; pick.Label = HudView.ToolLabel(tools[i]);
                 _cards.Add((tools[i], name, stock, root, glow, icon));
@@ -99,6 +108,7 @@ namespace Resq.Game
             Pill(_controls, "Start", new Vector3(-0.1f, 0, 0), 0.06f, () => Driver.SetPaused(!Driver.Paused), true);
             Pill(_controls, "Restart", new Vector3(-0.035f, 0, 0), 0.06f, () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, Driver.Guided));
             _missions = ContentLibrary.MissionIds();
+            if (!ShowDevControls) return;   // the mission/layout/profile picker is a development aid
             Pill(_controls, "Prev", new Vector3(0.03f, 0, 0), 0.06f, () => Pick(-1));
             Pill(_controls, "Next", new Vector3(0.095f, 0, 0), 0.06f, () => Pick(+1));
             Pill(_controls, Driver.LayoutClass == "wide" ? "Wide" : "Compact", new Vector3(-0.1f, -0.03f, 0), 0.06f,
@@ -236,17 +246,22 @@ namespace Resq.Game
             var startBtn = _controls.Find("Button_Start/Label")?.GetComponent<TextMeshPro>();
             if (startBtn != null) startBtn.text = Driver.Paused ? "Start" : "Pause";
 
-            foreach (var (tool, name, stock, root, glow, icon) in _cards)
+            if (_cardState.Count != _cards.Count) { _cardState.Clear(); for (int i = 0; i < _cards.Count; i++) _cardState.Add((-1, -1, false)); }
+            for (int ci = 0; ci < _cards.Count; ci++)
             {
+                var (tool, name, stock, root, glow, icon) = _cards[ci];
                 int left = sim.RemainingStock(tool);
                 int cost = _def.ToolCost[(int)tool];
-                stock.text = $"×{left}  ·  {cost} supply";
                 bool usable = left > 0 && sim.RemainingSupplies >= cost && ToolAllowedNow(tool);
+                if (_cardState[ci] != (left, cost, usable))
+                {
+                    _cardState[ci] = (left, cost, usable);
+                    name.text = $"<b>{HudView.ToolLabel(tool)}</b>\n<size=78%><color=#{(usable ? "CCDBDB" : "FFFFFF4D")}>×{left}  ·  {cost} supply</color></size>";
+                }
                 bool armed = Interaction != null && Interaction.Mode == InteractMode.ToolArmed && Interaction.ArmedTool == tool;
                 bool hovered = Interaction != null && Interaction.Hover != null && Interaction.Hover.transform == root;
                 if (glow.gameObject.activeSelf != (armed || hovered)) glow.gameObject.SetActive(armed || hovered);
                 name.color = usable ? UiKit.Ink : new Color(1, 1, 1, 0.35f);
-                stock.color = usable ? UiKit.InkSoft : new Color(1, 1, 1, 0.3f);
                 icon.gameObject.SetActive(usable || armed);
                 root.localPosition = new Vector3(root.localPosition.x, armed ? 0.008f : 0f, 0);
             }

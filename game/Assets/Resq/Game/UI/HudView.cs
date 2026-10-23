@@ -24,7 +24,7 @@ namespace Resq.Game
         Transform _root, _card, _tooltip, _hintBar, _toast;
         TextMeshPro _progress, _tipTitle, _tipSub, _hintText, _toastText;
         readonly List<(int objective, string label, TextMeshPro text, MeshFilter icon)> _rows = new List<(int, string, TextMeshPro, MeshFilter)>();
-        readonly List<(string kind, TextMeshPro value)> _chips = new List<(string, TextMeshPro)>();
+        readonly List<(string kind, TextMeshPro value, string label)> _chips = new List<(string, TextMeshPro, string)>();
         readonly List<Transform> _bubbles = new List<Transform>();
         readonly StringBuilder _sb = new StringBuilder(128);
         MeshFilter _tipIcon;
@@ -88,6 +88,13 @@ namespace Resq.Game
             BuildTooltip();
             BuildSign(ext);
             BuildToast();
+            // draw-call budget: the card, chips and toast (one root) and the world sign each draw their glass as one mesh
+            GlassBatcher.Attach(_root, _glass);
+            if (_sign != null) GlassBatcher.Attach(_sign, _glass);   // direct reference: the old sign is still pending Destroy
+            // group bubbles move every frame: their glass still draws as one mesh, rebuilt per frame without allocations
+            _bubbleRoot = new GameObject("Bubbles").transform;
+            _bubbleRoot.SetParent(transform, false);
+            _bubbleBatch = GlassBatcher.Attach(_bubbleRoot, _glass);
         }
 
         // ------------------------------------------------------------------ objectives card
@@ -182,9 +189,10 @@ namespace Resq.Game
                 int fromRight = kinds.Count - 1 - i;
                 var chip = UiKit.Panel(_root, "Chip_" + kinds[i].kind, new Vector3(right - w * 0.5f - fromRight * (w + gap), 0.035f, 0), w, h, _glass);
                 UiKit.IconObj(chip, kinds[i].icon, new Vector3(-w / 2 + 0.02f, 0, 0), 0.024f, UiKit.Accent, _glass);
-                UiKit.Text(chip, kinds[i].label, new Vector3(0.012f, 0.009f, 0), 0.085f, UiKit.InkSoft, false, 0.06f, 0.014f);
-                var value = UiKit.Text(chip, "", new Vector3(0.012f, -0.008f, 0), 0.14f, UiKit.Ink, true, 0.06f, 0.02f);
-                _chips.Add((kinds[i].kind, value));
+                // one text object per chip (label line + value line): one draw instead of two
+                var value = UiKit.Text(chip, "", new Vector3(0.012f, 0f, 0), 0.13f, UiKit.Ink, false, 0.06f, 0.044f);
+                value.lineSpacing = 24f;
+                _chips.Add((kinds[i].kind, value, kinds[i].label));
             }
         }
 
@@ -223,9 +231,12 @@ namespace Resq.Game
             _toast.gameObject.SetActive(false);
         }
 
+        Transform _sign, _bubbleRoot;
+        GlassBatcher _bubbleBatch;
+
         void BuildSign(Vector2 ext)
         {
-            var sign = new GameObject("WorldSign").transform;
+            var sign = _sign = new GameObject("WorldSign").transform;
             sign.SetParent(transform, false);
             sign.localPosition = new Vector3(ext.x + 0.018f, -0.01f, -ext.y + 0.02f);
             sign.localRotation = Quaternion.Euler(0, -28f, 0);
@@ -247,6 +258,21 @@ namespace Resq.Game
             if (Driver?.Sim == null || _def != Driver.Def || _root == null) return;
             FaceViewer();
             var sim = Driver.Sim; var S = sim.S;
+            // objectives and chips change at simulation pace: refresh their text at 5 Hz, not every frame
+            // (each refresh formats strings; per-frame formatting was most of the HUD's garbage)
+            if (Time.unscaledTime >= _nextText) { _nextText = Time.unscaledTime + 0.2f; RefreshTexts(sim, S); }
+            UpdateTooltip(sim);
+            UpdateHint();
+            UpdateToast();
+            UpdateBubbles(sim);
+        }
+
+        float _nextText;
+
+        static string Chip(string label, string value) => "<size=58%><color=#CCDBDB>" + label + "</color></size>\n<b>" + value + "</b>";
+
+        void RefreshTexts(Simulator sim, SimState S)
+        {
             int done = 0;
             foreach (var row in _rows)
             {
@@ -260,29 +286,29 @@ namespace Resq.Game
             }
             _progress.text = $"{done}/{_rows.Count}";
 
-            foreach (var (kind, value) in _chips)
+            foreach (var (kind, value, label) in _chips)
             {
                 switch (kind)
                 {
-                    case "rescued": value.text = $"{S.C.Evacuated} / {_def.TotalResidents}"; break;
-                    case "supplies": value.text = $"{sim.RemainingSupplies}"; break;
+                    case "rescued": value.text = Chip(label, $"{S.C.Evacuated} / {_def.TotalResidents}"); break;
+                    case "supplies": value.text = Chip(label, $"{sim.RemainingSupplies}"); break;
                     case "tide":
                     {
                         long lvl = S.TideLevel[0], end = S.TideEndLevel[0];
-                        value.text = end > lvl ? "Rising" : end < lvl ? "Falling" : lvl >= 600 ? "High" : "Low";
+                        value.text = Chip(label, end > lvl ? "Rising" : end < lvl ? "Falling" : lvl >= 600 ? "High" : "Low");
                         break;
                     }
                     case "wind":
                     {
                         int code = S.WindCode.Length > 0 ? S.WindCode[_def.CellWindRegion[System.Array.FindIndex(_def.CellWindRegion, r => r >= 0)]] : 0;
-                        value.text = code > 0 && code < WindNames.Length ? "→ " + WindNames[code] : "Calm";
+                        value.text = Chip(label, code > 0 && code < WindNames.Length ? "→ " + WindNames[code] : "Calm");
                         break;
                     }
                     case "stability":
                     {
                         int min = 1000;
                         for (int i = 0; i < _def.SupportIds.Length; i++) if (!S.SupCollapsed[i]) min = Mathf.Min(min, sim.EffectiveStability(i));
-                        value.text = min.ToString();
+                        value.text = Chip(label, min.ToString());
                         value.color = min <= Simulator.SupportWarnStability ? UiKit.Warn : UiKit.Ink;
                         break;
                     }
@@ -291,15 +317,11 @@ namespace Resq.Game
                         int n = 0;
                         foreach (int c in S.CoolantStore) n += c;
                         for (int inst = 0; inst < S.C.EquipmentCount; inst++) if ((ToolKind)S.EqKind[inst] == ToolKind.Cooler) n += S.EqCharges[inst];
-                        value.text = n.ToString();
+                        value.text = Chip(label, n.ToString());
                         break;
                     }
                 }
             }
-            UpdateTooltip(sim);
-            UpdateHint();
-            UpdateToast();
-            UpdateBubbles(sim);
         }
 
         /// <summary>The HUD stays world-locked above the board but turns (smoothly) to face the player's head.</summary>
@@ -392,7 +414,7 @@ namespace Resq.Game
             for (int v = 0; v < S.C.VehicleCount; v++)
             {
                 if (S.VState[v] != (byte)VehicleState.Moving || S.VOccupantCount[v] == 0) continue;
-                var t = actors.transform.Find("Vehicle_" + v);
+                var t = actors.VehicleTransform(v);
                 if (t != null) PlaceBubble(used++, t.localPosition + new Vector3(0, 0.05f, 0), "Evacuating…");
             }
             for (int g = 0; g < _def.GroupIds.Length && used < 6; g++)
@@ -400,7 +422,7 @@ namespace Resq.Game
                 if (!S.GroupEvacuate[g]) continue;
                 Vector3 sum = Vector3.zero; int n = 0;
                 foreach (int r in _def.GroupResidents[g])
-                    if (S.RState[r] == (byte)ResidentState.Walking) { var rt = actors.transform.Find("Resident_" + r); if (rt != null) { sum += rt.localPosition; n++; } }
+                    if (S.RState[r] == (byte)ResidentState.Walking) { var rt = actors.ResidentTransform(r); if (rt != null) { sum += rt.localPosition; n++; } }
                 if (n > 0) PlaceBubble(used++, sum / n + new Vector3(0, 0.06f, 0), "Evacuating…");
             }
             for (int i = used; i < _bubbles.Count; i++) if (_bubbles[i].gameObject.activeSelf) _bubbles[i].gameObject.SetActive(false);
@@ -410,11 +432,12 @@ namespace Resq.Game
         {
             while (_bubbles.Count <= i)
             {
-                var b = UiKit.Panel(transform, "Bubble", Vector3.zero, 0.075f, 0.024f, _glass, 0.012f);
+                var b = UiKit.Panel(_bubbleRoot, "Bubble", Vector3.zero, 0.075f, 0.024f, _glass, 0.012f);
                 b.gameObject.AddComponent<Billboard>();
                 UiKit.IconObj(b, Icon.People, new Vector3(-0.026f, 0, 0), 0.016f, UiKit.Accent, _glass);
                 UiKit.Text(b, "", new Vector3(0.008f, 0, 0), 0.085f, UiKit.Ink, false, 0.055f, 0.016f).name = "BubbleText";
                 _bubbles.Add(b);
+                _bubbleBatch.Collect();
             }
             var bubble = _bubbles[i];
             if (!bubble.gameObject.activeSelf) bubble.gameObject.SetActive(true);

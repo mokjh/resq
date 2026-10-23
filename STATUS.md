@@ -1,4 +1,4 @@
-# RESQ status — 23 Oct 2026, 10:15 (day 1 of 26)
+# RESQ status — 23 Oct 2026, 11:30 (day 1 of 26)
 
 **Phase:** P0 complete; P1 (vertical slice) well under way. Plan: `BUILD_PLAN.md`.
 
@@ -38,6 +38,7 @@
 - **Crowds:** rescue crew stand at every evacuation landing (3 per landing, hi-vis orange jackets, white helmets, no group base). Rescued residents gather around them. Waiting groups stand in front of their own homes.
 - **Golden hour and backdrops:** each world has its own low warm sun from the player's front-left, plus a matching trilight and ambient probe (`WorldLighting`). The Blender backdrop tiles ring the board: three along the far side and two down each side, flush with the player's edge and 80% height at the sides, with an earth plinth to the table. Frostline's ground is now bright snow (rock only on outcrops); Cinder Reach uses warm basalt browns.
 - **Art validator:** all checks pass, 0 fail (`art/IMPORT_REPORT.md`, automated). Contact sheets v2–v4: `docs/look-review-contact-sheet-v{2,3,4}-20261023.png` (Editor captures, not device).
+- **Render budget (automated, Editor):** all 25 missions on both layouts are within the Quest budgets: 87–144 draw calls (≤150) and 138–290k triangles (≤300k). Worst cases are W5-M5 (draws) and W1-M5 (triangles). Before the fixes: 175–264 draws and up to 649k triangles. Report: `docs/perf-budget-20261023.md`; tool: `tools/unity/perf.sh`. Garbage per frame needs a device development build to measure (the Editor alone makes ~14.8 KB).
 - **PlayMode smoke gate (automated, Editor):** `bash tools/unity/smoke.sh` boots the Operation scene, checks board and art (terrain, frame, scatter, hero homes and landmark, rigged residents, crew, 7 backdrop tiles, low sun), then wins W1-M1 strategy A at 3 stars through real pointer presses. Any logged error fails the run. It passes 6 of 6 runs. Four mutations each made it fail: placement not submitted, vehicle route not submitted, backdrops missing, error logged. It also found a real input bug: picks tested stale collider positions for moving handles. Fixed with `Physics.SyncTransforms()` before each pick.
 - **Remaining gaps:** golden-hour lighting is untested on Quest (cost and how it looks over passthrough); backdrop rings are procedural (the Blender backdrops aren't used yet); the W3 snow reads grey and W5 reads dark.
 

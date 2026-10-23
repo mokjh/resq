@@ -57,7 +57,15 @@ namespace Resq.Game
             terrain.transform.SetParent(_root, false);
             terrain.AddComponent<MeshFilter>().sharedMesh = TerrainBuilder.Build(_def);
             if (_groundMat == null) { var sh = Shader.Find("Resq/Terrain"); _groundMat = sh != null ? new Material(sh) : TerrainMaterial; }
-            terrain.AddComponent<MeshRenderer>().sharedMaterial = _groundMat;
+            var terrainR = terrain.AddComponent<MeshRenderer>();
+            terrainR.sharedMaterial = _groundMat;
+            terrainR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // the coarse proxy below casts instead
+            var terrainShadow = new GameObject("TerrainShadow");
+            terrainShadow.transform.SetParent(_root, false);
+            terrainShadow.AddComponent<MeshFilter>().sharedMesh = TerrainBuilder.BuildShadowProxy(_def);
+            var tsR = terrainShadow.AddComponent<MeshRenderer>();
+            tsR.sharedMaterial = _groundMat;
+            tsR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
 
             var frame = new GameObject("Frame");
             frame.transform.SetParent(_root, false);
@@ -67,7 +75,8 @@ namespace Resq.Game
             var water = new GameObject("Water");
             water.transform.SetParent(_root, false);
             water.AddComponent<MeshFilter>();
-            water.AddComponent<MeshRenderer>().sharedMaterial = WaterMaterial;
+            var waterR = water.AddComponent<MeshRenderer>(); waterR.sharedMaterial = WaterMaterial;
+            waterR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // a water sheet casting is wasted shadow-pass work
             Water = water.AddComponent<WaterView>();
             Water.Driver = Driver;
             Water.Build(_def);
@@ -96,7 +105,7 @@ namespace Resq.Game
             var hazards = new GameObject("Hazards");
             hazards.transform.SetParent(_root, false);
             hazards.AddComponent<MeshFilter>();
-            hazards.AddComponent<MeshRenderer>().sharedMaterial = OverlayMaterial;
+            var hazR = hazards.AddComponent<MeshRenderer>(); hazR.sharedMaterial = OverlayMaterial; hazR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             Hazards = hazards.AddComponent<HazardView>();
             Hazards.Driver = Driver;
             Hazards.Build(_def);
@@ -104,7 +113,7 @@ namespace Resq.Game
             var forecast = new GameObject("Forecast");
             forecast.transform.SetParent(_root, false);
             forecast.AddComponent<MeshFilter>();
-            forecast.AddComponent<MeshRenderer>().sharedMaterial = OverlayMaterial;
+            var fcR = forecast.AddComponent<MeshRenderer>(); fcR.sharedMaterial = OverlayMaterial; fcR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             Forecast = forecast.AddComponent<ForecastView>();
             Forecast.Driver = Driver; Forecast.Interaction = Interaction;
             Forecast.Build(_def);
@@ -115,7 +124,7 @@ namespace Resq.Game
             var routeMat = new Material(Shader.Find("Resq/Hologram"));
             routeMat.SetFloat("_Dash", 0.008f);
             routeMat.SetFloat("_DashSpeed", 0.012f);
-            routes.AddComponent<MeshRenderer>().sharedMaterial = routeMat;
+            var rtR = routes.AddComponent<MeshRenderer>(); rtR.sharedMaterial = routeMat; rtR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             var rv = routes.AddComponent<RouteView>();
             rv.Driver = Driver; rv.Interaction = Interaction;
             rv.Build(_def);
@@ -124,7 +133,7 @@ namespace Resq.Game
             _ghost.transform.SetParent(_root, false);
             _ghostFilter = _ghost.AddComponent<MeshFilter>();
             _ghostMat = new Material(Shader.Find("Resq/Hologram"));
-            _ghost.AddComponent<MeshRenderer>().sharedMaterial = _ghostMat;
+            var ghR = _ghost.AddComponent<MeshRenderer>(); ghR.sharedMaterial = _ghostMat; ghR.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             _ghost.SetActive(false);
 
             BuildSockets();
@@ -149,6 +158,7 @@ namespace Resq.Game
                 vis.transform.SetParent(go.transform, false);
                 vis.AddComponent<MeshFilter>().sharedMesh = visual;
                 r = vis.AddComponent<MeshRenderer>();
+                r.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;   // markers never cast (shadow-pass draws)
                 r.sharedMaterial = MarkerMaterial;
                 SetTint(r, color);
             }
@@ -318,7 +328,7 @@ namespace Resq.Game
             }
             for (int v = 0; v < _vehicles.Count; v++)
             {
-                var actor = Actors.transform.Find("Vehicle_" + v);
+                var actor = Actors.VehicleTransform(v);
                 if (actor != null) _vehicles[v].transform.localPosition = actor.localPosition;
             }
         }

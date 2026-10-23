@@ -38,6 +38,7 @@ namespace Resq.Game
             _def = d;
             foreach (Transform child in transform) Destroy(child.gameObject);
             _crewPending.Clear();
+            _crew.Clear(); _crewParts.Clear(); _crowds.Clear(); _crowdList.Clear(); _parts = null;
             _residents.Clear(); _vehicles.Clear(); _equipment.Clear(); _vehicleYaw.Clear(); CottageCells.Clear();
             float s = BoardSpace.CellSize(d) / BoardSpace.WideCell; // compact scales down
             _kit = ActorKit.Load();
@@ -93,6 +94,11 @@ namespace Resq.Game
                         .Cylinder(Vector3.zero, 0.0068f, 0.0008f, 14, GroupColors[d.ResidentGroup[r] % GroupColors.Length]).Build("GroupBase"));
                 disc.AddComponent<MeshRenderer>().sharedMaterial = Material;
                 _residents.Add(go.transform);
+                if (_anims[r] != null)   // rigged: record parts once the group base exists
+                {
+                    _kit.RigFor(model, out var rmat, out _);
+                    RecordParts(r, go, model.name + (_kit.IsDerivedChild(r, d.ResidentStepFree[r]) ? "_child" : ""), rmat);
+                }
             }
             BuildCables(d);
             BuildCottages(d);
@@ -111,6 +117,7 @@ namespace Resq.Game
 
         void LateUpdate()
         {
+            foreach (var c in _crowdList) c.M.Clear();
             if (Driver == null || Driver.Sim == null || Driver.Def != _def) return;
             var sim = Driver.Sim;
             var S = sim.S;
@@ -183,7 +190,9 @@ namespace Resq.Game
                     slot[node] = k + 1;
                     pos = NodePos(node, false) + RingOffset(k);
                 }
-                AnimateResident(r, st == ResidentState.Walking);
+                bool walking = st == ResidentState.Walking;
+                if (_anims[r] != null && _anims[r].enabled != walking) _anims[r].enabled = walking;   // standing = baked pose
+                AnimateResident(r, walking);
                 if (st == ResidentState.Evacuated) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 4f + r)) * 0.002f; // gentle celebration
                 if (st == ResidentState.Walking) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 14f + r)) * 0.0008f; // walking bob
                 // face the way they move (kit models), easing so groups don't snap
@@ -198,10 +207,13 @@ namespace Resq.Game
                     _residentPrev[r] = pos;
                 }
                 t.localPosition = pos;
+                QueueResident(r, walking);
             }
             SyncEquipment(sim);
             LateUpdateChildHeads();
             FitCrewHelmets();
+            QueueCrew();
+            DrawCrowds();
         }
 
         /// <summary>
@@ -252,13 +264,15 @@ namespace Resq.Game
                     var look = centre - pos; look.y = 0;
                     go.transform.localRotation = Quaternion.LookRotation(look.normalized, Vector3.up) * Quaternion.Euler(0, _kit.ResidentYaw, 0);
                     go.transform.localScale = Vector3.one * _kitScale;
-                    foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true)) smr.sharedMaterial = _crewMat;
+                    foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+                    { smr.sharedMaterial = _crewMat; smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; }
                     var an = go.GetComponent<Animator>(); if (an == null) an = go.AddComponent<Animator>();   // Unity null: no ?? on components
                     an.runtimeAnimatorController = _kit.AdultBAnim;
                     an.applyRootMotion = false;
                     an.speed = 0f;
                     an.Play(0, 0, _kit.IdleTime);
                     _crewPending.Add((go.transform, helmet));
+                    _crew.Add(go.transform);
                     n++;
                 }
             }
@@ -299,7 +313,8 @@ namespace Resq.Game
             ActorKit.Spawn(_kit.WheelchairChair, root.transform, "Chair");
             var rider = ActorKit.Spawn(_kit.SeatedRider, root.transform, "Rider");
             _kit.RigFor(_kit.SeatedRider, out var mat, out var ctl);
-            foreach (var smr in rider.GetComponentsInChildren<SkinnedMeshRenderer>(true)) if (mat != null) smr.sharedMaterial = mat;
+            foreach (var smr in rider.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+            { if (mat != null) smr.sharedMaterial = mat; smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off; }
             var an = rider.GetComponent<Animator>(); if (an == null) an = rider.AddComponent<Animator>();
             an.runtimeAnimatorController = ctl;
             an.applyRootMotion = false;
@@ -311,7 +326,125 @@ namespace Resq.Game
                 ?? (_groupBase[group % GroupColors.Length] = new MeshKit()
                     .Cylinder(Vector3.zero, 0.0068f, 0.0008f, 14, GroupColors[group % GroupColors.Length]).Build("GroupBase"));
             disc.AddComponent<MeshRenderer>().sharedMaterial = Material;
+            _anims[r] = null;   // the seated rider never walks: always drawn as its baked pose
+            RecordParts(r, root, "seated", mat);
             return root.transform;
+        }
+
+        // ------------------------------------------------------------------ instanced crowds (draw-call budget)
+        // A standing figure is the same baked pose for every resident of its model, so standing residents, seated
+        // riders, crew, group bases, chairs and helmets are drawn instanced: one draw per (mesh, material) instead
+        // of one or two per person. Walking residents switch back to their animated skinned renderer.
+        sealed class Crowd { public Mesh Mesh; public Material Mat; public readonly List<Matrix4x4> M = new List<Matrix4x4>(); }
+        sealed class Parts
+        {
+            public SkinnedMeshRenderer Smr; public Mesh Baked; public Material SmrMat;
+            public readonly List<(Renderer r, Crowd c)> Statics = new List<(Renderer, Crowd)>();
+            public Crowd Pose;
+        }
+        readonly Dictionary<(Mesh, Material), Crowd> _crowds = new Dictionary<(Mesh, Material), Crowd>();
+        readonly List<Crowd> _crowdList = new List<Crowd>();
+        readonly Dictionary<string, Mesh> _bakedPoses = new Dictionary<string, Mesh>();
+        readonly List<Transform> _crew = new List<Transform>();
+        readonly List<Parts> _crewParts = new List<Parts>();
+        Parts[] _parts;
+        Matrix4x4[] _drawBuf = new Matrix4x4[256];
+
+        Crowd CrowdFor(Mesh m, Material mat)
+        {
+            if (!_crowds.TryGetValue((m, mat), out var c))
+            {
+                c = new Crowd { Mesh = m, Mat = mat };
+                if (mat != null && !mat.enableInstancing) mat.enableInstancing = true;
+                _crowds[(m, mat)] = c; _crowdList.Add(c);
+            }
+            return c;
+        }
+
+        /// <summary>Bakes (once per model variant) the standing pose and collects the figure's static parts.</summary>
+        Parts BuildParts(GameObject go, string poseKey, Material mat)
+        {
+            var p = new Parts();
+            p.Smr = go.GetComponentInChildren<SkinnedMeshRenderer>(true);
+            if (p.Smr != null && p.Smr.sharedMesh != null && p.Smr.sharedMesh.isReadable)
+            {
+                if (!_bakedPoses.TryGetValue(poseKey, out var baked))
+                {
+                    var an = p.Smr.GetComponentInParent<Animator>();
+                    if (an != null) { an.Update(0f); }
+                    if (poseKey.EndsWith("_child"))
+                        foreach (var t in go.GetComponentsInChildren<Transform>(true)) if (t.name == "Head") t.localScale = Vector3.one * _kit.ChildHead;
+                    baked = new Mesh { name = "Pose_" + poseKey };
+                    p.Smr.BakeMesh(baked, false);
+                    _bakedPoses[poseKey] = baked;
+                }
+                p.Baked = baked;
+                p.SmrMat = mat != null ? mat : p.Smr.sharedMaterial;
+                p.Pose = CrowdFor(p.Baked, p.SmrMat);
+            }
+            foreach (var mr in go.GetComponentsInChildren<MeshRenderer>(true))
+            {
+                var mf = mr.GetComponent<MeshFilter>();
+                if (mf == null || mf.sharedMesh == null) continue;
+                p.Statics.Add((mr, CrowdFor(mf.sharedMesh, mr.sharedMaterial)));
+                mr.enabled = false;
+                mr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            }
+            return p;
+        }
+
+        void RecordParts(int r, GameObject go, string poseKey, Material mat)
+        {
+            if (_parts == null) _parts = new Parts[_def.ResidentIds.Length];
+            _parts[r] = BuildParts(go, poseKey, mat);
+        }
+
+        /// <summary>BakeMesh(useScale: false) leaves vertices at world size relative to the renderer: position and rotation only (verified 23 Oct).</summary>
+        static Matrix4x4 PoseMatrix(Transform smr) => Matrix4x4.TRS(smr.position, smr.rotation, Vector3.one);
+
+        void QueueResident(int r, bool walking)
+        {
+            var p = _parts != null ? _parts[r] : null;
+            if (p == null) return;
+            bool baked = !walking && p.Pose != null;
+            if (p.Smr != null && p.Smr.enabled == baked) p.Smr.enabled = !baked;
+            if (baked) p.Pose.M.Add(PoseMatrix(p.Smr.transform));
+            foreach (var (rend, c) in p.Statics) c.M.Add(rend.transform.localToWorldMatrix);
+        }
+
+        void QueueCrew()
+        {
+            // crew parts are recorded once their helmets are on (FitCrewHelmets runs after the first posed frame)
+            if (_crewParts.Count == 0 && _crew.Count > 0 && _crewPending.Count == 0)
+            {
+                Material crewMat = _crewMat;
+                foreach (var t in _crew) _crewParts.Add(BuildParts(t.gameObject, _kit.ResidentAdultB.name, crewMat));
+            }
+            foreach (var p in _crewParts)
+            {
+                if (p.Smr != null && p.Pose != null) { if (p.Smr.enabled) p.Smr.enabled = false; p.Pose.M.Add(PoseMatrix(p.Smr.transform)); }
+                foreach (var (rend, c) in p.Statics) c.M.Add(rend.transform.localToWorldMatrix);
+            }
+        }
+
+        void DrawCrowds()
+        {
+            var bounds = new Bounds(transform.position, Vector3.one * 4f);
+            foreach (var c in _crowdList)
+            {
+                int n = c.M.Count;
+                if (n == 0 || c.Mesh == null || c.Mat == null) continue;
+                if (_drawBuf.Length < n) _drawBuf = new Matrix4x4[Mathf.NextPowerOfTwo(n)];
+                c.M.CopyTo(_drawBuf);
+                var rp = new RenderParams(c.Mat)
+                {
+                    shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off,
+                    receiveShadows = true,
+                    layer = gameObject.layer,
+                    worldBounds = bounds,
+                };
+                Graphics.RenderMeshInstanced(rp, c.Mesh, 0, _drawBuf, n);
+            }
         }
 
         Animator[] _anims;
@@ -329,7 +462,8 @@ namespace Resq.Game
             foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true))
             {
                 if (mat != null) smr.sharedMaterial = mat;
-                smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                // budget: skinned figures don't cast (a second skinned draw each); the group base anchors them instead
+                smr.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
             }
             var an = go.GetComponent<Animator>(); if (an == null) an = go.AddComponent<Animator>();   // Unity null: no ?? on components
             an.runtimeAnimatorController = ctl;
@@ -338,11 +472,13 @@ namespace Resq.Game
             an.speed = 0f;
             an.Play(0, 0, _kit.IdleTime);
             _anims[r] = an;
-            if (_kit.IsDerivedChild(r, stepFree))
+            bool child = _kit.IsDerivedChild(r, stepFree);
+            if (child)
             {
                 go.transform.localScale *= _kit.ChildScale;
                 foreach (var t in go.GetComponentsInChildren<Transform>(true)) if (t.name == "Head") { _childHeads[r] = t; break; }
             }
+
         }
 
         void AnimateResident(int r, bool walking)
@@ -655,6 +791,9 @@ namespace Resq.Game
         public Mesh GhostMesh(ToolKind tool, int sock) => EquipmentMesh(tool, sock);
 
         public Transform EquipmentTransform(int inst) => _equipment.TryGetValue(inst, out var t) ? t : null;
+        /// <summary>Direct lookups for per-frame callers (a Find("Vehicle_" + v) allocates a string every frame).</summary>
+        public Transform VehicleTransform(int v) => v >= 0 && v < _vehicles.Count ? _vehicles[v] : null;
+        public Transform ResidentTransform(int r) => r >= 0 && r < _residents.Count ? _residents[r] : null;
 
         public Vector3 SocketPos(int sock)
         {

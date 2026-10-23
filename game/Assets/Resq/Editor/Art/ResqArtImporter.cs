@@ -62,6 +62,7 @@ namespace Resq.EditorTools
             mi.importNormals = ModelImporterNormals.Import;
             mi.addCollider = false;
             mi.preserveHierarchy = true;
+            if (IsResident(assetPath)) mi.isReadable = true;   // the standing pose is baked once at runtime (instanced crowds)
             bool rigged = Path.GetFileNameWithoutExtension(assetPath).StartsWith("resident");
             mi.animationType = rigged ? ModelImporterAnimationType.Generic : ModelImporterAnimationType.None;
             mi.importAnimation = rigged;

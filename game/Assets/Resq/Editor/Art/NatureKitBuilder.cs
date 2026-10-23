@@ -41,7 +41,9 @@ namespace Resq.EditorTools
                 if (kind == null || mesh == null) { skipped++; continue; }
                 // the first charred twin per kind is the burnt stand-in; dead snags stand in for conifers in W2
                 if (charred && kit.Entries.Any(e => e.World == world && e.Kind == kind.Value && e.Charred)) continue;
-                kit.Entries.Add(new NatureKit.Entry { World = world, Kind = kind.Value, Mesh = mesh, Charred = charred });
+                var all = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Mesh>().ToList();
+                Mesh Lod(int i) => all.FirstOrDefault(m => ResqArtImporter.LodIndex(m.name) == i);
+                kit.Entries.Add(new NatureKit.Entry { World = world, Kind = kind.Value, Mesh = mesh, Charred = charred, Lod1 = Lod(1), Lod2 = Lod(2) });
             }
             EditorUtility.SetDirty(kit);
             AssetDatabase.SaveAssets();

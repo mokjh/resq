@@ -17,10 +17,29 @@ namespace Resq.Game
             public DecorKind Kind;
             public Mesh Mesh;
             public bool Charred;      // the burnt stand-in for this kind
+            public Mesh Lod1, Lod2;   // reduced meshes: LOD1 draws the instances, LOD2 casts their shadows
         }
 
         public List<Entry> Entries = new List<Entry>();
         public Material Material; // RESQ_Shared (instancing on)
+
+        Dictionary<Mesh, Entry> _byMesh;
+
+        /// <summary>Reduced meshes for a kit LOD0 mesh (falls back to the mesh itself).</summary>
+        public void LodsFor(Mesh lod0, out Mesh draw, out Mesh shadow)
+        {
+            if (_byMesh == null)
+            {
+                _byMesh = new Dictionary<Mesh, Entry>();
+                foreach (var e in Entries) if (e.Mesh != null) _byMesh[e.Mesh] = e;
+            }
+            draw = shadow = lod0;
+            if (lod0 != null && _byMesh.TryGetValue(lod0, out var en))
+            {
+                if (en.Lod1 != null) draw = en.Lod1;
+                shadow = en.Lod2 != null ? en.Lod2 : draw;
+            }
+        }
 
         static NatureKit _cached;
         static bool _looked;

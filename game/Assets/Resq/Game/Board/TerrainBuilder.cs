@@ -150,8 +150,17 @@ namespace Resq.Game
         /// ground type (soft-blended) on flats, layered rock on slopes, darker in hollows (AO in vertex alpha for
         /// Resq/Terrain). The board edge keeps the cutaway geology walls.
         /// </summary>
-        public static Mesh Build(MissionDef d)
+        public static Mesh Build(MissionDef d) => Build(d, HfSub);
+
+        /// <summary>
+        /// Coarse copy of the heightfield for the shadow pass only (budget, 23 Oct): 2 samples per cell side
+        /// casts the same cliff shadows for about a quarter of the visible mesh's triangles.
+        /// </summary>
+        public static Mesh BuildShadowProxy(MissionDef d) => Build(d, 2);
+
+        static Mesh Build(MissionDef d, int sub)
         {
+            int HfSub = sub;
             int W = d.GridW * HfSub, H = d.GridH * HfSub;
             int vw = W + 1, vh = H + 1;
             float s = BoardSpace.CellSize(d);
