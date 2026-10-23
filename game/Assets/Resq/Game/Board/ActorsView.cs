@@ -400,6 +400,9 @@ namespace Resq.Game
             t.localScale = new Vector3(stretch, broken ? 0.35f : 1f, 1f) * _kitScale;
         }
 
+        /// <summary>Mesh for the placement hologram of a tool at a socket (same proportions as the placed greybox).</summary>
+        public Mesh GhostMesh(ToolKind tool, int sock) => EquipmentMesh(tool, sock);
+
         public Transform EquipmentTransform(int inst) => _equipment.TryGetValue(inst, out var t) ? t : null;
 
         public Vector3 SocketPos(int sock)

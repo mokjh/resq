@@ -28,6 +28,11 @@ namespace Resq.Game
         public string Hint { get; private set; } = "";
         /// <summary>Optional gate on which tool cards respond (guided first play unlocks tools step by step).</summary>
         public System.Func<ToolKind, bool> ToolAllowed;
+        /// <summary>Dev/capture only: when set, stands in for whatever the pointer hovers (no presses are synthesised).</summary>
+        public Pickable DebugHover;
+
+        /// <summary>Dev/capture only: arm a tool as if its card had been pinched.</summary>
+        public void DebugArm(ToolKind tool) { Mode = InteractMode.ToolArmed; ArmedTool = tool; }
 
         readonly List<IPointerSource> _sources = new List<IPointerSource>();
         IPointerSource _owner;
@@ -74,6 +79,7 @@ namespace Resq.Game
 
         Pickable Pick(PointerSample s)
         {
+            if (DebugHover != null) return DebugHover;
             if (s.HasPokePoint)
             {
                 var near = Physics.OverlapSphere(s.PokePoint, PokeRadius);

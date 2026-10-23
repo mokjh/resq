@@ -21,6 +21,7 @@ namespace Resq.Game
         public SimDriver Driver { get; private set; }
         public BoardView Board { get; private set; }
         public BoardInteraction Interaction { get; private set; }
+        public HudView Hud { get; private set; }
 
         void Awake()
         {
@@ -39,9 +40,14 @@ namespace Resq.Game
             panelGo.transform.SetParent(boardGo.transform, false);
             var panel = panelGo.AddComponent<OperationPanel>();
             panel.Driver = Driver; panel.Interaction = Interaction; panel.CardMaterial = CardMaterial;
+            var hudGo = new GameObject("Hud");
+            hudGo.transform.SetParent(boardGo.transform, false);
+            Hud = hudGo.AddComponent<HudView>();
+            Hud.Driver = Driver; Hud.Interaction = Interaction; Hud.Panel = panel;
             // enable after wiring so OnEnable subscriptions see the driver
             Board.enabled = false; Board.enabled = true;
             panel.enabled = false; panel.enabled = true;
+            Hud.enabled = false; Hud.enabled = true;
         }
 
         void Start()
@@ -83,6 +89,7 @@ namespace Resq.Game
                     Interaction.AddSource(new HandPointer(hand, skel, left));
                 }
                 if (Profile == RuleProfile.Command) Interaction.AddSource(new HeadDwellPointer(rig.centerEyeAnchor));
+                if (Hud != null) Hud.HandsActive = true;
             }
             var cam = Camera.main;
             if (cam == null || !xr)

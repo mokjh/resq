@@ -14,6 +14,7 @@ namespace Resq.Game
         public SimDriver Driver;
         public BoardInteraction Interaction;
         public Material TerrainMaterial, WaterMaterial, ActorMaterial, MarkerMaterial, OverlayMaterial;
+        Material _groundMat;
         public HazardView Hazards { get; private set; }
         public ScatterView Scatter { get; private set; }
         public ForecastView Forecast { get; private set; }
@@ -27,6 +28,11 @@ namespace Resq.Game
         readonly List<Pickable> _vehicles = new List<Pickable>();
         readonly List<Pickable> _equipment = new List<Pickable>();
         Transform _root;
+        GameObject _ghost;
+        MeshFilter _ghostFilter;
+        Material _ghostMat;
+        int _ghostSocket = -1;
+        ToolKind _ghostTool;
         MaterialPropertyBlock _mpb;
         MissionDef _def;
 
@@ -49,7 +55,13 @@ namespace Resq.Game
             var terrain = new GameObject("Terrain");
             terrain.transform.SetParent(_root, false);
             terrain.AddComponent<MeshFilter>().sharedMesh = TerrainBuilder.Build(_def);
-            terrain.AddComponent<MeshRenderer>().sharedMaterial = TerrainMaterial;
+            if (_groundMat == null) { var sh = Shader.Find("Resq/Terrain"); _groundMat = sh != null ? new Material(sh) : TerrainMaterial; }
+            terrain.AddComponent<MeshRenderer>().sharedMaterial = _groundMat;
+
+            var frame = new GameObject("Frame");
+            frame.transform.SetParent(_root, false);
+            frame.AddComponent<MeshFilter>().sharedMesh = TerrainBuilder.BuildFrame(_def);
+            frame.AddComponent<MeshRenderer>().sharedMaterial = ActorMaterial;
 
             var water = new GameObject("Water");
             water.transform.SetParent(_root, false);
@@ -77,7 +89,7 @@ namespace Resq.Game
             ring.transform.SetParent(_root, false);
             ring.AddComponent<MeshFilter>();
             var ringRenderer = ring.AddComponent<MeshRenderer>();
-            ringRenderer.sharedMaterial = TerrainMaterial;
+            ringRenderer.sharedMaterial = _groundMat;
             ring.AddComponent<WorldRingView>().Build(_def);
 
             var hazards = new GameObject("Hazards");
@@ -95,6 +107,24 @@ namespace Resq.Game
             Forecast = forecast.AddComponent<ForecastView>();
             Forecast.Driver = Driver; Forecast.Interaction = Interaction;
             Forecast.Build(_def);
+
+            var routes = new GameObject("Routes");
+            routes.transform.SetParent(_root, false);
+            routes.AddComponent<MeshFilter>();
+            var routeMat = new Material(Shader.Find("Resq/Hologram"));
+            routeMat.SetFloat("_Dash", 0.008f);
+            routeMat.SetFloat("_DashSpeed", 0.012f);
+            routes.AddComponent<MeshRenderer>().sharedMaterial = routeMat;
+            var rv = routes.AddComponent<RouteView>();
+            rv.Driver = Driver; rv.Interaction = Interaction;
+            rv.Build(_def);
+
+            _ghost = new GameObject("PlacementGhost");
+            _ghost.transform.SetParent(_root, false);
+            _ghostFilter = _ghost.AddComponent<MeshFilter>();
+            _ghostMat = new Material(Shader.Find("Resq/Hologram"));
+            _ghost.AddComponent<MeshRenderer>().sharedMaterial = _ghostMat;
+            _ghost.SetActive(false);
 
             BuildSockets();
             BuildNodes();
@@ -221,6 +251,23 @@ namespace Resq.Game
                 if (hovered) col = Color.Lerp(col, Color.white, 0.35f);
                 SetTint(r, col);
                 p.transform.localScale = Vector3.one * (hovered ? 1.25f : 1f + 0.08f * Mathf.Sin(Time.time * 4f));
+            }
+            // holographic ghost of the armed tool at the hovered socket: cyan when legal, red when not
+            var hoverSock = mode == InteractMode.ToolArmed && Interaction.Hover != null && Interaction.Hover.Kind == PickKind.Socket ? Interaction.Hover.Index : -1;
+            if (hoverSock < 0) { if (_ghost.activeSelf) _ghost.SetActive(false); _ghostSocket = -1; }
+            else
+            {
+                if (hoverSock != _ghostSocket || Interaction.ArmedTool != _ghostTool)
+                {
+                    _ghostSocket = hoverSock; _ghostTool = Interaction.ArmedTool;
+                    _ghostFilter.sharedMesh = Actors.GhostMesh(_ghostTool, hoverSock);
+                    _ghost.transform.localPosition = Actors.SocketPos(hoverSock) + Vector3.up * 0.004f;
+                    _ghost.transform.localRotation = Actors.SocketRotation(hoverSock);
+                }
+                bool legal = Interaction.HoverVerdict == Reject.OK;
+                _ghostMat.SetColor("_Color", legal ? new Color(0.35f, 0.95f, 1f, 1f) : new Color(1f, 0.3f, 0.3f, 1f));
+                _ghost.transform.localScale = Vector3.one * (1f + 0.03f * Mathf.Sin(Time.time * 5f));
+                if (!_ghost.activeSelf) _ghost.SetActive(true);
             }
             // destinations active only while choosing a destination
             bool choosing = mode == InteractMode.GroupRouting || mode == InteractMode.VehicleDestination || mode == InteractMode.VehiclePickup;

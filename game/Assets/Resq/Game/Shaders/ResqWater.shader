@@ -46,15 +46,15 @@ Shader "Resq/Water"
                 half3 v = normalize(GetWorldSpaceViewDir(i.wpos));
                 Light l = GetMainLight();
                 half3 baseCol = lerp(_Shallow.rgb, _Deep.rgb, smoothstep(0.0, 0.85, depth));
+                // gentle animated ripples from the uv grid, no textures
+                float t = _Time.y * _FlowSpeed;
+                half ripple = sin(i.uv.x * 180 + t * 2.1) * sin(i.uv.y * 150 - t * 1.7) * 0.5 + 0.5;
                 // sparkle: tiny glints where ripples align with the light
                 float t0 = _Time.y * _FlowSpeed;
                 // two incommensurate wave trains, gated by the slow ripple, so glints wander instead of tiling
                 half g1 = sin(i.uv.x * 413.7 + i.uv.y * 97.3 + t0 * 4.0) * sin(i.uv.y * 377.1 - i.uv.x * 61.9 - t0 * 3.1);
                 half g2 = sin((i.uv.x + i.uv.y) * 233.9 - t0 * 2.3);
                 half glint = pow(saturate(g1 * g2), 40) * ripple * 0.28;
-                // gentle animated ripples from the uv grid, no textures
-                float t = _Time.y * _FlowSpeed;
-                half ripple = sin(i.uv.x * 180 + t * 2.1) * sin(i.uv.y * 150 - t * 1.7) * 0.5 + 0.5;
                 half fres = pow(1 - saturate(dot(n, v)), 4);
                 half spec = pow(saturate(dot(reflect(-l.direction, n), v)), 48) * 0.6;
                 // foam: shallow water plus a broken lapping line along the shore (vertex G), animated by the ripple

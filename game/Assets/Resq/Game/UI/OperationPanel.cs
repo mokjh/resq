@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text;
 using Resq.Sim;
 using TMPro;
 using UnityEngine;
@@ -7,8 +6,10 @@ using UnityEngine;
 namespace Resq.Game
 {
     /// <summary>
-    /// Tactile tool tray along the near edge of the board plus the operation board (mission, clock, rescues,
-    /// objectives, warnings) on the far edge. Everything is a world-space object the same pointers can press.
+    /// Hands-on controls in the concept style: the glass tool tray along the near edge (icon, name, stock and cost
+    /// per card), the run controls and development mission picker as glass pills under the HUD chips, the guided
+    /// first-play coach, and the end-of-run banner. Status and objectives live in <see cref="HudView"/>; this panel
+    /// publishes the current warning/forecast line as <see cref="Toast"/>.
     /// </summary>
     public sealed class OperationPanel : MonoBehaviour
     {
@@ -16,91 +17,108 @@ namespace Resq.Game
         public BoardInteraction Interaction;
         public Material CardMaterial;
 
-        TextMeshPro _status, _objectives, _hint, _banner, _coach;
-        Transform _ackButton;
+        /// <summary>Transient line for the HUD toast: warnings, rejections, forecast summary.</summary>
+        public string Toast { get; private set; } = "";
+
+        TextMeshPro _banner, _coach;
+        Transform _ackButton, _coachPanel, _controls;
         List<string> _missions;
-        readonly List<(ToolKind tool, TextMeshPro label, Renderer card, Transform root)> _cards = new List<(ToolKind, TextMeshPro, Renderer, Transform)>();
-        readonly StringBuilder _sb = new StringBuilder(512);
-        MaterialPropertyBlock _mpb;
+        readonly List<(ToolKind tool, TextMeshPro name, TextMeshPro stock, Transform root, Transform glow, Transform icon)> _cards =
+            new List<(ToolKind, TextMeshPro, TextMeshPro, Transform, Transform, Transform)>();
         string _lastWarning = "";
         float _warningUntil;
         MissionDef _def;
-        Transform _tray, _board;
+        Material _glass;
 
-        static readonly int TintId = Shader.PropertyToID("_Tint");
-        static readonly Color Paper = TerrainBuilder.Hex(0xF3EBDD), Evergreen = TerrainBuilder.Hex(0x132B2A);
-
-        void Awake() { _mpb = new MaterialPropertyBlock(); }
         void OnEnable() { if (Driver != null) { Driver.OnRunLoaded += Rebuild; Driver.OnSimEvent += OnSimEvent; } }
         void OnDisable() { if (Driver != null) { Driver.OnRunLoaded -= Rebuild; Driver.OnSimEvent -= OnSimEvent; } }
 
         public void Rebuild()
         {
             _def = Driver.Def;
+            if (_glass == null) _glass = new Material(Shader.Find("Resq/Glass"));
             foreach (Transform t in transform) Destroy(t.gameObject);
             _cards.Clear();
             var ext = BoardSpace.Extent(_def) * 0.5f;
+            BuildTray(ext);
+            BuildControls(ext);
 
-            _tray = new GameObject("ToolTray").transform;
-            _tray.SetParent(transform, false);
-            _tray.localPosition = new Vector3(0, 0.012f, -ext.y - 0.055f);
+            _banner = UiKit.Text(transform, "", new Vector3(0, 0.1f, 0), 0.5f, UiKit.Ink, true, 0.5f, 0.08f, TextAlignmentOptions.Center);
+            _banner.outlineWidth = 0.2f; _banner.outlineColor = TerrainBuilder.Hex(0x132B2A);
+            _banner.enableWordWrapping = true;
+            _banner.gameObject.AddComponent<Billboard>();
+
+            // guided first play coach: a glass card above the tray plus its acknowledge button
+            _coachPanel = UiKit.Panel(transform, "Coach", new Vector3(0, 0.07f, -ext.y - 0.03f), 0.36f, 0.04f, _glass, 0.02f);
+            _coachPanel.gameObject.AddComponent<Billboard>();
+            _coach = UiKit.Text(_coachPanel, "", Vector3.zero, 0.12f, UiKit.Ink, false, 0.34f, 0.036f, TextAlignmentOptions.Center);
+            _coach.enableWordWrapping = true;
+            _coachPanel.gameObject.SetActive(false);
+            _ackButton = Pill(transform, "Got it", new Vector3(0, 0.035f, -ext.y - 0.03f), 0.07f, () => Driver.Submit(Command.AcknowledgeTutorial()), true);
+            _ackButton.gameObject.AddComponent<Billboard>();
+            _ackButton.gameObject.SetActive(false);
+            Interaction.ToolAllowed = ToolAllowedNow;
+        }
+
+        // ------------------------------------------------------------------ tool tray
+        void BuildTray(Vector2 ext)
+        {
+            var tray = new GameObject("ToolTray").transform;
+            tray.SetParent(transform, false);
+            tray.localPosition = new Vector3(0, 0.012f, -ext.y - 0.06f);
             var tools = new List<ToolKind>();
             for (int t = 0; t < MissionDef.ToolCount; t++) if (_def.Permitted[t] && _def.MaxStock[t] > 0) tools.Add((ToolKind)t);
-            float w = 0.07f, gap = 0.012f;
+            float w = 0.074f, h = 0.05f, gap = 0.01f;
             float start = -(tools.Count - 1) * (w + gap) * 0.5f;
             for (int i = 0; i < tools.Count; i++)
             {
                 var root = new GameObject("Card_" + tools[i]).transform;
-                root.SetParent(_tray, false);
+                root.SetParent(tray, false);
                 root.localPosition = new Vector3(start + i * (w + gap), 0, 0);
-                root.localRotation = Quaternion.Euler(-25, 0, 0); // tilted toward the seated player
-                var card = new GameObject("Card");
-                card.transform.SetParent(root, false);
-                card.AddComponent<MeshFilter>().sharedMesh = new MeshKit().Box(Vector3.zero, new Vector3(w, 0.006f, 0.05f), Color.white).Build("Card");
-                var r = card.AddComponent<MeshRenderer>(); r.sharedMaterial = CardMaterial;
-                var col = root.gameObject.AddComponent<BoxCollider>(); col.size = new Vector3(w, 0.02f, 0.05f); col.isTrigger = true;
-                var pick = root.gameObject.AddComponent<Pickable>(); pick.Kind = PickKind.Tool; pick.Index = (int)tools[i];
-                var label = MakeText(root, "", new Vector3(0, 0.0045f, 0), 0.16f, Evergreen);
-                label.transform.localRotation = Quaternion.Euler(90, 0, 0);
-                label.rectTransform.sizeDelta = new Vector2(w * 0.95f, 0.045f);
-                _cards.Add((tools[i], label, r, root));
+                root.localRotation = Quaternion.Euler(62, 0, 0); // lying back toward the seated player
+                var glow = UiKit.Panel(root, "Glow", new Vector3(0, 0, 0.0012f), w + 0.006f, h + 0.006f, _glass, 0.013f, new Color(0.37f, 0.9f, 0.95f, 0.75f));
+                glow.gameObject.SetActive(false);
+                UiKit.Panel(root, "Face", Vector3.zero, w, h, _glass, 0.01f);
+                var icon = UiKit.IconObj(root, HudView.ToolIcon(tools[i]), new Vector3(0, 0.011f, 0), 0.02f, UiKit.Accent, _glass);
+                var name = UiKit.Text(root, HudView.ToolLabel(tools[i]), new Vector3(0, -0.006f, 0), 0.1f, UiKit.Ink, true, w - 0.006f, 0.014f, TextAlignmentOptions.Center);
+                name.enableAutoSizing = true; name.fontSizeMax = 0.1f; name.fontSizeMin = 0.06f;
+                var stock = UiKit.Text(root, "", new Vector3(0, -0.018f, 0), 0.08f, UiKit.InkSoft, false, w - 0.006f, 0.012f, TextAlignmentOptions.Center);
+                var col = root.gameObject.AddComponent<BoxCollider>(); col.size = new Vector3(w, h, 0.012f); col.isTrigger = true;
+                var pick = root.gameObject.AddComponent<Pickable>(); pick.Kind = PickKind.Tool; pick.Index = (int)tools[i]; pick.Label = HudView.ToolLabel(tools[i]);
+                _cards.Add((tools[i], name, stock, root, glow, icon));
             }
+        }
 
-            _board = new GameObject("OperationBoard").transform;
-            _board.SetParent(transform, false);
-            _board.localPosition = new Vector3(0, 0.11f, ext.y + 0.04f);
-            var bg = new GameObject("Backing");
-            bg.transform.SetParent(_board, false);
-            bg.transform.localPosition = new Vector3(0, 0, 0.004f);
-            bg.AddComponent<MeshFilter>().sharedMesh = new MeshKit().Box(Vector3.zero, new Vector3(0.46f, 0.15f, 0.004f), Evergreen).Build("Backing");
-            bg.AddComponent<MeshRenderer>().sharedMaterial = CardMaterial;
-            _status = MakeText(_board, "", new Vector3(-0.115f, 0.035f, 0), 0.22f, Paper, 0.22f, 0.07f, TextAlignmentOptions.TopLeft);
-            _objectives = MakeText(_board, "", new Vector3(0.115f, 0.035f, 0), 0.17f, Paper, 0.22f, 0.07f, TextAlignmentOptions.TopLeft);
-            _hint = MakeText(_board, "", new Vector3(0, -0.045f, 0), 0.2f, TerrainBuilder.Hex(0xF2B134), 0.44f, 0.03f, TextAlignmentOptions.Center);
-            _banner = MakeText(transform, "", new Vector3(0, 0.08f, 0), 0.5f, Paper, 0.5f, 0.08f, TextAlignmentOptions.Center);
-            _banner.outlineWidth = 0.2f; _banner.outlineColor = Evergreen;
-            _banner.gameObject.AddComponent<Billboard>();
-            Button(_board, "Start", new Vector3(-0.17f, -0.058f, -0.006f), () => Driver.SetPaused(!Driver.Paused));
-            Button(_board, "Restart", new Vector3(0.17f, -0.058f, -0.006f), () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, Driver.Guided));
-            // mission picker strip (development hub until the full hub lands): previous/next, layout, rules profile
+        // ------------------------------------------------------------------ run controls + dev mission picker
+        void BuildControls(Vector2 ext)
+        {
+            _controls = new GameObject("Controls").transform;
+            _controls.SetParent(transform, false);
+            _controls.localPosition = new Vector3(ext.x - 0.14f, 0.13f, ext.y + 0.05f);
+            _controls.localRotation = Quaternion.Euler(-8f, 0, 0);
+            Pill(_controls, "Start", new Vector3(-0.1f, 0, 0), 0.06f, () => Driver.SetPaused(!Driver.Paused), true);
+            Pill(_controls, "Restart", new Vector3(-0.035f, 0, 0), 0.06f, () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, Driver.Guided));
             _missions = ContentLibrary.MissionIds();
-            Button(_board, "Prev", new Vector3(-0.17f, 0.088f, -0.006f), () => Pick(-1));
-            Button(_board, "Next", new Vector3(-0.09f, 0.088f, -0.006f), () => Pick(+1));
-            Button(_board, Driver.LayoutClass == "wide" ? "Wide" : "Compact", new Vector3(0.01f, 0.088f, -0.006f),
+            Pill(_controls, "Prev", new Vector3(0.03f, 0, 0), 0.06f, () => Pick(-1));
+            Pill(_controls, "Next", new Vector3(0.095f, 0, 0), 0.06f, () => Pick(+1));
+            Pill(_controls, Driver.LayoutClass == "wide" ? "Wide" : "Compact", new Vector3(-0.1f, -0.03f, 0), 0.06f,
                 () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass == "wide" ? "compact" : "wide", Driver.Profile, Driver.Guided));
-            Button(_board, Driver.Profile.ToString(), new Vector3(0.09f, 0.088f, -0.006f),
+            Pill(_controls, Driver.Profile.ToString(), new Vector3(-0.035f, -0.03f, 0), 0.06f,
                 () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, (RuleProfile)(((int)Driver.Profile + 1) % 3), Driver.Guided));
             if (_def.GuidedFirstPlay)
-                Button(_board, Driver.Guided ? "Guided" : "Free", new Vector3(0.17f, 0.088f, -0.006f),
+                Pill(_controls, Driver.Guided ? "Guided" : "Free", new Vector3(0.03f, -0.03f, 0), 0.06f,
                     () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, !Driver.Guided));
+        }
 
-            // guided first play coach card, above the tray, plus its acknowledge button
-            _coach = MakeText(transform, "", new Vector3(0, 0.05f, -ext.y - 0.02f), 0.22f, Paper, 0.42f, 0.05f, TextAlignmentOptions.Center);
-            _coach.outlineWidth = 0.22f; _coach.outlineColor = Evergreen;
-            _coach.gameObject.AddComponent<Billboard>();
-            _ackButton = Button(transform, "Got it", new Vector3(0, 0.02f, -ext.y - 0.02f), () => Driver.Submit(Command.AcknowledgeTutorial()));
-            _ackButton.gameObject.SetActive(false);
-            Interaction.ToolAllowed = ToolAllowedNow;
+        Transform Pill(Transform parent, string text, Vector3 pos, float w, System.Action onPress, bool primary = false)
+        {
+            var root = UiKit.Panel(parent, "Button_" + text, pos, w, 0.024f, _glass, 0.012f,
+                primary ? new Color(1f, 0.42f, 0.21f, 0.92f) : (Color?)null);
+            var col = root.gameObject.AddComponent<BoxCollider>(); col.size = new Vector3(w, 0.024f, 0.012f); col.isTrigger = true;
+            var p = root.gameObject.AddComponent<Pickable>(); p.Kind = PickKind.Button; p.OnPress = onPress; p.Label = text;
+            var label = UiKit.Text(root, text, Vector3.zero, 0.1f, UiKit.Ink, true, w - 0.004f, 0.02f, TextAlignmentOptions.Center);
+            label.name = "Label";
+            return root;
         }
 
         void Pick(int delta)
@@ -114,6 +132,7 @@ namespace Resq.Game
             Driver.LoadRun(id, Driver.LayoutClass, Driver.Profile, guided);
         }
 
+        // ------------------------------------------------------------------ guided first play
         bool TutorialActive => Driver?.Sim != null && Driver.Sim.S.C.TutorialStep > 0 && !Driver.Sim.S.C.ScenarioEnabled;
 
         bool BusDelivered()
@@ -133,50 +152,17 @@ namespace Resq.Game
             if (!TutorialActive)
             {
                 if (sim.S.C.TutorialStep > 0 && sim.S.C.S < 150)
-                    return "Barriers hold water back. Skiffs reach docks. Hover a spot with a tool to see the forecast.";
+                    return "Barriers hold water back. Boats reach the docks. Hover a spot with a tool to see the forecast.";
                 return "";
             }
             bool bridge = sim.S.Deployed[(int)ToolKind.Bridge] > 0;
-            if (!bridge) return Driver.Paused ? "Press Start, then tap Bridge and the glowing spot on the river" : "Tap Bridge, then the glowing spot on the river";
+            if (!bridge) return Driver.Paused ? "Press Start, then pinch the Emergency Bridge and the glowing spot on the river" : "Pinch the Emergency Bridge, then the glowing spot on the river";
             if (!BusDelivered()) return "The bus is crossing — watch it reach the depot";
             if (sim.S.C.TutorialStep < 2) return "Everyone on the bus is safe. Upstream, the river is about to rise.";
             return "";
         }
 
-        Transform Button(Transform parent, string text, Vector3 pos, System.Action onPress)
-        {
-            var root = new GameObject("Button_" + text).transform;
-            root.SetParent(parent, false);
-            root.localPosition = pos;
-            var vis = new GameObject("Face");
-            vis.transform.SetParent(root, false);
-            vis.AddComponent<MeshFilter>().sharedMesh = new MeshKit().Box(Vector3.zero, new Vector3(0.07f, 0.024f, 0.006f), ActorsView.Rescue).Build("Btn");
-            vis.AddComponent<MeshRenderer>().sharedMaterial = CardMaterial;
-            var col = root.gameObject.AddComponent<BoxCollider>(); col.size = new Vector3(0.07f, 0.024f, 0.02f); col.isTrigger = true;
-            var p = root.gameObject.AddComponent<Pickable>(); p.Kind = PickKind.Button; p.OnPress = onPress; p.Label = text;
-            var label = MakeText(root, text, new Vector3(0, 0, -0.0035f), 0.16f, Paper, 0.07f, 0.024f, TextAlignmentOptions.Center);
-            label.name = "Label";
-            return root;
-        }
-
-        TextMeshPro MakeText(Transform parent, string text, Vector3 pos, float size, Color color, float w = 0.1f, float h = 0.03f,
-                             TextAlignmentOptions align = TextAlignmentOptions.Center)
-        {
-            var go = new GameObject("Text");
-            go.transform.SetParent(parent, false);
-            go.transform.localPosition = pos;
-            var tmp = go.AddComponent<TextMeshPro>();
-            tmp.text = text; tmp.fontSize = size; tmp.color = color; tmp.alignment = align;
-            tmp.enableWordWrapping = true;
-            tmp.rectTransform.sizeDelta = new Vector2(w, h);
-            // long titles/tool names shrink to fit their card instead of spilling into neighbours
-            tmp.enableAutoSizing = true;
-            tmp.fontSizeMax = size;
-            tmp.fontSizeMin = size * 0.45f;
-            tmp.overflowMode = TextOverflowModes.Truncate;
-            return tmp;
-        }
-
+        // ------------------------------------------------------------------ warnings
         void OnSimEvent(SimEvent e)
         {
             if (_def == null) return;
@@ -224,91 +210,45 @@ namespace Resq.Game
             return $"Something changes in {lead}s";
         }
 
+        // ------------------------------------------------------------------ live
         void LateUpdate()
         {
-            if (Driver?.Sim == null || _def != Driver.Def || _status == null) return;
+            if (Driver?.Sim == null || _def != Driver.Def || _banner == null) return;
             var sim = Driver.Sim;
             var S = sim.S;
-            long remain = System.Math.Max(0, (_def.DurationTicks - S.C.S) / 10);
-            _sb.Clear();
-            _sb.Append("<b>").Append(_def.Title).Append("</b>\n");
-            _sb.Append("Time ").Append(remain / 60).Append(':').Append((remain % 60).ToString("00"));
-            _sb.Append("   Rescued ").Append(S.C.Evacuated).Append('/').Append(_def.TotalResidents);
-            _sb.Append("\nSupplies ").Append(sim.RemainingSupplies).Append('/').Append(_def.SupplyBudget);
-            if (S.C.AwaitingBackup > 0) _sb.Append("   <color=#E5484D>Stranded ").Append(S.C.AwaitingBackup).Append("</color>");
-            _status.text = _sb.ToString();
 
-            _sb.Clear();
-            _sb.Append("<b>Goals</b>\n");
-            _sb.Append(S.C.Evacuated >= _def.MinimumRescues ? "✓ " : "• ").Append("Rescue ").Append(_def.MinimumRescues).Append('\n');
-            for (int i = 0; i < _def.Objectives.Length; i++)
-            {
-                var o = _def.Objectives[i];
-                if (o.Tier == Tier.Required && o.Condition.Kind == ConditionKind.RescueCount) continue;
-                if (o.Tier == Tier.Critical) continue;
-                _sb.Append(sim.ObjectiveFulfilled(i) ? "✓ " : o.Tier == Tier.Mastery ? "★ " : "• ").Append(Describe(o)).Append('\n');
-            }
-            _objectives.text = _sb.ToString();
-
-            string hint = Interaction != null ? Interaction.Hint : "";
+            string toast = "";
             var forecast = Interaction?.Board?.Forecast;
-            if (forecast != null && forecast.Showing && forecast.Summary.Length > 0) hint = forecast.Summary;
-            if (Time.unscaledTime < _warningUntil) hint = _lastWarning;
-            else if (Driver.Paused && !sim.IsOver) hint = "Paused — plan your rescue, then press Start";
-            _hint.text = hint;
-            if (_coach != null)
-            {
-                _coach.text = CoachText();
-                bool ask = TutorialActive && BusDelivered() && sim.S.C.TutorialStep < 2;
-                if (_ackButton != null && _ackButton.gameObject.activeSelf != ask) _ackButton.gameObject.SetActive(ask);
-            }
+            if (forecast != null && forecast.Showing && forecast.Summary.Length > 0) toast = forecast.Summary;
+            if (Time.unscaledTime < _warningUntil) toast = _lastWarning;
+            if (S.C.AwaitingBackup > 0 && toast.Length == 0) toast = $"{S.C.AwaitingBackup} stranded — backup called";
+            Toast = toast;
+
+            string coach = CoachText();
+            bool showCoach = coach.Length > 0;
+            if (_coachPanel.gameObject.activeSelf != showCoach) _coachPanel.gameObject.SetActive(showCoach);
+            _coach.text = coach;
+            bool ask = TutorialActive && BusDelivered() && sim.S.C.TutorialStep < 2;
+            if (_ackButton.gameObject.activeSelf != ask) _ackButton.gameObject.SetActive(ask);
 
             _banner.text = sim.IsOver ? (S.C.Success ? $"Rescue complete  {new string('★', S.C.Stars)}{new string('☆', 3 - S.C.Stars)}\nScore {S.C.ScoreValue}" : "Operation failed — try another plan") : "";
 
-            var startBtn = _board.Find("Button_Start/Label")?.GetComponent<TextMeshPro>();
+            var startBtn = _controls.Find("Button_Start/Label")?.GetComponent<TextMeshPro>();
             if (startBtn != null) startBtn.text = Driver.Paused ? "Start" : "Pause";
 
-            foreach (var (tool, label, card, root) in _cards)
+            foreach (var (tool, name, stock, root, glow, icon) in _cards)
             {
                 int left = sim.RemainingStock(tool);
                 int cost = _def.ToolCost[(int)tool];
-                label.text = $"<b>{BoardView.Pretty(MapCompiler.ToolName(tool))}</b>\n×{left}  ·  {cost} supply";
+                stock.text = $"×{left}  ·  {cost} supply";
+                bool usable = left > 0 && sim.RemainingSupplies >= cost && ToolAllowedNow(tool);
                 bool armed = Interaction != null && Interaction.Mode == InteractMode.ToolArmed && Interaction.ArmedTool == tool;
                 bool hovered = Interaction != null && Interaction.Hover != null && Interaction.Hover.transform == root;
-                Color c = left <= 0 || sim.RemainingSupplies < cost || !ToolAllowedNow(tool) ? TerrainBuilder.Hex(0x9A9A92) : armed ? ActorsView.Rescue : Paper;
-                if (hovered) c = Color.Lerp(c, Color.white, 0.3f);
-                card.GetPropertyBlock(_mpb); _mpb.SetColor(TintId, c); card.SetPropertyBlock(_mpb);
+                if (glow.gameObject.activeSelf != (armed || hovered)) glow.gameObject.SetActive(armed || hovered);
+                name.color = usable ? UiKit.Ink : new Color(1, 1, 1, 0.35f);
+                stock.color = usable ? UiKit.InkSoft : new Color(1, 1, 1, 0.3f);
+                icon.gameObject.SetActive(usable || armed);
                 root.localPosition = new Vector3(root.localPosition.x, armed ? 0.008f : 0f, 0);
-            }
-        }
-
-        string Describe(ObjectiveDef o)
-        {
-            var c = o.Condition;
-            switch (c.Kind)
-            {
-                case ConditionKind.GroupEvacuated: return $"Get the {BoardView.Pretty(_def.GroupIds[c.A])} group to safety";
-                case ConditionKind.InfrastructureOperational: return $"Keep the {BoardView.Pretty(_def.InfraIds[c.A])} working";
-                case ConditionKind.ExposureBelow: return $"Keep the {BoardView.Pretty(_def.RegionIds[c.A])} dry";
-                case ConditionKind.RouteAvailable: return $"Keep the {BoardView.Pretty(_def.RouteIds[c.A])} road open";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.GeneratorShutdowns: return "No generator shutdowns";
-                case ConditionKind.CounterAtLeast when c.Metric == MetricKind.EvacuatedByMode:
-                    return $"Bring {c.Value} out {(c.MetricMode == 1 ? "by boat" : c.MetricMode == 2 ? "by cable" : "on foot")}";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.StationShutdowns: return "No station loses power";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.ShelterExhaustions: return "No shelter runs out";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.PeakNodeOccupancy: return $"No more than {c.Value} at the {BoardView.Pretty(_def.NodeIds[c.MetricTarget])}";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.MaxNodeDwell: return $"Nobody waits long at the {BoardView.Pretty(_def.NodeIds[c.MetricTarget])}";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.MaxDockQueue: return "Keep the dock queue short";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.LoadedClosedDockWait: return "No loaded boat waits at a closed dock";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.PumpedIntoRegion: return $"Don't pump into the {BoardView.Pretty(_def.RegionIds[c.MetricTarget])}";
-                case ConditionKind.CounterAtLeast when c.Metric == MetricKind.EdgeTransfers: return "Use the bypass route";
-                case ConditionKind.TemporaryShelterEmpty: return "Everyone leaves the shelters";
-                case ConditionKind.TemporaryStagingEmpty: return "Nobody left at staging points";
-                case ConditionKind.AllVehiclesUnloaded: return "Every vehicle unloaded";
-                case ConditionKind.ResourceRemaining: return "Keep some in reserve";
-                case ConditionKind.EquipmentLossesAtMost: return c.Value == 0 ? "Lose no equipment" : $"Lose at most {c.Value} tools";
-                case ConditionKind.RescueCount: return $"Rescue {c.Value}";
-                default: return o.Id;
             }
         }
     }

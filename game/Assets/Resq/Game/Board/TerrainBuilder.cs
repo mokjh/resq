@@ -139,8 +139,169 @@ namespace Resq.Game
             return new Color(Mathf.Clamp01(c.r + v + hueShift * 0.5f), Mathf.Clamp01(c.g + v + hueShift), Mathf.Clamp01(c.b + v - hueShift * 0.6f), 1f);
         }
 
-        // ------------------------------------------------------------------ build
+        // ------------------------------------------------------------------ build (Look 3: natural heightfield)
+        const int HfSub = 4;          // heightfield samples per cell side
+        const float Sigma = 0.26f;    // Gaussian blend width (cells): plateaus at centres, steep rounded cliffs at borders
+        const float Warp = 0.14f;     // domain warp (cells) for irregular cliff lines
+
+        /// <summary>
+        /// Natural terrain (art direction 23 Oct): one continuous heightfield whose cell centres sit exactly at the
+        /// simulated elevation while borders between levels become steep, rounded, irregular rock faces. Colour =
+        /// ground type (soft-blended) on flats, layered rock on slopes, darker in hollows (AO in vertex alpha for
+        /// Resq/Terrain). The board edge keeps the cutaway geology walls.
+        /// </summary>
         public static Mesh Build(MissionDef d)
+        {
+            int W = d.GridW * HfSub, H = d.GridH * HfSub;
+            int vw = W + 1, vh = H + 1;
+            float s = BoardSpace.CellSize(d);
+            float metresPerMm = s / 20f;
+            var heights = new float[vw * vh];
+            var cellY = new float[d.GridW * d.GridH];
+            for (int c = 0; c < cellY.Length; c++) cellY[c] = BoardSpace.CellCenter(d, c).y;
+            for (int j = 0; j < vh; j++)
+                for (int i = 0; i < vw; i++)
+                {
+                    float gx = i / (float)HfSub, gy = j / (float)HfSub;
+                    heights[j * vw + i] = Sample(d, cellY, gx, gy);
+                }
+            var verts = new List<Vector3>(vw * vh + 4000);
+            var cols = new List<Color>(vw * vh + 4000);
+            var norms = new List<Vector3>(vw * vh + 4000);
+            var tris = new List<int>(W * H * 6 + 8000);
+            var strata = Strata(d.WorldId);
+            var lip = Lip(d.WorldId);
+            float ox = -d.GridW * 0.5f * s, oz = -d.GridH * 0.5f * s;
+            for (int j = 0; j < vh; j++)
+                for (int i = 0; i < vw; i++)
+                {
+                    float gx = i / (float)HfSub, gy = j / (float)HfSub;
+                    float h = heights[j * vw + i];
+                    verts.Add(new Vector3(ox + gx * s, h, oz + gy * s));
+                    // slope and concavity from neighbours
+                    float hl = heights[j * vw + Mathf.Max(0, i - 1)], hr = heights[j * vw + Mathf.Min(vw - 1, i + 1)];
+                    float hd = heights[Mathf.Max(0, j - 1) * vw + i], hu = heights[Mathf.Min(vh - 1, j + 1) * vw + i];
+                    float step = s / HfSub;
+                    float slope = new Vector2((hr - hl) / (2 * step), (hu - hd) / (2 * step)).magnitude;
+                    float concave = (hl + hr + hd + hu - 4 * h) / (step * 4f);
+                    int cx = Mathf.Clamp(Mathf.FloorToInt(gx), 0, d.GridW - 1), cy = Mathf.Clamp(Mathf.FloorToInt(gy), 0, d.GridH - 1);
+                    var baseCol = Vary(BlendedBase(d, cx, cy, gx - cx, gy - cy, cellY[d.CellIndex(cx, cy)]), gx, gy, !Hard(d, d.CellTerrain[d.CellIndex(cx, cy)]));
+                    int band = Mathf.FloorToInt(h / (StrataMm * metresPerMm) + Fbm(gx * 3f, gy * 3f, 41) * 1.5f);
+                    var rock = strata[((band % strata.Length) + strata.Length) % strata.Length];
+                    float rj = Fbm(gx * 5f, gy * 5f, 43) * 0.12f;
+                    rock = new Color(Mathf.Clamp01(rock.r + rj), Mathf.Clamp01(rock.g + rj), Mathf.Clamp01(rock.b + rj), 1f);
+                    float rockMix = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.6f, 1.8f, slope));
+                    var col = Color.Lerp(baseCol, rock, rockMix);
+                    // grassy lip on cliff tops (convex), snow/sand/ash per world
+                    if (concave < -0.15f && rockMix > 0.05f && rockMix < 0.7f) col = Color.Lerp(col, lip, 0.35f);
+                    float ao = Mathf.Clamp01(1f - Mathf.Max(0f, concave) * 0.55f) * Mathf.Lerp(1f, 0.82f, rockMix);
+                    col.a = ao;
+                    cols.Add(col);
+                    norms.Add(Vector3.up);
+                }
+            for (int j = 0; j < H; j++)
+                for (int i = 0; i < W; i++)
+                {
+                    int a = j * vw + i, b = a + 1, e = a + vw, f = e + 1;
+                    if (((i + j) & 1) == 0) { tris.Add(a); tris.Add(e); tris.Add(f); tris.Add(a); tris.Add(f); tris.Add(b); }
+                    else { tris.Add(a); tris.Add(e); tris.Add(b); tris.Add(b); tris.Add(e); tris.Add(f); }
+                }
+            int topVerts = verts.Count;
+            // cutaway walls around the board edge, following the heightfield's top line
+            float baseY = -BoardSpace.BaseDepth;
+            void EdgeWall(int i0, int j0, int i1, int j1, Vector3 outward)
+            {
+                var p0 = verts[j0 * vw + i0]; var p1 = verts[j1 * vw + i1];
+                float soil = Mathf.Min(0f, Mathf.Min(p0.y, p1.y));
+                // rock from the surface down to elevation 0, then two soil bands to the base
+                AddWallQuad(verts, cols, norms, tris, p0, p1, p0.y, p1.y, soil, soil, outward, strata, metresPerMm);
+                var earth = Earth; earth.a = 0.85f; var earthDark = EarthDark; earthDark.a = 0.75f;
+                float mid = Mathf.Lerp(soil, baseY, 0.45f);
+                AddFlatQuad(verts, cols, norms, tris, p0, p1, soil, mid, outward, earth);
+                AddFlatQuad(verts, cols, norms, tris, p0, p1, mid, baseY, outward, earthDark);
+            }
+            for (int i = 0; i < W; i++) { EdgeWall(i, 0, i + 1, 0, Vector3.back); EdgeWall(i, H, i + 1, H, Vector3.forward); }
+            for (int j = 0; j < H; j++) { EdgeWall(0, j, 0, j + 1, Vector3.left); EdgeWall(W, j, W, j + 1, Vector3.right); }
+            var ext = BoardSpace.Extent(d) * 0.5f;
+            Quad(verts, cols, norms, tris,
+                new Vector3(-ext.x, baseY, ext.y), new Vector3(-ext.x, baseY, -ext.y),
+                new Vector3(ext.x, baseY, -ext.y), new Vector3(ext.x, baseY, ext.y), Vector3.down, EarthDark);
+            var mesh = new Mesh { name = "Terrain_" + d.MissionId, indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
+            mesh.SetVertices(verts); mesh.SetColors(cols); mesh.SetNormals(norms); mesh.SetTriangles(tris, 0);
+            // smooth normals over the shared heightfield grid; walls keep their own flat normals
+            var smooth = new Vector3[topVerts];
+            for (int t = 0; t < W * H * 6; t += 3)
+            {
+                int a = tris[t], b = tris[t + 1], c = tris[t + 2];
+                var fn = Vector3.Cross(verts[b] - verts[a], verts[c] - verts[a]);
+                if (fn.y < 0) fn = -fn;
+                smooth[a] += fn; smooth[b] += fn; smooth[c] += fn;
+            }
+            for (int i = 0; i < topVerts; i++) norms[i] = smooth[i].sqrMagnitude > 1e-20f ? smooth[i].normalized : Vector3.up;
+            mesh.SetNormals(norms);
+            mesh.RecalculateBounds();
+            return mesh;
+        }
+
+        /// <summary>Height at a grid-space point: Gaussian blend of nearby cell elevations with a light domain warp.</summary>
+        static float Sample(MissionDef d, float[] cellY, float gx, float gy)
+        {
+            float wx = gx + Fbm(gx * 2.7f, gy * 2.7f, 61) * Warp * 2f;
+            float wy = gy + Fbm(gx * 2.7f + 17f, gy * 2.7f - 9f, 67) * Warp * 2f;
+            int cx = Mathf.FloorToInt(wx), cy = Mathf.FloorToInt(wy);
+            float sum = 0, wsum = 0;
+            for (int oy = -1; oy <= 1; oy++)
+                for (int ox = -1; ox <= 1; ox++)
+                {
+                    int x = Mathf.Clamp(cx + ox, 0, d.GridW - 1), y = Mathf.Clamp(cy + oy, 0, d.GridH - 1);
+                    float dx = wx - (x + 0.5f), dy = wy - (y + 0.5f);
+                    float w = Mathf.Exp(-(dx * dx + dy * dy) / (2f * Sigma * Sigma));
+                    sum += w * cellY[d.CellIndex(x, y)]; wsum += w;
+                }
+            return wsum > 0 ? sum / wsum : cellY[d.CellIndex(Mathf.Clamp(cx, 0, d.GridW - 1), Mathf.Clamp(cy, 0, d.GridH - 1))];
+        }
+
+        static void AddWallQuad(List<Vector3> v, List<Color> c, List<Vector3> n, List<int> t, Vector3 p0, Vector3 p1,
+                                float top0, float top1, float bot0, float bot1, Vector3 normal, Color[] strata, float metresPerMm)
+        {
+            if (top0 - bot0 < 1e-5f && top1 - bot1 < 1e-5f) return;
+            var col = strata[0]; col.a = 0.9f;
+            Quad(v, c, n, t, new Vector3(p0.x, bot0, p0.z), new Vector3(p0.x, top0, p0.z), new Vector3(p1.x, top1, p1.z), new Vector3(p1.x, bot1, p1.z), normal, col);
+        }
+
+        static void AddFlatQuad(List<Vector3> v, List<Color> c, List<Vector3> n, List<int> t, Vector3 p0, Vector3 p1, float top, float bottom, Vector3 normal, Color col)
+        {
+            if (top - bottom < 1e-5f) return;
+            Quad(v, c, n, t, new Vector3(p0.x, bottom, p0.z), new Vector3(p0.x, top, p0.z), new Vector3(p1.x, top, p1.z), new Vector3(p1.x, bottom, p1.z), normal, col);
+        }
+
+        /// <summary>The wooden diorama tray around the board (concept frames): bevelled rim with a little grain.</summary>
+        public static Mesh BuildFrame(MissionDef d)
+        {
+            var ext = BoardSpace.Extent(d) * 0.5f;
+            float rim = 0.016f, top = 0.006f, bottom = -BoardSpace.BaseDepth - 0.008f, lip = 0.0025f;
+            var kit = new MeshKit();
+            var wood = Hex(0x7A5234); var woodLight = Hex(0x93653F); var woodDark = Hex(0x5E3E27);
+            // four rails (long sides full length, short sides between them), plus a raised inner lip
+            kit.Box(new Vector3(0, (top + bottom) / 2, -ext.y - rim / 2), new Vector3(ext.x * 2 + rim * 2, top - bottom, rim), wood);
+            kit.Box(new Vector3(0, (top + bottom) / 2, ext.y + rim / 2), new Vector3(ext.x * 2 + rim * 2, top - bottom, rim), wood);
+            kit.Box(new Vector3(-ext.x - rim / 2, (top + bottom) / 2, 0), new Vector3(rim, top - bottom, ext.y * 2), woodLight);
+            kit.Box(new Vector3(ext.x + rim / 2, (top + bottom) / 2, 0), new Vector3(rim, top - bottom, ext.y * 2), woodLight);
+            kit.Box(new Vector3(0, top + lip / 2, -ext.y - rim * 0.3f), new Vector3(ext.x * 2 + rim * 1.4f, lip, rim * 0.4f), woodDark);
+            kit.Box(new Vector3(0, top + lip / 2, ext.y + rim * 0.3f), new Vector3(ext.x * 2 + rim * 1.4f, lip, rim * 0.4f), woodDark);
+            kit.Box(new Vector3(-ext.x - rim * 0.3f, top + lip / 2, 0), new Vector3(rim * 0.4f, lip, ext.y * 2), woodDark);
+            kit.Box(new Vector3(ext.x + rim * 0.3f, top + lip / 2, 0), new Vector3(rim * 0.4f, lip, ext.y * 2), woodDark);
+            // grain strips on the long rails' tops
+            for (int i = 0; i < 6; i++)
+            {
+                float z = -ext.y - rim + (i + 0.5f) * rim / 6f;
+                kit.Box(new Vector3(0, top + 0.0002f, z), new Vector3(ext.x * 2 + rim * 2, 0.0003f, rim / 14f), i % 2 == 0 ? woodDark : woodLight);
+                kit.Box(new Vector3(0, top + 0.0002f, -z), new Vector3(ext.x * 2 + rim * 2, 0.0003f, rim / 14f), i % 2 == 0 ? woodDark : woodLight);
+            }
+            return kit.Build("Frame");
+        }
+
+        public static Mesh BuildCells(MissionDef d)
         {
             var verts = new List<Vector3>(30000);
             var cols = new List<Color>(30000);
