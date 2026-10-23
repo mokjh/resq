@@ -20,5 +20,11 @@ Resume by reading `AGENTS.md`, `BUILD_PLAN.md` and `STATUS.md`. Older handoffs a
 - **Product code:** `game/Assets/Resq/`. The legacy simulation moves to `reference/legacy-sim/` in P0.
 - **Archived process history:** `docs/archive/process-2026-10/` and `evidence/` (frozen, not tracked in git).
 
+## Gates (run before committing board, art, input or sim changes)
+- **Sim tests (headless):** `python3 tools/simtest/simtest.py sim`.
+- **Mission matrix:** `python3 tools/simtest/simtest.py lab validate|run MISSION ...`.
+- **Art import:** the Editor menu `RESQ/Art/Validate Art` writes `art/IMPORT_REPORT.md`; a pass means 0 FAIL rows.
+- **PlayMode smoke:** `bash tools/unity/smoke.sh` runs in the open RESQ Editor and exits 0 on a pass. It boots `Operation_Desktop`, checks the board and art, then wins W1-M1 with strategy A using real pointer presses through `BoardInteraction`. Any logged error fails it. The last result is in `tools/.cache/smoke_last.json`.
+
 ## Current step
-P0, reset and foundation. See the task list in `STATUS.md`.
+Look 3 (concept art direction) and P1 slice work. See `STATUS.md`.

@@ -80,6 +80,9 @@ namespace Resq.Game
         Pickable Pick(PointerSample s)
         {
             if (DebugHover != null) return DebugHover;
+            // handles move in LateUpdate (vehicles, groups); colliders otherwise only catch up on the next fixed step,
+            // so at 72-90 fps a pick could test last frame's positions and miss a moving boat (found by the smoke gate)
+            Physics.SyncTransforms();
             if (s.HasPokePoint)
             {
                 var near = Physics.OverlapSphere(s.PokePoint, PokeRadius);
