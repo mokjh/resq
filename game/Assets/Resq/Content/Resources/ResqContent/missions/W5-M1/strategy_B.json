@@ -1,0 +1,14 @@
+{
+  "id": "B",
+  "description": "Stage residents in shelter, cool the longer route, then cross together: both groups take the ridge paths to the fork causeway (the orchard waits in the shelter on the hot west bank), one cooler opens the wide crust road, and everyone crosses to the depot in the same window.",
+  "steps": [
+    {"t": 5, "place": "bridge:01"},
+    {"t": 6, "place": "shelter:01"},
+    {"t": 7, "place": "cooler:03"},
+    {"t": 8, "group": "orchard", "to": "fork_shelter", "evacuate": false},
+    {"t": 9, "group": "research", "to": "fork_east", "evacuate": false},
+    {"t": 1050, "cool": "cooler:03"},
+    {"t": 1051, "group": "orchard", "to": "depot"},
+    {"t": 1051, "group": "research", "to": "depot"}
+  ]
+}

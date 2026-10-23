@@ -1,0 +1,52 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: moving people uphill into a temporary staging node without onward capacity blocks the route): plan A, but the released station group is sent up the traverse into the sheltered hut instead of down the east road, and no lift is assigned to take it on. The four fill the hut (capacity 4) and wait there to the end.",
+  "steps": [
+    {
+      "t": 1,
+      "place": "generator:01"
+    },
+    {
+      "t": 2,
+      "place": "generator:02"
+    },
+    {
+      "t": 3,
+      "place": "winch:01"
+    },
+    {
+      "t": 4,
+      "place": "winch:02"
+    },
+    {
+      "t": 5,
+      "vehicle": "winch:01",
+      "group": "observatory",
+      "pickup": "observatory_pickup",
+      "to": "intermediate",
+      "evacuate": false
+    },
+    {
+      "t": 6,
+      "group": "village",
+      "to": "depot"
+    },
+    {
+      "t": 7,
+      "group": "station",
+      "to": "intermediate",
+      "evacuate": false
+    },
+    {
+      "t": 8,
+      "place": "brace:01"
+    },
+    {
+      "t": 100,
+      "vehicle": "winch:02",
+      "group": "observatory",
+      "pickup": "intermediate",
+      "to": "depot"
+    }
+  ]
+}

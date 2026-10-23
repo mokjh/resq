@@ -26,6 +26,8 @@ namespace Resq.Game
         public Pickable Hover { get; private set; }
         public Reject HoverVerdict { get; private set; }
         public string Hint { get; private set; } = "";
+        /// <summary>Optional gate on which tool cards respond (guided first play unlocks tools step by step).</summary>
+        public System.Func<ToolKind, bool> ToolAllowed;
 
         readonly List<IPointerSource> _sources = new List<IPointerSource>();
         IPointerSource _owner;
@@ -98,7 +100,16 @@ namespace Resq.Game
                 case InteractMode.GroupRouting when p.Kind == PickKind.Node:
                     return sim.Reachable(CurrentNodeOfGroup(SelectedGroup), p.Index, Traversal.Ground, false, false) ? Reject.OK : Reject.RouteBlocked;
                 case InteractMode.VehicleDestination when p.Kind == PickKind.Node:
-                    return (Driver.Def.NodeFlags[p.Index] & NodeFlags.Evacuation) != 0 ? Reject.OK : Reject.UnknownTarget;
+                {
+                    // any node the vehicle can reach: refuges evacuate, other nodes are relay/staging drop-offs
+                    var sim2 = Driver.Sim;
+                    int v = SelectedVehicle;
+                    if (v < 0 || v >= sim2.S.C.VehicleCount) return Reject.UnknownTarget;
+                    var cls = Simulator.VehicleClass((VehicleKind)sim2.S.VKind[v]);
+                    return sim2.Reachable(sim2.S.VNode[v], p.Index, cls, false, false) ? Reject.OK : Reject.RouteBlocked;
+                }
+                case InteractMode.Idle when p.Kind == PickKind.Equipment:
+                    return EquipmentAction(p.Index, out _) ? Reject.OK : Reject.NotIdle;
                 default:
                     return Reject.OK;
             }
@@ -115,6 +126,7 @@ namespace Resq.Game
                 case PickKind.Tool:
                 {
                     var tool = (ToolKind)p.Index;
+                    if (ToolAllowed != null && !ToolAllowed(tool)) { Hint = "Not yet — follow the guide"; return; }
                     if (Mode == InteractMode.ToolArmed && ArmedTool == tool) { Cancel(); return; }
                     Mode = InteractMode.ToolArmed;
                     ArmedTool = tool;
@@ -122,6 +134,10 @@ namespace Resq.Game
                 }
                 case PickKind.Socket when Mode == InteractMode.ToolArmed:
                     TryPlace(p.Index);
+                    return;
+                case PickKind.Equipment when Mode == InteractMode.Idle:
+                    if (EquipmentAction(p.Index, out var cmd)) Driver.Submit(cmd);
+                    else Hint = "Nothing to do with that right now";
                     return;
                 case PickKind.Group:
                     if (Mode == InteractMode.VehiclePickup) { PickupGroup = p.Index; Mode = InteractMode.VehicleDestination; return; }
@@ -140,7 +156,7 @@ namespace Resq.Game
                     else if (Mode == InteractMode.VehicleDestination || Mode == InteractMode.VehiclePickup)
                     {
                         int g = PickupGroup;
-                        int pickup = g >= 0 ? Driver.Def.GroupPickup[g] : -1;
+                        int pickup = g >= 0 ? PickupNodeFor(g) : -1;
                         bool evac = (Driver.Def.NodeFlags[p.Index] & NodeFlags.Evacuation) != 0;
                         Driver.Submit(Command.VehicleRoute(SelectedVehicle, g, pickup, p.Index, evac));
                         Cancel();
@@ -163,6 +179,42 @@ namespace Resq.Game
             if (verdict != Reject.OK) { Hint = Explain(verdict); return; }
             Driver.Submit(Command.Place(socket, ArmedTool, 0));
             Cancel();
+        }
+
+        /// <summary>
+        /// Where a vehicle should collect a group: members dropped part-way (a relay stop) are collected where they
+        /// wait; otherwise the group's authored pickup.
+        /// </summary>
+        public int PickupNodeFor(int g)
+        {
+            var S = Driver.Sim.S;
+            foreach (int r in Driver.Def.GroupResidents[g])
+                if (S.RState[r] == (byte)ResidentState.AtNode && S.RStay[r]) return S.RNode[r];
+            return Driver.Def.GroupPickup[g];
+        }
+
+        /// <summary>What tapping placed equipment does: coolers cool their segment (or refill when empty);
+        /// switchable tools toggle on/off. Structural tools (barrier, bridge, brace, firebreak) do nothing.</summary>
+        public bool EquipmentAction(int inst, out Command cmd)
+        {
+            cmd = default;
+            var sim = Driver.Sim; var S = sim.S; var d = Driver.Def;
+            if (inst < 0 || inst >= S.C.EquipmentCount || S.EqBroken[inst]) return false;
+            var tool = (ToolKind)S.EqKind[inst];
+            int sock = S.EqSocket[inst];
+            switch (tool)
+            {
+                case ToolKind.Cooler:
+                    if (S.EqCharges[inst] > 0) { cmd = Command.Cool(inst); return true; }
+                    if (d.SocketCoolantStore[sock] >= 0 && S.CoolantStore[d.SocketCoolantStore[sock]] > 0)
+                    { cmd = Command.Refill(inst, d.SocketCoolantStore[sock]); return true; }
+                    return false;
+                case ToolKind.Pump: case ToolKind.Generator: case ToolKind.Sprinkler: case ToolKind.Relay: case ToolKind.Winch:
+                    cmd = S.EqActive[inst] ? Command.Disable(inst) : Command.Enable(inst);
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         public void Cancel()
@@ -204,6 +256,9 @@ namespace Resq.Game
                 case Reject.Occupied: return "Something is already there";
                 case Reject.UnsafeTarget: return "Too dangerous to place there";
                 case Reject.RouteBlocked: return "No safe way there right now";
+                case Reject.ResourceEmpty: return "Out of coolant";
+                case Reject.NotIdle: return "It's busy right now";
+                case Reject.PowerRequired: return "Needs power";
                 default: return r.ToString();
             }
         }

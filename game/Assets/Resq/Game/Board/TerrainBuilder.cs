@@ -14,6 +14,52 @@ namespace Resq.Game
 
         public static Color Hex(int rgb) => new Color(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, 1f);
 
+        // Worlds 2–5 top colours by terrain code (codes come from each world's map kit legend).
+        static readonly Dictionary<int, int> Emberwood = new Dictionary<int, int>
+        {
+            { 0, 0x3E5A60 }, { 2, 0xC9A46A }, { 3, 0x8A8173 }, { 8, 0xD2C29A }, { 9, 0xD2C29A }, { 10, 0x6F8A3E }, { 11, 0xB79B6B },
+            { 13, 0x9AA857 }, { 14, 0x3F5B32 }, { 15, 0x4E6A36 }, { 16, 0x8C7A3A }, { 17, 0xA8875C }, { 18, 0x9B8C6A },
+            { 19, 0x7A5A3C }, { 20, 0x6E8E9A }, { 22, 0x8C8577 }, { 23, 0x9B6B4A },
+        };
+        static readonly Dictionary<int, int> Frostline = new Dictionary<int, int>
+        {
+            { 0, 0x4A6A7A }, { 2, 0x9AA3AA }, { 3, 0x6E747A }, { 6, 0x5C7A8A }, { 8, 0xD8D2C4 }, { 9, 0xD8D2C4 }, { 11, 0xB8B0A4 },
+            { 21, 0xF1F4F7 }, { 22, 0x8E959C }, { 23, 0xA88A6A }, { 24, 0xC9CCD0 }, { 25, 0xD9DEE3 }, { 26, 0xE6EBF0 },
+            { 27, 0xE9EEF2 }, { 28, 0xDCE3E8 }, { 29, 0x7D848B },
+        };
+        static readonly Dictionary<int, int> Tidemark = new Dictionary<int, int>
+        {
+            { 0, 0x2F5E6E }, { 2, 0xC8B790 }, { 3, 0x6E8F5A }, { 6, 0xB9A57E }, { 7, 0x9A9283 }, { 8, 0xD9CBA6 }, { 9, 0xD9CBA6 },
+            { 11, 0xD6C7AE }, { 12, 0x8C8577 },
+        };
+        static readonly Dictionary<int, int> CinderReach = new Dictionary<int, int>
+        {
+            { 1, 0x6E7A4E }, { 2, 0x8E8579 }, { 3, 0x3B3836 }, { 4, 0x2E4E58 }, { 6, 0x4F4A44 }, { 8, 0xC2B596 }, { 9, 0xC2B596 },
+            { 10, 0x5E7A3E }, { 11, 0xB8A88A }, { 12, 0x5A5048 }, { 13, 0x2A2624 }, { 14, 0x9AA3AA },
+        };
+
+        static Dictionary<int, int> WorldPalette(string worldId)
+        {
+            switch (worldId)
+            {
+                case "W2": return Emberwood;
+                case "W3": return Frostline;
+                case "W4": return Tidemark;
+                case "W5": return CinderReach;
+                default: return null;
+            }
+        }
+
+        public static Color TopColor(MissionDef d, byte terrainCode, int cell)
+        {
+            var pal = WorldPalette(d.WorldId);
+            if (pal == null || !pal.TryGetValue(terrainCode, out int rgb)) return TopColor(terrainCode, cell);
+            uint hash = unchecked((uint)cell * 2654435761u);
+            float jitter = (hash >> 24) / 255f * 0.06f - 0.03f;
+            var c = Hex(rgb);
+            return new Color(Mathf.Clamp01(c.r + jitter), Mathf.Clamp01(c.g + jitter), Mathf.Clamp01(c.b + jitter), 1f);
+        }
+
         public static Color TopColor(byte terrainCode, int cell)
         {
             uint hash = unchecked((uint)cell * 2654435761u);
@@ -48,7 +94,7 @@ namespace Resq.Game
                 var center = BoardSpace.CellCenter(d, c);
                 float y = center.y;
                 float h = s * 0.5f;
-                var top = TopColor(d.CellTerrain[c], c);
+                var top = TopColor(d, d.CellTerrain[c], c);
                 Quad(verts, cols, norms, tris,
                     new Vector3(center.x - h, y, center.z - h), new Vector3(center.x - h, y, center.z + h),
                     new Vector3(center.x + h, y, center.z + h), new Vector3(center.x + h, y, center.z - h), Vector3.up, top);

@@ -13,7 +13,9 @@ namespace Resq.Game
     {
         public SimDriver Driver;
         public BoardInteraction Interaction;
-        public Material TerrainMaterial, WaterMaterial, ActorMaterial, MarkerMaterial;
+        public Material TerrainMaterial, WaterMaterial, ActorMaterial, MarkerMaterial, OverlayMaterial;
+        public HazardView Hazards { get; private set; }
+        public ForecastView Forecast { get; private set; }
 
         public WaterView Water { get; private set; }
         public ActorsView Actors { get; private set; }
@@ -22,6 +24,7 @@ namespace Resq.Game
         readonly List<(Pickable p, Renderer r)> _nodes = new List<(Pickable, Renderer)>();
         readonly List<Pickable> _groups = new List<Pickable>();
         readonly List<Pickable> _vehicles = new List<Pickable>();
+        readonly List<Pickable> _equipment = new List<Pickable>();
         Transform _root;
         MaterialPropertyBlock _mpb;
         MissionDef _def;
@@ -40,7 +43,7 @@ namespace Resq.Game
             if (_root != null) Destroy(_root.gameObject);
             _root = new GameObject("BoardRoot").transform;
             _root.SetParent(transform, false);
-            _sockets.Clear(); _nodes.Clear(); _groups.Clear(); _vehicles.Clear();
+            _sockets.Clear(); _nodes.Clear(); _groups.Clear(); _vehicles.Clear(); _equipment.Clear();
 
             var terrain = new GameObject("Terrain");
             terrain.transform.SetParent(_root, false);
@@ -60,6 +63,22 @@ namespace Resq.Game
             Actors = actors.AddComponent<ActorsView>();
             Actors.Driver = Driver; Actors.Material = ActorMaterial;
             Actors.Build(_def);
+
+            var hazards = new GameObject("Hazards");
+            hazards.transform.SetParent(_root, false);
+            hazards.AddComponent<MeshFilter>();
+            hazards.AddComponent<MeshRenderer>().sharedMaterial = OverlayMaterial;
+            Hazards = hazards.AddComponent<HazardView>();
+            Hazards.Driver = Driver;
+            Hazards.Build(_def);
+
+            var forecast = new GameObject("Forecast");
+            forecast.transform.SetParent(_root, false);
+            forecast.AddComponent<MeshFilter>();
+            forecast.AddComponent<MeshRenderer>().sharedMaterial = OverlayMaterial;
+            Forecast = forecast.AddComponent<ForecastView>();
+            Forecast.Driver = Driver; Forecast.Interaction = Interaction;
+            Forecast.Build(_def);
 
             BuildSockets();
             BuildNodes();
@@ -108,11 +127,15 @@ namespace Resq.Game
             float c = BoardSpace.CellSize(_def);
             var flag = new MeshKit().Cylinder(Vector3.zero, 0.0008f, 0.03f, 6, Color.white)
                                     .Box(new Vector3(0.005f, 0.026f, 0), new Vector3(0.01f, 0.007f, 0.001f), Color.white).Build("NodeFlag");
+            // every place a group or vehicle can sensibly be sent: flagged nodes, group pickups/assemblies, vehicle stations
+            var useful = new HashSet<int>();
+            for (int n = 0; n < _def.NodeIds.Length; n++) if (_def.NodeFlags[n] != NodeFlags.None) useful.Add(n);
+            for (int g = 0; g < _def.GroupIds.Length; g++) { useful.Add(_def.GroupPickup[g]); useful.Add(_def.GroupAssembly[g]); }
+            for (int s = 0; s < _def.SocketIds.Length; s++) if (_def.SocketNode[s] >= 0) useful.Add(_def.SocketNode[s]);
             for (int n = 0; n < _def.NodeIds.Length; n++)
             {
                 var flags = _def.NodeFlags[n];
-                bool destination = (flags & (NodeFlags.Evacuation | NodeFlags.Dock | NodeFlags.Assembly)) != 0;
-                if (!destination) continue;
+                if (!useful.Contains(n)) continue;
                 var pos = BoardSpace.CellCenter(_def, _def.NodeCell[n]);
                 bool refuge = (flags & NodeFlags.Evacuation) != 0;
                 var p = MakePick("Node_" + _def.NodeIds[n], PickKind.Node, n, pos, c * 0.8f, refuge ? flag : null, ActorsView.Rescue, out var r);
@@ -211,8 +234,23 @@ namespace Resq.Game
             {
                 int v = _vehicles.Count;
                 var p = MakePick("VehicleHandle_" + v, PickKind.Vehicle, v, Vector3.zero, BoardSpace.CellSize(_def) * 0.9f, null, Color.white, out _);
-                p.Label = v < _def.FixedVehicleIds.Length ? Pretty(_def.FixedVehicleIds[v]) : "Skiff";
+                p.Label = v < _def.FixedVehicleIds.Length ? Pretty(_def.FixedVehicleIds[v]) : ((VehicleKind)S.VKind[v]).ToString();
                 _vehicles.Add(p);
+            }
+            // placed equipment can be tapped (cool, refill, switch on/off)
+            while (_equipment.Count < S.C.EquipmentCount)
+            {
+                int inst = _equipment.Count;
+                var p = MakePick("EquipmentHandle_" + inst, PickKind.Equipment, inst, Vector3.zero, BoardSpace.CellSize(_def) * 0.7f, null, Color.white, out _);
+                p.Label = ((ToolKind)S.EqKind[inst]).ToString();
+                _equipment.Add(p);
+            }
+            for (int i = 0; i < _equipment.Count; i++)
+            {
+                var actor = Actors.EquipmentTransform(i);
+                bool tappable = actor != null && mode == InteractMode.Idle && Interaction.EquipmentAction(i, out _);
+                if (_equipment[i].gameObject.activeSelf != tappable) _equipment[i].gameObject.SetActive(tappable);
+                if (tappable) _equipment[i].transform.localPosition = actor.localPosition + Vector3.up * 0.01f;
             }
             for (int v = 0; v < _vehicles.Count; v++)
             {

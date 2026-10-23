@@ -1,0 +1,46 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): plan A's boats, but every boat is sent to the receiving dock. Its berth is held for the whole trip up and down the long pontoon channel, so the boats form a readable queue at the harbor (reserved berths, no overlapping hulls). When the stall pontoon blocks the channel at 170 s, the boats still in the queue are loaded and can never reach the dock, and the north market is left waiting.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "skiff:03"
+    },
+    {
+      "t": 6,
+      "vehicle": "skiff:03",
+      "group": "south_market",
+      "pickup": "south_market_pickup",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 7,
+      "place": "skiff:02"
+    },
+    {
+      "t": 8,
+      "vehicle": "skiff:02",
+      "group": "east_market",
+      "pickup": "east_market_pickup",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 9,
+      "place": "skiff:04"
+    },
+    {
+      "t": 10,
+      "vehicle": "skiff:04",
+      "group": "west_market",
+      "pickup": "west_market_pickup",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 1200,
+      "vehicle": "skiff:03",
+      "group": "north_market",
+      "pickup": "north_market_pickup",
+      "to": "receiving_dock"
+    }
+  ]
+}

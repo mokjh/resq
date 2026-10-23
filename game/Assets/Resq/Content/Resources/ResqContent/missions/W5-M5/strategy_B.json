@@ -1,0 +1,20 @@
+{
+  "id": "B",
+  "description": "Evacuate the most exposed groups first, use shelter for the high village, and dedicate late resources to the ferry connection: the orchard crosses before the lava, a skiff takes the research group from its dock before their terraces burn, a second skiff ferries the waterfront while the north generator (behind the barrier) powers the ferry terminal; the drainage is left unpumped, so the causeway drowns but the high lagoon fills; the high village waits in the quay shelter through the staging heat and leaves by skiff across the lagoon; the harbour mouth is cooled in the last window for the final ferry route. Step t=10400 repeats the last cooling for the Relaxed clock.",
+  "steps": [
+    {"t": 5, "place": "generator:01"},
+    {"t": 6, "place": "barrier:01"},
+    {"t": 7, "place": "shelter:01"},
+    {"t": 8, "place": "skiff:01"},
+    {"t": 9, "place": "skiff:03"},
+    {"t": 10, "place": "cooler:02"},
+    {"t": 11, "group": "orchard", "to": "depot"},
+    {"t": 12, "group": "station", "to": "high_landing"},
+    {"t": 13, "vehicle": "skiff:01", "group": "research", "pickup": "r_dock", "to": "depot"},
+    {"t": 14, "vehicle": "skiff:03", "group": "waterfront", "pickup": "ferry_dock", "to": "high_landing"},
+    {"t": 15, "group": "high_village", "to": "quay_shelter", "evacuate": false},
+    {"t": 4003, "vehicle": "skiff:01", "group": "high_village", "pickup": "hv_quay", "to": "depot"},
+    {"t": 5200, "cool": "cooler:02"},
+    {"t": 10400, "cool": "cooler:02"}
+  ]
+}

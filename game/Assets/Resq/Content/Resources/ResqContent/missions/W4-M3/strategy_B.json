@@ -1,0 +1,59 @@
+{
+  "id": "B",
+  "description": "Evacuate one island fully, then reuse its high dock as a transfer point: the bridge closes the south breach and the whole south market walks home; the south skiff drops the north market at the emptied south high dock (a staging point, not a refuge), and each drop is walked on over the bridge to the receiving dock (one order after the first four, one after the last); the west and east skiffs land at the high landing, so no boat ever needs the pontoon channel.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "bridge:01"
+    },
+    {
+      "t": 6,
+      "group": "south_market",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 7,
+      "place": "skiff:03"
+    },
+    {
+      "t": 8,
+      "vehicle": "skiff:03",
+      "group": "north_market",
+      "pickup": "north_market_pickup",
+      "to": "south_market_pickup",
+      "evacuate": false
+    },
+    {
+      "t": 9,
+      "place": "skiff:04"
+    },
+    {
+      "t": 10,
+      "vehicle": "skiff:04",
+      "group": "west_market",
+      "pickup": "west_market_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 11,
+      "place": "skiff:02"
+    },
+    {
+      "t": 12,
+      "vehicle": "skiff:02",
+      "group": "east_market",
+      "pickup": "east_market_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 600,
+      "group": "north_market",
+      "to": "receiving_dock"
+    },
+    {
+      "t": 1300,
+      "group": "north_market",
+      "to": "receiving_dock"
+    }
+  ]
+}

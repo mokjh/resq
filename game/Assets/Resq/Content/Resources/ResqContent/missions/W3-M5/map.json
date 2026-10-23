@@ -1,0 +1,720 @@
+{
+ "mission_id": "W3-M5",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  "###OOOOOOO############SSSSSSS###",
+  "###OOOOOOO############SSSSSSS###",
+  "###OOOOOOO############SSSSSSS###",
+  "###OOOOOOO############SSSSSSS###",
+  "###OOOOOOO||||||||||||SSSSSSS###",
+  "###OOOOOOO############SSSSSSS###",
+  "######################|#####=###",
+  "######################|#####=###",
+  "######################|#####=###",
+  "######################|#####=###",
+  "####vvvvv#############|#####=###",
+  "####vvvvv#####mmm||||||#####=###",
+  "####vvvvv#####mmm======#####=###",
+  "####vvvvv=====mmm#####=#####=###",
+  "####vvvvv###aaa=aaa###=#HHHHH###",
+  "###t########aaa=aaa#####HHHHH###",
+  "###t########aaa=aaa#####HHHHH###",
+  "###ttttttttttDDDDD##############",
+  "#############DDDDD##############",
+  "################################",
+  "################################"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "a": {
+   "terrain": "avalanche_slope",
+   "code": 21,
+   "elev": 1200
+  },
+  "S": {
+   "terrain": "cable_station",
+   "code": 23,
+   "elev": 1200
+  },
+  "O": {
+   "terrain": "observatory",
+   "code": 24,
+   "elev": 1200
+  },
+  "t": {
+   "terrain": "footpath",
+   "code": 25,
+   "elev": 1200
+  },
+  "|": {
+   "terrain": "cable_line",
+   "code": 26,
+   "elev": 1200
+  },
+  "m": {
+   "terrain": "mid_terrace",
+   "code": 28,
+   "elev": 1200
+  }
+ },
+ "regions": {},
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "observatory_start",
+   "at": [
+    6,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "observatory_assembly",
+   "at": [
+    6,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "observatory_pickup",
+   "at": [
+    6,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "station_start",
+   "at": [
+    25,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "station_assembly",
+   "at": [
+    25,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "station_pickup",
+   "at": [
+    25,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "village_start",
+   "at": [
+    7,
+    9
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_assembly",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_pickup",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "receiving_station",
+   "at": [
+    15,
+    8
+   ],
+   "flags": [
+    "staging"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "window_bend",
+   "at": [
+    22,
+    8
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_bend",
+   "at": [
+    28,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "west_track",
+   "at": [
+    3,
+    4
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 14
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    26,
+    5
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 8
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_observatory_start",
+   "from": "observatory_start",
+   "to": "observatory_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_observatory_pickup",
+   "from": "observatory_assembly",
+   "to": "observatory_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_station_start",
+   "from": "station_start",
+   "to": "station_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_station_pickup",
+   "from": "station_assembly",
+   "to": "station_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_start",
+   "from": "village_start",
+   "to": "village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_pickup",
+   "from": "village_assembly",
+   "to": "village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "c_upper",
+   "from": "observatory_pickup",
+   "to": "station_pickup",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     6,
+     16
+    ],
+    [
+     25,
+     16
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_upper_west",
+   "from": "observatory_pickup",
+   "to": "station_pickup",
+   "ticks": 100,
+   "class": "cable",
+   "sample": [
+    [
+     6,
+     16
+    ],
+    [
+     25,
+     16
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_lower",
+   "from": "station_pickup",
+   "to": "receiving_station",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     25,
+     16
+    ],
+    [
+     15,
+     8
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_valley_shortcut",
+   "from": "receiving_station",
+   "to": "depot",
+   "ticks": 150,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_lower_window_a",
+   "from": "receiving_station",
+   "to": "window_bend",
+   "ticks": 300,
+   "class": "ground",
+   "enabled": false,
+   "slots": 2
+  },
+  {
+   "id": "g_lower_window_b",
+   "from": "window_bend",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_east_road_a",
+   "from": "station_assembly",
+   "to": "east_bend",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_east_road_b",
+   "from": "east_bend",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_lane",
+   "from": "village_pickup",
+   "to": "receiving_station",
+   "ticks": 150,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_west_track_a",
+   "from": "village_pickup",
+   "to": "west_track",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_west_track_b",
+   "from": "west_track",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  }
+ ],
+ "sockets": [
+  {
+   "id": "winch:01",
+   "tool": "winch",
+   "node": "observatory_pickup",
+   "edge": "c_upper",
+   "at": [
+    10,
+    16
+   ],
+   "support": "upper_support",
+   "power": "frost_grid",
+   "zone": "upper_winches"
+  },
+  {
+   "id": "winch:03",
+   "tool": "winch",
+   "node": "observatory_pickup",
+   "edge": "c_upper_west",
+   "at": [
+    9,
+    15
+   ],
+   "support": "upper_support",
+   "power": "frost_grid",
+   "zone": "upper_winches"
+  },
+  {
+   "id": "winch:02",
+   "tool": "winch",
+   "node": "station_pickup",
+   "edge": "c_lower",
+   "at": [
+    22,
+    14
+   ],
+   "support": "upper_support",
+   "power": "frost_grid",
+   "zone": "lower_winch"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    4,
+    16
+   ],
+   "platform": [
+    [
+     4,
+     16
+    ]
+   ],
+   "power": "frost_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    27,
+    15
+   ],
+   "platform": [
+    [
+     27,
+     15
+    ]
+   ],
+   "power": "frost_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:03",
+   "tool": "generator",
+   "at": [
+    17,
+    2
+   ],
+   "platform": [
+    [
+     17,
+     2
+    ]
+   ],
+   "power": "frost_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "receiving_station",
+   "at": [
+    16,
+    8
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    14,
+    2
+   ]
+  },
+  {
+   "id": "brace:01",
+   "tool": "brace",
+   "at": [
+    21,
+    15
+   ],
+   "support": "upper_support",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:02",
+   "tool": "brace",
+   "at": [
+    21,
+    14
+   ],
+   "support": "upper_support",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:03",
+   "tool": "brace",
+   "at": [
+    23,
+    14
+   ],
+   "support": "upper_support",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:04",
+   "tool": "brace",
+   "at": [
+    8,
+    15
+   ],
+   "support": "west_tower",
+   "zone": "braces"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "frost_grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "observatory",
+   "start": "observatory_start",
+   "assembly": "observatory_assembly",
+   "pickup": "observatory_pickup"
+  },
+  {
+   "id": "station",
+   "start": "station_start",
+   "assembly": "station_assembly",
+   "pickup": "station_pickup"
+  },
+  {
+   "id": "village",
+   "start": "village_start",
+   "assembly": "village_assembly",
+   "pickup": "village_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "observatory_cable",
+   "from": "observatory_pickup",
+   "to": "receiving_station",
+   "class": "cable"
+  }
+ ],
+ "roles": {
+  "upper_support": {
+   "supports": [
+    "upper_support"
+   ]
+  },
+  "valley_slope": {
+   "runouts": [
+    "valley_slope"
+   ]
+  },
+  "lower_window": {
+   "edges": [
+    "g_lower_window_a"
+   ]
+  },
+  "observatory": {
+   "groups": [
+    "observatory"
+   ]
+  },
+  "station": {
+   "groups": [
+    "station"
+   ]
+  },
+  "receiving_station": {
+   "edges": [
+    "c_lower",
+    "g_valley_shortcut"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 8
+    },
+    {
+     "id": "high_landing",
+     "capacity": 14
+    }
+   ],
+   "edges": [
+    {
+     "id": "g_east_road_b",
+     "ticks": 400
+    }
+   ]
+  }
+ },
+ "supports": [
+  {
+   "id": "upper_support",
+   "base_stability": 400,
+   "static_load": 0,
+   "nodes": [
+    "station_pickup"
+   ],
+   "edges": [
+    "c_upper",
+    "c_upper_west",
+    "c_lower"
+   ],
+   "collapse_nodes": [
+    "station_pickup"
+   ],
+   "collapse_edges": [
+    "c_upper",
+    "c_upper_west",
+    "c_lower"
+   ]
+  },
+  {
+   "id": "west_tower",
+   "base_stability": 600,
+   "static_load": 0,
+   "nodes": [
+    "observatory_pickup"
+   ],
+   "edges": [],
+   "collapse_nodes": [],
+   "collapse_edges": []
+  }
+ ],
+ "runouts": [
+  {
+   "id": "valley_slope",
+   "segments": [
+    {
+     "id": "shortcut",
+     "edges": [
+      "g_valley_shortcut"
+     ],
+     "nodes": [],
+     "delay": 10,
+     "settle": 200,
+     "cells": {
+      "x0": 12,
+      "y0": 4,
+      "x1": 18,
+      "y1": 6
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Resq.Game
 {
-    public enum PickKind : byte { None, Tool, Socket, Node, Group, Vehicle, Button }
+    public enum PickKind : byte { None, Tool, Socket, Node, Group, Vehicle, Button, Equipment }
 
     /// <summary>Anything a pointer can select. Residents/hazards are never pickable as objects to move.</summary>
     public sealed class Pickable : MonoBehaviour

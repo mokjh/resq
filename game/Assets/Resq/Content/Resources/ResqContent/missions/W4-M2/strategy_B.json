@@ -1,0 +1,60 @@
+{
+  "id": "B",
+  "description": "Use the short network early (relay:03 with the breakwater relay:02), then transfer the idle breakwater relay to the sea-stack socket before peak tide. Boats do all the lifting: the high-landing skiff takes the market off its low-water pontoon; the depot skiff ferries the west island to the depot, then waits there for the peak and lifts the keepers.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "generator:01"
+    },
+    {
+      "t": 6,
+      "place": "relay:03"
+    },
+    {
+      "t": 7,
+      "place": "relay:02"
+    },
+    {
+      "t": 8,
+      "place": "skiff:02"
+    },
+    {
+      "t": 9,
+      "vehicle": "skiff:02",
+      "group": "market",
+      "pickup": "market_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 10,
+      "place": "skiff:01"
+    },
+    {
+      "t": 11,
+      "vehicle": "skiff:01",
+      "group": "west_island",
+      "pickup": "west_island_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 3000,
+      "vehicle": "skiff:01",
+      "group": "lighthouse",
+      "pickup": "lighthouse_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 3300,
+      "disable": "relay:02"
+    },
+    {
+      "t": 3301,
+      "move": "relay:02",
+      "to": "relay:04"
+    },
+    {
+      "t": 3302,
+      "enable": "relay:04"
+    }
+  ]
+}

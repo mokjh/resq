@@ -1,0 +1,12 @@
+{
+  "id": "B",
+  "description": "Avoid the short road entirely and stage winch transfers above it: power the lift station and winch the weather crew across to the shelf landing two at a time; the crew's standard walkers then take the shelf stair, and the two step-free residents (weather crew and rock shelf) wait safely on the shelf until the debris gully is cleared at 340 s. The village walks the slope-foot lane early.",
+  "steps": [
+    {"t": 1, "place": "generator:01"},
+    {"t": 2, "place": "winch:01"},
+    {"t": 3, "vehicle": "winch:01", "group": "weather_crew", "pickup": "weather_crew_pickup", "to": "shelf_landing", "evacuate": false},
+    {"t": 4, "group": "village", "to": "depot"},
+    {"t": 5, "group": "rock_shelf", "to": "high_landing"},
+    {"t": 700, "group": "weather_crew", "to": "high_landing"}
+  ]
+}

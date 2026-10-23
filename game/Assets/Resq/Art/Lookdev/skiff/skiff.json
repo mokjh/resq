@@ -1,0 +1,572 @@
+{
+  "schema": "resq-lookdev-asset-1",
+  "asset": "skiff",
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -40.0,
+      -17.5,
+      -6.0
+    ],
+    "max": [
+      40.0,
+      17.5,
+      19.0
+    ],
+    "size": [
+      80.0,
+      35.0,
+      25.0
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    80.0,
+    25.0,
+    35.0
+  ],
+  "triangles": {
+    "skiff_LOD0": 2012,
+    "skiff_LOD1": 1126,
+    "skiff_LOD2": 478
+  },
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "skiff_LOD0": 0.6433,
+    "skiff_LOD1": 0.6261,
+    "skiff_LOD2": 0.6363
+  },
+  "colliders": {
+    "skiff_COL": 295
+  },
+  "material_roles_faces_lod0": {
+    "evergreen": 392,
+    "hull_paint": 226,
+    "metal_dark": 246,
+    "paper": 12,
+    "rescue_orange": 692,
+    "rubber": 234,
+    "wood_deck": 210
+  },
+  "markers": {
+    "skiff_mk_seat_1": {
+      "blender_mm": [
+        -14.0,
+        -5.7,
+        3.9
+      ],
+      "unity_mm": [
+        14.0,
+        3.9,
+        5.7
+      ],
+      "meaning": "seat 1 (top of seat pad)"
+    },
+    "skiff_mk_seat_2": {
+      "blender_mm": [
+        -14.0,
+        5.7,
+        3.9
+      ],
+      "unity_mm": [
+        14.0,
+        3.9,
+        -5.7
+      ],
+      "meaning": "seat 2 (top of seat pad)"
+    },
+    "skiff_mk_seat_3": {
+      "blender_mm": [
+        6.0,
+        -5.7,
+        3.9
+      ],
+      "unity_mm": [
+        -6.0,
+        3.9,
+        5.7
+      ],
+      "meaning": "seat 3 (top of seat pad)"
+    },
+    "skiff_mk_seat_4": {
+      "blender_mm": [
+        6.0,
+        5.7,
+        3.9
+      ],
+      "unity_mm": [
+        -6.0,
+        3.9,
+        -5.7
+      ],
+      "meaning": "seat 4 (top of seat pad)"
+    },
+    "skiff_mk_boarding": {
+      "blender_mm": [
+        0.0,
+        -17.5,
+        0.0
+      ],
+      "unity_mm": [
+        -0.0,
+        0.0,
+        17.5
+      ],
+      "meaning": "boarding point, -Y side, at the waterline"
+    },
+    "skiff_mk_bow": {
+      "blender_mm": [
+        40.0,
+        0.0,
+        8.0
+      ],
+      "unity_mm": [
+        -40.0,
+        8.0,
+        -0.0
+      ],
+      "meaning": "bow tip (travel direction +X)"
+    }
+  },
+  "pivot": "waterline centre: z=0 is the design waterline at mid-length/mid-beam",
+  "capacity_seats": 4,
+  "lod_notes": [],
+  "design": "rescue RIB: cream hull with dark bottom paint below the waterline, rescue-orange collar band around the gunwale, two thwarts carrying four dark-green seat pads, foredeck locker, stowed paddles, outboard motor with tiller",
+  "ao_bake": {
+    "skiff_LOD0": "cycles_ao_16spp",
+    "skiff_LOD1": "cycles_ao_16spp",
+    "skiff_LOD2": "cycles_ao_16spp"
+  },
+  "dimension_check": {
+    "x": {
+      "measured_mm": 80.0,
+      "target_mm": 80.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    },
+    "y": {
+      "measured_mm": 35.0,
+      "target_mm": 35.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    },
+    "z": {
+      "measured_mm": 25.0,
+      "target_mm": 25.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    }
+  },
+  "checks": {
+    "dimensions_pm1pct": true,
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.56,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.238,
+    "lod2_le_30pct": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "skiff": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "skiff_COL": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_mk_boarding": {
+        "type": "Null",
+        "lcl_translation": [
+          0.0,
+          0.0,
+          0.0175
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_mk_bow": {
+        "type": "Null",
+        "lcl_translation": [
+          0.04,
+          0.008,
+          0.0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_mk_seat_1": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.014,
+          0.0039,
+          0.0057
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_mk_seat_2": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.014,
+          0.0039,
+          -0.0057
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_mk_seat_3": {
+        "type": "Null",
+        "lcl_translation": [
+          0.006,
+          0.0039,
+          0.0057
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      },
+      "skiff_mk_seat_4": {
+        "type": "Null",
+        "lcl_translation": [
+          0.006,
+          0.0039,
+          -0.0057
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "skiff"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "skiff_COL": {
+        "min": [
+          -0.04000000283122063,
+          -0.006000000052154064,
+          -0.017518091946840286
+        ],
+        "max": [
+          0.04000000283122063,
+          0.01900000125169754,
+          0.017518607899546623
+        ],
+        "count": 120
+      },
+      "skiff_LOD0": {
+        "min": [
+          -0.04000000283122063,
+          -0.006000000052154064,
+          -0.017500000074505806
+        ],
+        "max": [
+          0.04000000283122063,
+          0.01900000125169754,
+          0.017500000074505806
+        ],
+        "count": 1124
+      },
+      "skiff_LOD1": {
+        "min": [
+          -0.04000000283122063,
+          -0.006000000052154064,
+          -0.017500000074505806
+        ],
+        "max": [
+          0.04000000283122063,
+          0.01900000125169754,
+          0.017500000074505806
+        ],
+        "count": 648
+      },
+      "skiff_LOD2": {
+        "min": [
+          -0.04000000283122063,
+          -0.006000000052154064,
+          -0.017500000074505806
+        ],
+        "max": [
+          0.04000000283122063,
+          0.01900000125169754,
+          0.017500000074505806
+        ],
+        "count": 274
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/lookdev/skiff/skiff.fbx",
+    "fbx_sha256": "33ff1bf937bfbf190f8b152caf794f8f798c033d08dd2d510dc7ea24d2e72026",
+    "fbx_bytes": 142428,
+    "blend": "art/lookdev/skiff/skiff.blend",
+    "blend_sha256": "05fae13f2faa85b891fc1422e5e0d5c8c08202a9cc321c4d51171daa1debd194",
+    "blend_bytes": 172216,
+    "preview": "art/lookdev/skiff/skiff_preview.png"
+  },
+  "preview_note": "EEVEE, left to right LOD0/LOD1/LOD2, ortho 3/4 view, same light as the contact sheet",
+  "generator_sha256": {
+    "lookdev.py": "c08c48ef8e7aee746270a3d31d46bc0fe7edd11c55202373c8e29b6a046f6b99",
+    "kit.py": "7284c5fc22763f78794a8d6abd1bce3f9e232b3fb2c07642851027e16d385f16"
+  },
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "skiff_LOD0": {
+        "min": [
+          -40.0,
+          -17.5,
+          -6.0
+        ],
+        "max": [
+          40.0,
+          17.5,
+          19.0
+        ],
+        "size": [
+          80.0,
+          35.0,
+          25.0
+        ]
+      },
+      "skiff_LOD1": {
+        "min": [
+          -40.0,
+          -17.5,
+          -6.0
+        ],
+        "max": [
+          40.0,
+          17.5,
+          19.0
+        ],
+        "size": [
+          80.0,
+          35.0,
+          25.0
+        ]
+      },
+      "skiff_LOD2": {
+        "min": [
+          -40.0,
+          -17.5,
+          -6.0
+        ],
+        "max": [
+          40.0,
+          17.5,
+          19.0
+        ],
+        "size": [
+          80.0,
+          35.0,
+          25.0
+        ]
+      }
+    },
+    "root_rotations_rad": {
+      "skiff": [
+        1.5708,
+        -0.0,
+        0.0
+      ]
+    },
+    "mean_ao_alpha": {
+      "skiff_LOD0": 0.6433,
+      "skiff_LOD1": 0.6261,
+      "skiff_LOD2": 0.6363
+    },
+    "colour_attrs": {
+      "skiff_COL": [],
+      "skiff_LOD0": [
+        "Col"
+      ],
+      "skiff_LOD1": [
+        "Col"
+      ],
+      "skiff_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

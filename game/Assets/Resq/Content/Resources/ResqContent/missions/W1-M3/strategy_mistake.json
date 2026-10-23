@@ -1,0 +1,9 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): one skiff clears the west dock first, then is sent for the east workshop with the depot still as its destination after the debris warning. The inner lane closes at 180 s; the loaded skiff waits at the safe workshop dock because its only route to the depot is blocked, and the player never reassigns it to the east landing.",
+  "steps": [
+    {"t": 5, "place": "skiff:01"},
+    {"t": 6, "vehicle": "skiff:01", "group": "west_village", "pickup": "west_dock", "to": "depot"},
+    {"t": 1700, "vehicle": "skiff:01", "group": "east_workshop", "pickup": "east_workshop_pickup", "to": "depot"}
+  ]
+}

@@ -1,0 +1,777 @@
+{
+ "mission_id": "W3-M3",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  "###uuuuuuu############kkkkkkk###",
+  "###uuuuuuu############kkkkkkk###",
+  "###uuuuuuuttttttttttttkkkkkkk###",
+  "###uuuuuuu###########tkkkkkkk###",
+  "###uuuuuuu|||||||||||||kkkkkk###",
+  "###uuuuuu====#########kkkkkkk###",
+  "#########aaa=aaa######kkkkkkk###",
+  "#########aaa=aaa########t##=####",
+  "#########aaa=aaa########t##=####",
+  "#########aaa=aaa########t##=####",
+  "#########aaa===a########t##=####",
+  "####vvvvvaaaaa=a########t##=####",
+  "####vvvvvaaaaa=a########t##=####",
+  "####vvvvvaaaaa=a########t##=####",
+  "####vvvvv=======########HHHHH###",
+  "###t#####aaaaaa=########HHHHH###",
+  "###t#########DDDDD######HHHHH###",
+  "###ttttttttttDDDDD##############",
+  "#############DDDDD##############",
+  "################################",
+  "################################"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "a": {
+   "terrain": "avalanche_slope",
+   "code": 21,
+   "elev": 1200
+  },
+  "k": {
+   "terrain": "rock_shelf",
+   "code": 22,
+   "elev": 1200
+  },
+  "t": {
+   "terrain": "footpath",
+   "code": 25,
+   "elev": 1200
+  },
+  "|": {
+   "terrain": "cable_line",
+   "code": 26,
+   "elev": 1200
+  },
+  "u": {
+   "terrain": "upper_terrace",
+   "code": 27,
+   "elev": 1200
+  }
+ },
+ "regions": {},
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "weather_crew_start",
+   "at": [
+    6,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "weather_crew_assembly",
+   "at": [
+    6,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "weather_crew_pickup",
+   "at": [
+    6,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "rock_shelf_start",
+   "at": [
+    25,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "rock_shelf_assembly",
+   "at": [
+    25,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "rock_shelf_pickup",
+   "at": [
+    25,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_start",
+   "at": [
+    7,
+    9
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_assembly",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "village_pickup",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "slope_top",
+   "at": [
+    9,
+    15
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "slope_mid",
+   "at": [
+    12,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "slope_foot",
+   "at": [
+    14,
+    6
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "ridge_gap",
+   "at": [
+    15,
+    18
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "shelf_landing",
+   "at": [
+    22,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "west_track",
+   "at": [
+    3,
+    4
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 10
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    26,
+    5
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 6
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_weather_crew_start",
+   "from": "weather_crew_start",
+   "to": "weather_crew_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_weather_crew_pickup",
+   "from": "weather_crew_assembly",
+   "to": "weather_crew_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_rock_shelf_start",
+   "from": "rock_shelf_start",
+   "to": "rock_shelf_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_rock_shelf_pickup",
+   "from": "rock_shelf_assembly",
+   "to": "rock_shelf_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_start",
+   "from": "village_start",
+   "to": "village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_pickup",
+   "from": "village_assembly",
+   "to": "village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_short_top",
+   "from": "weather_crew_pickup",
+   "to": "slope_top",
+   "ticks": 50,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_slope_upper",
+   "from": "slope_top",
+   "to": "slope_mid",
+   "ticks": 100,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_slope_lower",
+   "from": "slope_mid",
+   "to": "slope_foot",
+   "ticks": 100,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_short_bottom",
+   "from": "slope_foot",
+   "to": "depot",
+   "ticks": 50,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_ridge_traverse",
+   "from": "weather_crew_pickup",
+   "to": "ridge_gap",
+   "ticks": 150,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false,
+   "tags": [
+    "rock_shelf_bypass"
+   ]
+  },
+  {
+   "id": "g_shelf_traverse",
+   "from": "ridge_gap",
+   "to": "shelf_landing",
+   "ticks": 130,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false,
+   "tags": [
+    "rock_shelf_bypass"
+   ]
+  },
+  {
+   "id": "g_shelf_walk",
+   "from": "shelf_landing",
+   "to": "rock_shelf_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_shelf_stair",
+   "from": "rock_shelf_pickup",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false,
+   "tags": [
+    "rock_shelf_bypass"
+   ]
+  },
+  {
+   "id": "g_debris_gully",
+   "from": "rock_shelf_pickup",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "enabled": false,
+   "slots": 2
+  },
+  {
+   "id": "c_shelf_lift",
+   "from": "weather_crew_pickup",
+   "to": "shelf_landing",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     6,
+     16
+    ],
+    [
+     22,
+     16
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_shelf_drop",
+   "from": "shelf_landing",
+   "to": "high_landing",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     22,
+     16
+    ],
+    [
+     26,
+     5
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_village_lane",
+   "from": "village_pickup",
+   "to": "slope_foot",
+   "ticks": 250,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_west_track_a",
+   "from": "village_pickup",
+   "to": "west_track",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_west_track_b",
+   "from": "west_track",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  }
+ ],
+ "sockets": [
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    16,
+    3
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "high_landing",
+   "at": [
+    25,
+    5
+   ]
+  },
+  {
+   "id": "winch:01",
+   "tool": "winch",
+   "node": "weather_crew_pickup",
+   "edge": "c_shelf_lift",
+   "at": [
+    9,
+    16
+   ],
+   "support": "lift_station",
+   "power": "ridge_grid",
+   "zone": "winches"
+  },
+  {
+   "id": "winch:02",
+   "tool": "winch",
+   "node": "shelf_landing",
+   "edge": "c_shelf_drop",
+   "at": [
+    23,
+    15
+   ],
+   "power": "ridge_grid",
+   "zone": "winches"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    4,
+    16
+   ],
+   "platform": [
+    [
+     4,
+     16
+    ]
+   ],
+   "power": "ridge_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    23,
+    16
+   ],
+   "platform": [
+    [
+     23,
+     16
+    ]
+   ],
+   "power": "ridge_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "brace:01",
+   "tool": "brace",
+   "at": [
+    8,
+    15
+   ],
+   "support": "lift_station",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:02",
+   "tool": "brace",
+   "at": [
+    9,
+    14
+   ],
+   "support": "lift_station",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:03",
+   "tool": "brace",
+   "at": [
+    15,
+    17
+   ],
+   "support": "ridge_bridge",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:04",
+   "tool": "brace",
+   "at": [
+    16,
+    17
+   ],
+   "support": "ridge_bridge",
+   "zone": "braces"
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ],
+   "zone": "beacons"
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    27,
+    5
+   ],
+   "zone": "beacons"
+  },
+  {
+   "id": "beacon:03",
+   "tool": "beacon",
+   "node": "shelf_landing",
+   "at": [
+    22,
+    17
+   ],
+   "zone": "beacons"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "ridge_grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "weather_crew",
+   "start": "weather_crew_start",
+   "assembly": "weather_crew_assembly",
+   "pickup": "weather_crew_pickup"
+  },
+  {
+   "id": "rock_shelf",
+   "start": "rock_shelf_start",
+   "assembly": "rock_shelf_assembly",
+   "pickup": "rock_shelf_pickup"
+  },
+  {
+   "id": "village",
+   "start": "village_start",
+   "assembly": "village_assembly",
+   "pickup": "village_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "weather_crew_cable",
+   "from": "weather_crew_pickup",
+   "to": "shelf_landing",
+   "class": "cable"
+  }
+ ],
+ "roles": {
+  "quiet_slope": {
+   "runouts": [
+    "quiet_slope"
+   ]
+  },
+  "debris_bypass": {
+   "edges": [
+    "g_debris_gully"
+   ]
+  },
+  "weather_crew": {
+   "groups": [
+    "weather_crew"
+   ]
+  },
+  "upper_path": {
+   "edges": [
+    "g_slope_upper"
+   ]
+  },
+  "rock_shelf_bypass": {
+   "edges": [
+    "g_ridge_traverse",
+    "g_shelf_traverse",
+    "g_shelf_stair"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 6
+    },
+    {
+     "id": "high_landing",
+     "capacity": 10
+    }
+   ],
+   "edges": [
+    {
+     "id": "g_shelf_stair",
+     "ticks": 400
+    }
+   ]
+  }
+ },
+ "supports": [
+  {
+   "id": "lift_station",
+   "base_stability": 400,
+   "static_load": 0,
+   "nodes": [
+    "weather_crew_pickup"
+   ],
+   "edges": [
+    "c_shelf_lift"
+   ],
+   "collapse_nodes": [],
+   "collapse_edges": []
+  },
+  {
+   "id": "ridge_bridge",
+   "base_stability": 400,
+   "static_load": 0,
+   "nodes": [
+    "ridge_gap"
+   ],
+   "edges": [
+    "g_ridge_traverse",
+    "g_shelf_traverse"
+   ],
+   "collapse_nodes": [],
+   "collapse_edges": []
+  }
+ ],
+ "runouts": [
+  {
+   "id": "quiet_slope",
+   "segments": [
+    {
+     "id": "upper",
+     "edges": [
+      "g_slope_upper"
+     ],
+     "nodes": [
+      "slope_mid"
+     ],
+     "delay": 10,
+     "settle": 200,
+     "cells": {
+      "x0": 9,
+      "y0": 9,
+      "x1": 15,
+      "y1": 14
+     },
+     "next": [
+      "lower"
+     ]
+    },
+    {
+     "id": "lower",
+     "edges": [
+      "g_slope_lower",
+      "g_village_lane"
+     ],
+     "nodes": [
+      "slope_foot"
+     ],
+     "delay": 10,
+     "settle": 200,
+     "cells": {
+      "x0": 9,
+      "y0": 5,
+      "x1": 15,
+      "y1": 8
+     }
+    }
+   ]
+  }
+ ]
+}

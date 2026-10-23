@@ -1,0 +1,13 @@
+{
+  "id": "B",
+  "description": "Use both boats from the beginning and reserve the bridge for the high route: two skiffs lift the low market off its low-water jetty (one to the depot, one to the relay-lit high landing); the bridge closes the high-causeway breach and the outer island walks to the high landing.",
+  "steps": [
+    {"t": 5, "place": "skiff:03"},
+    {"t": 6, "place": "skiff:02"},
+    {"t": 7, "place": "relay:01"},
+    {"t": 8, "vehicle": "skiff:03", "group": "low_market", "pickup": "low_market_pickup", "to": "depot"},
+    {"t": 9, "vehicle": "skiff:02", "group": "low_market", "pickup": "low_market_pickup", "to": "high_landing"},
+    {"t": 10, "place": "bridge:02"},
+    {"t": 11, "group": "outer_island", "to": "high_landing"}
+  ]
+}

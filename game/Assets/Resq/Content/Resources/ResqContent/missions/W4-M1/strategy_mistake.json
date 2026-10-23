@@ -1,0 +1,9 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): plan A, but the skiff is sent to the outer island's low-water jetty instead of its high pier. The jetty stays visible, but by the time the flats let a boat through the tide stands over its deck (more than 500 mm), so every boarding is refused with a tide explanation; the outer island is never lifted.",
+  "steps": [
+    {"t": 5, "group": "low_market", "to": "depot"},
+    {"t": 6, "place": "skiff:01"},
+    {"t": 7, "vehicle": "skiff:01", "group": "outer_island", "pickup": "outer_jetty", "to": "depot"}
+  ]
+}

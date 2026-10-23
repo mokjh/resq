@@ -1,0 +1,15 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): a poor early diversion. Plan B is followed, but at 60 s the main river is sealed at the fork instead of waiting for the late surge, so the first surge pours over the spillway into the diversion basin. The safe basin capacity is spent before the peak; the basin rises onto its rim, drowning the generator that runs the downstream-basin pump; the 420 s late inflow then floods the ridge road dip and the long way home is cut at the end.",
+  "steps": [
+    {"t": 5, "place": "skiff:02"},
+    {"t": 6, "vehicle": "skiff:02", "group": "orchard", "pickup": "orchard_pickup", "to": "depot"},
+    {"t": 7, "group": "workshop", "to": "depot"},
+    {"t": 8, "group": "upper_village", "to": "depot"},
+    {"t": 600, "place": "barrier:01"},
+    {"t": 700, "vehicle": "skiff:02", "group": "island", "pickup": "island_pickup", "to": "depot"},
+    {"t": 3000, "place": "bridge:01"},
+    {"t": 3001, "place": "generator:02"},
+    {"t": 3002, "place": "pump:01"}
+  ]
+}

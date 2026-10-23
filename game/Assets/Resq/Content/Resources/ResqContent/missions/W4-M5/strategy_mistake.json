@@ -1,0 +1,58 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): plan B's network, bridge and boats, but the low market's walking order waits until the 180 s harbor-power warning. The low causeway closed at the first rise, the boats are committed to the isolated islands, and at the peak the low-market terrace floods: the lighthouse is lit and the harbor operational, but only 18 of 26 are rescued against a minimum of 20.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "bridge:01"
+    },
+    {
+      "t": 7,
+      "group": "middle_island",
+      "to": "depot"
+    },
+    {
+      "t": 8,
+      "place": "generator:01"
+    },
+    {
+      "t": 9,
+      "place": "barrier:01"
+    },
+    {
+      "t": 10,
+      "place": "barrier:02"
+    },
+    {
+      "t": 11,
+      "place": "relay:01"
+    },
+    {
+      "t": 12,
+      "place": "skiff:01"
+    },
+    {
+      "t": 13,
+      "vehicle": "skiff:01",
+      "group": "lighthouse",
+      "pickup": "lighthouse_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 14,
+      "place": "skiff:02"
+    },
+    {
+      "t": 15,
+      "vehicle": "skiff:02",
+      "group": "outer_island",
+      "pickup": "outer_island_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 1800,
+      "group": "low_market",
+      "to": "depot"
+    }
+  ]
+}

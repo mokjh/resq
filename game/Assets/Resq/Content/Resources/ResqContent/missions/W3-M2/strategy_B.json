@@ -1,0 +1,64 @@
+{
+  "id": "B",
+  "description": "Prioritize the observatory, then reuse the lower link for all groups: the five standard observatory walkers take the upper snow path at once, before it closes; the village walks its road. Then one generator per grid (observatory terrace and depot) and both winches bring the step-free observer down through the hut, and the same lower winch takes the released station group from the hut two at a time.",
+  "steps": [
+    {
+      "t": 1,
+      "group": "observatory",
+      "to": "depot"
+    },
+    {
+      "t": 2,
+      "group": "village",
+      "to": "depot"
+    },
+    {
+      "t": 1700,
+      "group": "observatory",
+      "to": "observatory_pickup",
+      "evacuate": false
+    },
+    {
+      "t": 1701,
+      "place": "generator:01"
+    },
+    {
+      "t": 1702,
+      "place": "winch:01"
+    },
+    {
+      "t": 1703,
+      "place": "generator:03"
+    },
+    {
+      "t": 1704,
+      "place": "winch:02"
+    },
+    {
+      "t": 1705,
+      "vehicle": "winch:01",
+      "group": "observatory",
+      "pickup": "observatory_pickup",
+      "to": "intermediate",
+      "evacuate": false
+    },
+    {
+      "t": 1706,
+      "place": "brace:02"
+    },
+    {
+      "t": 1830,
+      "vehicle": "winch:02",
+      "group": "observatory",
+      "pickup": "intermediate",
+      "to": "depot"
+    },
+    {
+      "t": 2000,
+      "vehicle": "winch:02",
+      "group": "station",
+      "pickup": "intermediate",
+      "to": "depot"
+    }
+  ]
+}

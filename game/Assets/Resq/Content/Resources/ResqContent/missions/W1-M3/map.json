@@ -1,0 +1,1155 @@
+{
+ "mission_id": "W1-M3",
+ "rows": [
+  "##############RRRRR#############",
+  "##############RRRRR#############",
+  "##############RRRRR#############",
+  "################~###############",
+  "################~###############",
+  "################~###############",
+  "################~###############",
+  "################~###############",
+  "################~~~~~~~#########",
+  "##########hhhhhh~hh###~#########",
+  "#####VVVVVh#####~#h###~hvvvv####",
+  "###hhhVVVVhhhhh#~#h###~#vvvv####",
+  "###h#VVVVV######~#h###~#vvvv####",
+  "###h#VVVVV######~#h###~#vvvv####",
+  "###h###f########~#h###~#########",
+  "###h###f##eexggg~#h###~#########",
+  "###r###f##bb####~#h###~#########",
+  "###h###fffFFfggg~#h###~#########",
+  "###h########f###~#HHHH~#########",
+  "###h########fDDD~#HHHH~#########",
+  "###h#########DDD~#HHHH~#########",
+  "###hhhhhhhhhhDDD~~~W~~~#########",
+  "################~###############",
+  "################w###############"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "high",
+   "code": 3,
+   "elev": 1200
+  },
+  "~": {
+   "terrain": "channel",
+   "code": 0,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "R": {
+   "terrain": "reservoir",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "w": {
+   "terrain": "weir",
+   "code": 12,
+   "elev": 200,
+   "cond": 2000000
+  },
+  "V": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 700
+  },
+  "f": {
+   "terrain": "low_footpath",
+   "code": 7,
+   "elev": 400,
+   "cond": 1000000
+  },
+  "b": {
+   "terrain": "low_lip",
+   "code": 1,
+   "elev": 300,
+   "cond": 1000000
+  },
+  "F": {
+   "terrain": "footpath_dip",
+   "code": 7,
+   "elev": 300,
+   "cond": 1000000
+  },
+  "e": {
+   "terrain": "central_basin",
+   "code": 6,
+   "elev": 150,
+   "cond": 1000000
+  },
+  "x": {
+   "terrain": "spillway",
+   "code": 2,
+   "elev": 900,
+   "cond": 2000000
+  },
+  "g": {
+   "terrain": "gully",
+   "code": 0,
+   "elev": 350,
+   "cond": 2000000
+  },
+  "h": {
+   "terrain": "high_road",
+   "code": 2,
+   "elev": 1200
+  },
+  "r": {
+   "terrain": "ravine",
+   "code": 6,
+   "elev": 0
+  },
+  "W": {
+   "terrain": "weir",
+   "code": 12,
+   "elev": 200,
+   "cond": 2000000
+  }
+ },
+ "regions": {
+  "central_basin": "e",
+  "low_footpath": "f",
+  "west_village": "V",
+  "east_workshop": "v"
+ },
+ "sources": [
+  {
+   "id": "reservoir_in",
+   "at": [
+    16,
+    22
+   ],
+   "rate": 10000000
+  },
+  {
+   "id": "central_in",
+   "at": [
+    10,
+    8
+   ],
+   "rate": 0
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outlet",
+   "at": [
+    16,
+    0
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "west_village_start",
+   "at": [
+    7,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "west_village_assembly",
+   "at": [
+    7,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "west_village_pickup",
+   "at": [
+    7,
+    10
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "footpath_bend",
+   "at": [
+    7,
+    6
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "footpath_ford",
+   "at": [
+    11,
+    6
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "high_corner_nw",
+   "at": [
+    3,
+    12
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "ravine_north",
+   "at": [
+    3,
+    8
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "ravine_south",
+   "at": [
+    3,
+    6
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "high_corner_sw",
+   "at": [
+    3,
+    2
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "west_dock",
+   "at": [
+    15,
+    12
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 8,
+   "water_at": [
+    16,
+    12
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "west_bridgehead",
+   "at": [
+    15,
+    14
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "east_bridgehead",
+   "at": [
+    17,
+    14
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "depot",
+   "at": [
+    14,
+    3
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 8,
+   "water_at": [
+    16,
+    3
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    21,
+    4
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    22,
+    4
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "fork",
+   "at": [
+    17,
+    15
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "east_workshop_start",
+   "at": [
+    25,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_workshop_assembly",
+   "at": [
+    25,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_workshop_pickup",
+   "at": [
+    23,
+    13
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    22,
+    13
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_wv_start",
+   "from": "west_village_start",
+   "to": "west_village_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_wv_pickup",
+   "from": "west_village_assembly",
+   "to": "west_village_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_foot_a",
+   "from": "west_village_pickup",
+   "to": "footpath_bend",
+   "ticks": 110,
+   "class": "ground",
+   "sample": [
+    [
+     7,
+     6
+    ],
+    [
+     7,
+     7
+    ],
+    [
+     7,
+     8
+    ],
+    [
+     7,
+     9
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_foot_b",
+   "from": "footpath_bend",
+   "to": "footpath_ford",
+   "ticks": 130,
+   "class": "ground",
+   "sample": [
+    [
+     7,
+     6
+    ],
+    [
+     8,
+     6
+    ],
+    [
+     9,
+     6
+    ],
+    [
+     10,
+     6
+    ],
+    [
+     11,
+     6
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_foot_c",
+   "from": "footpath_ford",
+   "to": "depot",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     11,
+     6
+    ],
+    [
+     12,
+     6
+    ],
+    [
+     12,
+     5
+    ],
+    [
+     12,
+     4
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_high_a",
+   "from": "west_village_assembly",
+   "to": "high_corner_nw",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     5,
+     12
+    ],
+    [
+     4,
+     12
+    ],
+    [
+     3,
+     12
+    ]
+   ]
+  },
+  {
+   "id": "g_high_b",
+   "from": "high_corner_nw",
+   "to": "ravine_north",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     9
+    ],
+    [
+     3,
+     10
+    ],
+    [
+     3,
+     11
+    ],
+    [
+     3,
+     12
+    ]
+   ]
+  },
+  {
+   "id": "g_ravine",
+   "from": "ravine_north",
+   "to": "ravine_south",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     3,
+     8
+    ],
+    [
+     3,
+     6
+    ]
+   ],
+   "tags": [
+    "bridge"
+   ]
+  },
+  {
+   "id": "g_high_c",
+   "from": "ravine_south",
+   "to": "high_corner_sw",
+   "ticks": 100,
+   "class": "ground",
+   "sample": [
+    [
+     3,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     3,
+     4
+    ],
+    [
+     3,
+     5
+    ],
+    [
+     3,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "g_high_d",
+   "from": "high_corner_sw",
+   "to": "depot",
+   "ticks": 280,
+   "class": "ground",
+   "sample": [
+    [
+     3,
+     2
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ],
+    [
+     10,
+     2
+    ],
+    [
+     11,
+     2
+    ],
+    [
+     12,
+     2
+    ]
+   ]
+  },
+  {
+   "id": "g_dock_path",
+   "from": "west_village_assembly",
+   "to": "west_dock",
+   "ticks": 120,
+   "class": "ground",
+   "sample": [
+    [
+     10,
+     12
+    ],
+    [
+     11,
+     12
+    ],
+    [
+     12,
+     12
+    ],
+    [
+     13,
+     12
+    ],
+    [
+     14,
+     12
+    ]
+   ]
+  },
+  {
+   "id": "g_xriver_a",
+   "from": "west_village_assembly",
+   "to": "west_bridgehead",
+   "ticks": 160,
+   "class": "ground",
+   "sample": [
+    [
+     10,
+     13
+    ],
+    [
+     10,
+     14
+    ],
+    [
+     11,
+     14
+    ],
+    [
+     12,
+     14
+    ],
+    [
+     13,
+     14
+    ],
+    [
+     14,
+     14
+    ],
+    [
+     15,
+     14
+    ]
+   ]
+  },
+  {
+   "id": "g_xriver",
+   "from": "west_bridgehead",
+   "to": "east_bridgehead",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     14
+    ],
+    [
+     17,
+     14
+    ]
+   ],
+   "tags": [
+    "bridge"
+   ]
+  },
+  {
+   "id": "g_strip",
+   "from": "east_bridgehead",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     18,
+     6
+    ],
+    [
+     18,
+     7
+    ],
+    [
+     18,
+     8
+    ],
+    [
+     18,
+     9
+    ],
+    [
+     18,
+     10
+    ],
+    [
+     18,
+     11
+    ],
+    [
+     18,
+     12
+    ],
+    [
+     18,
+     13
+    ],
+    [
+     18,
+     14
+    ]
+   ]
+  },
+  {
+   "id": "g_ws_start",
+   "from": "east_workshop_start",
+   "to": "east_workshop_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_ws_pickup",
+   "from": "east_workshop_assembly",
+   "to": "east_workshop_pickup",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     24,
+     13
+    ],
+    [
+     23,
+     13
+    ]
+   ]
+  },
+  {
+   "id": "w_west_fork",
+   "from": "west_dock",
+   "to": "fork",
+   "ticks": 60,
+   "class": "water",
+   "sample": [
+    [
+     16,
+     12
+    ],
+    [
+     16,
+     13
+    ],
+    [
+     16,
+     14
+    ],
+    [
+     16,
+     15
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_workshop_fork",
+   "from": "east_workshop_pickup",
+   "to": "fork",
+   "ticks": 100,
+   "class": "water",
+   "sample": [
+    [
+     17,
+     15
+    ],
+    [
+     18,
+     15
+    ],
+    [
+     19,
+     15
+    ],
+    [
+     20,
+     15
+    ],
+    [
+     21,
+     15
+    ],
+    [
+     22,
+     15
+    ],
+    [
+     22,
+     14
+    ],
+    [
+     22,
+     13
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_inner",
+   "from": "fork",
+   "to": "depot",
+   "ticks": 200,
+   "class": "water",
+   "sample": [
+    [
+     16,
+     3
+    ],
+    [
+     16,
+     4
+    ],
+    [
+     16,
+     5
+    ],
+    [
+     16,
+     6
+    ],
+    [
+     16,
+     7
+    ],
+    [
+     16,
+     8
+    ],
+    [
+     16,
+     9
+    ],
+    [
+     16,
+     10
+    ],
+    [
+     16,
+     11
+    ],
+    [
+     16,
+     12
+    ],
+    [
+     16,
+     13
+    ],
+    [
+     16,
+     14
+    ],
+    [
+     16,
+     15
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_east",
+   "from": "east_workshop_pickup",
+   "to": "high_landing",
+   "ticks": 400,
+   "class": "water",
+   "sample": [
+    [
+     22,
+     4
+    ],
+    [
+     22,
+     5
+    ],
+    [
+     22,
+     6
+    ],
+    [
+     22,
+     7
+    ],
+    [
+     22,
+     8
+    ],
+    [
+     22,
+     9
+    ],
+    [
+     22,
+     10
+    ],
+    [
+     22,
+     11
+    ],
+    [
+     22,
+     12
+    ],
+    [
+     22,
+     13
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  }
+ ],
+ "sockets": [
+  {
+   "id": "bridge:01",
+   "tool": "bridge",
+   "edge": "g_ravine",
+   "at": [
+    3,
+    7
+   ],
+   "zone": "bridges"
+  },
+  {
+   "id": "bridge:02",
+   "tool": "bridge",
+   "edge": "g_xriver",
+   "at": [
+    16,
+    14
+   ],
+   "zone": "bridges"
+  },
+  {
+   "id": "barrier:01",
+   "tool": "barrier",
+   "at": [
+    10,
+    7
+   ],
+   "links": [
+    [
+     [
+      10,
+      8
+     ],
+     [
+      10,
+      7
+     ]
+    ]
+   ],
+   "zone": "lips"
+  },
+  {
+   "id": "barrier:02",
+   "tool": "barrier",
+   "at": [
+    11,
+    7
+   ],
+   "links": [
+    [
+     [
+      11,
+      8
+     ],
+     [
+      11,
+      7
+     ]
+    ]
+   ],
+   "zone": "lips"
+  },
+  {
+   "id": "barrier:03",
+   "tool": "barrier",
+   "at": [
+    12,
+    8
+   ],
+   "links": [
+    [
+     [
+      11,
+      8
+     ],
+     [
+      12,
+      8
+     ]
+    ]
+   ],
+   "zone": "lips"
+  },
+  {
+   "id": "skiff:01",
+   "tool": "skiff",
+   "node": "depot",
+   "at": [
+    16,
+    3
+   ]
+  },
+  {
+   "id": "skiff:02",
+   "tool": "skiff",
+   "node": "high_landing",
+   "at": [
+    22,
+    4
+   ]
+  },
+  {
+   "id": "skiff:03",
+   "tool": "skiff",
+   "node": "west_dock",
+   "at": [
+    16,
+    12
+   ]
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ]
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    20,
+    4
+   ]
+  },
+  {
+   "id": "beacon:03",
+   "tool": "beacon",
+   "node": "west_dock",
+   "at": [
+    15,
+    12
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "west_village",
+   "start": "west_village_start",
+   "assembly": "west_village_assembly",
+   "pickup": "west_village_pickup"
+  },
+  {
+   "id": "east_workshop",
+   "start": "east_workshop_start",
+   "assembly": "east_workshop_assembly",
+   "pickup": "east_workshop_pickup"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "central_basin": {
+   "sources": [
+    "central_in"
+   ]
+  },
+  "boat_lane_inner": {
+   "edges": [
+    "w_inner"
+   ]
+  },
+  "east_lane": {
+   "edges": [
+    "w_east"
+   ]
+  },
+  "west_village": {
+   "groups": [
+    "west_village"
+   ]
+  },
+  "east_workshop": {
+   "groups": [
+    "east_workshop"
+   ]
+  }
+ }
+}

@@ -1,0 +1,818 @@
+{
+ "mission_id": "W1-M4",
+ "rows": [
+  "#############RRRRR##############",
+  "#############RRRRR##############",
+  "#############RRRRR##############",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "##########~~~~~~~~~~~~~~########",
+  "##########~############~########",
+  "##########~#P##########~#vvvv###",
+  "##########~#kkkkMnn####~#vvvv###",
+  "##########~#kkkkMnn####~#vvvv###",
+  "##########~#kkkkMnn####~#vvvv###",
+  "##########~##b##Mnn####~#=######",
+  "##########~#LLL#=######~#=######",
+  "##########~#LLL#=######~#=######",
+  "##########~#LLL#=##Jee#~#=######",
+  "##########~#####=###eeq~HHHHH###",
+  "##########~##DDD=######~HHHHH###",
+  "##########~##DDD=######~HHHHH###",
+  "##########~##DDD#~~~~~~~########",
+  "##########~~~~~~~~##############",
+  "################w###############"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "high",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "~": {
+   "terrain": "channel",
+   "code": 0,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "R": {
+   "terrain": "reservoir",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "L": {
+   "terrain": "low_terrace",
+   "code": 7,
+   "elev": 100
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "w": {
+   "terrain": "weir",
+   "code": 12,
+   "elev": 200,
+   "cond": 2000000
+  },
+  "k": {
+   "terrain": "clinic_basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "n": {
+   "terrain": "second_basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "e": {
+   "terrain": "power_basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "M": {
+   "terrain": "clinic_pad",
+   "code": 8,
+   "elev": 300
+  },
+  "b": {
+   "terrain": "low_lip",
+   "code": 1,
+   "elev": 350
+  },
+  "q": {
+   "terrain": "basin_weir",
+   "code": 12,
+   "elev": 600,
+   "cond": 300000
+  },
+  "P": {
+   "terrain": "low_platform",
+   "code": 2,
+   "elev": 200
+  },
+  "J": {
+   "terrain": "spine_junction",
+   "code": 2,
+   "elev": 300
+  }
+ },
+ "regions": {
+  "clinic": "M",
+  "clinic_basin": "k",
+  "second_basin": "n",
+  "power_basin": "e",
+  "riverside": "L"
+ },
+ "sources": [
+  {
+   "id": "reservoir_in",
+   "at": [
+    15,
+    22
+   ],
+   "rate": 10000000
+  },
+  {
+   "id": "clinic_in",
+   "at": [
+    13,
+    11
+   ],
+   "rate": 0
+  },
+  {
+   "id": "power_in",
+   "at": [
+    20,
+    6
+   ],
+   "rate": 0
+  },
+  {
+   "id": "second_in",
+   "at": [
+    18,
+    10
+   ],
+   "rate": 0
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outlet",
+   "at": [
+    16,
+    0
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "clinic_start",
+   "at": [
+    16,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "clinic_assembly",
+   "at": [
+    16,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "clinic_pickup",
+   "at": [
+    16,
+    10
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "clinic_gate",
+   "at": [
+    16,
+    8
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "depot",
+   "at": [
+    14,
+    3
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 10,
+   "water_at": [
+    13,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "riverside_start",
+   "at": [
+    13,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "riverside_assembly",
+   "at": [
+    12,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "riverside_pickup",
+   "at": [
+    11,
+    7
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    10,
+    7
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "tram_start",
+   "at": [
+    26,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "tram_assembly",
+   "at": [
+    26,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "tram_pickup",
+   "at": [
+    25,
+    10
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    24,
+    4
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    23,
+    4
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_clinic_start",
+   "from": "clinic_start",
+   "to": "clinic_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_clinic_pickup",
+   "from": "clinic_assembly",
+   "to": "clinic_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_clinic_gate",
+   "from": "clinic_pickup",
+   "to": "clinic_gate",
+   "ticks": 30,
+   "class": "ground",
+   "sample": [
+    [
+     16,
+     10
+    ],
+    [
+     16,
+     9
+    ],
+    [
+     16,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "g_clinic_road",
+   "from": "clinic_gate",
+   "to": "depot",
+   "ticks": 250,
+   "class": "ground",
+   "sample": [
+    [
+     16,
+     3
+    ],
+    [
+     16,
+     4
+    ],
+    [
+     16,
+     5
+    ],
+    [
+     16,
+     6
+    ],
+    [
+     16,
+     7
+    ],
+    [
+     16,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "g_riverside_start",
+   "from": "riverside_start",
+   "to": "riverside_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_riverside_pickup",
+   "from": "riverside_assembly",
+   "to": "riverside_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_tram_start",
+   "from": "tram_start",
+   "to": "tram_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_tram_pickup",
+   "from": "tram_assembly",
+   "to": "tram_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_tram_road",
+   "from": "tram_pickup",
+   "to": "high_landing",
+   "ticks": 260,
+   "class": "ground",
+   "via": [
+    [
+     25,
+     4
+    ]
+   ],
+   "sample": [
+    [
+     25,
+     4
+    ],
+    [
+     25,
+     5
+    ],
+    [
+     25,
+     6
+    ],
+    [
+     25,
+     7
+    ],
+    [
+     25,
+     8
+    ],
+    [
+     25,
+     9
+    ],
+    [
+     25,
+     10
+    ]
+   ]
+  },
+  {
+   "id": "w_riverside_depot",
+   "from": "riverside_pickup",
+   "to": "depot",
+   "ticks": 200,
+   "class": "water",
+   "sample": [
+    [
+     10,
+     1
+    ],
+    [
+     10,
+     2
+    ],
+    [
+     10,
+     3
+    ],
+    [
+     10,
+     4
+    ],
+    [
+     10,
+     5
+    ],
+    [
+     10,
+     6
+    ],
+    [
+     10,
+     7
+    ],
+    [
+     11,
+     1
+    ],
+    [
+     12,
+     1
+    ],
+    [
+     13,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_depot_landing",
+   "from": "depot",
+   "to": "high_landing",
+   "ticks": 260,
+   "class": "water",
+   "sample": [
+    [
+     14,
+     1
+    ],
+    [
+     15,
+     1
+    ],
+    [
+     16,
+     1
+    ],
+    [
+     17,
+     1
+    ],
+    [
+     17,
+     2
+    ],
+    [
+     18,
+     2
+    ],
+    [
+     19,
+     2
+    ],
+    [
+     20,
+     2
+    ],
+    [
+     21,
+     2
+    ],
+    [
+     22,
+     2
+    ],
+    [
+     23,
+     2
+    ],
+    [
+     23,
+     3
+    ],
+    [
+     23,
+     4
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  }
+ ],
+ "sockets": [
+  {
+   "id": "pump:01",
+   "tool": "pump",
+   "at": [
+    11,
+    11
+   ],
+   "intake": [
+    12,
+    11
+   ],
+   "outlet": [
+    10,
+    11
+   ],
+   "power": "spine",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:02",
+   "tool": "pump",
+   "at": [
+    20,
+    10
+   ],
+   "intake": [
+    18,
+    10
+   ],
+   "outlet": [
+    23,
+    10
+   ],
+   "power": "spine",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:03",
+   "tool": "pump",
+   "at": [
+    14,
+    13
+   ],
+   "intake": [
+    14,
+    12
+   ],
+   "outlet": [
+    14,
+    15
+   ],
+   "power": "spine",
+   "zone": "pumps"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    16,
+    13
+   ],
+   "platform": [
+    [
+     16,
+     13
+    ]
+   ],
+   "power": "spine",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    19,
+    6
+   ],
+   "platform": [
+    [
+     19,
+     6
+    ]
+   ],
+   "power": "spine",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:03",
+   "tool": "generator",
+   "at": [
+    12,
+    13
+   ],
+   "platform": [
+    [
+     12,
+     13
+    ]
+   ],
+   "power": "spine",
+   "zone": "generators"
+  },
+  {
+   "id": "barrier:01",
+   "tool": "barrier",
+   "at": [
+    20,
+    6
+   ],
+   "links": [
+    [
+     [
+      20,
+      6
+     ],
+     [
+      19,
+      6
+     ]
+    ]
+   ],
+   "zone": "barriers"
+  },
+  {
+   "id": "barrier:02",
+   "tool": "barrier",
+   "at": [
+    13,
+    9
+   ],
+   "links": [
+    [
+     [
+      13,
+      10
+     ],
+     [
+      13,
+      9
+     ]
+    ]
+   ],
+   "zone": "barriers"
+  },
+  {
+   "id": "skiff:01",
+   "tool": "skiff",
+   "node": "depot",
+   "at": [
+    13,
+    1
+   ]
+  },
+  {
+   "id": "skiff:02",
+   "tool": "skiff",
+   "node": "riverside_pickup",
+   "at": [
+    10,
+    7
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "spine",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [
+  {
+   "id": "clinic_power",
+   "power": "spine",
+   "demand": 1,
+   "region": "clinic",
+   "max_depth": 100
+  }
+ ],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "clinic",
+   "start": "clinic_start",
+   "assembly": "clinic_assembly",
+   "pickup": "clinic_pickup"
+  },
+  {
+   "id": "tram",
+   "start": "tram_start",
+   "assembly": "tram_assembly",
+   "pickup": "tram_pickup",
+   "held": true
+  },
+  {
+   "id": "riverside",
+   "start": "riverside_start",
+   "assembly": "riverside_assembly",
+   "pickup": "riverside_pickup"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "clinic_basin": {
+   "sources": [
+    "clinic_in"
+   ]
+  },
+  "power_basin": {
+   "sources": [
+    "power_in"
+   ]
+  },
+  "second_basin": {
+   "sources": [
+    "second_in"
+   ]
+  },
+  "tram": {
+   "groups": [
+    "tram"
+   ]
+  },
+  "clinic_power": {
+   "infrastructure": [
+    "clinic_power"
+   ]
+  }
+ }
+}

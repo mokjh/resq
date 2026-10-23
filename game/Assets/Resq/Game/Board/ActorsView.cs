@@ -17,7 +17,7 @@ namespace Resq.Game
         readonly List<Transform> _residents = new List<Transform>();
         readonly List<Transform> _vehicles = new List<Transform>();
         readonly Dictionary<int, Transform> _equipment = new Dictionary<int, Transform>();
-        Mesh _residentMesh, _busMesh, _skiffMesh;
+        Mesh _residentMesh, _busMesh, _skiffMesh, _crawlerMesh, _cabinMesh;
         Mesh[] _residentVariants;
 
         static readonly Color[] GroupColors =
@@ -50,8 +50,19 @@ namespace Resq.Game
                 .Box(new Vector3(0, 0.0085f, 0) * s, new Vector3(0.0168f, 0.002f, 0.037f) * s, Rescue)
                 .Box(new Vector3(0, 0.012f, -0.012f) * s, new Vector3(0.012f, 0.008f, 0.008f) * s, TerrainBuilder.Hex(0x132B2A))
                 .Build("Skiff");
+            _crawlerMesh = new MeshKit()
+                .Box(new Vector3(0, 0.008f, 0) * s, new Vector3(0.017f, 0.012f, 0.034f) * s, Rescue)
+                .Box(new Vector3(0, 0.016f, -0.004f) * s, new Vector3(0.014f, 0.006f, 0.018f) * s, TerrainBuilder.Hex(0xF3EBDD))
+                .Box(new Vector3(0.009f, 0.003f, 0) * s, new Vector3(0.004f, 0.006f, 0.036f) * s, TerrainBuilder.Hex(0x2B2B2B))
+                .Box(new Vector3(-0.009f, 0.003f, 0) * s, new Vector3(0.004f, 0.006f, 0.036f) * s, TerrainBuilder.Hex(0x2B2B2B))
+                .Build("Crawler");
+            _cabinMesh = new MeshKit()
+                .Box(new Vector3(0, -0.008f, 0) * s, new Vector3(0.012f, 0.012f, 0.012f) * s, Rescue)
+                .Box(new Vector3(0, 0.0005f, 0) * s, new Vector3(0.002f, 0.006f, 0.002f) * s, TerrainBuilder.Hex(0x2B2B2B))
+                .Build("WinchCabin");
             for (int r = 0; r < d.ResidentIds.Length; r++)
                 _residents.Add(Spawn("Resident_" + r, _residentVariants[d.ResidentGroup[r] % GroupColors.Length]));
+            BuildCables(d);
         }
 
         Transform Spawn(string name, Mesh mesh)
@@ -75,14 +86,18 @@ namespace Resq.Game
             {
                 int v = _vehicles.Count;
                 var kind = (VehicleKind)S.VKind[v];
-                _vehicles.Add(Spawn("Vehicle_" + v, kind == VehicleKind.Skiff ? _skiffMesh : _busMesh));
+                var mesh = kind == VehicleKind.Skiff ? _skiffMesh : kind == VehicleKind.Crawler ? _crawlerMesh
+                         : kind == VehicleKind.Winch ? _cabinMesh : _busMesh;
+                _vehicles.Add(Spawn("Vehicle_" + v, mesh));
             }
             for (int v = 0; v < S.C.VehicleCount; v++)
             {
                 Vector3 pos, fwd;
+                bool onWater = (VehicleKind)S.VKind[v] == VehicleKind.Skiff;
                 if (S.VState[v] == (byte)VehicleState.Moving)
-                    EdgePose(S.VEdge[v], S.VFrom[v], S.VNode[v], (S.VProgress[v] + alpha) / Mathf.Max(1, S.VDuration[v]), true, out pos, out fwd);
-                else { pos = NodePos(S.VNode[v], true); fwd = Vector3.forward; }
+                    EdgePose(S.VEdge[v], S.VFrom[v], S.VNode[v], (S.VProgress[v] + (S.VBrake[v] > 0 ? 0 : alpha)) / Mathf.Max(1, S.VDuration[v]), onWater, out pos, out fwd);
+                else { pos = NodePos(S.VNode[v], onWater); fwd = Vector3.forward; }
+                if ((VehicleKind)S.VKind[v] == VehicleKind.Winch) { pos.y += CableHeight; fwd = Vector3.zero; }
                 var t = _vehicles[v];
                 t.localPosition = pos;
                 if (fwd.sqrMagnitude > 1e-6f) t.localRotation = Quaternion.Slerp(t.localRotation, Quaternion.LookRotation(fwd, Vector3.up), 0.25f);
@@ -124,9 +139,30 @@ namespace Resq.Game
             return new Vector3(Mathf.Cos(ang) * rad, 0, Mathf.Sin(ang) * rad);
         }
 
+        public const float CableHeight = 0.035f;
+
+        /// <summary>Cable edges are drawn as a taut line between their stations, raised above the ground.</summary>
+        void BuildCables(MissionDef d)
+        {
+            var kit = new MeshKit();
+            bool any = false;
+            for (int e = 0; e < d.EdgeIds.Length; e++)
+            {
+                if (d.EdgeClass[e] != Traversal.Cable) continue;
+                var a = BoardSpace.CellCenter(d, d.NodeCell[d.EdgeFrom[e]]) + Vector3.up * CableHeight;
+                var b = BoardSpace.CellCenter(d, d.NodeCell[d.EdgeTo[e]]) + Vector3.up * CableHeight;
+                kit.Segment(a, b, 0.0007f, TerrainBuilder.Hex(0x2B2B2B));
+                kit.Cylinder(a - Vector3.up * CableHeight, 0.0012f, CableHeight, 6, TerrainBuilder.Hex(0x8C8577));
+                kit.Cylinder(b - Vector3.up * CableHeight, 0.0012f, CableHeight, 6, TerrainBuilder.Hex(0x8C8577));
+                any = true;
+            }
+            if (any) Spawn("Cables", kit.Build("Cables"));
+        }
+
         Vector3 NodePos(int node, bool onWater)
         {
             var d = _def;
+            if (onWater && d.NodeWaterCell[node] < 0) onWater = false;
             int cell = onWater ? d.NodeWaterCell[node] : d.NodeCell[node];
             var p = BoardSpace.CellCenter(d, cell);
             if (onWater) p.y = WaterSurface(cell);
@@ -145,6 +181,13 @@ namespace Resq.Game
         {
             var d = _def;
             bool water = d.EdgeClass[edge] == Traversal.Water;
+            if (d.EdgeClass[edge] == Traversal.Cable)
+            {
+                // straight span between stations
+                var a = NodePos(fromNode, false); var b = NodePos(toNode, false);
+                pos = Vector3.Lerp(a, b, Mathf.Clamp01(t)); fwd = b - a; fwd.y = 0;
+                return;
+            }
             var pts = _scratchPts;
             pts.Clear();
             pts.Add(NodePos(fromNode, water));
@@ -200,6 +243,8 @@ namespace Resq.Game
                 t.localScale = S.EqBroken[inst] ? new Vector3(1, 0.35f, 1) : Vector3.one;
             }
         }
+
+        public Transform EquipmentTransform(int inst) => _equipment.TryGetValue(inst, out var t) ? t : null;
 
         public Vector3 SocketPos(int sock)
         {
@@ -269,6 +314,44 @@ namespace Resq.Game
                 case ToolKind.Generator:
                     kit.Box(new Vector3(0, 0.007f, 0), new Vector3(c * 0.8f, 0.014f, c * 0.6f), Rescue)
                        .Box(new Vector3(0, 0.0155f, 0), new Vector3(c * 0.5f, 0.003f, c * 0.3f), TerrainBuilder.Hex(0xF3EBDD));
+                    break;
+                case ToolKind.Firebreak:
+                {
+                    // a cleared strip: one low dark slab per target cell, centred on the socket cell
+                    var at = BoardSpace.CellCenter(d, Mathf.Max(0, d.SocketCell[sock]));
+                    foreach (int cell in d.SocketCells[sock])
+                    {
+                        var p = BoardSpace.CellCenter(d, cell) - at;
+                        kit.Box(new Vector3(p.x, 0.0012f, p.z), new Vector3(c * 0.9f, 0.0024f, c * 0.9f), TerrainBuilder.Hex(0x6B5440));
+                    }
+                    break;
+                }
+                case ToolKind.Sprinkler:
+                    kit.Cylinder(Vector3.zero, 0.001f, 0.022f, 6, TerrainBuilder.Hex(0xF3EBDD))
+                       .Cylinder(new Vector3(0, 0.022f, 0), c * 0.3f, 0.002f, 10, TerrainBuilder.Hex(0x5AA9E6))
+                       .Box(new Vector3(0, 0.003f, 0), new Vector3(c * 0.5f, 0.006f, c * 0.5f), Rescue);
+                    break;
+                case ToolKind.Brace:
+                    kit.Segment(new Vector3(-c * 0.35f, 0, 0), new Vector3(0, 0.028f, 0), 0.0016f, Rescue)
+                       .Segment(new Vector3(c * 0.35f, 0, 0), new Vector3(0, 0.028f, 0), 0.0016f, Rescue)
+                       .Box(new Vector3(0, 0.0015f, 0), new Vector3(c * 0.8f, 0.003f, 0.003f), TerrainBuilder.Hex(0x8C8577));
+                    break;
+                case ToolKind.Winch:
+                    kit.Box(new Vector3(0, 0.006f, 0), new Vector3(c * 0.7f, 0.012f, c * 0.5f), Rescue)
+                       .Cylinder(new Vector3(0, 0.012f, 0), c * 0.18f, 0.008f, 10, TerrainBuilder.Hex(0x2B2B2B));
+                    break;
+                case ToolKind.Relay:
+                    kit.Cylinder(Vector3.zero, 0.0012f, 0.034f, 6, TerrainBuilder.Hex(0xF3EBDD))
+                       .Box(new Vector3(0, 0.034f, 0), new Vector3(0.012f, 0.003f, 0.003f), Rescue)
+                       .Box(new Vector3(0, 0.002f, 0), new Vector3(c * 0.5f, 0.004f, c * 0.5f), Rescue);
+                    break;
+                case ToolKind.Cooler:
+                    kit.Cylinder(Vector3.zero, c * 0.28f, 0.016f, 12, TerrainBuilder.Hex(0x5AA9E6))
+                       .Cylinder(new Vector3(0, 0.016f, 0), c * 0.3f, 0.003f, 12, TerrainBuilder.Hex(0xF3EBDD));
+                    break;
+                case ToolKind.Shelter:
+                    kit.Box(new Vector3(0, 0.007f, 0), new Vector3(c * 0.9f, 0.014f, c * 0.9f), TerrainBuilder.Hex(0xF3EBDD))
+                       .Box(new Vector3(0, 0.0155f, 0), new Vector3(c * 1.0f, 0.003f, c * 1.0f), Rescue);
                     break;
                 case ToolKind.Beacon:
                     kit.Cylinder(Vector3.zero, 0.001f, 0.03f, 6, TerrainBuilder.Hex(0xF3EBDD))

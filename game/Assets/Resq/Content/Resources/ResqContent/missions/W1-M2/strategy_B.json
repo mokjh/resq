@@ -1,0 +1,14 @@
+{
+  "id": "B",
+  "description": "Use paired barriers to spare the road, ferry the orchard first, and reserve the pump for the late surge.",
+  "steps": [
+    {"t": 5, "place": "barrier:01"},
+    {"t": 6, "place": "barrier:02"},
+    {"t": 8, "place": "skiff:02"},
+    {"t": 9, "vehicle": "skiff:02", "group": "orchard", "pickup": "orchard_dock", "to": "depot"},
+    {"t": 10, "group": "river_houses", "to": "high_landing"},
+    {"t": 600, "vehicle": "skiff:02", "group": "ferry_landing", "pickup": "ferry_dock", "to": "depot"},
+    {"t": 2300, "place": "generator:01"},
+    {"t": 2301, "place": "pump:01"}
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: a sprinkler without water shows a visible dry gauge rather than pretending to operate). Plan A is followed but the pump is never placed, so nothing replenishes the tank after the 150 s warning. The orchard sprinkler empties it (S=1210 in Standard, S=1980 in Relaxed) and the culvert-shed sprinkler placed for the return road runs dry: its gauge reads empty when the brush ignites at 300 s. The culvert shed catches, the fire creeps up the timber sheds and the orchard assembly route is lost at the end.",
+  "steps": [
+    {"t": 5, "place": "generator:01"},
+    {"t": 7, "place": "sprinkler:01"},
+    {"t": 8, "place": "crawler:02"},
+    {"t": 9, "vehicle": "crawler:02", "group": "orchard", "pickup": "orchard_pickup", "to": "depot"},
+    {"t": 10, "group": "pond_houses", "to": "high_landing"},
+    {"t": 1300, "disable": "sprinkler:01"},
+    {"t": 2850, "place": "sprinkler:02"},
+    {"t": 6000, "disable": "sprinkler:02"}
+  ]
+}

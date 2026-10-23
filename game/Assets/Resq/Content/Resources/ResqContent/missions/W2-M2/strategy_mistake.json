@@ -1,0 +1,12 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: an empty vehicle on the wrong loop costs time but can be rerouted). Plan A's junction firebreak is cut, but the crawler staged at the high landing is sent empty across to the north camp on the west loop instead of taking the east camp on its own loop. The west camp crawler and the detour both finish, and the crawler is rerouted to the east camp at t=1200, but the east woods reach the east camp's tents first (S~1580): its six campers go to backup at S=1599 and only 12 of 18 (minimum 14) are rescued.",
+  "steps": [
+    {"t": 5, "place": "firebreak:02"},
+    {"t": 6, "place": "crawler:01"},
+    {"t": 7, "place": "crawler:02"},
+    {"t": 8, "vehicle": "crawler:02", "group": "north_camp", "pickup": "north_camp_start", "to": "depot"},
+    {"t": 9, "vehicle": "crawler:01", "group": "west_camp", "pickup": "west_camp_start", "to": "depot"},
+    {"t": 1200, "vehicle": "crawler:02", "group": "east_camp", "pickup": "east_camp_start", "to": "high_landing"}
+  ]
+}

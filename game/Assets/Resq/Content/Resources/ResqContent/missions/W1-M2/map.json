@@ -1,0 +1,1012 @@
+{
+ "mission_id": "W1-M2",
+ "rows": [
+  "#############RRRRR##############",
+  "#############RRRRR##############",
+  "#############RRRRR##############",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~################",
+  "###############~~~~~############",
+  "###################~############",
+  "#####ooo###########~#vvvvv######",
+  "#####ooo###########~#vvvvv######",
+  "#####ooo###########~#vvvvv===###",
+  "###########uuP#####~#vvvvv##=###",
+  "#dddd###=sxuu#=####~###=####=###",
+  "#dddd##ppsbuu#=####~###=####=###",
+  "#dddd##ppsbuu#=####~###=####=###",
+  "#dddd###=M#c##=####~###=####=###",
+  "######vvvv#~~#=####~HHHHHH##=###",
+  "######vvvv#~~DDD###~HHHHHH===###",
+  "######vvvv#~~DDD###~HHHHHH######",
+  "###########~~DDD~~~~############",
+  "###########~~~~~~###############",
+  "################w###############"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "high",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "~": {
+   "terrain": "channel",
+   "code": 0,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "R": {
+   "terrain": "reservoir",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 2000000
+  },
+  "d": {
+   "terrain": "basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "w": {
+   "terrain": "weir",
+   "code": 12,
+   "elev": 200,
+   "cond": 2000000
+  },
+  "u": {
+   "terrain": "upper_basin",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 340,
+   "cond": 2000000
+  },
+  "c": {
+   "terrain": "culvert",
+   "code": 0,
+   "elev": 0,
+   "init_depth": 300,
+   "cond": 200000
+  },
+  "p": {
+   "terrain": "underpass",
+   "code": 2,
+   "elev": 0,
+   "init_depth": 250
+  },
+  "b": {
+   "terrain": "low_lip",
+   "code": 1,
+   "elev": 370,
+   "cond": 18000
+  },
+  "x": {
+   "terrain": "spillway",
+   "code": 2,
+   "elev": 950,
+   "cond": 500000
+  },
+  "s": {
+   "terrain": "shoulder",
+   "code": 7,
+   "elev": 100,
+   "cond": 500000
+  },
+  "M": {
+   "terrain": "medical_pad",
+   "code": 8,
+   "elev": 200
+  },
+  "P": {
+   "terrain": "low_platform",
+   "code": 2,
+   "elev": 650
+  }
+ },
+ "regions": {
+  "orchard_assembly": "o",
+  "medical": "M",
+  "lower_road": "p",
+  "diversion_basin": "d",
+  "upper_basin": "u"
+ },
+ "sources": [
+  {
+   "id": "upper_in",
+   "at": [
+    12,
+    10
+   ],
+   "rate": 10000000
+  },
+  {
+   "id": "reservoir_in",
+   "at": [
+    15,
+    22
+   ],
+   "rate": 10000000
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outlet",
+   "at": [
+    16,
+    0
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "orchard_start",
+   "at": [
+    6,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "orchard_assembly",
+   "at": [
+    6,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "orchard_dock",
+   "at": [
+    10,
+    10
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    11,
+    10
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 800
+  },
+  {
+   "id": "ferry_landing_start",
+   "at": [
+    7,
+    4
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "ferry_landing_assembly",
+   "at": [
+    8,
+    4
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "ferry_landing_pickup",
+   "at": [
+    9,
+    5
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "ferry_dock",
+   "at": [
+    10,
+    5
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    11,
+    5
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 800
+  },
+  {
+   "id": "lower_road_south",
+   "at": [
+    8,
+    6
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "underpass",
+   "at": [
+    8,
+    8
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "west_viaduct",
+   "at": [
+    9,
+    9
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "east_viaduct",
+   "at": [
+    14,
+    9
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "depot",
+   "at": [
+    13,
+    3
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 8,
+   "water_at": [
+    12,
+    3
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "river_houses_start",
+   "at": [
+    23,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "river_houses_assembly",
+   "at": [
+    23,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 4
+  },
+  {
+   "id": "river_houses_pickup",
+   "at": [
+    23,
+    10
+   ],
+   "flags": [
+    "assembly",
+    "vehicle_parking"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "ridge_corner",
+   "at": [
+    28,
+    11
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    20,
+    4
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 4,
+   "water_at": [
+    19,
+    4
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_orchard_start",
+   "from": "orchard_start",
+   "to": "orchard_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_orchard_dock",
+   "from": "orchard_assembly",
+   "to": "orchard_dock",
+   "ticks": 30,
+   "class": "ground",
+   "sample": [
+    [
+     6,
+     11
+    ],
+    [
+     7,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_ferry_start",
+   "from": "ferry_landing_start",
+   "to": "ferry_landing_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_ferry_pickup",
+   "from": "ferry_landing_assembly",
+   "to": "ferry_landing_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_ferry_dock",
+   "from": "ferry_landing_pickup",
+   "to": "ferry_dock",
+   "ticks": 10,
+   "class": "ground"
+  },
+  {
+   "id": "g_lower_road_a",
+   "from": "ferry_landing_assembly",
+   "to": "lower_road_south",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     4
+    ],
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     6
+    ]
+   ]
+  },
+  {
+   "id": "g_lower_road_b",
+   "from": "lower_road_south",
+   "to": "underpass",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     6
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     8,
+     8
+    ]
+   ]
+  },
+  {
+   "id": "g_lower_road_c",
+   "from": "underpass",
+   "to": "west_viaduct",
+   "ticks": 40,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     8
+    ],
+    [
+     8,
+     9
+    ],
+    [
+     9,
+     9
+    ]
+   ]
+  },
+  {
+   "id": "g_viaduct",
+   "from": "west_viaduct",
+   "to": "east_viaduct",
+   "ticks": 50,
+   "class": "ground",
+   "sample": [
+    [
+     9,
+     9
+    ],
+    [
+     14,
+     9
+    ]
+   ]
+  },
+  {
+   "id": "g_high_road",
+   "from": "east_viaduct",
+   "to": "depot",
+   "ticks": 130,
+   "class": "ground",
+   "sample": [
+    [
+     14,
+     5
+    ],
+    [
+     14,
+     6
+    ],
+    [
+     14,
+     7
+    ],
+    [
+     14,
+     8
+    ],
+    [
+     14,
+     9
+    ]
+   ]
+  },
+  {
+   "id": "g_river_start",
+   "from": "river_houses_start",
+   "to": "river_houses_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_river_short",
+   "from": "river_houses_assembly",
+   "to": "river_houses_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_river_road",
+   "from": "river_houses_pickup",
+   "to": "high_landing",
+   "ticks": 260,
+   "class": "ground",
+   "via": [
+    [
+     23,
+     4
+    ]
+   ],
+   "sample": [
+    [
+     23,
+     4
+    ],
+    [
+     23,
+     5
+    ],
+    [
+     23,
+     6
+    ],
+    [
+     23,
+     7
+    ],
+    [
+     23,
+     8
+    ],
+    [
+     23,
+     9
+    ],
+    [
+     23,
+     10
+    ]
+   ]
+  },
+  {
+   "id": "g_river_ridge",
+   "from": "river_houses_assembly",
+   "to": "ridge_corner",
+   "ticks": 200,
+   "class": "ground",
+   "sample": [
+    [
+     26,
+     11
+    ],
+    [
+     27,
+     11
+    ],
+    [
+     28,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_ridge_down",
+   "from": "ridge_corner",
+   "to": "high_landing",
+   "ticks": 380,
+   "class": "ground",
+   "sample": [
+    [
+     28,
+     4
+    ],
+    [
+     28,
+     5
+    ],
+    [
+     28,
+     6
+    ],
+    [
+     28,
+     7
+    ],
+    [
+     28,
+     8
+    ],
+    [
+     28,
+     9
+    ],
+    [
+     28,
+     10
+    ],
+    [
+     28,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "w_orchard_ferry",
+   "from": "orchard_dock",
+   "to": "ferry_dock",
+   "ticks": 100,
+   "class": "water",
+   "sample": [
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     6
+    ],
+    [
+     11,
+     7
+    ],
+    [
+     11,
+     8
+    ],
+    [
+     11,
+     9
+    ],
+    [
+     11,
+     10
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_ferry_depot",
+   "from": "ferry_dock",
+   "to": "depot",
+   "ticks": 60,
+   "class": "water",
+   "sample": [
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     4
+    ],
+    [
+     12,
+     4
+    ],
+    [
+     12,
+     3
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_depot_landing",
+   "from": "depot",
+   "to": "high_landing",
+   "ticks": 200,
+   "class": "water",
+   "sample": [
+    [
+     12,
+     2
+    ],
+    [
+     12,
+     1
+    ],
+    [
+     13,
+     1
+    ],
+    [
+     14,
+     1
+    ],
+    [
+     15,
+     1
+    ],
+    [
+     16,
+     1
+    ],
+    [
+     16,
+     2
+    ],
+    [
+     17,
+     2
+    ],
+    [
+     18,
+     2
+    ],
+    [
+     19,
+     2
+    ],
+    [
+     19,
+     3
+    ],
+    [
+     19,
+     4
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  }
+ ],
+ "sockets": [
+  {
+   "id": "pump:01",
+   "tool": "pump",
+   "at": [
+    6,
+    8
+   ],
+   "intake": [
+    7,
+    8
+   ],
+   "outlet": [
+    4,
+    8
+   ],
+   "power": "grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:02",
+   "tool": "pump",
+   "at": [
+    8,
+    10
+   ],
+   "intake": [
+    8,
+    8
+   ],
+   "outlet": [
+    7,
+    11
+   ],
+   "power": "grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    7,
+    6
+   ],
+   "platform": [
+    [
+     7,
+     6
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    13,
+    10
+   ],
+   "platform": [
+    [
+     13,
+     10
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "barrier:01",
+   "tool": "barrier",
+   "at": [
+    10,
+    7
+   ],
+   "links": [
+    [
+     [
+      11,
+      7
+     ],
+     [
+      10,
+      7
+     ]
+    ]
+   ],
+   "zone": "lips"
+  },
+  {
+   "id": "barrier:02",
+   "tool": "barrier",
+   "at": [
+    10,
+    8
+   ],
+   "links": [
+    [
+     [
+      11,
+      8
+     ],
+     [
+      10,
+      8
+     ]
+    ]
+   ],
+   "zone": "lips"
+  },
+  {
+   "id": "barrier:03",
+   "tool": "barrier",
+   "at": [
+    10,
+    9
+   ],
+   "links": [
+    [
+     [
+      11,
+      9
+     ],
+     [
+      10,
+      9
+     ]
+    ]
+   ],
+   "zone": "lips"
+  },
+  {
+   "id": "skiff:01",
+   "tool": "skiff",
+   "node": "depot",
+   "at": [
+    12,
+    3
+   ]
+  },
+  {
+   "id": "skiff:02",
+   "tool": "skiff",
+   "node": "ferry_dock",
+   "at": [
+    11,
+    5
+   ]
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ]
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    21,
+    4
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [
+  {
+   "id": "medical_station",
+   "power": "grid",
+   "demand": 1,
+   "region": "medical",
+   "max_depth": 100
+  }
+ ],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "orchard",
+   "start": "orchard_start",
+   "assembly": "orchard_assembly",
+   "pickup": "orchard_dock"
+  },
+  {
+   "id": "river_houses",
+   "start": "river_houses_start",
+   "assembly": "river_houses_assembly",
+   "pickup": "river_houses_pickup"
+  },
+  {
+   "id": "ferry_landing",
+   "start": "ferry_landing_start",
+   "assembly": "ferry_landing_assembly",
+   "pickup": "ferry_dock"
+  }
+ ],
+ "routes": [],
+ "roles": {
+  "upper_basin": {
+   "sources": [
+    "upper_in"
+   ]
+  },
+  "lower_road": {
+   "edges": [
+    "g_lower_road_b",
+    "g_lower_road_c"
+   ]
+  },
+  "medical_station": {
+   "infrastructure": [
+    "medical_station"
+   ]
+  },
+  "orchard_assembly": {
+   "regions": [
+    "orchard_assembly"
+   ]
+  }
+ }
+}

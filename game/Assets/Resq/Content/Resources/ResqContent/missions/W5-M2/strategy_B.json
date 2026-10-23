@@ -1,0 +1,128 @@
+{
+ "id": "B",
+ "description": "Use both shelters briefly and alternate transport pickups before heat peaks: the orchard fills the ledge and its shelter, the village fills its shelter; the crawler (crossed before the lava) takes six villagers in the first window, the orchard walks across in the next windows, and the last villagers, now sheltered in the village heat zone, walk out in the third and fourth windows.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "crawler:02"
+  },
+  {
+   "t": 6,
+   "place": "cooler:01"
+  },
+  {
+   "t": 7,
+   "place": "cooler:02"
+  },
+  {
+   "t": 8,
+   "place": "shelter:01"
+  },
+  {
+   "t": 9,
+   "place": "shelter:02"
+  },
+  {
+   "t": 10,
+   "group": "orchard",
+   "to": "n_bank",
+   "evacuate": false
+  },
+  {
+   "t": 11,
+   "group": "village",
+   "to": "e_shelter",
+   "evacuate": false
+  },
+  {
+   "t": 12,
+   "vehicle": "crawler:02",
+   "group": "village",
+   "pickup": "e_shelter",
+   "to": "depot"
+  },
+  {
+   "t": 700,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 771,
+   "group": "orchard",
+   "to": "depot"
+  },
+  {
+   "t": 800,
+   "refill": "cooler:01",
+   "store": "coolant"
+  },
+  {
+   "t": 960,
+   "group": "orchard",
+   "to": "n_bank",
+   "evacuate": false
+  },
+  {
+   "t": 1010,
+   "cool": "cooler:02"
+  },
+  {
+   "t": 1011,
+   "group": "orchard",
+   "to": "depot"
+  },
+  {
+   "t": 1021,
+   "vehicle": "crawler:02",
+   "to": "depot",
+   "evacuate": false
+  },
+  {
+   "t": 1100,
+   "refill": "cooler:02",
+   "store": "coolant"
+  },
+  {
+   "t": 1250,
+   "group": "orchard",
+   "to": "w_shelter",
+   "evacuate": false
+  },
+  {
+   "t": 1320,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 1321,
+   "group": "village",
+   "to": "depot"
+  },
+  {
+   "t": 1630,
+   "cool": "cooler:02"
+  },
+  {
+   "t": 1631,
+   "group": "orchard",
+   "to": "depot"
+  },
+  {
+   "t": 3690,
+   "refill": "cooler:01",
+   "store": "coolant"
+  },
+  {
+   "t": 3700,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 3701,
+   "group": "orchard",
+   "to": "depot"
+  },
+  {
+   "t": 3702,
+   "group": "village",
+   "to": "depot"
+  }
+ ]
+}

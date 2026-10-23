@@ -1,0 +1,483 @@
+{
+  "schema": "resq-lookdev-asset-1",
+  "asset": "cottage",
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -40.0,
+      -30.0,
+      0.0
+    ],
+    "max": [
+      40.0,
+      30.0,
+      70.0
+    ],
+    "size": [
+      80.0,
+      60.0,
+      70.0
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    80.0,
+    70.0,
+    60.0
+  ],
+  "triangles": {
+    "cottage_LOD0": 2432,
+    "cottage_LOD1": 1414,
+    "cottage_LOD2": 216
+  },
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "cottage_LOD0": 0.3909,
+    "cottage_LOD1": 0.3107,
+    "cottage_LOD2": 0.5631
+  },
+  "colliders": {
+    "cottage_COL": 96
+  },
+  "material_roles_faces_lod0": {
+    "cedar": 1030,
+    "door_paint": 20,
+    "metal_dark": 38,
+    "roof_tile": 382,
+    "stone": 348,
+    "trim_paint": 600,
+    "window_glass": 14
+  },
+  "markers": {
+    "cottage_mk_door": {
+      "blender_mm": [
+        -12.0,
+        -21.0,
+        3.0
+      ],
+      "unity_mm": [
+        12.0,
+        3.0,
+        21.0
+      ],
+      "meaning": "door threshold centre on the -Y navigation-facing wall"
+    },
+    "cottage_mk_door_nav": {
+      "blender_mm": [
+        -12.0,
+        -28.0,
+        0.0
+      ],
+      "unity_mm": [
+        12.0,
+        0.0,
+        28.0
+      ],
+      "meaning": "ground navigation point in front of the door step"
+    },
+    "cottage_mk_chimney_top": {
+      "blender_mm": [
+        20.0,
+        11.5,
+        70.0
+      ],
+      "unity_mm": [
+        -20.0,
+        70.0,
+        -11.5
+      ],
+      "meaning": "chimney top (smoke/hazard anchor)"
+    }
+  },
+  "pivot": "ground centre: root at footprint centre, z=0 on the support surface",
+  "hidden_faces_culled": {
+    "cottage_LOD0": 672,
+    "cottage_LOD1": 509,
+    "cottage_LOD2": 24
+  },
+  "lod_method": "semantic rebuild per LOD (fewer courses/details), decimation only as top-up",
+  "lod_notes": [
+    "LOD1 semantic build had 1474 tris; collapse-decimated by 0.960 to 1414"
+  ],
+  "design": "cedar lap-siding wedge courses over a dark core (real shadow lines), cream gables, asymmetric roof (ridge 5 mm toward +Y, ~40/54 deg slopes) with 9 mm front/back and 8 mm gable eaves, stone plinth blocks, chimney rooted inside the gable body",
+  "ao_bake": {
+    "cottage_LOD0": "cycles_ao_16spp",
+    "cottage_LOD1": "cycles_ao_16spp",
+    "cottage_LOD2": "cycles_ao_16spp"
+  },
+  "dimension_check": {
+    "x": {
+      "measured_mm": 80.0,
+      "target_mm": 80.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    },
+    "y": {
+      "measured_mm": 60.0,
+      "target_mm": 60.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    },
+    "z": {
+      "measured_mm": 70.0,
+      "target_mm": 70.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    }
+  },
+  "checks": {
+    "dimensions_pm1pct": true,
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.581,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.089,
+    "lod2_le_30pct": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "cottage": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "cottage_COL": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      },
+      "cottage_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      },
+      "cottage_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      },
+      "cottage_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      },
+      "cottage_mk_chimney_top": {
+        "type": "Null",
+        "lcl_translation": [
+          0.02,
+          0.07,
+          -0.0115
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      },
+      "cottage_mk_door": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.012,
+          0.003,
+          0.021
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      },
+      "cottage_mk_door_nav": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.012,
+          0.0,
+          0.028
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "cottage"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "cottage_COL": {
+        "min": [
+          -0.04000000283122063,
+          0.0,
+          -0.030000001192092896
+        ],
+        "max": [
+          0.04000000283122063,
+          0.07000000029802322,
+          0.030000001192092896
+        ],
+        "count": 50
+      },
+      "cottage_LOD0": {
+        "min": [
+          -0.04000000283122063,
+          0.0,
+          -0.030000001192092896
+        ],
+        "max": [
+          0.04000000283122063,
+          0.07000000029802322,
+          0.030000001192092896
+        ],
+        "count": 1998
+      },
+      "cottage_LOD1": {
+        "min": [
+          -0.04000000283122063,
+          0.0,
+          -0.030000001192092896
+        ],
+        "max": [
+          0.04000000283122063,
+          0.07000000029802322,
+          0.030000001192092896
+        ],
+        "count": 1227
+      },
+      "cottage_LOD2": {
+        "min": [
+          -0.04000000283122063,
+          0.0,
+          -0.030000001192092896
+        ],
+        "max": [
+          0.04000000283122063,
+          0.07000000029802322,
+          0.030000001192092896
+        ],
+        "count": 176
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/lookdev/cottage/cottage.fbx",
+    "fbx_sha256": "326428a710d9d8c04b7756a2fc83f51bef523e3ae2c81b14b240f819e9657b6b",
+    "fbx_bytes": 123676,
+    "blend": "art/lookdev/cottage/cottage.blend",
+    "blend_sha256": "51e1ba1829ad3ecaf1f9aca93af7a56d9aebfce8788e8bf360f3e57135ddf0ac",
+    "blend_bytes": 196175,
+    "preview": "art/lookdev/cottage/cottage_preview.png"
+  },
+  "preview_note": "EEVEE, left to right LOD0/LOD1/LOD2, ortho 3/4 view, same light as the contact sheet",
+  "generator_sha256": {
+    "lookdev.py": "4dffa8c91abd67b7fcb5dff051fc248f80467a0dc26971fcbe8dca9b8a62d310",
+    "kit.py": "7284c5fc22763f78794a8d6abd1bce3f9e232b3fb2c07642851027e16d385f16"
+  },
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "cottage_LOD0": {
+        "min": [
+          -40.0,
+          -30.0,
+          -0.0
+        ],
+        "max": [
+          40.0,
+          30.0,
+          70.0
+        ],
+        "size": [
+          80.0,
+          60.0,
+          70.0
+        ]
+      },
+      "cottage_LOD1": {
+        "min": [
+          -40.0,
+          -30.0,
+          -0.0
+        ],
+        "max": [
+          40.0,
+          30.0,
+          70.0
+        ],
+        "size": [
+          80.0,
+          60.0,
+          70.0
+        ]
+      },
+      "cottage_LOD2": {
+        "min": [
+          -40.0,
+          -30.0,
+          -0.0
+        ],
+        "max": [
+          40.0,
+          30.0,
+          70.0
+        ],
+        "size": [
+          80.0,
+          60.0,
+          70.0
+        ]
+      }
+    },
+    "root_rotations_rad": {
+      "cottage": [
+        1.5708,
+        -0.0,
+        0.0
+      ]
+    },
+    "mean_ao_alpha": {
+      "cottage_LOD0": 0.3912,
+      "cottage_LOD1": 0.311,
+      "cottage_LOD2": 0.5632
+    },
+    "colour_attrs": {
+      "cottage_COL": [],
+      "cottage_LOD0": [
+        "Col"
+      ],
+      "cottage_LOD1": [
+        "Col"
+      ],
+      "cottage_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

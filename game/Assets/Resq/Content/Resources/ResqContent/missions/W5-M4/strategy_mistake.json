@@ -1,0 +1,61 @@
+{
+ "id": "mistake",
+ "description": "Use shelter to stage inland groups while boats clear the receiving dock: the research crew walks the bridged short route and two skiffs ferry the coast village to two different landings. The orchard stages at its tiny pier (four on the pier, four in the pier shelter, which the inland lobe makes hazardous from 300 s). When the pier channel clears (330 s) each skiff takes four from the pier back to its own landing, so no landing is overloaded.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "bridge:01"
+  },
+  {
+   "t": 6,
+   "place": "skiff:03"
+  },
+  {
+   "t": 7,
+   "place": "skiff:02"
+  },
+  {
+   "t": 8,
+   "place": "shelter:01"
+  },
+  {
+   "t": 9,
+   "group": "research_crew",
+   "to": "depot"
+  },
+  {
+   "t": 10,
+   "vehicle": "skiff:03",
+   "group": "coast",
+   "pickup": "coast_dock",
+   "to": "high_landing"
+  },
+  {
+   "t": 11,
+   "vehicle": "skiff:02",
+   "group": "coast",
+   "pickup": "coast_dock",
+   "to": "depot"
+  },
+  {
+   "t": 12,
+   "group": "inland",
+   "to": "pier",
+   "evacuate": false
+  },
+  {
+   "t": 3300,
+   "vehicle": "skiff:02",
+   "group": "inland",
+   "pickup": "pier",
+   "to": "high_landing"
+  },
+  {
+   "t": 3301,
+   "vehicle": "skiff:03",
+   "group": "inland",
+   "pickup": "pier",
+   "to": "high_landing"
+  }
+ ]
+}

@@ -1,0 +1,769 @@
+{
+ "mission_id": "W3-M4",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  "###uuuuuuu############SSSSSSS###",
+  "###uuuuuuu############SSSSSSS###",
+  "###uuuuuuu############SSSSSSS###",
+  "###uuuuuuu############SSSSSSS###",
+  "###uuuuuuu||||||||||||SSSSSSS###",
+  "###uuuuuuu############SSSSSSS###",
+  "######t###############|#####=###",
+  "######t###############|#####=###",
+  "######t###############|#####=###",
+  "######t###############|#####=###",
+  "####vvvvv########||||||#####=###",
+  "####vvvvv########|##~#######=###",
+  "####vvvvv####ddddd##~#######=###",
+  "####vvvvv===#ddddd##~#######=###",
+  "###t#######=PdddddQ#~###HHHHH###",
+  "###t#######=#ddddd##~###HHHHH###",
+  "###t#######=####w###~###HHHHH###",
+  "###t#######==DDDDD##~###########",
+  "###ttttttttttDDDDD##~###########",
+  "####################~###########",
+  "####################~###########"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "S": {
+   "terrain": "cable_station",
+   "code": 23,
+   "elev": 1200
+  },
+  "t": {
+   "terrain": "footpath",
+   "code": 25,
+   "elev": 1200
+  },
+  "|": {
+   "terrain": "cable_line",
+   "code": 26,
+   "elev": 1200
+  },
+  "u": {
+   "terrain": "upper_terrace",
+   "code": 27,
+   "elev": 1200
+  },
+  "d": {
+   "terrain": "lower_basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "P": {
+   "terrain": "lower_platform_a",
+   "code": 2,
+   "elev": 300
+  },
+  "Q": {
+   "terrain": "lower_platform_b",
+   "code": 2,
+   "elev": 300
+  },
+  "w": {
+   "terrain": "drive_house",
+   "code": 23,
+   "elev": 150
+  },
+  "~": {
+   "terrain": "river",
+   "code": 0,
+   "elev": 0,
+   "cond": 2000000
+  }
+ },
+ "regions": {
+  "lower_basin": "d",
+  "lower_platform_a": "P",
+  "lower_platform_b": "Q",
+  "drive_house": "w"
+ },
+ "sources": [
+  {
+   "id": "lower_basin_in",
+   "at": [
+    15,
+    7
+   ],
+   "rate": 0
+  },
+  {
+   "id": "melt_basin_in",
+   "at": [
+    14,
+    8
+   ],
+   "rate": 0
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outlet",
+   "at": [
+    20,
+    0
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "upper_terrace_start",
+   "at": [
+    6,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "upper_terrace_assembly",
+   "at": [
+    6,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "upper_terrace_pickup",
+   "at": [
+    6,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "cable_station_start",
+   "at": [
+    25,
+    18
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "cable_station_assembly",
+   "at": [
+    25,
+    17
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "cable_station_pickup",
+   "at": [
+    25,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "lower_village_start",
+   "at": [
+    7,
+    9
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "lower_village_assembly",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "lower_village_pickup",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_bend",
+   "at": [
+    28,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "west_track",
+   "at": [
+    3,
+    4
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 12
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    26,
+    5
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 6
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_upper_terrace_start",
+   "from": "upper_terrace_start",
+   "to": "upper_terrace_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_upper_terrace_pickup",
+   "from": "upper_terrace_assembly",
+   "to": "upper_terrace_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_cable_station_start",
+   "from": "cable_station_start",
+   "to": "cable_station_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_cable_station_pickup",
+   "from": "cable_station_assembly",
+   "to": "cable_station_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_lower_village_start",
+   "from": "lower_village_start",
+   "to": "lower_village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_lower_village_pickup",
+   "from": "lower_village_assembly",
+   "to": "lower_village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "c_upper",
+   "from": "upper_terrace_pickup",
+   "to": "cable_station_pickup",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     6,
+     16
+    ],
+    [
+     25,
+     16
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_lower",
+   "from": "cable_station_pickup",
+   "to": "depot",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     25,
+     16
+    ],
+    [
+     15,
+     3
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "c_lower_east",
+   "from": "cable_station_pickup",
+   "to": "high_landing",
+   "ticks": 50,
+   "class": "cable",
+   "sample": [
+    [
+     25,
+     16
+    ],
+    [
+     26,
+     5
+    ]
+   ],
+   "slots": 1
+  },
+  {
+   "id": "g_upper_stairs",
+   "from": "upper_terrace_pickup",
+   "to": "lower_village_assembly",
+   "ticks": 600,
+   "class": "ground",
+   "slots": 2,
+   "step_free": false
+  },
+  {
+   "id": "g_east_road_a",
+   "from": "cable_station_pickup",
+   "to": "east_bend",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_east_road_b",
+   "from": "east_bend",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_village_road",
+   "from": "lower_village_pickup",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     7,
+     7
+    ],
+    [
+     8,
+     7
+    ],
+    [
+     9,
+     7
+    ],
+    [
+     10,
+     7
+    ],
+    [
+     11,
+     7
+    ],
+    [
+     11,
+     3
+    ],
+    [
+     11,
+     4
+    ],
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     6
+    ],
+    [
+     12,
+     3
+    ],
+    [
+     13,
+     3
+    ]
+   ],
+   "slots": 2
+  },
+  {
+   "id": "g_west_track_a",
+   "from": "lower_village_pickup",
+   "to": "west_track",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  },
+  {
+   "id": "g_west_track_b",
+   "from": "west_track",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "slots": 2
+  }
+ ],
+ "sockets": [
+  {
+   "id": "winch:01",
+   "tool": "winch",
+   "node": "upper_terrace_pickup",
+   "edge": "c_upper",
+   "at": [
+    9,
+    16
+   ],
+   "support": "upper_tower",
+   "power": "valley_grid",
+   "zone": "upper_winch"
+  },
+  {
+   "id": "winch:02",
+   "tool": "winch",
+   "node": "cable_station_pickup",
+   "edge": "c_lower",
+   "at": [
+    16,
+    4
+   ],
+   "support": "busy_cable",
+   "power": "valley_grid",
+   "zone": "lower_winches"
+  },
+  {
+   "id": "winch:03",
+   "tool": "winch",
+   "node": "cable_station_pickup",
+   "edge": "c_lower_east",
+   "at": [
+    27,
+    8
+   ],
+   "power": "valley_grid",
+   "zone": "lower_winches"
+  },
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    12,
+    6
+   ],
+   "platform": "P",
+   "power": "valley_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    18,
+    6
+   ],
+   "platform": "Q",
+   "power": "valley_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:03",
+   "tool": "generator",
+   "at": [
+    23,
+    14
+   ],
+   "platform": [
+    [
+     23,
+     14
+    ]
+   ],
+   "power": "valley_grid",
+   "zone": "generators"
+  },
+  {
+   "id": "pump:01",
+   "tool": "pump",
+   "at": [
+    19,
+    7
+   ],
+   "intake": [
+    17,
+    6
+   ],
+   "outlet": [
+    20,
+    6
+   ],
+   "power": "valley_grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:02",
+   "tool": "pump",
+   "at": [
+    12,
+    4
+   ],
+   "intake": [
+    13,
+    5
+   ],
+   "outlet": [
+    20,
+    3
+   ],
+   "power": "valley_grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "brace:01",
+   "tool": "brace",
+   "at": [
+    21,
+    14
+   ],
+   "support": "busy_cable",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:02",
+   "tool": "brace",
+   "at": [
+    23,
+    13
+   ],
+   "support": "busy_cable",
+   "zone": "braces"
+  },
+  {
+   "id": "brace:03",
+   "tool": "brace",
+   "at": [
+    10,
+    15
+   ],
+   "support": "upper_tower",
+   "zone": "braces"
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    14,
+    2
+   ],
+   "zone": "beacons"
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    27,
+    5
+   ],
+   "zone": "beacons"
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "valley_grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "upper_terrace",
+   "start": "upper_terrace_start",
+   "assembly": "upper_terrace_assembly",
+   "pickup": "upper_terrace_pickup"
+  },
+  {
+   "id": "cable_station",
+   "start": "cable_station_start",
+   "assembly": "cable_station_assembly",
+   "pickup": "cable_station_pickup"
+  },
+  {
+   "id": "lower_village",
+   "start": "lower_village_start",
+   "assembly": "lower_village_assembly",
+   "pickup": "lower_village_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "powered_cable",
+   "from": "upper_terrace_pickup",
+   "to": "depot",
+   "class": "cable"
+  }
+ ],
+ "roles": {
+  "lower_basin": {
+   "sources": [
+    "lower_basin_in"
+   ]
+  },
+  "melt_basin": {
+   "sources": [
+    "melt_basin_in"
+   ]
+  },
+  "busy_cable": {
+   "supports": [
+    "busy_cable"
+   ]
+  },
+  "lower_platform_a": {
+   "regions": [
+    "lower_platform_a"
+   ]
+  },
+  "lower_platform_b": {
+   "regions": [
+    "lower_platform_b"
+   ]
+  },
+  "powered_cable": {
+   "edges": [
+    "c_upper",
+    "c_lower"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 6
+    },
+    {
+     "id": "high_landing",
+     "capacity": 12
+    }
+   ],
+   "edges": [
+    {
+     "id": "g_east_road_b",
+     "ticks": 400
+    }
+   ]
+  }
+ },
+ "supports": [
+  {
+   "id": "busy_cable",
+   "base_stability": 400,
+   "static_load": 0,
+   "nodes": [
+    "cable_station_pickup"
+   ],
+   "edges": [
+    "c_lower"
+   ],
+   "collapse_nodes": [],
+   "collapse_edges": [
+    "c_lower"
+   ]
+  },
+  {
+   "id": "upper_tower",
+   "base_stability": 600,
+   "static_load": 0,
+   "nodes": [
+    "upper_terrace_pickup"
+   ],
+   "edges": [
+    "c_upper"
+   ],
+   "collapse_nodes": [],
+   "collapse_edges": [
+    "c_upper"
+   ]
+  }
+ ]
+}

@@ -14,7 +14,7 @@ namespace Resq.Game
         public string LayoutClass = "wide";
         public RuleProfile Profile = RuleProfile.Standard;
         public bool Guided;
-        public Material TerrainMaterial, WaterMaterial, ActorMaterial, MarkerMaterial, CardMaterial;
+        public Material TerrainMaterial, WaterMaterial, ActorMaterial, MarkerMaterial, CardMaterial, OverlayMaterial;
         [Tooltip("Board placement when no MR placement has run yet (metres, rig space).")]
         public Vector3 DefaultBoardPosition = new Vector3(0, 0.74f, 0.55f);
 
@@ -33,7 +33,7 @@ namespace Resq.Game
             Board = boardGo.AddComponent<BoardView>();
             Board.Driver = Driver; Board.Interaction = Interaction;
             Board.TerrainMaterial = TerrainMaterial; Board.WaterMaterial = WaterMaterial;
-            Board.ActorMaterial = ActorMaterial; Board.MarkerMaterial = MarkerMaterial;
+            Board.ActorMaterial = ActorMaterial; Board.MarkerMaterial = MarkerMaterial; Board.OverlayMaterial = OverlayMaterial;
             Interaction.Driver = Driver; Interaction.Board = Board;
             var panelGo = new GameObject("OperationPanel");
             panelGo.transform.SetParent(boardGo.transform, false);
@@ -115,6 +115,7 @@ namespace Resq.Game
             if (MarkerMaterial == null) MarkerMaterial = new Material(Shader.Find("Resq/VertexLit"));
             if (CardMaterial == null) CardMaterial = new Material(Shader.Find("Resq/VertexLit"));
             if (WaterMaterial == null) WaterMaterial = new Material(Shader.Find("Resq/Water"));
+            if (OverlayMaterial == null) OverlayMaterial = new Material(Shader.Find("Resq/Overlay"));
         }
     }
 

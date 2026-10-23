@@ -1,0 +1,71 @@
+{
+  "id": "B",
+  "description": "Clear the lower village first to free receiving capacity for the mountain groups: the crawler's first run fetches the whole village from its pickup and carries it through the receiving station and down the shortcut, while the upper winch (one generator on the observatory terrace) lifts the observatory onto the station deck to wait. With the receiving station empty, the lower winch and the crawler bring the observatory down, then the same lower winch and crawler serve the station group from its deck, so both mountain groups pass through the receiving station and nobody walks the long east road.",
+  "steps": [
+    {
+      "t": 1,
+      "place": "generator:01"
+    },
+    {
+      "t": 2,
+      "place": "winch:01"
+    },
+    {
+      "t": 3,
+      "place": "winch:02"
+    },
+    {
+      "t": 4,
+      "place": "crawler:01"
+    },
+    {
+      "t": 5,
+      "vehicle": "crawler:01",
+      "group": "village",
+      "pickup": "village_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 6,
+      "vehicle": "winch:01",
+      "group": "observatory",
+      "pickup": "observatory_pickup",
+      "to": "station_pickup",
+      "evacuate": false
+    },
+    {
+      "t": 650,
+      "vehicle": "winch:02",
+      "group": "observatory",
+      "pickup": "station_pickup",
+      "to": "receiving_station",
+      "evacuate": false
+    },
+    {
+      "t": 651,
+      "vehicle": "crawler:01",
+      "group": "observatory",
+      "pickup": "receiving_station",
+      "to": "depot"
+    },
+    {
+      "t": 1590,
+      "vehicle": "crawler:01",
+      "group": "station",
+      "pickup": "receiving_station",
+      "to": "depot"
+    },
+    {
+      "t": 1591,
+      "vehicle": "winch:02",
+      "group": "station",
+      "pickup": "station_pickup",
+      "to": "receiving_station",
+      "evacuate": false
+    },
+    {
+      "t": 1700,
+      "place": "brace:02"
+    }
+  ]
+}

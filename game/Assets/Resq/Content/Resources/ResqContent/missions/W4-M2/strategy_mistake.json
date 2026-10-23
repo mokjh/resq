@@ -1,0 +1,60 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: failure to communicate): plan B, but at the transfer the yard relay (relay:03) is switched off and moved to the sea stack instead of the idle breakwater relay. relay:03 carried the only plant-to-ridge span, so the lamp goes dark the moment it is switched off; the depot's safe-route signal fails and every unload there is blocked. The peak then drowns the breakwater relay as well, the keepers' boat sits loaded at the dark depot and the lighthouse is out at the end.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "generator:01"
+    },
+    {
+      "t": 6,
+      "place": "relay:03"
+    },
+    {
+      "t": 7,
+      "place": "relay:02"
+    },
+    {
+      "t": 8,
+      "place": "skiff:02"
+    },
+    {
+      "t": 9,
+      "vehicle": "skiff:02",
+      "group": "market",
+      "pickup": "market_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 10,
+      "place": "skiff:01"
+    },
+    {
+      "t": 11,
+      "vehicle": "skiff:01",
+      "group": "west_island",
+      "pickup": "west_island_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 3000,
+      "vehicle": "skiff:01",
+      "group": "lighthouse",
+      "pickup": "lighthouse_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 3300,
+      "disable": "relay:03"
+    },
+    {
+      "t": 3301,
+      "move": "relay:03",
+      "to": "relay:04"
+    },
+    {
+      "t": 3302,
+      "enable": "relay:04"
+    }
+  ]
+}

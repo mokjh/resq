@@ -1,0 +1,13 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: cooling too early wastes the safe window). Plan A, but crossing B is cooled the moment the east arm turns Hot (80 s) while the research crew is still on the stair road. The crust window closes at 105 s, before they reach the bank; cooler:02 is empty and is never refilled, so the crew is stranded on the north bank.",
+  "steps": [
+    {"t": 5, "place": "bridge:01"},
+    {"t": 6, "place": "cooler:01"},
+    {"t": 7, "place": "cooler:02"},
+    {"t": 8, "group": "orchard", "to": "depot"},
+    {"t": 9, "group": "research", "to": "high_landing"},
+    {"t": 801, "cool": "cooler:02"},
+    {"t": 2101, "cool": "cooler:01"}
+  ]
+}

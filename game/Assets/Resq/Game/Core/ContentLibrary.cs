@@ -24,6 +24,16 @@ namespace Resq.Game
             foreach (var m in _contracts["missions"].Elements()) _contractById[m.Str("id")] = m;
         }
 
+        /// <summary>Synced, playable missions in contract order (W1-M1 … W5-M5).</summary>
+        public static List<string> MissionIds()
+        {
+            EnsureLoaded();
+            var list = new List<string>();
+            foreach (var m in _contracts["missions"].Elements())
+                if (HasMission(m.Str("id"))) list.Add(m.Str("id"));
+            return list;
+        }
+
         public static bool HasMission(string missionId) =>
             Resources.Load<TextAsset>($"ResqContent/missions/{missionId}/map") != null;
 

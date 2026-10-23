@@ -1,0 +1,17 @@
+{
+  "id": "A",
+  "description": "Use a vertical relay before the runout, then transfer onto the crawler: one generator on the station deck runs both winches; the upper winch lifts the observatory onto the deck two at a time, the lower winch takes each pair on to the receiving station, and the crawler, waiting there, carries whoever has arrived down the valley shortcut to the depot, long before the 300 s runout. The station group walks the long east road from its assembly point; the village gathers at the west-track junction, away from the receiving station, and walks on to the depot. One brace goes on the deck after the warming forecast.",
+  "steps": [
+    {"t": 1, "place": "generator:02"},
+    {"t": 2, "place": "winch:01"},
+    {"t": 3, "place": "winch:02"},
+    {"t": 4, "place": "crawler:01"},
+    {"t": 5, "vehicle": "winch:01", "group": "observatory", "pickup": "observatory_pickup", "to": "station_pickup", "evacuate": false},
+    {"t": 6, "group": "station", "to": "high_landing"},
+    {"t": 7, "group": "village", "to": "west_track", "evacuate": false},
+    {"t": 100, "vehicle": "winch:02", "group": "observatory", "pickup": "station_pickup", "to": "receiving_station", "evacuate": false},
+    {"t": 101, "vehicle": "crawler:01", "group": "observatory", "pickup": "receiving_station", "to": "depot"},
+    {"t": 650, "place": "brace:01"},
+    {"t": 1000, "group": "village", "to": "depot"}
+  ]
+}

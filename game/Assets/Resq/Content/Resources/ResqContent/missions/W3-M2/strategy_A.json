@@ -1,0 +1,51 @@
+{
+  "id": "A",
+  "description": "Run both winches as a staged relay with separate power: a generator on each grid (observatory terrace and the hut), the upper winch lifts the observatory into the hut two at a time and the lower winch, waiting in the hut, takes each pair straight on to the depot. The village walks its road; the station walks the long east road when it is released.",
+  "steps": [
+    {
+      "t": 1,
+      "place": "generator:01"
+    },
+    {
+      "t": 2,
+      "place": "generator:02"
+    },
+    {
+      "t": 3,
+      "place": "winch:01"
+    },
+    {
+      "t": 4,
+      "place": "winch:02"
+    },
+    {
+      "t": 5,
+      "vehicle": "winch:01",
+      "group": "observatory",
+      "pickup": "observatory_pickup",
+      "to": "intermediate",
+      "evacuate": false
+    },
+    {
+      "t": 6,
+      "group": "village",
+      "to": "depot"
+    },
+    {
+      "t": 7,
+      "group": "station",
+      "to": "high_landing"
+    },
+    {
+      "t": 8,
+      "place": "brace:01"
+    },
+    {
+      "t": 100,
+      "vehicle": "winch:02",
+      "group": "observatory",
+      "pickup": "intermediate",
+      "to": "depot"
+    }
+  ]
+}

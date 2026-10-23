@@ -1,0 +1,53 @@
+{
+  "id": "B",
+  "description": "Keep high docks available and prioritize boat evacuation while managing only the critical basin: skiffs lift the market to the high landing and the medical landing from its jetty while the inland village walks; barrier:01 seals the inland basin's tide sill (the emptied market basin is left to the tide) and a single pump on the always-dry ridge relays runs from the start without stripping the barrier of its back-pressure.",
+  "steps": [
+    {
+      "t": 5,
+      "place": "skiff:03"
+    },
+    {
+      "t": 6,
+      "vehicle": "skiff:03",
+      "group": "market",
+      "pickup": "market_pickup",
+      "to": "high_landing"
+    },
+    {
+      "t": 7,
+      "place": "skiff:01"
+    },
+    {
+      "t": 8,
+      "vehicle": "skiff:01",
+      "group": "medical_landing",
+      "pickup": "medical_landing_pickup",
+      "to": "depot"
+    },
+    {
+      "t": 9,
+      "group": "inland",
+      "to": "depot"
+    },
+    {
+      "t": 10,
+      "place": "barrier:01"
+    },
+    {
+      "t": 11,
+      "place": "generator:01"
+    },
+    {
+      "t": 12,
+      "place": "relay:02"
+    },
+    {
+      "t": 13,
+      "place": "relay:03"
+    },
+    {
+      "t": 14,
+      "place": "pump:03"
+    }
+  ]
+}

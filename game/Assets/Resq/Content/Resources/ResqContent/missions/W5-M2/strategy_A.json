@@ -1,0 +1,60 @@
+{
+ "id": "A",
+ "description": "Stage one group, evacuate the other, then return along the cooled route: the village waits out the heat in the quarry hut while the crawler, which crossed before the lava, carries the orchard over in three cooled windows (six, then back empty, then the last three); at 320 s the village leaves by the outer route.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "crawler:01"
+  },
+  {
+   "t": 6,
+   "place": "cooler:01"
+  },
+  {
+   "t": 7,
+   "group": "orchard",
+   "to": "w_shelter",
+   "evacuate": false
+  },
+  {
+   "t": 8,
+   "vehicle": "crawler:01",
+   "group": "orchard",
+   "pickup": "w_shelter",
+   "to": "depot"
+  },
+  {
+   "t": 9,
+   "group": "village",
+   "to": "quarry",
+   "evacuate": false
+  },
+  {
+   "t": 706,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 960,
+   "refill": "cooler:01",
+   "store": "coolant"
+  },
+  {
+   "t": 1070,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 1130,
+   "refill": "cooler:01",
+   "store": "coolant"
+  },
+  {
+   "t": 1395,
+   "cool": "cooler:01"
+  },
+  {
+   "t": 3201,
+   "group": "village",
+   "to": "high_landing"
+  }
+ ]
+}

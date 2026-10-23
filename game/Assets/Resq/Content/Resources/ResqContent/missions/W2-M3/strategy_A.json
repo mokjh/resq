@@ -1,0 +1,15 @@
+{
+  "id": "A",
+  "description": "Pump pond water into the tank and alternate sprinklers.",
+  "steps": [
+    {"t": 5, "place": "generator:01"},
+    {"t": 6, "place": "pump:01"},
+    {"t": 7, "place": "sprinkler:01"},
+    {"t": 8, "place": "crawler:02"},
+    {"t": 9, "vehicle": "crawler:02", "group": "orchard", "pickup": "orchard_pickup", "to": "depot"},
+    {"t": 10, "group": "pond_houses", "to": "high_landing"},
+    {"t": 1300, "disable": "sprinkler:01"},
+    {"t": 2850, "place": "sprinkler:02"},
+    {"t": 6000, "disable": "sprinkler:02"}
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "id": "A",
+  "description": "Protect both flanks selectively and time transport before the turn.",
+  "steps": [
+    {"t": 5, "place": "firebreak:01"},
+    {"t": 6, "place": "firebreak:02"},
+    {"t": 7, "place": "crawler:01"},
+    {"t": 8, "vehicle": "crawler:01", "group": "lookout", "pickup": "lookout_pickup", "to": "depot"},
+    {"t": 9, "group": "west_camp", "to": "depot"},
+    {"t": 1800, "group": "east_camp", "to": "high_landing"}
+  ]
+}

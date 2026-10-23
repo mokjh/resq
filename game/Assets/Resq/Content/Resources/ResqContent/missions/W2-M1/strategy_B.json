@@ -1,0 +1,9 @@
+{
+  "id": "B",
+  "description": "Defend the longer path and stage the campsite first.",
+  "steps": [
+    {"t": 5, "group": "campsite", "to": "depot"},
+    {"t": 6, "place": "firebreak:03"},
+    {"t": 300, "group": "lookout", "to": "high_landing"}
+  ]
+}

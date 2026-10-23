@@ -1,0 +1,1597 @@
+{
+ "mission_id": "W5-M5",
+ "rows": [
+  "##############################SS",
+  "#eeee##############ll#########SS",
+  "#eeee##############ll###vvvvv#SS",
+  "#eeeeP#############ll###vvvvv#SS",
+  "#eeeeP#############ll###vvvvv#SS",
+  "##llllll#ll########ll###vvvvv#SS",
+  "##llllll#ll##vvvvv#ll#########SS",
+  "##oooooo#ll##vvvvv#ll#########SS",
+  "##oooooo#ll##vvvvv#ll###vvvvv#SS",
+  "##oooooo#ll##vvvvv#ll###vvvvv#SS",
+  "##oooooo#ll########ll###vvvvv#SS",
+  "##oooooo#ll########ll###vvvvv#SS",
+  "#########ll########ll#########SS",
+  "###llllllll#LLLLLL#ll#########SS",
+  "####.....ll#dddddd#ll#########SS",
+  "####.....llQdddddd#ll#########SS",
+  "####.....ll#dddddd#ll#########SS",
+  "####.....ll#gggggg#ll#########SS",
+  "####.....ll#gggggg#ll#########SS",
+  "#########ll########ll###HHHH##SS",
+  "#########ll##DDDD##ll###HHHH##SS",
+  "##u######ll##DDDD##ll###HHHH##SS",
+  "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS",
+  "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "basalt",
+   "code": 3,
+   "elev": 1200
+  },
+  ".": {
+   "terrain": "terrace",
+   "code": 1,
+   "elev": 100
+  },
+  "o": {
+   "terrain": "orchard",
+   "code": 10,
+   "elev": 100
+  },
+  "v": {
+   "terrain": "village",
+   "code": 11,
+   "elev": 300
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200
+  },
+  "l": {
+   "terrain": "lava_channel",
+   "code": 13,
+   "elev": 0,
+   "solid": true
+  },
+  "S": {
+   "terrain": "sea",
+   "code": 4,
+   "elev": 0,
+   "init_depth": 800,
+   "cond": 2000000,
+   "solid": true
+  },
+  "d": {
+   "terrain": "basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "P": {
+   "terrain": "north_platform",
+   "code": 2,
+   "elev": 200
+  },
+  "L": {
+   "terrain": "low_causeway",
+   "code": 2,
+   "elev": 150
+  },
+  "g": {
+   "terrain": "high_lagoon",
+   "code": 4,
+   "elev": 330,
+   "cond": 2000000
+  },
+  "e": {
+   "terrain": "power_basin",
+   "code": 6,
+   "elev": 0,
+   "cond": 1000000
+  },
+  "Q": {
+   "terrain": "basin_platform",
+   "code": 2,
+   "elev": 350
+  },
+  "u": {
+   "terrain": "outfall",
+   "code": 12,
+   "elev": 0,
+   "solid": true
+  }
+ },
+ "regions": {
+  "lagoon": "g",
+  "causeway": "L"
+ },
+ "sources": [
+  {
+   "id": "drain_in",
+   "at": [
+    14,
+    7
+   ],
+   "rate": 0
+  },
+  {
+   "id": "power_in",
+   "at": [
+    3,
+    19
+   ],
+   "rate": 0
+  }
+ ],
+ "sinks": [
+  {
+   "id": "outfall",
+   "at": [
+    2,
+    2
+   ],
+   "rate": 80000000
+  }
+ ],
+ "nodes": [
+  {
+   "id": "orchard_start",
+   "at": [
+    5,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "orchard_assembly",
+   "at": [
+    5,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "orchard_pickup",
+   "at": [
+    5,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "research_start",
+   "at": [
+    7,
+    8
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "research_assembly",
+   "at": [
+    7,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "research_pickup",
+   "at": [
+    7,
+    6
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "high_village_start",
+   "at": [
+    15,
+    16
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "high_village_assembly",
+   "at": [
+    15,
+    15
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "high_village_pickup",
+   "at": [
+    15,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "station_start",
+   "at": [
+    26,
+    14
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "station_assembly",
+   "at": [
+    26,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "station_pickup",
+   "at": [
+    26,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "waterfront_start",
+   "at": [
+    26,
+    21
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "waterfront_assembly",
+   "at": [
+    26,
+    20
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "waterfront_pickup",
+   "at": [
+    26,
+    19
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "w_bank",
+   "at": [
+    8,
+    13
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "w_east",
+   "at": [
+    11,
+    13
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "r_bank",
+   "at": [
+    8,
+    6
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "r_east",
+   "at": [
+    11,
+    4
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "r_dock",
+   "at": [
+    6,
+    3
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    6,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "hv_road",
+   "at": [
+    11,
+    12
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "causeway_e",
+   "at": [
+    18,
+    11
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "s_east",
+   "at": [
+    21,
+    11
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "station_junction",
+   "at": [
+    24,
+    10
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 12
+  },
+  {
+   "id": "hv_quay",
+   "at": [
+    18,
+    5
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 2,
+   "water_at": [
+    17,
+    5
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "quay_shelter",
+   "at": [
+    18,
+    6
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "ferry_dock",
+   "at": [
+    29,
+    19
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    30,
+    19
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "harbour_buoy",
+   "at": [
+    23,
+    1
+   ],
+   "flags": [
+    "junction"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 18,
+   "water_at": [
+    15,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    25,
+    4
+   ],
+   "flags": [
+    "evacuation",
+    "dock"
+   ],
+   "capacity": 12,
+   "water_at": [
+    25,
+    1
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
+  },
+  {
+   "id": "r_shelter",
+   "at": [
+    5,
+    4
+   ],
+   "flags": [
+    "shelter"
+   ],
+   "capacity": 6
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_orchard_start",
+   "from": "orchard_start",
+   "to": "orchard_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_orchard_pickup",
+   "from": "orchard_assembly",
+   "to": "orchard_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_research_start",
+   "from": "research_start",
+   "to": "research_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_research_pickup",
+   "from": "research_assembly",
+   "to": "research_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_high_village_start",
+   "from": "high_village_start",
+   "to": "high_village_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_high_village_pickup",
+   "from": "high_village_assembly",
+   "to": "high_village_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_station_start",
+   "from": "station_start",
+   "to": "station_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_station_pickup",
+   "from": "station_assembly",
+   "to": "station_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_waterfront_start",
+   "from": "waterfront_start",
+   "to": "waterfront_assembly",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_waterfront_pickup",
+   "from": "waterfront_assembly",
+   "to": "waterfront_pickup",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_orchard_bank",
+   "from": "orchard_pickup",
+   "to": "w_bank",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     5,
+     12
+    ],
+    [
+     8,
+     13
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_w",
+   "from": "w_bank",
+   "to": "w_east",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     9,
+     13
+    ],
+    [
+     10,
+     13
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 2
+  },
+  {
+   "id": "g_w_depot",
+   "from": "w_east",
+   "to": "depot",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     11,
+     13
+    ],
+    [
+     11,
+     3
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_research_bank",
+   "from": "research_pickup",
+   "to": "r_bank",
+   "ticks": 700,
+   "class": "ground",
+   "sample": [
+    [
+     7,
+     6
+    ],
+    [
+     8,
+     6
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_r",
+   "from": "r_bank",
+   "to": "r_east",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     9,
+     6
+    ],
+    [
+     10,
+     5
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 2
+  },
+  {
+   "id": "g_r_depot",
+   "from": "r_east",
+   "to": "depot",
+   "ticks": 200,
+   "class": "ground",
+   "sample": [
+    [
+     11,
+     4
+    ],
+    [
+     13,
+     3
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_research_dock",
+   "from": "research_pickup",
+   "to": "r_dock",
+   "ticks": 100,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_hv_road",
+   "from": "high_village_pickup",
+   "to": "hv_road",
+   "ticks": 2400,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     14
+    ],
+    [
+     11,
+     12
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_causeway",
+   "from": "hv_road",
+   "to": "causeway_e",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     12,
+     10
+    ],
+    [
+     13,
+     10
+    ],
+    [
+     14,
+     10
+    ],
+    [
+     15,
+     10
+    ],
+    [
+     16,
+     10
+    ],
+    [
+     17,
+     10
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_cross_s",
+   "from": "causeway_e",
+   "to": "s_east",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     19,
+     11
+    ],
+    [
+     20,
+     11
+    ]
+   ],
+   "tags": [
+    "crossing"
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_s_junction",
+   "from": "s_east",
+   "to": "station_junction",
+   "ticks": 100,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_hv_quay",
+   "from": "high_village_pickup",
+   "to": "quay_shelter",
+   "ticks": 400,
+   "class": "ground",
+   "sample": [
+    [
+     16,
+     13
+    ],
+    [
+     18,
+     6
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_quay",
+   "from": "quay_shelter",
+   "to": "hv_quay",
+   "ticks": 20,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_station_junction",
+   "from": "station_pickup",
+   "to": "station_junction",
+   "ticks": 100,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "g_station_landing",
+   "from": "station_junction",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     24,
+     9
+    ],
+    [
+     25,
+     5
+    ]
+   ],
+   "slots": 6
+  },
+  {
+   "id": "g_ferry_dock",
+   "from": "waterfront_pickup",
+   "to": "ferry_dock",
+   "ticks": 40,
+   "class": "ground",
+   "slots": 6
+  },
+  {
+   "id": "w_research",
+   "from": "r_dock",
+   "to": "depot",
+   "ticks": 250,
+   "class": "water",
+   "sample": [
+    [
+     6,
+     1
+    ],
+    [
+     7,
+     1
+    ],
+    [
+     8,
+     1
+    ],
+    [
+     9,
+     1
+    ],
+    [
+     10,
+     1
+    ],
+    [
+     11,
+     1
+    ],
+    [
+     12,
+     1
+    ],
+    [
+     13,
+     1
+    ],
+    [
+     14,
+     1
+    ],
+    [
+     15,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_mouth",
+   "from": "depot",
+   "to": "harbour_buoy",
+   "ticks": 150,
+   "class": "water",
+   "sample": [
+    [
+     15,
+     1
+    ],
+    [
+     16,
+     1
+    ],
+    [
+     17,
+     1
+    ],
+    [
+     18,
+     1
+    ],
+    [
+     19,
+     1
+    ],
+    [
+     20,
+     1
+    ],
+    [
+     21,
+     1
+    ],
+    [
+     22,
+     1
+    ],
+    [
+     23,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_landing",
+   "from": "harbour_buoy",
+   "to": "high_landing",
+   "ticks": 50,
+   "class": "water",
+   "sample": [
+    [
+     23,
+     1
+    ],
+    [
+     25,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_east",
+   "from": "harbour_buoy",
+   "to": "ferry_dock",
+   "ticks": 500,
+   "class": "water",
+   "sample": [
+    [
+     23,
+     1
+    ],
+    [
+     24,
+     1
+    ],
+    [
+     25,
+     1
+    ],
+    [
+     26,
+     1
+    ],
+    [
+     27,
+     1
+    ],
+    [
+     28,
+     1
+    ],
+    [
+     29,
+     1
+    ],
+    [
+     30,
+     1
+    ],
+    [
+     30,
+     1
+    ],
+    [
+     30,
+     2
+    ],
+    [
+     30,
+     3
+    ],
+    [
+     30,
+     4
+    ],
+    [
+     30,
+     5
+    ],
+    [
+     30,
+     6
+    ],
+    [
+     30,
+     7
+    ],
+    [
+     30,
+     8
+    ],
+    [
+     30,
+     9
+    ],
+    [
+     30,
+     10
+    ],
+    [
+     30,
+     11
+    ],
+    [
+     30,
+     12
+    ],
+    [
+     30,
+     13
+    ],
+    [
+     30,
+     14
+    ],
+    [
+     30,
+     15
+    ],
+    [
+     30,
+     16
+    ],
+    [
+     30,
+     17
+    ],
+    [
+     30,
+     18
+    ],
+    [
+     30,
+     19
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_lagoon",
+   "from": "hv_quay",
+   "to": "depot",
+   "ticks": 150,
+   "class": "water",
+   "sample": [
+    [
+     12,
+     5
+    ],
+    [
+     13,
+     5
+    ],
+    [
+     14,
+     5
+    ],
+    [
+     15,
+     5
+    ],
+    [
+     16,
+     5
+    ],
+    [
+     17,
+     5
+    ],
+    [
+     12,
+     6
+    ],
+    [
+     13,
+     6
+    ],
+    [
+     14,
+     6
+    ],
+    [
+     15,
+     6
+    ],
+    [
+     16,
+     6
+    ],
+    [
+     17,
+     6
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "g_r_shelter",
+   "from": "research_pickup",
+   "to": "r_shelter",
+   "ticks": 60,
+   "class": "ground",
+   "slots": 6
+  }
+ ],
+ "sockets": [
+  {
+   "id": "generator:01",
+   "tool": "generator",
+   "at": [
+    5,
+    20
+   ],
+   "platform": [
+    [
+     5,
+     19
+    ],
+    [
+     5,
+     20
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "generator:02",
+   "tool": "generator",
+   "at": [
+    11,
+    8
+   ],
+   "platform": [
+    [
+     11,
+     8
+    ]
+   ],
+   "power": "grid",
+   "zone": "generators"
+  },
+  {
+   "id": "pump:01",
+   "tool": "pump",
+   "at": [
+    11,
+    7
+   ],
+   "intake": [
+    12,
+    8
+   ],
+   "outlet": [
+    2,
+    2
+   ],
+   "power": "grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "pump:02",
+   "tool": "pump",
+   "at": [
+    2,
+    19
+   ],
+   "intake": [
+    3,
+    19
+   ],
+   "outlet": [
+    2,
+    2
+   ],
+   "power": "grid",
+   "zone": "pumps"
+  },
+  {
+   "id": "barrier:01",
+   "tool": "barrier",
+   "at": [
+    5,
+    20
+   ],
+   "links": [
+    [
+     [
+      4,
+      20
+     ],
+     [
+      5,
+      20
+     ]
+    ],
+    [
+     [
+      4,
+      19
+     ],
+     [
+      5,
+      19
+     ]
+    ]
+   ],
+   "zone": "barriers"
+  },
+  {
+   "id": "barrier:02",
+   "tool": "barrier",
+   "at": [
+    12,
+    10
+   ],
+   "links": [
+    [
+     [
+      12,
+      9
+     ],
+     [
+      12,
+      10
+     ]
+    ]
+   ],
+   "zone": "barriers"
+  },
+  {
+   "id": "cooler:01",
+   "tool": "cooler",
+   "at": [
+    8,
+    7
+   ],
+   "segment": "west_flow",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:02",
+   "tool": "cooler",
+   "at": [
+    21,
+    2
+   ],
+   "segment": "staging",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "cooler:03",
+   "tool": "cooler",
+   "at": [
+    18,
+    12
+   ],
+   "segment": "staging",
+   "coolant_store": "coolant",
+   "zone": "coolers"
+  },
+  {
+   "id": "shelter:01",
+   "tool": "shelter",
+   "node": "quay_shelter",
+   "at": [
+    18,
+    7
+   ],
+   "zone": "shelters"
+  },
+  {
+   "id": "shelter:02",
+   "tool": "shelter",
+   "node": "r_shelter",
+   "at": [
+    6,
+    4
+   ],
+   "zone": "shelters"
+  },
+  {
+   "id": "skiff:01",
+   "tool": "skiff",
+   "node": "depot",
+   "at": [
+    15,
+    1
+   ]
+  },
+  {
+   "id": "skiff:02",
+   "tool": "skiff",
+   "node": "high_landing",
+   "at": [
+    25,
+    1
+   ]
+  },
+  {
+   "id": "skiff:03",
+   "tool": "skiff",
+   "node": "ferry_dock",
+   "at": [
+    30,
+    19
+   ]
+  },
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "station_junction",
+   "at": [
+    24,
+    11
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    16,
+    4
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "grid",
+    "fixed_supply": 0
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [
+  {
+   "id": "ferry_terminal",
+   "power": "grid",
+   "demand": 1,
+   "nodes": [
+    "ferry_dock"
+   ],
+   "gates_dock": true
+  }
+ ],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "orchard",
+   "start": "orchard_start",
+   "assembly": "orchard_assembly",
+   "pickup": "orchard_pickup"
+  },
+  {
+   "id": "research",
+   "start": "research_start",
+   "assembly": "research_assembly",
+   "pickup": "research_pickup"
+  },
+  {
+   "id": "high_village",
+   "start": "high_village_start",
+   "assembly": "high_village_assembly",
+   "pickup": "high_village_pickup"
+  },
+  {
+   "id": "station",
+   "start": "station_start",
+   "assembly": "station_assembly",
+   "pickup": "station_pickup"
+  },
+  {
+   "id": "waterfront",
+   "start": "waterfront_start",
+   "assembly": "waterfront_assembly",
+   "pickup": "waterfront_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "final_ferry",
+   "from": "ferry_dock",
+   "to": "depot",
+   "class": "water"
+  }
+ ],
+ "roles": {
+  "drainage_basin": {
+   "sources": [
+    "drain_in"
+   ]
+  },
+  "orchard_channel": {
+   "lava_sources": [
+    "west_vent"
+   ]
+  },
+  "first_transport": {
+   "edges": [
+    "g_causeway"
+   ]
+  },
+  "power_basin": {
+   "sources": [
+    "power_in"
+   ]
+  },
+  "staging_channel": {
+   "lava_sources": [
+    "north_vent"
+   ]
+  },
+  "final_ferry": {
+   "edges": [
+    "w_mouth",
+    "w_east"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "nodes": [
+    {
+     "id": "depot",
+     "capacity": 12
+    },
+    {
+     "id": "high_landing",
+     "capacity": 18
+    }
+   ]
+  }
+ },
+ "lava": {
+  "segments": [
+   {
+    "id": "west_flow",
+    "cells": {
+     "x0": 9,
+     "y0": 2,
+     "x1": 10,
+     "y1": 18
+    },
+    "edges": [
+     "g_cross_w",
+     "g_cross_r"
+    ],
+    "next": [
+     {
+      "to": "orchard_lobe",
+      "delay": 150
+     },
+     {
+      "to": "research_lobe",
+      "delay": 900
+     }
+    ]
+   },
+   {
+    "id": "orchard_lobe",
+    "cells": {
+     "x0": 2,
+     "y0": 17,
+     "x1": 7,
+     "y1": 18
+    },
+    "nodes": [
+     "orchard_start",
+     "orchard_assembly",
+     "orchard_pickup"
+    ]
+   },
+   {
+    "id": "research_lobe",
+    "cells": {
+     "x0": 3,
+     "y0": 10,
+     "x1": 8,
+     "y1": 10
+    },
+    "nodes": [
+     "research_start",
+     "research_assembly",
+     "research_pickup"
+    ]
+   },
+   {
+    "id": "staging",
+    "cells": {
+     "x0": 19,
+     "y0": 2,
+     "x1": 20,
+     "y1": 22
+    },
+    "edges": [
+     "g_cross_s",
+     "w_mouth"
+    ],
+    "nodes": [
+     "high_village_start",
+     "high_village_assembly",
+     "high_village_pickup",
+     "quay_shelter"
+    ]
+   }
+  ],
+  "sources": [
+   {
+    "id": "west_vent",
+    "segment": "west_flow"
+   },
+   {
+    "id": "north_vent",
+    "segment": "staging"
+   }
+  ]
+ },
+ "coolant_stores": [
+  {
+   "id": "coolant",
+   "charges": 2,
+   "capacity": 8
+  }
+ ]
+}

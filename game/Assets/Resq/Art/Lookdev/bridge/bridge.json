@@ -1,0 +1,668 @@
+{
+  "schema": "resq-lookdev-asset-1",
+  "asset": "bridge",
+  "kit_version": "resq-kit-1",
+  "origin": "original procedural geometry authored in tools/blender (no downloads, no paid generation)",
+  "evidence_kind": "automated (Blender headless); Unity import, device and human review pending",
+  "units": "metres in files; values below in millimetres",
+  "blender_axes": "Z up, asset forward -Y",
+  "bounds_lod0_blender_mm": {
+    "min": [
+      -60.0,
+      -20.0,
+      -4.0
+    ],
+    "max": [
+      60.0,
+      20.0,
+      16.0
+    ],
+    "size": [
+      120.0,
+      40.0,
+      20.0
+    ]
+  },
+  "bounds_lod0_unity_mm_size": [
+    120.0,
+    20.0,
+    40.0
+  ],
+  "triangles": {
+    "bridge_LOD0": 1320,
+    "bridge_LOD1": 768,
+    "bridge_LOD2": 396
+  },
+  "material": "RESQ_Shared (one material). Vertex colour 'Col': RGB = albedo (sRGB in FBX), A = baked AO; UV = palette-atlas cell (atlas alpha = smoothness)",
+  "mean_ao_alpha": {
+    "bridge_LOD0": 0.6708,
+    "bridge_LOD1": 0.6788,
+    "bridge_LOD2": 0.6355
+  },
+  "colliders": {
+    "bridge_COL": 132
+  },
+  "material_roles_faces_lod0": {
+    "metal_dark": 320,
+    "paper": 40,
+    "rescue_orange": 520,
+    "rubber": 176,
+    "wood_deck": 264
+  },
+  "markers": {
+    "bridge_mk_support_near": {
+      "blender_mm": [
+        -52.0,
+        0.0,
+        -4.0
+      ],
+      "unity_mm": [
+        52.0,
+        -4.0,
+        -0.0
+      ],
+      "meaning": "near bearing (-X end) on the bank surface"
+    },
+    "bridge_mk_support_far": {
+      "blender_mm": [
+        52.0,
+        0.0,
+        -4.0
+      ],
+      "unity_mm": [
+        -52.0,
+        -4.0,
+        -0.0
+      ],
+      "meaning": "far bearing (+X end) on the bank surface"
+    },
+    "bridge_mk_deck_end_near": {
+      "blender_mm": [
+        -60.0,
+        0.0,
+        0.0
+      ],
+      "unity_mm": [
+        60.0,
+        0.0,
+        -0.0
+      ],
+      "meaning": "walking-surface end, near"
+    },
+    "bridge_mk_deck_end_far": {
+      "blender_mm": [
+        60.0,
+        0.0,
+        0.0
+      ],
+      "unity_mm": [
+        -60.0,
+        0.0,
+        -0.0
+      ],
+      "meaning": "walking-surface end, far"
+    },
+    "bridge_mk_hinge": {
+      "blender_mm": [
+        0.0,
+        0.0,
+        2.6
+      ],
+      "unity_mm": [
+        -0.0,
+        2.6,
+        -0.0
+      ],
+      "meaning": "fold hinge axis (along Y)"
+    },
+    "bridge_mk_grip_near_L": {
+      "blender_mm": [
+        -31.0,
+        16.8,
+        12.8
+      ],
+      "unity_mm": [
+        31.0,
+        12.8,
+        -16.8
+      ],
+      "meaning": "grip centre"
+    },
+    "bridge_mk_grip_near_R": {
+      "blender_mm": [
+        -31.0,
+        -16.8,
+        12.8
+      ],
+      "unity_mm": [
+        31.0,
+        12.8,
+        16.8
+      ],
+      "meaning": "grip centre"
+    },
+    "bridge_mk_grip_far_L": {
+      "blender_mm": [
+        31.0,
+        16.8,
+        12.8
+      ],
+      "unity_mm": [
+        -31.0,
+        12.8,
+        -16.8
+      ],
+      "meaning": "grip centre"
+    },
+    "bridge_mk_grip_far_R": {
+      "blender_mm": [
+        31.0,
+        -16.8,
+        12.8
+      ],
+      "unity_mm": [
+        -31.0,
+        12.8,
+        16.8
+      ],
+      "meaning": "grip centre"
+    }
+  },
+  "pivot": "deck centre: root on the top surface of the deck planks at mid-span (z=0 = walk surface); stringer bottoms at z=-4, grip tops at z=+16",
+  "state": "deployed",
+  "lod_notes": [
+    "LOD1 semantic build had 1012 tris; collapse-decimated by 0.759 to 768"
+  ],
+  "design": "two orange halves folding about a central Y-axis hinge (three knuckles per side, leaf plates, rail hinge links), deck planks, rubber grips, reflective end bands, under-deck cross members",
+  "ao_bake": {
+    "bridge_LOD0": "cycles_ao_16spp",
+    "bridge_LOD1": "cycles_ao_16spp",
+    "bridge_LOD2": "cycles_ao_16spp"
+  },
+  "dimension_check": {
+    "x": {
+      "measured_mm": 120.0,
+      "target_mm": 120.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    },
+    "y": {
+      "measured_mm": 40.0,
+      "target_mm": 40.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    },
+    "z": {
+      "measured_mm": 20.0,
+      "target_mm": 20.0,
+      "deviation_pct": 0.0,
+      "pass": true
+    }
+  },
+  "checks": {
+    "dimensions_pm1pct": true,
+    "lod0_in_budget": true,
+    "lod1_ratio": 0.582,
+    "lod1_le_60pct": true,
+    "lod2_ratio": 0.3,
+    "lod2_le_30pct": true,
+    "reimport_bounds_match_0p01mm": true
+  },
+  "fbx_export_settings": {
+    "global_scale": 1.0,
+    "apply_unit_scale": true,
+    "apply_scale_options": "FBX_SCALE_UNITS",
+    "axis_forward": "-Z",
+    "axis_up": "Y",
+    "use_space_transform": true,
+    "bake_space_transform": true,
+    "object_types": [
+      "ARMATURE",
+      "EMPTY",
+      "MESH"
+    ],
+    "use_selection": true,
+    "use_mesh_modifiers": false,
+    "mesh_smooth_type": "OFF",
+    "use_triangles": true,
+    "use_tspace": false,
+    "colors_type": "SRGB",
+    "prioritize_active_color": true,
+    "add_leaf_bones": false,
+    "primary_bone_axis": "Y",
+    "secondary_bone_axis": "X",
+    "armature_nodetype": "NULL",
+    "bake_anim": false,
+    "use_custom_props": true,
+    "path_mode": "STRIP",
+    "embed_textures": false
+  },
+  "fbx_file_inspection": {
+    "fbx_version": 7400,
+    "global": {
+      "UpAxis": 1,
+      "UpAxisSign": 1,
+      "FrontAxis": 2,
+      "FrontAxisSign": 1,
+      "CoordAxis": 0,
+      "CoordAxisSign": 1,
+      "UnitScaleFactor": 100.0,
+      "OriginalUnitScaleFactor": 100.0
+    },
+    "models": {
+      "bridge": {
+        "type": "Null",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "<scene root>"
+      },
+      "bridge_COL": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_LOD0": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_LOD1": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_LOD2": {
+        "type": "Mesh",
+        "lcl_translation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_deck_end_far": {
+        "type": "Null",
+        "lcl_translation": [
+          0.06,
+          0.0,
+          0.0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_deck_end_near": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.06,
+          0.0,
+          0.0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_grip_far_L": {
+        "type": "Null",
+        "lcl_translation": [
+          0.031,
+          0.0128,
+          -0.0168
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_grip_far_R": {
+        "type": "Null",
+        "lcl_translation": [
+          0.031,
+          0.0128,
+          0.0168
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_grip_near_L": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.031,
+          0.0128,
+          -0.0168
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_grip_near_R": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.031,
+          0.0128,
+          0.0168
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_hinge": {
+        "type": "Null",
+        "lcl_translation": [
+          0.0,
+          0.0026,
+          0.0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_support_far": {
+        "type": "Null",
+        "lcl_translation": [
+          0.052,
+          -0.004,
+          0.0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      },
+      "bridge_mk_support_near": {
+        "type": "Null",
+        "lcl_translation": [
+          -0.052,
+          -0.004,
+          0.0
+        ],
+        "lcl_rotation": [
+          0,
+          0,
+          0
+        ],
+        "lcl_scaling": [
+          1,
+          1,
+          1
+        ],
+        "parent": "bridge"
+      }
+    },
+    "geometry_bounds_file_units": {
+      "bridge_COL": {
+        "min": [
+          -0.06000000238418579,
+          -0.004000000189989805,
+          -0.020000001415610313
+        ],
+        "max": [
+          0.06000000238418579,
+          0.01600000075995922,
+          0.020000001415610313
+        ],
+        "count": 68
+      },
+      "bridge_LOD0": {
+        "min": [
+          -0.06000000238418579,
+          -0.004000000189989805,
+          -0.020000001415610313
+        ],
+        "max": [
+          0.06000000238418579,
+          0.01600000075995922,
+          0.020000001415610313
+        ],
+        "count": 1020
+      },
+      "bridge_LOD1": {
+        "min": [
+          -0.06000000238418579,
+          -0.004000000189989805,
+          -0.020000001415610313
+        ],
+        "max": [
+          0.06000000238418579,
+          0.01600000075995922,
+          0.020000001415610313
+        ],
+        "count": 594
+      },
+      "bridge_LOD2": {
+        "min": [
+          -0.06000000238418579,
+          -0.004000000189989805,
+          -0.020000001415610313
+        ],
+        "max": [
+          0.06000000238418579,
+          0.015571282245218754,
+          0.020000001415610313
+        ],
+        "count": 268
+      }
+    }
+  },
+  "files": {
+    "fbx": "art/lookdev/bridge/bridge.fbx",
+    "fbx_sha256": "116584433cd5beb332a2faba4667cd645ee026c4d42ccb756d7e488f4ca57257",
+    "fbx_bytes": 97260,
+    "blend": "art/lookdev/bridge/bridge.blend",
+    "blend_sha256": "481e527a79141737783a68166b53a6410ffc1b3cdeafe15612288c8068f2b9e1",
+    "blend_bytes": 155491,
+    "preview": "art/lookdev/bridge/bridge_preview.png"
+  },
+  "preview_note": "EEVEE, left to right LOD0/LOD1/LOD2, ortho 3/4 view, same light as the contact sheet",
+  "generator_sha256": {
+    "lookdev.py": "4dffa8c91abd67b7fcb5dff051fc248f80467a0dc26971fcbe8dca9b8a62d310",
+    "kit.py": "7284c5fc22763f78794a8d6abd1bce3f9e232b3fb2c07642851027e16d385f16"
+  },
+  "blender_reimport": {
+    "lod_bounds_mm": {
+      "bridge_LOD0": {
+        "min": [
+          -60.0,
+          -20.0,
+          -4.0
+        ],
+        "max": [
+          60.0,
+          20.0,
+          16.0
+        ],
+        "size": [
+          120.0,
+          40.0,
+          20.0
+        ]
+      },
+      "bridge_LOD1": {
+        "min": [
+          -60.0,
+          -20.0,
+          -4.0
+        ],
+        "max": [
+          60.0,
+          20.0,
+          16.0
+        ],
+        "size": [
+          120.0,
+          40.0,
+          20.0
+        ]
+      },
+      "bridge_LOD2": {
+        "min": [
+          -60.0,
+          -20.0,
+          -4.0
+        ],
+        "max": [
+          60.0,
+          20.0,
+          15.571
+        ],
+        "size": [
+          120.0,
+          40.0,
+          19.571
+        ]
+      }
+    },
+    "root_rotations_rad": {
+      "bridge": [
+        1.5708,
+        -0.0,
+        0.0
+      ]
+    },
+    "mean_ao_alpha": {
+      "bridge_LOD0": 0.6707,
+      "bridge_LOD1": 0.6787,
+      "bridge_LOD2": 0.6354
+    },
+    "colour_attrs": {
+      "bridge_COL": [],
+      "bridge_LOD0": [
+        "Col"
+      ],
+      "bridge_LOD1": [
+        "Col"
+      ],
+      "bridge_LOD2": [
+        "Col"
+      ]
+    }
+  }
+}

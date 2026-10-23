@@ -1,0 +1,934 @@
+{
+ "mission_id": "W2-M4",
+ "rows": [
+  "################################",
+  "################################",
+  "################################",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,kkkk,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,kkkk,,,,,,,,,,,,,,,,,,,vvv,,,",
+  ",,,kkkk,,,,,,YY,,,,,,,,,,vvvv,,,",
+  ",,,kkk,hhhhhhYYhhhhhhhhhhvvvv,,,",
+  ",,,kkk=h,,,,,,,,,,,,,,,,h=vvv,,,",
+  ",,,,,,=h,,,,,,,,,,,,,,,,h=,,,,,,",
+  ",,,,,,=h,,,,,,,,,,,,,,,,h=,,,,,,",
+  ",,,,,,=hvvv,,,,,,,,,,,,,h=,,,,,,",
+  ",,,,,,=hvvv,,,,,,,,,,,,,h=,,,,,,",
+  ",,,,,,=hvvv,,,,,,,,,,,,,h=,,,,,,",
+  ",,,,,,=h=,,,,,,,hhhhhhhh,=,,,,,,",
+  ",,,,,,=========,=========HHH,,,,",
+  ",,,,,,,,,,,,,DDDDD,,,,,,HHHH,,,,",
+  ",,,,,,,,,,,,,DDDDD,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,",
+  ",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+ ],
+ "legend": {
+  "#": {
+   "terrain": "rock",
+   "code": 3,
+   "elev": 1200,
+   "fuel": 0
+  },
+  ",": {
+   "terrain": "meadow",
+   "code": 13,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "h": {
+   "terrain": "hedge_trees",
+   "code": 15,
+   "elev": 1200,
+   "fuel": 1000
+  },
+  "Y": {
+   "terrain": "dry_stand",
+   "code": 16,
+   "elev": 1200,
+   "fuel": 1000
+  },
+  "=": {
+   "terrain": "road",
+   "code": 2,
+   "elev": 300,
+   "fuel": 0
+  },
+  "k": {
+   "terrain": "lookout_knoll",
+   "code": 18,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "D": {
+   "terrain": "depot",
+   "code": 8,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "H": {
+   "terrain": "high_landing",
+   "code": 9,
+   "elev": 1200,
+   "fuel": 0
+  },
+  "v": {
+   "terrain": "camp_ground",
+   "code": 11,
+   "elev": 300,
+   "fuel": 0
+  }
+ },
+ "regions": {
+  "forest": {
+   "x0": 0,
+   "y0": 0,
+   "x1": 31,
+   "y1": 23
+  },
+  "pine_stand": {
+   "x0": 13,
+   "y0": 12,
+   "x1": 14,
+   "y1": 13
+  },
+  "west_flank": [
+   [
+    7,
+    12
+   ],
+   [
+    8,
+    12
+   ],
+   [
+    9,
+    12
+   ],
+   [
+    10,
+    12
+   ],
+   [
+    11,
+    12
+   ],
+   [
+    12,
+    12
+   ],
+   [
+    7,
+    5
+   ],
+   [
+    7,
+    6
+   ],
+   [
+    7,
+    7
+   ],
+   [
+    7,
+    8
+   ],
+   [
+    7,
+    9
+   ],
+   [
+    7,
+    10
+   ],
+   [
+    7,
+    11
+   ]
+  ],
+  "east_flank": [
+   [
+    15,
+    12
+   ],
+   [
+    16,
+    12
+   ],
+   [
+    17,
+    12
+   ],
+   [
+    18,
+    12
+   ],
+   [
+    19,
+    12
+   ],
+   [
+    20,
+    12
+   ],
+   [
+    21,
+    12
+   ],
+   [
+    22,
+    12
+   ],
+   [
+    23,
+    12
+   ],
+   [
+    24,
+    12
+   ],
+   [
+    24,
+    6
+   ],
+   [
+    24,
+    7
+   ],
+   [
+    24,
+    8
+   ],
+   [
+    24,
+    9
+   ],
+   [
+    24,
+    10
+   ],
+   [
+    24,
+    11
+   ]
+  ],
+  "safe_loop_hedge": [
+   [
+    16,
+    5
+   ],
+   [
+    17,
+    5
+   ],
+   [
+    18,
+    5
+   ],
+   [
+    19,
+    5
+   ],
+   [
+    20,
+    5
+   ],
+   [
+    21,
+    5
+   ],
+   [
+    22,
+    5
+   ],
+   [
+    23,
+    5
+   ]
+  ]
+ },
+ "sources": [],
+ "sinks": [],
+ "nodes": [
+  {
+   "id": "lookout_start",
+   "at": [
+    6,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "lookout_assembly",
+   "at": [
+    6,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "lookout_pickup",
+   "at": [
+    6,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 8
+  },
+  {
+   "id": "west_camp_start",
+   "at": [
+    8,
+    7
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "west_camp_assembly",
+   "at": [
+    8,
+    6
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "west_camp_pickup",
+   "at": [
+    8,
+    5
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_camp_start",
+   "at": [
+    25,
+    13
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_camp_assembly",
+   "at": [
+    25,
+    12
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "east_camp_pickup",
+   "at": [
+    25,
+    11
+   ],
+   "flags": [
+    "assembly"
+   ],
+   "capacity": 6
+  },
+  {
+   "id": "lookout_road_foot",
+   "at": [
+    6,
+    4
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "west_junction",
+   "at": [
+    8,
+    4
+   ],
+   "flags": [
+    "junction"
+   ]
+  },
+  {
+   "id": "depot",
+   "at": [
+    15,
+    3
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 14
+  },
+  {
+   "id": "high_landing",
+   "at": [
+    25,
+    4
+   ],
+   "flags": [
+    "evacuation"
+   ],
+   "capacity": 6
+  }
+ ],
+ "edges": [
+  {
+   "id": "g_lookout_assembly",
+   "from": "lookout_start",
+   "to": "lookout_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_lookout_pickup",
+   "from": "lookout_assembly",
+   "to": "lookout_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_west_camp_assembly",
+   "from": "west_camp_start",
+   "to": "west_camp_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_west_camp_pickup",
+   "from": "west_camp_assembly",
+   "to": "west_camp_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_east_camp_assembly",
+   "from": "east_camp_start",
+   "to": "east_camp_assembly",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_east_camp_pickup",
+   "from": "east_camp_assembly",
+   "to": "east_camp_pickup",
+   "ticks": 20,
+   "class": "ground"
+  },
+  {
+   "id": "g_lookout_road",
+   "from": "lookout_pickup",
+   "to": "lookout_road_foot",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     6,
+     4
+    ],
+    [
+     6,
+     5
+    ],
+    [
+     6,
+     6
+    ],
+    [
+     6,
+     7
+    ],
+    [
+     6,
+     8
+    ],
+    [
+     6,
+     9
+    ],
+    [
+     6,
+     10
+    ],
+    [
+     6,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_lookout_foot",
+   "from": "lookout_road_foot",
+   "to": "west_junction",
+   "ticks": 50,
+   "class": "ground",
+   "sample": [
+    [
+     6,
+     4
+    ],
+    [
+     7,
+     4
+    ],
+    [
+     8,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "g_west_lane",
+   "from": "west_camp_pickup",
+   "to": "west_junction",
+   "ticks": 20,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     5
+    ],
+    [
+     8,
+     4
+    ]
+   ]
+  },
+  {
+   "id": "g_west_depot",
+   "from": "west_junction",
+   "to": "depot",
+   "ticks": 250,
+   "class": "ground",
+   "sample": [
+    [
+     8,
+     4
+    ],
+    [
+     9,
+     4
+    ],
+    [
+     10,
+     4
+    ],
+    [
+     11,
+     4
+    ],
+    [
+     12,
+     4
+    ],
+    [
+     13,
+     4
+    ],
+    [
+     14,
+     4
+    ],
+    [
+     15,
+     3
+    ]
+   ]
+  },
+  {
+   "id": "g_east_road",
+   "from": "east_camp_pickup",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     25,
+     4
+    ],
+    [
+     25,
+     5
+    ],
+    [
+     25,
+     6
+    ],
+    [
+     25,
+     7
+    ],
+    [
+     25,
+     8
+    ],
+    [
+     25,
+     9
+    ],
+    [
+     25,
+     10
+    ],
+    [
+     25,
+     11
+    ]
+   ]
+  },
+  {
+   "id": "g_safe_loop",
+   "from": "depot",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "ground",
+   "sample": [
+    [
+     15,
+     3
+    ],
+    [
+     16,
+     4
+    ],
+    [
+     17,
+     4
+    ],
+    [
+     18,
+     4
+    ],
+    [
+     19,
+     4
+    ],
+    [
+     20,
+     4
+    ],
+    [
+     21,
+     4
+    ],
+    [
+     22,
+     4
+    ],
+    [
+     23,
+     4
+    ],
+    [
+     24,
+     4
+    ],
+    [
+     25,
+     4
+    ]
+   ]
+  }
+ ],
+ "sockets": [
+  {
+   "id": "firebreak:01",
+   "tool": "firebreak",
+   "at": [
+    12,
+    11
+   ],
+   "cells": [
+    [
+     11,
+     12
+    ],
+    [
+     12,
+     12
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:02",
+   "tool": "firebreak",
+   "at": [
+    15,
+    11
+   ],
+   "cells": [
+    [
+     15,
+     12
+    ],
+    [
+     16,
+     12
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:03",
+   "tool": "firebreak",
+   "at": [
+    23,
+    11
+   ],
+   "cells": [
+    [
+     24,
+     12
+    ],
+    [
+     24,
+     11
+    ],
+    [
+     23,
+     12
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "firebreak:04",
+   "tool": "firebreak",
+   "at": [
+    23,
+    6
+   ],
+   "cells": [
+    [
+     24,
+     6
+    ],
+    [
+     23,
+     5
+    ]
+   ],
+   "zone": "firebreaks"
+  },
+  {
+   "id": "sprinkler:01",
+   "tool": "sprinkler",
+   "at": [
+    5,
+    10
+   ],
+   "cells": [
+    [
+     7,
+     11
+    ],
+    [
+     7,
+     12
+    ]
+   ],
+   "store": "tank",
+   "power": "tank_pump",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "sprinkler:02",
+   "tool": "sprinkler",
+   "at": [
+    26,
+    10
+   ],
+   "cells": [
+    [
+     24,
+     11
+    ],
+    [
+     24,
+     12
+    ]
+   ],
+   "store": "tank",
+   "power": "tank_pump",
+   "zone": "sprinklers"
+  },
+  {
+   "id": "crawler:01",
+   "tool": "crawler",
+   "node": "depot",
+   "at": [
+    14,
+    3
+   ]
+  },
+  {
+   "id": "crawler:02",
+   "tool": "crawler",
+   "node": "high_landing",
+   "at": [
+    26,
+    4
+   ]
+  },
+  {
+   "id": "crawler:03",
+   "tool": "crawler",
+   "node": "west_junction",
+   "at": [
+    9,
+    3
+   ]
+  },
+  {
+   "id": "beacon:01",
+   "tool": "beacon",
+   "node": "depot",
+   "at": [
+    16,
+    2
+   ]
+  },
+  {
+   "id": "beacon:02",
+   "tool": "beacon",
+   "node": "high_landing",
+   "at": [
+    27,
+    3
+   ]
+  },
+  {
+   "id": "beacon:03",
+   "tool": "beacon",
+   "node": "west_junction",
+   "at": [
+    9,
+    2
+   ]
+  }
+ ],
+ "power": {
+  "nodes": [
+   {
+    "id": "tank_pump",
+    "fixed_supply": 1
+   }
+  ],
+  "links": []
+ },
+ "infrastructure": [],
+ "vehicles": [],
+ "groups": [
+  {
+   "id": "lookout",
+   "start": "lookout_start",
+   "assembly": "lookout_assembly",
+   "pickup": "lookout_pickup"
+  },
+  {
+   "id": "west_camp",
+   "start": "west_camp_start",
+   "assembly": "west_camp_assembly",
+   "pickup": "west_camp_pickup"
+  },
+  {
+   "id": "east_camp",
+   "start": "east_camp_start",
+   "assembly": "east_camp_assembly",
+   "pickup": "east_camp_pickup"
+  }
+ ],
+ "routes": [
+  {
+   "id": "safe_loop",
+   "from": "depot",
+   "to": "high_landing",
+   "class": "ground"
+  }
+ ],
+ "roles": {
+  "forest": {
+   "regions": [
+    "forest"
+   ]
+  },
+  "lookout": {
+   "groups": [
+    "lookout"
+   ]
+  },
+  "firebreak": {
+   "regions": [
+    "west_flank",
+    "east_flank"
+   ]
+  },
+  "long_forest_route": {
+   "edges": [
+    "g_safe_loop"
+   ]
+  },
+  "tank": {
+   "stores": [
+    "tank"
+   ]
+  }
+ },
+ "class_overrides": {
+  "compact": {
+   "edges": [
+    {
+     "id": "g_east_road",
+     "ticks": 250
+    },
+    {
+     "id": "g_west_depot",
+     "ticks": 300
+    }
+   ]
+  }
+ },
+ "fire": {
+  "enabled": true,
+  "wind_regions": [
+   "forest"
+  ],
+  "burning": {
+   "x0": 13,
+   "y0": 12,
+   "x1": 14,
+   "y1": 13
+  }
+ },
+ "stores": [
+  {
+   "id": "tank",
+   "elev": 1200,
+   "volume": 600000000
+  }
+ ]
+}

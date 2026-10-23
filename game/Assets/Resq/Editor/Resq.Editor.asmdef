@@ -2,10 +2,13 @@
     "name": "Resq.Editor",
     "rootNamespace": "Resq.EditorTools",
     "references": [
+        "Resq.Sim",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Core.Runtime"
     ],
-    "includePlatforms": ["Editor"],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

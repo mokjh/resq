@@ -1,0 +1,17 @@
+{
+  "id": "mistake",
+  "description": "Single major mistake (bible: protecting every decorative building leaves too little transport capacity). The player spends the firebreak stock on the campsite lodge's ornamental trees, the orchard trees and the west tongue, and sprinkles the decorative lodge and the west cabin. Everyone is collected with plan A's crawlers, but no firebreak is left for the east tongue: the east hedge is lit at about S=3000, creeps west against the wind, and the corridor and the pump house beside it are lost at the end.",
+  "steps": [
+    {"t": 5, "place": "firebreak:04"},
+    {"t": 6, "place": "firebreak:03"},
+    {"t": 7, "place": "firebreak:01"},
+    {"t": 8, "place": "generator:01"},
+    {"t": 9, "place": "sprinkler:03"},
+    {"t": 10, "place": "crawler:01"},
+    {"t": 11, "place": "crawler:03"},
+    {"t": 12, "vehicle": "crawler:01", "group": "sawmill", "pickup": "sawmill_start", "to": "depot"},
+    {"t": 13, "vehicle": "crawler:03", "group": "orchard", "pickup": "orchard_start", "to": "high_landing"},
+    {"t": 14, "group": "campsite", "to": "depot"},
+    {"t": 1300, "place": "sprinkler:01"}
+  ]
+}

@@ -23,6 +23,25 @@ namespace Resq.Game
             return this;
         }
 
+        /// <summary>A square-section bar from a to b (cables, struts).</summary>
+        public MeshKit Segment(Vector3 a, Vector3 b, float halfWidth, Color col)
+        {
+            Vector3 axis = b - a;
+            float len = axis.magnitude;
+            if (len < 1e-6f) return this;
+            Vector3 w = axis / len;
+            Vector3 u = Vector3.Cross(w, Mathf.Abs(w.y) > 0.9f ? Vector3.right : Vector3.up).normalized * halfWidth;
+            Vector3 v = Vector3.Cross(w, u).normalized * halfWidth;
+            Vector3 c = (a + b) * 0.5f, h = w * (len * 0.5f);
+            Face(c, u, v, h, col);
+            Face(c, -u, h, v, col);
+            Face(c, v, h, u, col);
+            Face(c, -v, u, h, col);
+            Face(c, h, u, v, col);
+            Face(c, -h, v, u, col);
+            return this;
+        }
+
         void Face(Vector3 c, Vector3 normalOffset, Vector3 u, Vector3 v, Color col)
         {
             Vector3 n = normalOffset.normalized;

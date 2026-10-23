@@ -1,0 +1,12 @@
+{
+  "id": "B",
+  "description": "Use firebreaks to minimize wetting and reserve pumped water for the return road.",
+  "steps": [
+    {"t": 5, "place": "firebreak:01"},
+    {"t": 6, "place": "generator:01"},
+    {"t": 7, "place": "pump:01"},
+    {"t": 8, "group": "orchard", "to": "depot"},
+    {"t": 9, "group": "pond_houses", "to": "high_landing"},
+    {"t": 2850, "place": "sprinkler:02"}
+  ]
+}
