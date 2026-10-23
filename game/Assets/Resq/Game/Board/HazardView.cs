@@ -105,7 +105,7 @@ namespace Resq.Game
             if (Driver == null || Driver.Sim == null || Driver.Def != _def || !Active) return;
             var sim = Driver.Sim;
             var S = sim.S;
-            float t = Time.time;
+            float t = Comfort.ReducedEffects ? 0f : Time.time;   // reduced effects: steady colours, no flicker
             for (int q = 0; q < _cellOfQuad.Length; q++)
             {
                 int c = _cellOfQuad[q];

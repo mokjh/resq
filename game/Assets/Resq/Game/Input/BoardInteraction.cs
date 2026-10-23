@@ -28,6 +28,13 @@ namespace Resq.Game
         public string Hint { get; private set; } = "";
         /// <summary>Optional gate on which tool cards respond (guided first play unlocks tools step by step).</summary>
         public System.Func<ToolKind, bool> ToolAllowed;
+        /// <summary>Menus are open: only buttons respond; the board can't be changed behind a menu.</summary>
+        public bool MenuOnly;
+        /// <summary>Head-dwell time from settings (0.5–1.5 s), applied to every head-dwell source.</summary>
+        public float DwellSeconds = 0.8f;
+        /// <summary>The head (XR centre eye, or the desktop camera) that a hands-free pointer follows.</summary>
+        public Transform Head;
+        HeadDwellPointer _headOnly;
         /// <summary>Dev/capture only: when set, stands in for whatever the pointer hovers (no presses are synthesised).</summary>
         public Pickable DebugHover;
 
@@ -39,12 +46,27 @@ namespace Resq.Game
         bool _ownerWasPressed;
         Pickable _pressTarget;
 
-        public void AddSource(IPointerSource s) => _sources.Add(s);
-        public void ClearSources() => _sources.Clear();
+        public void AddSource(IPointerSource s)
+        {
+            if (s is HeadDwellPointer h) h.DwellSeconds = DwellSeconds;
+            _sources.Add(s);
+        }
+
+        public void ClearSources() { _sources.Clear(); _headOnly = null; }
+
+        /// <summary>Hands-free setting: adds a head-dwell pointer when none is present (the Command profile may
+        /// already have one) and keeps every head-dwell source on the chosen dwell time.</summary>
+        public void SetHeadOnly(bool on)
+        {
+            bool any = false;
+            foreach (var src in _sources) if (src is HeadDwellPointer h) { h.DwellSeconds = DwellSeconds; any = true; }
+            if (on && !any && Head != null) { _headOnly = new HeadDwellPointer(Head) { DwellSeconds = DwellSeconds }; _sources.Add(_headOnly); }
+            else if (!on && _headOnly != null) { _sources.Remove(_headOnly); _headOnly = null; }
+        }
 
         void Update()
         {
-            if (Driver?.Sim == null) return;
+            if (Driver?.Sim == null && !MenuOnly) return;
             // choose the gesture owner: keep the current owner while pressed; otherwise first valid source that hovers something
             PointerSample sample = default;
             IPointerSource active = null;
@@ -120,6 +142,7 @@ namespace Resq.Game
         public Reject Evaluate(Pickable p)
         {
             if (p == null) return Reject.UnknownTarget;
+            if (MenuOnly) return p.Kind == PickKind.Button ? Reject.OK : Reject.UnknownTarget;
             var sim = Driver.Sim;
             switch (Mode)
             {
@@ -146,6 +169,7 @@ namespace Resq.Game
         void OnPress(Pickable p)
         {
             if (p == null) return;
+            if (MenuOnly && p.Kind != PickKind.Button) return;
             switch (p.Kind)
             {
                 case PickKind.Button:

@@ -103,8 +103,10 @@ namespace Resq.Game
         {
             _controls = new GameObject("Controls").transform;
             _controls.SetParent(transform, false);
-            _controls.localPosition = new Vector3(ext.x - 0.14f, 0.13f, ext.y + 0.05f);
+            _controls.localPosition = new Vector3((Comfort.LeftHanded ? -1f : 1f) * (ext.x - 0.14f), 0.13f, ext.y + 0.05f);   // mirrored for left-hand play
             _controls.localRotation = Quaternion.Euler(-8f, 0, 0);
+            if (GameFlow.Instance != null && !GameFlow.Disabled)
+                Pill(_controls, "Menu", new Vector3(-0.165f, 0, 0), 0.06f, () => GameFlow.Instance.Pause());   // pause is never hidden
             Pill(_controls, "Start", new Vector3(-0.1f, 0, 0), 0.06f, () => Driver.SetPaused(!Driver.Paused), true);
             Pill(_controls, "Restart", new Vector3(-0.035f, 0, 0), 0.06f, () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, Driver.Guided));
             _missions = ContentLibrary.MissionIds();
@@ -241,7 +243,7 @@ namespace Resq.Game
             bool ask = TutorialActive && BusDelivered() && sim.S.C.TutorialStep < 2;
             if (_ackButton.gameObject.activeSelf != ask) _ackButton.gameObject.SetActive(ask);
 
-            _banner.text = sim.IsOver ? (S.C.Success ? $"Rescue complete  {new string('★', S.C.Stars)}{new string('☆', 3 - S.C.Stars)}\nScore {S.C.ScoreValue}" : "Operation failed — try another plan") : "";
+            _banner.text = sim.IsOver ? (S.C.Success ? $"Rescue complete  ·  {S.C.Stars} {(S.C.Stars == 1 ? "star" : "stars")}\nScore {S.C.ScoreValue}" : "Operation failed — try another plan") : "";
 
             var startBtn = _controls.Find("Button_Start/Label")?.GetComponent<TextMeshPro>();
             if (startBtn != null) startBtn.text = Driver.Paused ? "Start" : "Pause";

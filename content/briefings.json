@@ -1,0 +1,669 @@
+{
+ "source": "Resq_Production_Pack/docs/03_WORLD_MISSION_BIBLE.md",
+ "worlds": {
+  "W1": {
+   "name": "Alder Valley",
+   "identity": "A stepped river valley with cedar houses, terraced fields, a stone viaduct, a bright rescue depot, and a mountain reservoir.",
+   "thesis": "Redirect water without transferring danger onto an evacuation route.",
+   "aftercare": "A repaired bridge carries the bus past a dry village square. The final postcard animates a river lantern festival."
+  },
+  "W2": {
+   "name": "Emberwood",
+   "identity": "An inhabited forest reserve with a lookout tower, sawmill, campsite, orchard, and hillside water tanks.",
+   "thesis": "Create defensible transport routes by managing fuel, water, power, and forecast wind.",
+   "aftercare": "Rain arrives after stabilization, not as a deus ex machina that solves the mission. Residents replant the cleared strip."
+  },
+  "W3": {
+   "name": "Frostline",
+   "identity": "A snow-covered alpine settlement with a funicular, weather observatory, cable station, avalanche fences, and steep terraces.",
+   "thesis": "Stabilize selected structures and schedule vertical rescue before runout paths close.",
+   "aftercare": "The funicular returns to service, carrying supplies rather than a compulsory victory cutscene."
+  },
+  "W4": {
+   "name": "Tidemark",
+   "identity": "A fictional coastal archipelago with pale plaster houses, boatyards, a lighthouse, raised walkways, and a tidal market.",
+   "thesis": "Exploit safe tide windows and keep the power network dry while coordinating multiple transport legs.",
+   "aftercare": "The lighthouse sweeps across safe harbor and the floating market reopens."
+  },
+  "W5": {
+   "name": "Cinder Reach",
+   "identity": "A volcanic island research town with basalt terraces, a geothermal station, orchards, a ferry terminal, and cooling channels.",
+   "thesis": "Trade temporary protection against permanent evacuation while slow hazards remove routes.",
+   "aftercare": "The rescue fleet leaves together; recovered residents send postcards from every earlier world."
+  }
+ },
+ "missions": {
+  "W1-M1": {
+   "title": "First Crossing",
+   "world": "W1",
+   "decision": "Learn bridge placement, flood forecasts, and a first boat route.",
+   "layout": "Bus group of 4 at the west crossing; 4 residents at the low dock; depot and high landing are safe.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Reservoir inflow increases"
+    },
+    {
+     "at": 140,
+     "text": "Low-dock water rises toward closure threshold"
+    },
+    {
+     "at": 240,
+     "text": "Final moderate surge tests the placed barrier"
+    }
+   ],
+   "required": "Evacuate at least 6 residents; deliver the bus group to the depot.",
+   "mastery": "Rescue all 8 and keep the low dock usable until its group boards.",
+   "failure": "Leaving the dock above the flood threshold too long closes boarding; backup transport recovers the unrescued group.",
+   "payoff": "The first passengers turn and wave as the bridge unfolds."
+  },
+  "W1-M2": {
+   "title": "The Lower Road",
+   "world": "W1",
+   "decision": "Understand downstream consequences and dry power placement.",
+   "layout": "Three groups of 4: orchard, river houses, and ferry landing; pump has two legal outlet regions.",
+   "threats": [
+    {
+     "at": 45,
+     "text": "Rain begins in the upper basin"
+    },
+    {
+     "at": 130,
+     "text": "A warning reveals the lower-road closure forecast"
+    },
+    {
+     "at": 250,
+     "text": "Upper inflow peaks"
+    }
+   ],
+   "required": "Evacuate at least 9; maintain power at the medical station at mission end.",
+   "mastery": "Rescue all 12 without exposing the orchard assembly point.",
+   "failure": "An outlet into the orchard transfers the hazard to waiting residents; debrief displays the actual flow path.",
+   "payoff": "A pumping hose visibly bulges while a previously flooded road reappears."
+  },
+  "W1-M3": {
+   "title": "Two Banks",
+   "world": "W1",
+   "decision": "Allocate transport capacity between separated groups.",
+   "layout": "West village has 8 residents; east workshop 6. One bridge socket connects only the high paths, not both docks.",
+   "threats": [
+    {
+     "at": 70,
+     "text": "A central surge closes the low footpath"
+    },
+    {
+     "at": 180,
+     "text": "Debris blocks one boat lane after a clear warning"
+    },
+    {
+     "at": 320,
+     "text": "The east landing becomes the shorter remaining route"
+    }
+   ],
+   "required": "Evacuate at least 11; empty the east workshop group.",
+   "mastery": "Rescue all 14 with no idle fully loaded skiff at the end.",
+   "failure": "A boat assigned to a closing lane waits at a safe node; the player must reassign it.",
+   "payoff": "Two boats cross beneath the viaduct carrying different rescue groups."
+  },
+  "W1-M4": {
+   "title": "Power Before Water",
+   "world": "W1",
+   "decision": "Trade early protection against immediate evacuation.",
+   "layout": "Clinic, tram depot, and riverside housing share a power bottleneck. Dry source sockets are scarce but sufficient.",
+   "threats": [
+    {
+     "at": 50,
+     "text": "First spill enters the clinic basin"
+    },
+    {
+     "at": 160,
+     "text": "Tram passengers reach the assembly point"
+    },
+    {
+     "at": 280,
+     "text": "One low connection shuts down unless protected"
+    },
+    {
+     "at": 380,
+     "text": "Final spill threatens the second basin"
+    }
+   ],
+   "required": "Evacuate at least 12; preserve the clinic power connection at end.",
+   "mastery": "Rescue all 16 while keeping both generators operational.",
+   "failure": "Overcommitting power leaves a pump queued; the UI names the inactive consumer.",
+   "payoff": "The town’s lights return in a visible chain when power is restored."
+  },
+  "W1-M5": {
+   "title": "The Long Way Home",
+   "world": "W1",
+   "decision": "Combine flow, power, routing, and a deliberate equipment tradeoff.",
+   "layout": "Four groups of 5 occupy the upper village, orchard, workshop, and island landing. Three elevations create alternate safe routes.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "First surge reveals the main fork"
+    },
+    {
+     "at": 170,
+     "text": "A forecast landslide closes the short road"
+    },
+    {
+     "at": 290,
+     "text": "Reservoir overflow increases source flow"
+    },
+    {
+     "at": 420,
+     "text": "Late inflow tests the downstream basin"
+    }
+   ],
+   "required": "Evacuate at least 15; restore a continuous route between depot and upper village.",
+   "mastery": "Rescue all 20 and finish with no stranded loaded vehicle.",
+   "failure": "A poor early diversion consumes safe basin capacity and forces a longer evacuation; no instant unannounced loss.",
+   "payoff": "The final bus and skiff arrive together while the town’s rescue bell rings."
+  },
+  "W2-M1": {
+   "title": "A Line in the Trees",
+   "world": "W2",
+   "decision": "Learn fuel removal and moisture.",
+   "layout": "Campsite and lookout connect through two wooded paths; one tank supplies both sprinkler sockets.",
+   "threats": [
+    {
+     "at": 50,
+     "text": "A marked dry-cell cluster ignites"
+    },
+    {
+     "at": 160,
+     "text": "Steady wind advances heat toward the short path"
+    },
+    {
+     "at": 260,
+     "text": "The first cooled strip becomes safe to cross"
+    }
+   ],
+   "required": "Rescue at least 8; preserve a path to the lookout.",
+   "mastery": "Rescue all 10 while retaining water in the tank.",
+   "failure": "A gap in the firebreak permits predictable spread.",
+   "payoff": "The fire stops along the exact strip the player cleared."
+  },
+  "W2-M2": {
+   "title": "Last Bus from Camp",
+   "world": "W2",
+   "decision": "Coordinate finite ground transport capacity.",
+   "layout": "Three camps each hold 6 people; two road loops meet at a refill station.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "One road becomes threatened"
+    },
+    {
+     "at": 190,
+     "text": "A wind warning marks the alternate loop"
+    },
+    {
+     "at": 330,
+     "text": "The refill station approaches heat threshold"
+    }
+   ],
+   "required": "Rescue at least 14; unload every occupied crawler before finishing.",
+   "mastery": "Rescue all 18 without losing the refill station.",
+   "failure": "An empty vehicle on the wrong loop costs time but can be rerouted.",
+   "payoff": "Campers board with tiny backpacks and return a lost flag."
+  },
+  "W2-M3": {
+   "title": "Water Is a Route",
+   "world": "W2",
+   "decision": "Make water supply and transport choices interact.",
+   "layout": "A pond and storage tank feed separate areas; a pump link can refill the tank without protecting the road by itself.",
+   "threats": [
+    {
+     "at": 40,
+     "text": "Orchard edge heats"
+    },
+    {
+     "at": 150,
+     "text": "The tank drops below half unless replenished"
+    },
+    {
+     "at": 300,
+     "text": "A second ignition threatens the return road"
+    }
+   ],
+   "required": "Rescue at least 12; keep the orchard assembly route usable.",
+   "mastery": "Rescue all 16 with neither water source exhausted.",
+   "failure": "A sprinkler without water shows a visible dry gauge rather than pretending to operate.",
+   "payoff": "A hose network creates a brief corridor through a glowing forest edge."
+  },
+  "W2-M4": {
+   "title": "When the Wind Turns",
+   "world": "W2",
+   "decision": "Anticipate forecast direction changes.",
+   "layout": "Four groups use a road network with two dominant wind-exposed edges; a fixed powered tank is provided.",
+   "threats": [
+    {
+     "at": 70,
+     "text": "Wind is stable westward"
+    },
+    {
+     "at": 200,
+     "text": "A 40-second warning precedes an eastward turn"
+    },
+    {
+     "at": 360,
+     "text": "A second turn threatens the unprotected flank"
+    }
+   ],
+   "required": "Rescue at least 15; empty the lookout group.",
+   "mastery": "Rescue all 20 without rebuilding a committed firebreak.",
+   "failure": "Ignoring the visible wind timeline makes the formerly safe flank dangerous.",
+   "payoff": "Leaves and smoke lean before the route warning changes."
+  },
+  "W2-M5": {
+   "title": "The Green Corridor",
+   "world": "W2",
+   "decision": "Maintain a living evacuation corridor through a combined burn.",
+   "layout": "Campsite, orchard, and sawmill each hold 8; two water tanks and one long safe route can support a coordinated solution.",
+   "threats": [
+    {
+     "at": 50,
+     "text": "Outer forest ignition"
+    },
+    {
+     "at": 170,
+     "text": "Sawmill access becomes threatened"
+    },
+    {
+     "at": 310,
+     "text": "Wind shifts toward the central route"
+    },
+    {
+     "at": 430,
+     "text": "Final heat peak reaches the corridor flank"
+    }
+   ],
+   "required": "Rescue at least 18; preserve the central route at end.",
+   "mastery": "Rescue all 24 and save the orchard pump house.",
+   "failure": "Protecting every decorative building leaves too little transport capacity.",
+   "payoff": "The last crawler exits as residents begin planting the first new sapling."
+  },
+  "W3-M1": {
+   "title": "Hold the Station",
+   "world": "W3",
+   "decision": "Introduce structure-specific support and vertical transfers.",
+   "layout": "Two terraces connect at the cable station; one known weak support threatens the link.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "A support begins losing stability"
+    },
+    {
+     "at": 160,
+     "text": "Meltwater increases load"
+    },
+    {
+     "at": 260,
+     "text": "A minor tremor tests bracing"
+    }
+   ],
+   "required": "Rescue at least 8; preserve the cable support.",
+   "mastery": "Rescue all 10 with no station shutdown.",
+   "failure": "Bracing decorative rocks has no effect; only eligible supports accept placement.",
+   "payoff": "Cable tension relaxes visibly when a brace locks into place."
+  },
+  "W3-M2": {
+   "title": "Above the Snowline",
+   "world": "W3",
+   "decision": "Manage independent rescue links and power.",
+   "layout": "Three terraces; two winch links and one sheltered intermediate node.",
+   "threats": [
+    {
+     "at": 50,
+     "text": "Upper path closes under snow"
+    },
+    {
+     "at": 160,
+     "text": "Sheltered node receives an arriving group"
+    },
+    {
+     "at": 290,
+     "text": "One unbraced cable platform approaches instability"
+    }
+   ],
+   "required": "Rescue at least 11; empty the top observatory.",
+   "mastery": "Rescue all 14 without trapping residents at the intermediate node.",
+   "failure": "Moving people uphill into a temporary staging node without onward capacity blocks the route.",
+   "payoff": "Tiny lights descend the mountain in two synchronized lifts."
+  },
+  "W3-M3": {
+   "title": "The Quiet Slope",
+   "world": "W3",
+   "decision": "Read runout zones and preserve a secondary route.",
+   "layout": "A broad slope threatens one road; a rock shelf provides a longer bypass.",
+   "threats": [
+    {
+     "at": 90,
+     "text": "Slope stability warning appears"
+    },
+    {
+     "at": 210,
+     "text": "A marked avalanche runout closes the short road"
+    },
+    {
+     "at": 340,
+     "text": "Cooling makes one debris edge clearable in the authored route"
+    }
+   ],
+   "required": "Rescue at least 12; evacuate the weather crew.",
+   "mastery": "Rescue all 16 without entering the marked runout during release.",
+   "failure": "A closed road stops vehicles at a safe node; it does not fling rigidbody residents.",
+   "payoff": "A soft wall of stylized snow follows the warned corridor exactly."
+  },
+  "W3-M4": {
+   "title": "Cable and Current",
+   "world": "W3",
+   "decision": "Combine snow support and flooding power platforms.",
+   "layout": "A warming lower basin threatens generators while upper cables carry residents.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Lower snowmelt starts"
+    },
+    {
+     "at": 190,
+     "text": "Cable load increases"
+    },
+    {
+     "at": 310,
+     "text": "A second meltwater source activates"
+    }
+   ],
+   "required": "Rescue at least 14; keep one complete powered cable route available at end.",
+   "mastery": "Rescue all 18 while keeping both lower platforms dry.",
+   "failure": "Ignoring the lower basin breaks a logically correct upper rescue plan.",
+   "payoff": "A small stream passes beneath the rescued cable line rather than over its power box."
+  },
+  "W3-M5": {
+   "title": "Dawn at Frostline",
+   "world": "W3",
+   "decision": "Coordinate a complete mountain evacuation.",
+   "layout": "Observatory, station, and village groups converge through limited safe terraces.",
+   "threats": [
+    {
+     "at": 70,
+     "text": "Forecast warming begins"
+    },
+    {
+     "at": 180,
+     "text": "First cable support warning"
+    },
+    {
+     "at": 300,
+     "text": "Runout closes the valley shortcut"
+    },
+    {
+     "at": 420,
+     "text": "Final transport window opens at the lower station"
+    }
+   ],
+   "required": "Rescue at least 17; clear the observatory and station groups.",
+   "mastery": "Rescue all 22 with no occupied vehicle or shelter left behind.",
+   "failure": "Using the receiving station as indefinite storage causes a capacity bottleneck.",
+   "payoff": "The sun reaches the restored station as the last cabin arrives."
+  },
+  "W4-M1": {
+   "title": "Between Two Tides",
+   "world": "W4",
+   "decision": "Learn readable tide windows.",
+   "layout": "Two islands connect by a low causeway and an all-tide boat route; a fixed dry source powers the receiving dock.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Tide begins rising"
+    },
+    {
+     "at": 180,
+     "text": "Causeway closes"
+    },
+    {
+     "at": 300,
+     "text": "High landing becomes optimal for unloading"
+    }
+   ],
+   "required": "Rescue at least 9; clear the low-market group.",
+   "mastery": "Rescue all 12 without a loaded boat waiting at a closed dock.",
+   "failure": "An incorrect dock remains visible but rejects loading with a tide explanation.",
+   "payoff": "Market umbrellas fold as the water reaches the tide ruler."
+  },
+  "W4-M2": {
+   "title": "Keep the Light",
+   "world": "W4",
+   "decision": "Keep a dry power route while transporting residents.",
+   "layout": "Three elevated relay sockets can route around a flood-prone connection to the lighthouse.",
+   "threats": [
+    {
+     "at": 70,
+     "text": "Low cable channel floods"
+    },
+    {
+     "at": 210,
+     "text": "Receiving dock needs lighthouse power for its safe route signal"
+    },
+    {
+     "at": 350,
+     "text": "Peak tide threatens the shortest relay path"
+    }
+   ],
+   "required": "Rescue at least 12; power the lighthouse at end.",
+   "mastery": "Rescue all 16 with no power outage during final unloading.",
+   "failure": "Moving a relay while its only route is actively required temporarily blocks unloading.",
+   "payoff": "A lighthouse beam returns exactly when the circuit closes."
+  },
+  "W4-M3": {
+   "title": "The Floating Market",
+   "world": "W4",
+   "decision": "Handle multiple pickups and staging capacity.",
+   "layout": "Four markets each hold 5; the safe island has limited docks but sufficient total refuge.",
+   "threats": [
+    {
+     "at": 50,
+     "text": "First tidal lane opens"
+    },
+    {
+     "at": 170,
+     "text": "A stall pontoon blocks one marked channel"
+    },
+    {
+     "at": 300,
+     "text": "Current direction favors the outer loop"
+    }
+   ],
+   "required": "Rescue at least 15; unload all occupied skiffs.",
+   "mastery": "Rescue all 20 without exceeding any staging node capacity.",
+   "failure": "Assigning all boats to one dock creates a readable queue, not overlapping models.",
+   "payoff": "Boats line up between colorful awnings and a miniature harbor crane."
+  },
+  "W4-M4": {
+   "title": "Storm Switch",
+   "world": "W4",
+   "decision": "Combine rain inflow and sea-level changes.",
+   "layout": "Rain fills an inland basin while tide threatens pump outlets and the power network.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Rain source starts"
+    },
+    {
+     "at": 190,
+     "text": "Tide reduces discharge efficiency"
+    },
+    {
+     "at": 320,
+     "text": "A brief low-tide window opens"
+    },
+    {
+     "at": 440,
+     "text": "Final rain peak"
+    }
+   ],
+   "required": "Rescue at least 17; keep the medical landing accessible at end.",
+   "mastery": "Rescue all 22 without pumping into the occupied market basin.",
+   "failure": "A pump outlet submerged under a tide has reduced effect, clearly shown in its forecast.",
+   "payoff": "Two different water levels become visible across the barrier line."
+  },
+  "W4-M5": {
+   "title": "Harbor of Everyone",
+   "world": "W4",
+   "decision": "Master transport, tide windows, and power topology.",
+   "layout": "Three islands, two causeways, four pickup groups, and a lighthouse-backed safe harbor.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Rising tide closes the first causeway"
+    },
+    {
+     "at": 180,
+     "text": "Power warning at the harbor"
+    },
+    {
+     "at": 300,
+     "text": "Outer route becomes faster with the current"
+    },
+    {
+     "at": 430,
+     "text": "Last high-water phase closes low docks"
+    }
+   ],
+   "required": "Rescue at least 20; restore lighthouse power and empty every temporary staging dock.",
+   "mastery": "Rescue all 26 with the high causeway still usable.",
+   "failure": "Saving the lighthouse alone cannot satisfy the rescue goal.",
+   "payoff": "The harbor fills with rescued boats under a single calm sweep of light."
+  },
+  "W5-M1": {
+   "title": "A Path Through Heat",
+   "world": "W5",
+   "decision": "Introduce temporary cooled crossings.",
+   "layout": "Two heat channels divide an orchard from a high landing; one shelter socket lies outside the permanent safe zone.",
+   "threats": [
+    {
+     "at": 70,
+     "text": "Lava advances into a marked channel"
+    },
+    {
+     "at": 210,
+     "text": "First cooling opportunity appears"
+    },
+    {
+     "at": 330,
+     "text": "Cooled segment begins reheating"
+    }
+   ],
+   "required": "Rescue at least 9; empty the temporary shelter before completion.",
+   "mastery": "Rescue all 12 before the first crossing reheats.",
+   "failure": "Cooling too early wastes the safe window; the timer remains visible.",
+   "payoff": "A black crust forms under a cooling plume and opens a narrow path."
+  },
+  "W5-M2": {
+   "title": "Borrowed Safety",
+   "world": "W5",
+   "decision": "Use refuge as a temporary logistics tool, not a destination.",
+   "layout": "Two groups need protection while the crawler travels between sectors.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Heat advances toward the first assembly point"
+    },
+    {
+     "at": 180,
+     "text": "Shelter protection starts being consumed"
+    },
+    {
+     "at": 320,
+     "text": "The outer route opens after a cooling phase"
+    }
+   ],
+   "required": "Rescue at least 14; both temporary shelters empty at end.",
+   "mastery": "Rescue all 18 without exhausting a shelter protection interval.",
+   "failure": "Leaving residents in shelters fails the evacuation condition even if they remain safe.",
+   "payoff": "Shelter lamps change state as the last group boards the crawler."
+  },
+  "W5-M3": {
+   "title": "The Cooling Works",
+   "world": "W5",
+   "decision": "Protect coolant logistics and power.",
+   "layout": "A cooling plant supplies finite coolant; water drainage protects its generator and relay.",
+   "threats": [
+    {
+     "at": 50,
+     "text": "Drainage basin begins filling"
+    },
+    {
+     "at": 170,
+     "text": "Heat threatens coolant delivery"
+    },
+    {
+     "at": 310,
+     "text": "A second channel cuts the default route"
+    }
+   ],
+   "required": "Rescue at least 15; keep the cooling works available at end.",
+   "mastery": "Rescue all 20 while retaining one coolant charge.",
+   "failure": "Power loss stops production but does not erase stored coolant.",
+   "payoff": "The plant’s pipes light in sequence and a safe corridor opens."
+  },
+  "W5-M4": {
+   "title": "Three Ways Out",
+   "world": "W5",
+   "decision": "Choose among sea, road, and temporary crossings.",
+   "layout": "Three sectors support different transport types; all routes share limited final receiving capacity.",
+   "threats": [
+    {
+     "at": 70,
+     "text": "Road warning"
+    },
+    {
+     "at": 200,
+     "text": "Heat closes the short land route"
+    },
+    {
+     "at": 330,
+     "text": "Sea route improves as debris clears"
+    },
+    {
+     "at": 440,
+     "text": "Final cooling window"
+    }
+   ],
+   "required": "Rescue at least 18; clear the research crew and all temporary refuge.",
+   "mastery": "Rescue all 24 with no stranded vehicle load.",
+   "failure": "Overloading one final landing creates a queue; capacity indicators must predict it.",
+   "payoff": "A boat and crawler transfer groups at the same tiny pier."
+  },
+  "W5-M5": {
+   "title": "Every Little Life",
+   "world": "W5",
+   "decision": "Final combined-system rescue with meaningful priorities.",
+   "layout": "Five groups of 6 span an orchard, station, research terraces, waterfront, and high village. No new mechanic is introduced.",
+   "threats": [
+    {
+     "at": 60,
+     "text": "Rain and heat begin in separate regions"
+    },
+    {
+     "at": 170,
+     "text": "First transport route warning"
+    },
+    {
+     "at": 290,
+     "text": "Generator platform needs drainage"
+    },
+    {
+     "at": 400,
+     "text": "Last heat front approaches the staging zone"
+    }
+   ],
+   "required": "Rescue at least 23; empty all temporary shelters and restore the final ferry route.",
+   "mastery": "Rescue all 30 without any equipment loss.",
+   "failure": "A plan that protects scenery but delays evacuation cannot earn a successful outcome.",
+   "payoff": "Every rescued group joins a single departure; the credits can be skipped without interrupting the final save."
+  }
+ }
+}

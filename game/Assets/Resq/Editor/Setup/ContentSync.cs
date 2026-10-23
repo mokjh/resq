@@ -20,6 +20,7 @@ namespace Resq.EditorTools
             Copy(Path.Combine(repo, "specification/content/mission_contracts.json"), Path.Combine(Dest, "mission_contracts.json"));
             Copy(Path.Combine(repo, "specification/content/equipment_rules.json"), Path.Combine(Dest, "equipment_rules.json"));
             Copy(Path.Combine(repo, "specification/content/modes_and_challenges.json"), Path.Combine(Dest, "modes_and_challenges.json"));
+            Copy(Path.Combine(repo, "content/briefings.json"), Path.Combine(Dest, "briefings.json"));   // tools/content/briefings.py
             int maps = 0;
             string content = Path.Combine(repo, "content");
             if (Directory.Exists(content))

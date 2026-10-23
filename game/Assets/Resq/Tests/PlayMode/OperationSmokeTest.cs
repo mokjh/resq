@@ -50,6 +50,11 @@ namespace Resq.Tests
         string _lastPress = "";
         readonly List<System.Action> _checks = new List<System.Action>();   // verified after the tick's step applies
 
+        // the game flow records finished runs: keep them out of the player's real save
+        string _saveDir;
+        [SetUp] public void TempSave() { _saveDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "resq_smoke_" + System.Guid.NewGuid().ToString("N")); SaveStore.Folder = _saveDir; }
+        [TearDown] public void RestoreSave() { SaveStore.Folder = null; try { System.IO.Directory.Delete(_saveDir, true); } catch (System.IO.IOException) { } }
+
         [UnityTest]
         public IEnumerator WinsWorldFirstMission([ValueSource(nameof(WorldFirstMissions))] string mission)
         {

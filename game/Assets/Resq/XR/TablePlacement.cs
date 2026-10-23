@@ -39,7 +39,13 @@ namespace Resq.XR
         {
             GameBootstrap.XrPlacement = Run;
             GameBootstrap.XrPointers = XrPointers.Setup;
+            GameFlow.Replace = Replace;
+            GameFlow.UseVirtualTable = UseVirtual;
+            GameFlow.PlacementConfirmed = Confirm;
+            GameFlow.HandsTracked = XrPointers.AnyHandTracked;
         }
+
+        static bool FlowActive(GameBootstrap boot) => boot.Flow != null && !GameFlow.Disabled;
 
         public static IEnumerator Run(GameBootstrap boot)
         {
@@ -59,8 +65,8 @@ namespace Resq.XR
                 if (anchor != null)
                 {
                     string layout = PlayerPrefs.GetString(LayoutKey, "wide");
-                    boot.BeginRun(layout);
                     Attach(boot, anchor.transform, anchor.transform.position, anchor.transform.rotation);
+                    boot.BeginRun(layout, "Your valley is back where you left it");
                     if (PlayerPrefs.GetString(SurfaceKey, "") == "virtual")
                         VirtualTable.Build(boot, new Pose(anchor.transform.position, anchor.transform.rotation), layout == "wide" ? WideFootprint : CompactFootprint);
                     Report(Outcome.RestoredAnchor, $"restored anchor {uuid} ({layout})");
@@ -76,22 +82,74 @@ namespace Resq.XR
             while (scene.MoveNext()) yield return scene.Current;
             if (TryChooseTable(headT, out var pose, out var layoutChoice, out var detail))
             {
-                boot.BeginRun(layoutChoice);
-                yield return null;
                 SetBoard(boot, pose);
+                boot.BeginRun(layoutChoice, layoutChoice == "wide" ? "On your table" : "On your table (compact board)");
+                yield return null;
                 Report(Outcome.Table, detail);
             }
             else
             {
                 // 3. a virtual table in front of the seated player (spec 05: eye − 300 mm, 550 mm out)
-                boot.BeginRun("wide");
-                yield return null;
                 var p = InFrontOfHead(headT);
                 SetBoard(boot, p);
                 VirtualTable.Build(boot, p, WideFootprint);
+                boot.BeginRun("wide", "On a virtual table (no table that fits was found)");
+                yield return null;
                 Report(Outcome.VirtualTable, detail.Length > 0 ? detail : "no table found: virtual table");
             }
-            if (boot.XrActive) SaveAnchorAsync(boot, boot.LayoutClass, Last == Outcome.VirtualTable ? "virtual" : "table");
+            // with the game flow the anchor is saved when the player confirms the calibrated pose (Confirm)
+            if (boot.XrActive && !FlowActive(boot)) SaveAnchorAsync(boot, boot.LayoutClass, Last == Outcome.VirtualTable ? "virtual" : "table");
+        }
+
+        // ------------------------------------------------------------------ flow hooks (U03–U05, U17)
+        /// <summary>Move the board / relocalise: drop the current anchor and place afresh.</summary>
+        static void Replace(GameBootstrap boot)
+        {
+            Detach(boot);
+            ForgetAnchor();
+            boot.StartCoroutine(Run(boot));
+        }
+
+        /// <summary>Switch to the virtual table in front of the player.</summary>
+        static void UseVirtual(GameBootstrap boot)
+        {
+            Detach(boot);
+            ForgetAnchor();
+            var p = InFrontOfHead(Camera.main != null ? Camera.main.transform : null);
+            SetBoard(boot, p);
+            VirtualTable.Build(boot, p, boot.LayoutClass == "compact" ? CompactFootprint : WideFootprint);
+            Report(Outcome.VirtualTable, "chosen by the player");
+            boot.BeginRun(boot.LayoutClass, "On a virtual table");
+        }
+
+        /// <summary>The player confirmed the calibrated pose: save it as the valley's spatial anchor.</summary>
+        static void Confirm(GameBootstrap boot)
+        {
+            if (!boot.XrActive) return;
+            var parent = boot.BoardRoot.parent;
+            var old = parent != null ? parent.GetComponent<OVRSpatialAnchor>() : null;
+            // restored and not moved: the saved anchor is still right
+            if (old != null && boot.BoardRoot.localPosition.sqrMagnitude < 1e-6f && Quaternion.Angle(boot.BoardRoot.localRotation, Quaternion.identity) < 0.1f) return;
+            Detach(boot, keepTable: true);
+            SaveAnchorAsync(boot, boot.LayoutClass, Last == Outcome.VirtualTable || boot.BoardRoot.Find("VirtualTable") != null ? "virtual" : "table");
+        }
+
+        static void Detach(GameBootstrap boot, bool keepTable = false)
+        {
+            var root = boot.BoardRoot;
+            var parent = root.parent;
+            root.SetParent(null, true);
+            var anchor = parent != null ? parent.GetComponent<OVRSpatialAnchor>() : null;
+            if (anchor != null)
+            {
+                _ = anchor.EraseAnchorAsync();   // don't leave stale anchors in the headset's storage
+                UnityEngine.Object.Destroy(parent.gameObject);
+            }
+            if (!keepTable)
+            {
+                var vt = root.Find("VirtualTable");
+                if (vt != null) UnityEngine.Object.Destroy(vt.gameObject);
+            }
         }
 
         // ------------------------------------------------------------------ tables

@@ -261,7 +261,7 @@ namespace Resq.Game
                 Color col = verdict == Reject.OK ? Ok : verdict == Reject.InsufficientSupplies || verdict == Reject.StockExhausted ? Risky : Bad;
                 if (hovered) col = Color.Lerp(col, Color.white, 0.35f);
                 SetTint(r, col);
-                p.transform.localScale = Vector3.one * (hovered ? 1.25f : 1f + 0.08f * Mathf.Sin(Time.time * 4f));
+                p.transform.localScale = Vector3.one * (hovered ? 1.25f : Comfort.ReducedEffects ? 1f : 1f + 0.08f * Mathf.Sin(Time.time * 4f));
             }
             // holographic ghost of the armed tool at the hovered socket: cyan when legal, red when not
             var hoverSock = mode == InteractMode.ToolArmed && Interaction.Hover != null && Interaction.Hover.Kind == PickKind.Socket ? Interaction.Hover.Index : -1;
@@ -277,7 +277,7 @@ namespace Resq.Game
                 }
                 bool legal = Interaction.HoverVerdict == Reject.OK;
                 _ghostMat.SetColor("_Color", legal ? new Color(0.35f, 0.95f, 1f, 1f) : new Color(1f, 0.3f, 0.3f, 1f));
-                _ghost.transform.localScale = Vector3.one * (1f + 0.03f * Mathf.Sin(Time.time * 5f));
+                _ghost.transform.localScale = Vector3.one * (Comfort.ReducedEffects ? 1f : 1f + 0.03f * Mathf.Sin(Time.time * 5f));
                 if (!_ghost.activeSelf) _ghost.SetActive(true);
             }
             // destinations active only while choosing a destination

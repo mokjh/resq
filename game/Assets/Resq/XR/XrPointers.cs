@@ -22,6 +22,14 @@ namespace Resq.XR
         /// <summary>The hand pointers in use (diagnostics, tests).</summary>
         public static readonly List<IsdkHandPointer> Active = new List<IsdkHandPointer>();
 
+        /// <summary>For the tracking-recovery pause (U16): true while any hand is tracked, or when there are no hand pointers.</summary>
+        public static bool AnyHandTracked()
+        {
+            if (Active.Count == 0) return true;
+            foreach (var p in Active) if (p.Tracked) return true;
+            return false;
+        }
+
         public static void Setup(GameBootstrap boot, OVRCameraRig rig)
         {
             var bySide = new Dictionary<Handedness, List<IHand>>();

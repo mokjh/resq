@@ -100,7 +100,7 @@ namespace Resq.Game
         // ------------------------------------------------------------------ objectives card
         void BuildCard(Vector2 ext)
         {
-            var lines = ObjectiveLines();
+            var lines = ObjectiveLines(_def);
             float w = 0.34f, rowH = 0.024f, head = 0.062f;
             float h = head + rowH * lines.Count + 0.014f;
             float left = -ext.x - 0.02f + w * 0.5f;
@@ -127,32 +127,32 @@ namespace Resq.Game
         }
 
         /// <summary>Distinct, player-readable objective lines (critical duplicates of required lines folded in).</summary>
-        List<(int objective, string label)> ObjectiveLines()
+        public static List<(int objective, string label)> ObjectiveLines(MissionDef def)
         {
             var list = new List<(int, string)>();
             var seen = new HashSet<string>();
-            list.Add((-1, $"Rescue {_def.MinimumRescues} residents"));
+            list.Add((-1, $"Rescue {def.MinimumRescues} residents"));
             seen.Add(list[0].Item2);
-            for (int i = 0; i < _def.Objectives.Length; i++)
+            for (int i = 0; i < def.Objectives.Length; i++)
             {
-                var o = _def.Objectives[i];
+                var o = def.Objectives[i];
                 if (o.Condition.Kind == ConditionKind.RescueCount && o.Tier != Tier.Mastery) continue;
-                string label = Describe(o);
+                string label = Describe(def, o);
                 if (seen.Add(label)) list.Add((i, label));
             }
             return list;
         }
 
-        string Describe(ObjectiveDef o)
+        public static string Describe(MissionDef def, ObjectiveDef o)
         {
             var c = o.Condition;
             string prefix = o.Tier == Tier.Mastery ? "Bonus: " : "";
             switch (c.Kind)
             {
-                case ConditionKind.GroupEvacuated: return $"{prefix}Get the {BoardView.Pretty(_def.GroupIds[c.A])} group to safety";
-                case ConditionKind.InfrastructureOperational: return $"{prefix}Keep the {BoardView.Pretty(_def.InfraIds[c.A])} running";
-                case ConditionKind.ExposureBelow: return $"{prefix}Keep the {BoardView.Pretty(_def.RegionIds[c.A])} safe";
-                case ConditionKind.RouteAvailable: return $"{prefix}Keep the {BoardView.Pretty(_def.RouteIds[c.A])} open";
+                case ConditionKind.GroupEvacuated: return $"{prefix}Get the {BoardView.Pretty(def.GroupIds[c.A])} group to safety";
+                case ConditionKind.InfrastructureOperational: return $"{prefix}Keep the {BoardView.Pretty(def.InfraIds[c.A])} running";
+                case ConditionKind.ExposureBelow: return $"{prefix}Keep the {BoardView.Pretty(def.RegionIds[c.A])} safe";
+                case ConditionKind.RouteAvailable: return $"{prefix}Keep the {BoardView.Pretty(def.RouteIds[c.A])} open";
                 case ConditionKind.RescueCount: return $"{prefix}Rescue {c.Value} residents";
                 case ConditionKind.TemporaryShelterEmpty: return $"{prefix}Everyone leaves the shelters";
                 case ConditionKind.TemporaryStagingEmpty: return $"{prefix}Nobody left at staging points";
@@ -164,9 +164,9 @@ namespace Resq.Game
                 case ConditionKind.CounterAtMost when c.Metric == MetricKind.ShelterExhaustions: return $"{prefix}No shelter runs out";
                 case ConditionKind.CounterAtMost when c.Metric == MetricKind.LoadedClosedDockWait: return $"{prefix}No loaded boat waits at a closed dock";
                 case ConditionKind.CounterAtMost when c.Metric == MetricKind.MaxDockQueue: return $"{prefix}Keep the dock queue short";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.PeakNodeOccupancy: return $"{prefix}Don't crowd the {BoardView.Pretty(_def.NodeIds[c.MetricTarget])}";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.MaxNodeDwell: return $"{prefix}Nobody waits long at the {BoardView.Pretty(_def.NodeIds[c.MetricTarget])}";
-                case ConditionKind.CounterAtMost when c.Metric == MetricKind.PumpedIntoRegion: return $"{prefix}Don't pump into the {BoardView.Pretty(_def.RegionIds[c.MetricTarget])}";
+                case ConditionKind.CounterAtMost when c.Metric == MetricKind.PeakNodeOccupancy: return $"{prefix}Don't crowd the {BoardView.Pretty(def.NodeIds[c.MetricTarget])}";
+                case ConditionKind.CounterAtMost when c.Metric == MetricKind.MaxNodeDwell: return $"{prefix}Nobody waits long at the {BoardView.Pretty(def.NodeIds[c.MetricTarget])}";
+                case ConditionKind.CounterAtMost when c.Metric == MetricKind.PumpedIntoRegion: return $"{prefix}Don't pump into the {BoardView.Pretty(def.RegionIds[c.MetricTarget])}";
                 case ConditionKind.CounterAtLeast when c.Metric == MetricKind.EdgeTransfers: return $"{prefix}Use the bypass route";
                 case ConditionKind.CounterAtLeast when c.Metric == MetricKind.EvacuatedByMode:
                     return $"{prefix}Bring someone out {(c.MetricMode == 1 ? "by boat" : c.MetricMode == 2 ? "by cable" : "on foot")}";

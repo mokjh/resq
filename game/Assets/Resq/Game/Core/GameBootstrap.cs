@@ -23,6 +23,8 @@ namespace Resq.Game
         public BoardInteraction Interaction { get; private set; }
         public OperationPanel Panel { get; private set; }
         public HudView Hud { get; private set; }
+        public GameFlow Flow { get; private set; }
+        bool FlowActive => Flow != null && !GameFlow.Disabled;
 
         void Awake()
         {
@@ -50,6 +52,8 @@ namespace Resq.Game
             Board.enabled = false; Board.enabled = true;
             panel.enabled = false; panel.enabled = true;
             Hud.enabled = false; Hud.enabled = true;
+            Flow = gameObject.AddComponent<GameFlow>();
+            Flow.Init(this);
         }
 
         /// <summary>
@@ -74,19 +78,22 @@ namespace Resq.Game
             if (FindFirstObjectByType<OVRCameraRig>() != null)
                 for (float t = 0; t < 3f && !XRSettings.isDeviceActive; t += Time.unscaledDeltaTime) yield return null;
             SetupPointers();
-            if ((XrActive || XrPlacementWithoutDevice) && XrPlacement != null) StartCoroutine(XrPlacement(this));
-            else
-            {
-                Driver.LoadRun(MissionId, LayoutClass, Profile, Guided);
-                if (XrActive) StartCoroutine(PlaceInFrontOfHead());
-            }
+            bool placement = (XrActive || XrPlacementWithoutDevice) && XrPlacement != null;
+            if (placement) StartCoroutine(XrPlacement(this));
+            else if (XrActive) StartCoroutine(PlaceInFrontOfHead());
+            if (FlowActive) Flow.Begin(placement);
+            else if (!placement) Driver.LoadRun(MissionId, LayoutClass, Profile, Guided);
         }
 
-        /// <summary>Starts the run once placement has chosen the layout (wide or compact) the table can hold.</summary>
-        public void BeginRun(string layout)
+        /// <summary>
+        /// Placement has chosen the layout (wide or compact) the table can hold. With the game flow, the player
+        /// calibrates and continues to the hub; without it (dev, tests), the run starts straight away.
+        /// </summary>
+        public void BeginRun(string layout, string surface = "")
         {
             LayoutClass = layout;
-            Driver.LoadRun(MissionId, layout, Profile, Guided);
+            if (FlowActive) Flow.PlacementDone(layout, surface);
+            else Driver.LoadRun(MissionId, layout, Profile, Guided);
         }
 
         /// <summary>
@@ -113,6 +120,7 @@ namespace Resq.Game
             var rig = FindFirstObjectByType<OVRCameraRig>();
             bool xr = rig != null && XRSettings.isDeviceActive;
             XrActive = xr;
+            Interaction.Head = xr ? rig.centerEyeAnchor : null;
             if (xr && XrPointers != null)
             {
                 XrPointers(this, rig);
@@ -134,6 +142,7 @@ namespace Resq.Game
             {
                 cam = DesktopCamera();
                 Interaction.AddSource(new DesktopPointer(cam));
+                Interaction.Head = cam.transform;
             }
             else Interaction.AddSource(new DesktopPointer(cam));
         }
