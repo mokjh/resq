@@ -21,6 +21,8 @@ namespace Resq.Game
         ActorKit _kit;
         float _kitScale = 1f;
         readonly List<float> _vehicleYaw = new List<float>();
+        /// <summary>Cells under decorative cottages (scatter keeps clear of them).</summary>
+        public readonly HashSet<int> CottageCells = new HashSet<int>();
         Vector3[] _residentPrev;
         Mesh[] _residentVariants;
 
@@ -35,7 +37,7 @@ namespace Resq.Game
         {
             _def = d;
             foreach (Transform child in transform) Destroy(child.gameObject);
-            _residents.Clear(); _vehicles.Clear(); _equipment.Clear(); _vehicleYaw.Clear();
+            _residents.Clear(); _vehicles.Clear(); _equipment.Clear(); _vehicleYaw.Clear(); CottageCells.Clear();
             float s = BoardSpace.CellSize(d) / BoardSpace.WideCell; // compact scales down
             _kit = ActorKit.Load();
             _kitScale = s;
@@ -338,7 +340,7 @@ namespace Resq.Game
                                         if (blocked[c] || d.CellElevation[c] != blockElev) ok = false;
                                     }
                                 if (!ok) continue;
-                                for (int y = y0; y < y0 + bh; y++) for (int x = x0; x < x0 + bw; x++) blocked[d.CellIndex(x, y)] = true;
+                                for (int y = y0; y < y0 + bh; y++) for (int x = x0; x < x0 + bw; x++) { blocked[d.CellIndex(x, y)] = true; CottageCells.Add(d.CellIndex(x, y)); }
                                 float cs = BoardSpace.CellSize(d);
                                 var centre = new Vector3((x0 + bw * 0.5f - w * 0.5f) * cs, BoardSpace.Height(d, blockElev), (y0 + bh * 0.5f - h * 0.5f) * cs);
                                 var toNode = BoardSpace.CellCenter(d, start) - centre; toNode.y = 0;

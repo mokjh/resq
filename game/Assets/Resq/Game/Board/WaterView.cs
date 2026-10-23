@@ -93,7 +93,16 @@ namespace Resq.Game
                     {
                         _verts[i].y = sum / wet;
                         float dn = Mathf.Clamp01(depth / wet / 1500f);
-                        _colors[i] = new Color(dn, 0, 0, 1);
+                        // G = shoreline: this corner touches dry in-bounds ground (foam line on the water's edge)
+                        int inBounds = 0;
+                        for (int dy = -1; dy <= 0; dy++)
+                            for (int dx = -1; dx <= 0; dx++)
+                            {
+                                int cx = x + dx, cy = y + dy;
+                                if (cx >= 0 && cy >= 0 && cx < d.GridW && cy < d.GridH) inBounds++;
+                            }
+                        float shore = wet < inBounds ? 1f : 0f;
+                        _colors[i] = new Color(dn, shore, 0, 1);
                     }
                     else
                     {

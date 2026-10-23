@@ -116,6 +116,7 @@ namespace Resq.Game
             if (CardMaterial == null) CardMaterial = new Material(Shader.Find("Resq/VertexLit"));
             if (WaterMaterial == null) WaterMaterial = new Material(Shader.Find("Resq/Water"));
             if (OverlayMaterial == null) OverlayMaterial = new Material(Shader.Find("Resq/Overlay"));
+            ActorMaterial.enableInstancing = true; // world dressing is drawn instanced
         }
     }
 

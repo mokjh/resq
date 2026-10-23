@@ -15,6 +15,7 @@ namespace Resq.Game
         public BoardInteraction Interaction;
         public Material TerrainMaterial, WaterMaterial, ActorMaterial, MarkerMaterial, OverlayMaterial;
         public HazardView Hazards { get; private set; }
+        public ScatterView Scatter { get; private set; }
         public ForecastView Forecast { get; private set; }
 
         public WaterView Water { get; private set; }
@@ -63,6 +64,21 @@ namespace Resq.Game
             Actors = actors.AddComponent<ActorsView>();
             Actors.Driver = Driver; Actors.Material = ActorMaterial;
             Actors.Build(_def);
+
+            var scatter = new GameObject("Scatter");
+            scatter.transform.SetParent(_root, false);
+            Scatter = scatter.AddComponent<ScatterView>();
+            Scatter.Driver = Driver; Scatter.Actors = Actors;
+            var natureKit = NatureKit.Load();
+            Scatter.Material = natureKit != null && natureKit.Material != null ? natureKit.Material : ActorMaterial;
+            Scatter.Build(_def);
+
+            var ring = new GameObject("WorldRing");
+            ring.transform.SetParent(_root, false);
+            ring.AddComponent<MeshFilter>();
+            var ringRenderer = ring.AddComponent<MeshRenderer>();
+            ringRenderer.sharedMaterial = TerrainMaterial;
+            ring.AddComponent<WorldRingView>().Build(_def);
 
             var hazards = new GameObject("Hazards");
             hazards.transform.SetParent(_root, false);

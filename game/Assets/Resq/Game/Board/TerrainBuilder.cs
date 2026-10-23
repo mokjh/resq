@@ -4,7 +4,13 @@ using UnityEngine;
 
 namespace Resq.Game
 {
-    /// <summary>Builds the diorama terrain mesh (flat-topped cells, stepped walls, cutaway geology sides) from a MissionDef.</summary>
+    /// <summary>
+    /// Builds the diorama terrain mesh from a MissionDef (presentation only; the simulation never reads it).
+    /// Look 2.0: each cell top is a 3×3 patch with smooth world-space colour variation and soft blends between
+    /// natural ground types (roads, platforms and docks keep crisp edges), a little interior relief, chamfered
+    /// cliff tops, and stratified rock faces whose layers line up across the whole board. Cell borders stay at the
+    /// exact simulated elevation so water, nodes and equipment sit where the rules put them.
+    /// </summary>
     public static class TerrainBuilder
     {
         // World 1 palette (art bible): foliage, water, roof, stone, rescue.
@@ -12,8 +18,14 @@ namespace Resq.Game
             Earth = Hex(0x7A5A3C), EarthDark = Hex(0x5A4130), Rock = Hex(0x8C8577), Bed = Hex(0x3E4F4A),
             Terrace = Hex(0x6E9160), Depot = Hex(0xC9B98F), Basin = Hex(0x5C6B4E);
 
+        const int Sub = 3;                 // top patch subdivisions per cell side
+        const float ReliefMm = 0.55f;      // interior relief amplitude (board metres = mm * 0.001)
+        const float ChamferMm = 1.2f;      // cliff-top chamfer drop
+        const float StrataMm = 3.2f;       // rock layer thickness on cliff faces
+
         public static Color Hex(int rgb) => new Color(((rgb >> 16) & 255) / 255f, ((rgb >> 8) & 255) / 255f, (rgb & 255) / 255f, 1f);
 
+        // ------------------------------------------------------------------ palettes
         // Worlds 2–5 top colours by terrain code (codes come from each world's map kit legend).
         static readonly Dictionary<int, int> Emberwood = new Dictionary<int, int>
         {
@@ -38,6 +50,21 @@ namespace Resq.Game
             { 10, 0x5E7A3E }, { 11, 0xB8A88A }, { 12, 0x5A5048 }, { 13, 0x2A2624 }, { 14, 0x9AA3AA },
         };
 
+        /// <summary>Cliff strata per world, top to bottom of a repeating cycle.</summary>
+        static Color[] Strata(string world)
+        {
+            switch (world)
+            {
+                case "W2": return new[] { Hex(0x8A5A3A), Hex(0x6E4630), Hex(0x9C7350), Hex(0x5E3E2C) };
+                case "W3": return new[] { Hex(0x8C949C), Hex(0x6E767E), Hex(0x9AA2A8), Hex(0x5E666E) };
+                case "W4": return new[] { Hex(0xC2A878), Hex(0xA88C62), Hex(0xD0B98C), Hex(0x8E7556) };
+                case "W5": return new[] { Hex(0x3A3532), Hex(0x2A2624), Hex(0x5A3A2E), Hex(0x463F3A) };
+                default: return new[] { Hex(0x8C8577), Hex(0x7A6A58), Hex(0x9A8E7C), Hex(0x6A5A48) };
+            }
+        }
+
+        static Color Lip(string world) => world == "W3" ? Hex(0xF4F7FA) : world == "W5" ? Hex(0x5A524C) : world == "W4" ? Hex(0xD8C49A) : Hex(0x7E9A62);
+
         static Dictionary<int, int> WorldPalette(string worldId)
         {
             switch (worldId)
@@ -50,60 +77,130 @@ namespace Resq.Game
             }
         }
 
-        public static Color TopColor(MissionDef d, byte terrainCode, int cell)
+        /// <summary>Codes that keep crisp edges (built surfaces): roads, docks, depots, landings, platforms, buildings, water beds.</summary>
+        static bool Hard(MissionDef d, byte code)
+        {
+            switch (code)
+            {
+                case 0: case 2: case 4: case 8: case 9: case 12: return true;
+                case 23: case 24: case 26: return d.WorldId == "W3" || d.WorldId == "W2";
+                case 14: case 20: case 22: return d.WorldId == "W5" || (d.WorldId == "W2" && code != 14);
+                default: return false;
+            }
+        }
+
+        static Color BaseColor(MissionDef d, byte code)
         {
             var pal = WorldPalette(d.WorldId);
-            if (pal == null || !pal.TryGetValue(terrainCode, out int rgb)) return TopColor(terrainCode, cell);
-            uint hash = unchecked((uint)cell * 2654435761u);
-            float jitter = (hash >> 24) / 255f * 0.06f - 0.03f;
-            var c = Hex(rgb);
-            return new Color(Mathf.Clamp01(c.r + jitter), Mathf.Clamp01(c.g + jitter), Mathf.Clamp01(c.b + jitter), 1f);
-        }
-
-        public static Color TopColor(byte terrainCode, int cell)
-        {
-            uint hash = unchecked((uint)cell * 2654435761u);
-            float jitter = (hash >> 24) / 255f * 0.06f - 0.03f; // tiny deterministic variation
-            Color c;
-            switch (terrainCode)
+            if (pal != null && pal.TryGetValue(code, out int rgb)) return Hex(rgb);
+            switch (code)
             {
-                case 0: case 4: case 12: c = Bed; break;            // channel / reservoir / weir bed
-                case 1: case 7: c = Terrace; break;                 // terraces
-                case 2: c = Stone; break;                           // road
-                case 3: c = (cell % 3 == 0) ? FoliageLight : Foliage; break;
-                case 5: c = FoliageLight; break;                    // field
-                case 6: c = Basin; break;
-                case 8: case 9: c = Depot; break;                   // depot / landing
-                case 10: c = Hex(0x5E8A4E); break;                  // orchard
-                case 11: c = Hex(0xB9A98A); break;                  // village
-                default: c = Foliage; break;
+                case 0: case 4: case 12: return Bed;
+                case 1: case 7: return Terrace;
+                case 2: return Stone;
+                case 3: return Foliage;
+                case 5: return FoliageLight;
+                case 6: return Basin;
+                case 8: case 9: return Depot;
+                case 10: return Hex(0x5E8A4E);
+                case 11: return Hex(0xB9A98A);
+                default: return Foliage;
             }
-            return new Color(Mathf.Clamp01(c.r + jitter), Mathf.Clamp01(c.g + jitter), Mathf.Clamp01(c.b + jitter), 1f);
         }
 
+        public static Color TopColor(MissionDef d, byte terrainCode, int cell) => BaseColor(d, terrainCode);
+        public static Color TopColor(byte terrainCode, int cell) => BaseColor(null_def, terrainCode);
+        static readonly MissionDef null_def = new MissionDef();
+
+        // ------------------------------------------------------------------ noise (deterministic, presentation only)
+        static float Hash(int x, int y, int seed)
+        {
+            uint h = unchecked((uint)(x * 374761393 + y * 668265263 + seed * 1442695040));
+            h = (h ^ (h >> 13)) * 1274126177u;
+            return ((h ^ (h >> 16)) & 0xFFFF) / 65535f;
+        }
+
+        static float Value(float x, float y, int seed)
+        {
+            int xi = Mathf.FloorToInt(x), yi = Mathf.FloorToInt(y);
+            float fx = x - xi, fy = y - yi;
+            fx = fx * fx * (3 - 2 * fx); fy = fy * fy * (3 - 2 * fy);
+            float a = Hash(xi, yi, seed), b = Hash(xi + 1, yi, seed), c = Hash(xi, yi + 1, seed), e = Hash(xi + 1, yi + 1, seed);
+            return Mathf.Lerp(Mathf.Lerp(a, b, fx), Mathf.Lerp(c, e, fx), fy);
+        }
+
+        /// <summary>Two-octave noise in cell units, centred on 0.</summary>
+        static float Fbm(float x, float y, int seed) => (Value(x * 0.22f, y * 0.22f, seed) - 0.5f) * 0.7f + (Value(x * 0.9f, y * 0.9f, seed + 7) - 0.5f) * 0.3f;
+
+        static Color Vary(Color c, float gx, float gy, bool natural)
+        {
+            float v = Fbm(gx, gy, 11) * (natural ? 0.16f : 0.07f);
+            float hueShift = natural ? Fbm(gx + 31, gy - 17, 23) * 0.08f : 0f;
+            return new Color(Mathf.Clamp01(c.r + v + hueShift * 0.5f), Mathf.Clamp01(c.g + v + hueShift), Mathf.Clamp01(c.b + v - hueShift * 0.6f), 1f);
+        }
+
+        // ------------------------------------------------------------------ build
         public static Mesh Build(MissionDef d)
         {
-            var verts = new List<Vector3>(8000);
-            var cols = new List<Color>(8000);
-            var norms = new List<Vector3>(8000);
-            var tris = new List<int>(16000);
+            var verts = new List<Vector3>(30000);
+            var cols = new List<Color>(30000);
+            var norms = new List<Vector3>(30000);
+            var tris = new List<int>(60000);
             float s = BoardSpace.CellSize(d);
+            float mmToBoard = BoardSpace.Scale(d) * BoardSpace.VerticalExaggeration; // vertical metres per sim mm
+            float metresPerMm = s / 20f;                                              // presentation mm at this board scale
             float baseY = -BoardSpace.BaseDepth;
-            for (int c = 0; c < d.GridW * d.GridH; c++)
+            var strata = Strata(d.WorldId);
+            var lip = Lip(d.WorldId);
+            int n = d.GridW * d.GridH;
+            var grid = new Vector3[(Sub + 1) * (Sub + 1)];
+            var gcol = new Color[(Sub + 1) * (Sub + 1)];
+
+            for (int c = 0; c < n; c++)
             {
                 var center = BoardSpace.CellCenter(d, c);
                 float y = center.y;
                 float h = s * 0.5f;
-                var top = TopColor(d, d.CellTerrain[c], c);
-                Quad(verts, cols, norms, tris,
-                    new Vector3(center.x - h, y, center.z - h), new Vector3(center.x - h, y, center.z + h),
-                    new Vector3(center.x + h, y, center.z + h), new Vector3(center.x + h, y, center.z - h), Vector3.up, top);
                 int x = d.CellX(c), cy = d.CellY(c);
+                byte code = d.CellTerrain[c];
+                bool hard = Hard(d, code);
+                // which sides drop to lower ground (chamfer them) — the board edge always drops
+                bool dropW = Lower(d, x - 1, cy, y), dropE = Lower(d, x + 1, cy, y), dropS = Lower(d, x, cy - 1, y), dropN = Lower(d, x, cy + 1, y);
+                float chamfer = ChamferMm * metresPerMm;
+
+                for (int j = 0; j <= Sub; j++)
+                    for (int i = 0; i <= Sub; i++)
+                    {
+                        float u = i / (float)Sub, v = j / (float)Sub;
+                        float gx = x + u, gy = cy + v; // grid space (cells)
+                        var p = new Vector3(center.x - h + u * s, y, center.z - h + v * s);
+                        bool interior = i > 0 && i < Sub && j > 0 && j < Sub;
+                        if (interior && !hard) p.y += Fbm(gx * 2.3f, gy * 2.3f, 5) * ReliefMm * metresPerMm * 2f;
+                        bool lipVert = (i == 0 && dropW) || (i == Sub && dropE) || (j == 0 && dropS) || (j == Sub && dropN);
+                        if (lipVert) p.y -= chamfer;
+                        grid[j * (Sub + 1) + i] = p;
+                        var col = Vary(BlendedBase(d, x, cy, u, v, y), gx, gy, !hard);
+                        if (lipVert && !hard) col = Color.Lerp(col, lip, 0.35f);
+                        if (code == 2 && (i == 0 || i == Sub || j == 0 || j == Sub) && RoadEdge(d, x, cy, i, j)) col *= 0.82f; // kerb shading
+                        col.a = 1f;
+                        gcol[j * (Sub + 1) + i] = col;
+                    }
+                int start = verts.Count;
+                for (int k = 0; k < grid.Length; k++) { verts.Add(grid[k]); cols.Add(gcol[k]); norms.Add(Vector3.up); }
+                for (int j = 0; j < Sub; j++)
+                    for (int i = 0; i < Sub; i++)
+                    {
+                        int a = start + j * (Sub + 1) + i, b = a + 1, e = a + Sub + 1, f = e + 1;
+                        // alternate the diagonal so relief doesn't shade in stripes
+                        if (((i + j) & 1) == 0) { tris.Add(a); tris.Add(e); tris.Add(f); tris.Add(a); tris.Add(f); tris.Add(b); }
+                        else { tris.Add(a); tris.Add(e); tris.Add(b); tris.Add(b); tris.Add(e); tris.Add(f); }
+                    }
                 // walls towards lower neighbours, and cutaway walls on the board edge
-                Wall(d, verts, cols, norms, tris, center, h, y, x - 1, cy, new Vector3(-1, 0, 0), baseY);
-                Wall(d, verts, cols, norms, tris, center, h, y, x + 1, cy, new Vector3(1, 0, 0), baseY);
-                Wall(d, verts, cols, norms, tris, center, h, y, x, cy - 1, new Vector3(0, 0, -1), baseY);
-                Wall(d, verts, cols, norms, tris, center, h, y, x, cy + 1, new Vector3(0, 0, 1), baseY);
+                float topW = dropW ? y - chamfer : y, topE = dropE ? y - chamfer : y, topS = dropS ? y - chamfer : y, topN = dropN ? y - chamfer : y;
+                Wall(d, verts, cols, norms, tris, center, h, topW, x - 1, cy, new Vector3(-1, 0, 0), baseY, strata, metresPerMm, mmToBoard);
+                Wall(d, verts, cols, norms, tris, center, h, topE, x + 1, cy, new Vector3(1, 0, 0), baseY, strata, metresPerMm, mmToBoard);
+                Wall(d, verts, cols, norms, tris, center, h, topS, x, cy - 1, new Vector3(0, 0, -1), baseY, strata, metresPerMm, mmToBoard);
+                Wall(d, verts, cols, norms, tris, center, h, topN, x, cy + 1, new Vector3(0, 0, 1), baseY, strata, metresPerMm, mmToBoard);
             }
             // bottom plate
             var ext = BoardSpace.Extent(d) * 0.5f;
@@ -112,12 +209,72 @@ namespace Resq.Game
                 new Vector3(ext.x, baseY, -ext.y), new Vector3(ext.x, baseY, ext.y), Vector3.down, EarthDark);
             var mesh = new Mesh { name = "Terrain_" + d.MissionId, indexFormat = UnityEngine.Rendering.IndexFormat.UInt32 };
             mesh.SetVertices(verts); mesh.SetColors(cols); mesh.SetNormals(norms); mesh.SetTriangles(tris, 0);
+            RecalculateTopNormals(mesh, verts, tris, n);
             mesh.RecalculateBounds();
             return mesh;
         }
 
+        /// <summary>Face normals for the relief patches (walls keep their flat normals).</summary>
+        static void RecalculateTopNormals(Mesh mesh, List<Vector3> verts, List<int> tris, int cells)
+        {
+            var normals = new List<Vector3>(verts.Count);
+            mesh.GetNormals(normals);
+            int topVerts = (Sub + 1) * (Sub + 1);
+            var acc = new Vector3[verts.Count];
+            var isTop = new bool[verts.Count];
+            for (int t = 0; t + 2 < tris.Count; t += 3)
+            {
+                int a = tris[t], b = tris[t + 1], c = tris[t + 2];
+                if (normals[a] != Vector3.up || normals[b] != Vector3.up || normals[c] != Vector3.up) continue;
+                var fn = Vector3.Cross(verts[b] - verts[a], verts[c] - verts[a]);
+                if (fn.y < 0) fn = -fn;
+                acc[a] += fn; acc[b] += fn; acc[c] += fn;
+                isTop[a] = isTop[b] = isTop[c] = true;
+            }
+            for (int i = 0; i < verts.Count; i++) if (isTop[i] && acc[i].sqrMagnitude > 1e-14f) normals[i] = acc[i].normalized;
+            mesh.SetNormals(normals);
+        }
+
+        static bool Lower(MissionDef d, int nx, int ny, float y)
+        {
+            if (nx < 0 || ny < 0 || nx >= d.GridW || ny >= d.GridH) return true;
+            return BoardSpace.CellCenter(d, d.CellIndex(nx, ny)).y < y - 1e-5f;
+        }
+
+        static bool RoadEdge(MissionDef d, int x, int y, int i, int j)
+        {
+            int nx = i == 0 ? x - 1 : i == Sub ? x + 1 : x;
+            int ny = j == 0 ? y - 1 : j == Sub ? y + 1 : y;
+            if (nx == x && ny == y) return false;
+            if (nx < 0 || ny < 0 || nx >= d.GridW || ny >= d.GridH) return true;
+            return d.CellTerrain[d.CellIndex(nx, ny)] != 2;
+        }
+
+        /// <summary>Bilinear blend of neighbouring natural ground at the same height; built surfaces stay crisp.</summary>
+        static Color BlendedBase(MissionDef d, int x, int y, float u, float v, float height)
+        {
+            int c0 = d.CellIndex(x, y);
+            byte code0 = d.CellTerrain[c0];
+            var own = BaseColor(d, code0);
+            if (Hard(d, code0)) return own;
+            // sample the four cell centres around this point (in cell-centre space)
+            float px = x + u - 0.5f, py = y + v - 0.5f;
+            int x0 = Mathf.FloorToInt(px), y0 = Mathf.FloorToInt(py);
+            float fx = px - x0, fy = py - y0;
+            Color Sample(int sx, int sy)
+            {
+                if (sx < 0 || sy < 0 || sx >= d.GridW || sy >= d.GridH) return own;
+                int c = d.CellIndex(sx, sy);
+                if (Mathf.Abs(BoardSpace.CellCenter(d, c).y - height) > 1e-5f || Hard(d, d.CellTerrain[c])) return own;
+                return BaseColor(d, d.CellTerrain[c]);
+            }
+            var a = Sample(x0, y0); var b = Sample(x0 + 1, y0); var e = Sample(x0, y0 + 1); var f = Sample(x0 + 1, y0 + 1);
+            return Color.Lerp(Color.Lerp(a, b, fx), Color.Lerp(e, f, fx), fy);
+        }
+
         static void Wall(MissionDef d, List<Vector3> v, List<Color> c, List<Vector3> n, List<int> t,
-                         Vector3 center, float h, float y, int nx, int ny, Vector3 dir, float baseY)
+                         Vector3 center, float h, float y, int nx, int ny, Vector3 dir, float baseY, Color[] strata,
+                         float metresPerMm, float mmToBoard)
         {
             bool outside = nx < 0 || ny < 0 || nx >= d.GridW || ny >= d.GridH;
             float lowY = outside ? baseY : BoardSpace.CellCenter(d, d.CellIndex(nx, ny)).y;
@@ -125,16 +282,27 @@ namespace Resq.Game
             Vector3 side = new Vector3(dir.z, 0, -dir.x); // perpendicular in xz
             Vector3 mid = center + dir * h;
             Vector3 a = mid + side * h, b = mid - side * h;
-            // geology bands on the cutaway edge, plain earth/rock on interior steps
-            if (outside)
+            // stratified rock above the base; on the board edge, soil bands below elevation 0
+            float layer = StrataMm * metresPerMm;
+            float top = y;
+            float soilTop = outside ? Mathf.Min(y, 0f) : lowY;
+            while (top > soilTop + 1e-5f)
             {
-                float zeroY = 0f;
-                float split = Mathf.Max(lowY, Mathf.Min(y, zeroY));
-                if (y > split) Band(v, c, n, t, a, b, y, split, dir, Rock);
-                Band(v, c, n, t, a, b, split, Mathf.Lerp(split, lowY, 0.45f), dir, Earth);
-                Band(v, c, n, t, a, b, Mathf.Lerp(split, lowY, 0.45f), lowY, dir, EarthDark);
+                // band boundaries sit on a global ladder (multiples of the layer height) so layers line up across walls
+                int k = Mathf.FloorToInt((top - 1e-5f) / layer);
+                float bottom = Mathf.Max(soilTop, k * layer);
+                int band = ((-k) % strata.Length + strata.Length) % strata.Length;
+                var col = strata[band];
+                float jitter = (Hash(Mathf.RoundToInt(mid.x * 500), Mathf.RoundToInt(mid.z * 500), k) - 0.5f) * 0.06f;
+                col = new Color(Mathf.Clamp01(col.r + jitter), Mathf.Clamp01(col.g + jitter), Mathf.Clamp01(col.b + jitter), 1f);
+                Band(v, c, n, t, a, b, top, bottom, dir, col);
+                top = bottom;
             }
-            else Band(v, c, n, t, a, b, y, lowY, dir, Color.Lerp(Rock, Earth, 0.35f));
+            if (outside && soilTop > lowY)
+            {
+                Band(v, c, n, t, a, b, soilTop, Mathf.Lerp(soilTop, lowY, 0.45f), dir, Earth);
+                Band(v, c, n, t, a, b, Mathf.Lerp(soilTop, lowY, 0.45f), lowY, dir, EarthDark);
+            }
         }
 
         static void Band(List<Vector3> v, List<Color> c, List<Vector3> n, List<int> t, Vector3 a, Vector3 b,
