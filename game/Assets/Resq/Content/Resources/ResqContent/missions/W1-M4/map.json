@@ -324,6 +324,23 @@
    ],
    "dock_min_depth": 100,
    "dock_max_depth": 2500
+  },
+  {
+   "id": "riverside_pickup_alt",
+   "at": [
+    11,
+    6
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    10,
+    6
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
   }
  ],
  "edges": [
@@ -581,6 +598,89 @@
    "slots": 2,
    "min_depth": 100,
    "max_depth": 2500
+  },
+  {
+   "id": "g_riverside_pickup_alt",
+   "from": "riverside_assembly",
+   "to": "riverside_pickup_alt",
+   "ticks": 40,
+   "class": "ground"
+  },
+  {
+   "id": "w_riverside_depot_alt",
+   "from": "riverside_pickup_alt",
+   "to": "depot",
+   "ticks": 300,
+   "class": "water",
+   "sample": [
+    [
+     10,
+     6
+    ],
+    [
+     10,
+     1
+    ],
+    [
+     10,
+     2
+    ],
+    [
+     10,
+     3
+    ],
+    [
+     10,
+     4
+    ],
+    [
+     10,
+     5
+    ],
+    [
+     10,
+     6
+    ],
+    [
+     10,
+     7
+    ],
+    [
+     11,
+     1
+    ],
+    [
+     12,
+     1
+    ],
+    [
+     13,
+     1
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "class": "water",
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500,
+   "id": "w_riverside_pickup_alt_berth",
+   "from": "riverside_pickup",
+   "to": "riverside_pickup_alt",
+   "ticks": 20,
+   "sample": [
+    [
+     10,
+     7
+    ],
+    [
+     10,
+     6
+    ]
+   ]
   }
  ],
  "sockets": [
@@ -812,6 +912,11 @@
   "clinic_power": {
    "infrastructure": [
     "clinic_power"
+   ]
+  },
+  "alternate_pickup": {
+   "nodes": [
+    "riverside_pickup_alt"
    ]
   }
  }

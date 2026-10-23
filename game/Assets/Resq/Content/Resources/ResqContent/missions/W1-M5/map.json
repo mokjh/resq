@@ -501,6 +501,23 @@
    ],
    "dock_min_depth": 100,
    "dock_max_depth": 2500
+  },
+  {
+   "id": "island_pickup_alt",
+   "at": [
+    6,
+    19
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    7,
+    19
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
   }
  ],
  "edges": [
@@ -1118,6 +1135,85 @@
    "slots": 2,
    "min_depth": 100,
    "max_depth": 2500
+  },
+  {
+   "id": "g_is_pickup_alt",
+   "from": "island_assembly",
+   "to": "island_pickup_alt",
+   "ticks": 40,
+   "class": "ground"
+  },
+  {
+   "id": "w_island_mouth_alt",
+   "from": "island_pickup_alt",
+   "to": "lake_mouth",
+   "ticks": 220,
+   "class": "water",
+   "sample": [
+    [
+     7,
+     19
+    ],
+    [
+     7,
+     19
+    ],
+    [
+     8,
+     19
+    ],
+    [
+     9,
+     19
+    ],
+    [
+     10,
+     19
+    ],
+    [
+     11,
+     19
+    ],
+    [
+     12,
+     19
+    ],
+    [
+     13,
+     19
+    ],
+    [
+     14,
+     19
+    ],
+    [
+     7,
+     18
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "class": "water",
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500,
+   "id": "w_island_pickup_alt_berth",
+   "from": "island_pickup",
+   "to": "island_pickup_alt",
+   "ticks": 20,
+   "sample": [
+    [
+     7,
+     18
+    ],
+    [
+     7,
+     19
+    ]
+   ]
   }
  ],
  "sockets": [
@@ -1395,6 +1491,11 @@
    "edges": [
     "g_long_gap",
     "g_short_bridge"
+   ]
+  },
+  "alternate_pickup": {
+   "nodes": [
+    "island_pickup_alt"
    ]
   }
  }

@@ -1,0 +1,64 @@
+{
+ "id": "W4-M5-high-tide-start_B",
+ "description": "High Tide Start version of plan B: the low causeway is under water from the start, so the low market can't walk out; the kit's third skiff fetches them to the high landing instead. Otherwise B is unchanged: the bridge opens the high causeway for the middle island, the barrier-protected harbor generator lights the lamp through the breakwater relay, and skiffs serve the lighthouse rock and the outer island.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "bridge:01"
+  },
+  {
+   "t": 7,
+   "group": "middle_island",
+   "to": "depot"
+  },
+  {
+   "t": 8,
+   "place": "generator:01"
+  },
+  {
+   "t": 9,
+   "place": "barrier:01"
+  },
+  {
+   "t": 10,
+   "place": "barrier:02"
+  },
+  {
+   "t": 11,
+   "place": "relay:01"
+  },
+  {
+   "t": 12,
+   "place": "skiff:01"
+  },
+  {
+   "t": 13,
+   "vehicle": "skiff:01",
+   "group": "lighthouse",
+   "pickup": "lighthouse_pickup",
+   "to": "depot"
+  },
+  {
+   "t": 14,
+   "place": "skiff:02"
+  },
+  {
+   "t": 15,
+   "vehicle": "skiff:02",
+   "group": "outer_island",
+   "pickup": "outer_island_pickup",
+   "to": "high_landing"
+  },
+  {
+   "t": 16,
+   "place": "skiff:03"
+  },
+  {
+   "t": 17,
+   "vehicle": "skiff:03",
+   "group": "low_market",
+   "pickup": "low_market_pickup",
+   "to": "high_landing"
+  }
+ ]
+}

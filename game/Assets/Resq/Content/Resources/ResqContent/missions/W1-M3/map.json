@@ -374,6 +374,23 @@
    ],
    "dock_min_depth": 100,
    "dock_max_depth": 2500
+  },
+  {
+   "id": "east_workshop_pickup_alt",
+   "at": [
+    23,
+    13
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    22,
+    12
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 2500
   }
  ],
  "edges": [
@@ -963,6 +980,147 @@
    "slots": 2,
    "min_depth": 100,
    "max_depth": 2500
+  },
+  {
+   "id": "g_ws_pickup_alt",
+   "from": "east_workshop_assembly",
+   "to": "east_workshop_pickup_alt",
+   "ticks": 60,
+   "class": "ground",
+   "sample": [
+    [
+     24,
+     13
+    ],
+    [
+     23,
+     13
+    ]
+   ]
+  },
+  {
+   "id": "w_workshop_fork_alt",
+   "from": "east_workshop_pickup_alt",
+   "to": "fork",
+   "ticks": 200,
+   "class": "water",
+   "sample": [
+    [
+     22,
+     12
+    ],
+    [
+     17,
+     15
+    ],
+    [
+     18,
+     15
+    ],
+    [
+     19,
+     15
+    ],
+    [
+     20,
+     15
+    ],
+    [
+     21,
+     15
+    ],
+    [
+     22,
+     15
+    ],
+    [
+     22,
+     14
+    ],
+    [
+     22,
+     13
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_east_alt",
+   "from": "east_workshop_pickup_alt",
+   "to": "high_landing",
+   "ticks": 500,
+   "class": "water",
+   "sample": [
+    [
+     22,
+     12
+    ],
+    [
+     22,
+     4
+    ],
+    [
+     22,
+     5
+    ],
+    [
+     22,
+     6
+    ],
+    [
+     22,
+     7
+    ],
+    [
+     22,
+     8
+    ],
+    [
+     22,
+     9
+    ],
+    [
+     22,
+     10
+    ],
+    [
+     22,
+     11
+    ],
+    [
+     22,
+     12
+    ],
+    [
+     22,
+     13
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "class": "water",
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500,
+   "id": "w_east_workshop_pickup_alt_berth",
+   "from": "east_workshop_pickup",
+   "to": "east_workshop_pickup_alt",
+   "ticks": 20,
+   "sample": [
+    [
+     22,
+     13
+    ],
+    [
+     22,
+     12
+    ]
+   ]
   }
  ],
  "sockets": [
@@ -1149,6 +1307,11 @@
   "east_workshop": {
    "groups": [
     "east_workshop"
+   ]
+  },
+  "alternate_pickup": {
+   "nodes": [
+    "east_workshop_pickup_alt"
    ]
   }
  }

@@ -18,6 +18,7 @@ def main() -> int:
     DEST.mkdir(parents=True, exist_ok=True)
     for name in ("mission_contracts", "equipment_rules", "modes_and_challenges"):
         shutil.copyfile(ROOT / f"specification/content/{name}.json", DEST / f"{name}.json")
+    shutil.copyfile(ROOT / "content/briefings.json", DEST / "briefings.json")   # tools/content/briefings.py
     missions = DEST / "missions"
     missions.mkdir(exist_ok=True)
     seen = set()

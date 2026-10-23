@@ -1,0 +1,37 @@
+{
+ "id": "W1-M3-alternate-dock_B",
+ "description": "Alternate Dock version of plan B: the east workshop group boards at the alternate landing (east_workshop_pickup_alt); otherwise unchanged. Evacuate east early with one skiff, route the other west, then bridge the final safe path.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "skiff:01"
+  },
+  {
+   "t": 6,
+   "vehicle": "skiff:01",
+   "group": "east_workshop",
+   "pickup": "east_workshop_pickup_alt",
+   "to": "depot"
+  },
+  {
+   "t": 8,
+   "place": "skiff:03"
+  },
+  {
+   "t": 9,
+   "vehicle": "skiff:03",
+   "group": "west_village",
+   "pickup": "west_dock",
+   "to": "depot"
+  },
+  {
+   "t": 600,
+   "place": "bridge:02"
+  },
+  {
+   "t": 601,
+   "group": "west_village",
+   "to": "high_landing"
+  }
+ ]
+}

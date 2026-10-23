@@ -73,6 +73,7 @@ namespace Resq.Game
             var tray = _tray = new GameObject("ToolTray").transform;
             tray.SetParent(transform, false);
             tray.localPosition = new Vector3(0, 0.012f, -ext.y - 0.06f);
+            tray.localScale = Vector3.one * Comfort.UiScale;   // larger text means larger cards: bigger targets too
             var tools = new List<ToolKind>();
             for (int t = 0; t < MissionDef.ToolCount; t++) if (_def.Permitted[t] && _def.MaxStock[t] > 0) tools.Add((ToolKind)t);
             float w = 0.074f, h = 0.05f, gap = 0.01f;
@@ -105,10 +106,22 @@ namespace Resq.Game
             _controls.SetParent(transform, false);
             _controls.localPosition = new Vector3((Comfort.LeftHanded ? -1f : 1f) * (ext.x - 0.14f), 0.13f, ext.y + 0.05f);   // mirrored for left-hand play
             _controls.localRotation = Quaternion.Euler(-8f, 0, 0);
+            _controls.localScale = Vector3.one * Comfort.UiScale;
             if (GameFlow.Instance != null && !GameFlow.Disabled)
                 Pill(_controls, "Menu", new Vector3(-0.165f, 0, 0), 0.06f, () => GameFlow.Instance.Pause());   // pause is never hidden
             Pill(_controls, "Start", new Vector3(-0.1f, 0, 0), 0.06f, () => Driver.SetPaused(!Driver.Paused), true);
-            Pill(_controls, "Restart", new Vector3(-0.035f, 0, 0), 0.06f, () => Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, Driver.Guided));
+            // destructive: with the game flow, Restart asks first (Command mode especially: a glance can't wipe a run)
+            Pill(_controls, "Restart", new Vector3(-0.035f, 0, 0), 0.06f, () =>
+            {
+                if (GameFlow.Instance != null && !GameFlow.Disabled) GameFlow.Instance.ConfirmRestart();
+                else Driver.LoadRun(Driver.MissionId, Driver.LayoutClass, Driver.Profile, Driver.Guided, Driver.ChallengeId);
+            });
+            if (Driver.Profile == RuleProfile.Command)
+            {
+                // Command profile: time can be stepped instead of run, so slower input never costs a rescue (spec 04 §5)
+                Pill(_controls, "+1 s", new Vector3(-0.1f, 0.03f, 0), 0.06f, () => { Driver.SetPaused(true); Driver.Advance(10); });
+                Pill(_controls, "+5 s", new Vector3(-0.035f, 0.03f, 0), 0.06f, () => { Driver.SetPaused(true); Driver.Advance(50); });
+            }
             _missions = ContentLibrary.MissionIds();
             if (!ShowDevControls) return;   // the mission/layout/profile picker is a development aid
             Pill(_controls, "Prev", new Vector3(0.03f, 0, 0), 0.06f, () => Pick(-1));

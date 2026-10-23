@@ -106,6 +106,8 @@ namespace Resq.Tests
             Assert.AreEqual(1050, onDisk.Settings.DwellMs);
             Assert.AreEqual(1.25f, MenuPanel.TextScale, 1e-4f, "text scale applies to menus");
             Assert.AreEqual(1.05f, _boot.Interaction.DwellSeconds, 1e-4f, "dwell time applies to the pointer layer");
+            Assert.AreEqual(1.25f, Comfort.UiScale, 1e-4f, "text size also scales the HUD and tool tray");
+            Assert.IsTrue(Comfort.HighContrast, "high contrast applies to the HUD panels");
             yield return Press("Open play");
             yield return Press("Back");
             yield return Press("Missions");
@@ -147,6 +149,73 @@ namespace Resq.Tests
             AssertScreen("U20");
             yield return Press("Hub");
             AssertScreen("U06");
+        }
+
+        [UnityTest]
+        public IEnumerator CommandStepControlsAndRestartConfirmation()
+        {
+            File.WriteAllText(SaveStore.PrimaryPath, JsonUtility.ToJson(new SaveData { WelcomeDone = true }));
+            yield return Boot();
+            var driver = _boot.Driver;
+            driver.LoadRun("W1-M1", "wide", Resq.Sim.RuleProfile.Command, false);
+            yield return null; yield return null;
+            Assert.AreEqual(FlowState.Operation, _flow.State, "a run started outside the menus is played, not previewed");
+            yield return Press("+5 s");
+            Assert.AreEqual(50, driver.Sim.S.C.O, "+5 s advances exactly 50 operation steps");
+            Assert.IsTrue(driver.Paused, "stepping keeps the run paused");
+            yield return Press("+1 s");
+            Assert.AreEqual(60, driver.Sim.S.C.O);
+            yield return Press("Restart");
+            AssertScreen("confirm");
+            Assert.AreEqual(60, driver.Sim.S.C.O, "nothing resets before confirming");
+            yield return Press("Cancel");
+            Assert.AreEqual(FlowState.Operation, _flow.State);
+            Assert.AreEqual(60, driver.Sim.S.C.O);
+            yield return Press("Restart");
+            yield return Press("Restart");
+            Assert.AreEqual(0, driver.Sim.S.C.O, "confirmed restart resets the run");
+            Assert.AreEqual(FlowState.Operation, _flow.State);
+        }
+
+        [UnityTest]
+        public IEnumerator ChallengeUnlocksAfterBaseWinAndIsScoredSeparately()
+        {
+            var save = new SaveData { WelcomeDone = true };
+            yield return Boot();
+            File.WriteAllText(SaveStore.PrimaryPath, JsonUtility.ToJson(save));
+            // before the base win: listed but locked
+            SaveStore.Load();
+            _flow.ShowHub();
+            yield return Press("Missions");
+            yield return Press("M1");
+            AssertScreen("U08");
+            Assert.IsNull(FindButton("Challenge: Early Surge"), "a challenge stays locked until the mission is won");
+            yield return Press("Back");
+            yield return Press("Back");
+            // after the base win
+            var won = new SaveData { WelcomeDone = true };
+            var w = won.Get("W1-M1", true); w.Completed = true; w.BestStars = 2; w.Plays = 1;
+            File.WriteAllText(SaveStore.PrimaryPath, JsonUtility.ToJson(won));
+            SaveStore.Load();
+            _flow.ShowHub();
+            yield return Press("Missions");
+            yield return Press("M1");
+            yield return Press("Challenge: Early Surge");
+            AssertScreen("U08-challenge");
+            yield return Press("Start planning");
+            var driver = _boot.Driver;
+            Assert.AreEqual("W1-M1-early-surge", driver.ChallengeId);
+            Assert.AreEqual(Resq.Sim.RuleProfile.Standard, driver.Profile, "challenges use Standard rules");
+            driver.StartAutopilot("A");
+            for (int i = 0; i < 20000 && !driver.Sim.IsOver; i++) driver.Advance(1);
+            Assert.IsTrue(driver.Sim.S.C.Success, "the validated plan wins the challenge in the game, as in SimLab");
+            float t0 = Time.realtimeSinceStartup;
+            while (_flow.State != FlowState.Results && Time.realtimeSinceStartup - t0 < 6f) yield return null;
+            AssertScreen("U18");
+            var disk = JsonUtility.FromJson<SaveData>(File.ReadAllText(SaveStore.PrimaryPath));
+            Assert.IsTrue(disk.Get("W1-M1-early-surge").Completed, "the challenge result is saved under its own id");
+            Assert.AreEqual(2, disk.Get("W1-M1").BestStars, "the base mission's best is untouched");
+            Assert.AreEqual("W1-M1", disk.LastMission);
         }
 
         [UnityTest]

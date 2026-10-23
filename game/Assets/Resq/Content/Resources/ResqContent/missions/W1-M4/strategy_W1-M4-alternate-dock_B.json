@@ -1,0 +1,47 @@
+{
+ "id": "W1-M4-alternate-dock_B",
+ "description": "Alternate Dock version of plan B: the riverside group boards at the alternate landing (riverside_pickup_alt); otherwise unchanged. Evacuate riverside first, then dedicate both pumps to the clinic/tram sector.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "skiff:02"
+  },
+  {
+   "t": 6,
+   "vehicle": "skiff:02",
+   "group": "riverside",
+   "pickup": "riverside_pickup_alt",
+   "to": "depot"
+  },
+  {
+   "t": 7,
+   "group": "clinic",
+   "to": "depot"
+  },
+  {
+   "t": 8,
+   "group": "tram",
+   "to": "high_landing"
+  },
+  {
+   "t": 350,
+   "place": "generator:01"
+  },
+  {
+   "t": 351,
+   "place": "barrier:01"
+  },
+  {
+   "t": 352,
+   "place": "generator:02"
+  },
+  {
+   "t": 353,
+   "place": "pump:01"
+  },
+  {
+   "t": 354,
+   "place": "pump:02"
+  }
+ ]
+}

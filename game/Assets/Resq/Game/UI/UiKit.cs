@@ -13,7 +13,7 @@ namespace Resq.Game
     /// </summary>
     public static class UiKit
     {
-        public static readonly Color GlassFill = new Color(0.075f, 0.10f, 0.115f, 0.80f);
+        public static Color GlassFill => Comfort.HighContrast ? new Color(0.02f, 0.03f, 0.035f, 0.96f) : new Color(0.075f, 0.10f, 0.115f, 0.80f);
         public static readonly Color GlassEdge = new Color(1f, 1f, 1f, 0.16f);
         public static readonly Color Ink = TerrainBuilder.Hex(0xF3F5F2);
         public static readonly Color InkSoft = new Color(0.80f, 0.86f, 0.86f, 1f);

@@ -152,10 +152,11 @@ namespace Resq.Game
             catch (Exception e) { Debug.LogWarning("[RESQ] save failed: " + e.Message); }
         }
 
-        /// <summary>Records a finished run; returns true when it improved the best result.</summary>
-        public static bool RecordRun(string missionId, bool success, int stars, long score)
+        /// <summary>Records a finished run under its key (the mission, or a challenge id, whose best results are kept
+        /// separately: spec 04 §6 score partitions); returns true when it improved the best result.</summary>
+        public static bool RecordRun(string missionId, bool success, int stars, long score, string challengeId = null)
         {
-            var p = Current.Get(missionId, true);
+            var p = Current.Get(challengeId ?? missionId, true);
             p.Plays++;
             bool better = false;
             if (success)

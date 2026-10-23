@@ -7,6 +7,8 @@
 ROOT=/Users/dev/Desktop/Resq
 UC="$ROOT/tools/unity/uc.py"
 python3 "$UC" editor_stop > /dev/null 2>&1
+# import changed files first: a background Editor doesn't auto-refresh, and a bare recompile would test stale code
+python3 "$UC" eval --code 'UnityEditor.AssetDatabase.Refresh(UnityEditor.ImportAssetOptions.ForceSynchronousImport); return "refreshed";' > /dev/null 2>&1
 python3 "$UC" recompile > /dev/null 2>&1
 sleep 6
 for i in $(seq 1 80); do
@@ -17,15 +19,18 @@ done
 python3 "$UC" console_status 2>/dev/null | grep -q '"compilationFailed": true' && { echo "SMOKE: COMPILE FAILED"; exit 2; }
 # the perf check reads render counters: the Game view must repaint every frame, so the Editor needs focus
 python3 "$UC" editor_focus > /dev/null 2>&1
-# PlayMode entry reloads the domain, so the run is asynchronous: start it, then poll test_status
-python3 "$UC" run_tests --mode playmode --filter Resq.PlayMode.Tests --filter_type assembly --async_tests true --timeout 1800 > /dev/null 2>&1
-sleep 10
+# PlayMode entry reloads the domain, so the run is asynchronous: start it, then wait for the results file that
+# Assets/Resq/Editor/Testing/TestResultWriter.cs writes when the run finishes. Nothing talks to the Editor bridge while
+# tests run: a bridge request that times out mid-test logs an error, and the Test Framework fails that test for it.
+RES="$ROOT/tools/.cache/test_results.json"
 mkdir -p "$ROOT/tools/.cache"
-for i in $(seq 1 360); do
-  out=$(python3 "$UC" test_status 2>/dev/null)
-  echo "$out" | grep -q '"status": "completed"' && break
+rm -f "$RES"
+python3 "$UC" run_tests --mode playmode --filter Resq.PlayMode.Tests --filter_type assembly --async_tests true --timeout 1800 > /dev/null 2>&1
+for i in $(seq 1 720); do
+  grep -q '"status": "completed"' "$RES" 2>/dev/null && break
   sleep 5
 done
+out=$(cat "$RES" 2>/dev/null)
 echo "$out" > "$ROOT/tools/.cache/smoke_last.json"
 echo "$out" | python3 -c '
 import json, sys
@@ -36,13 +41,13 @@ except Exception:
     print("SMOKE: no result\n" + raw[-1500:]); sys.exit(2)
 if d.get("status") != "completed":
     print("SMOKE: did not complete (" + str(d.get("status")) + ")"); sys.exit(2)
-s = d.get("summary", {})
-for r in d.get("results", []):
-    print("  %s  %s  %.1fs" % (r.get("Status"), r.get("FullName"), r.get("Duration", 0)))
-    if r.get("Status") != "Passed":
-        print("   " + (r.get("Message") or "").strip().replace("\n", "\n   "))
-        print("   " + (r.get("Output") or "").strip()[:1500])
-if s.get("total", 0) == 0: print("SMOKE: no tests ran"); sys.exit(2)
-if s.get("failed", 0) > 0: print("SMOKE: FAIL (%d/%d)" % (s["failed"], s["total"])); sys.exit(1)
-print("SMOKE: PASS (%d/%d)" % (s.get("passed", 0), s["total"])); sys.exit(0)
+rs = d.get("results", [])
+for r in rs:
+    print("  %s  %s  %.1fs" % (r.get("status"), r.get("name"), r.get("duration", 0)))
+    if r.get("status") != "Passed":
+        print("   " + (r.get("message") or "").strip().replace("\n", "\n   ")[:1500])
+total = len(rs); failed = sum(1 for r in rs if r.get("status") == "Failed")
+if total == 0: print("SMOKE: no tests ran"); sys.exit(2)
+if failed > 0: print("SMOKE: FAIL (%d/%d)" % (failed, total)); sys.exit(1)
+print("SMOKE: PASS (%d/%d)" % (d.get("passed", 0), total)); sys.exit(0)
 '

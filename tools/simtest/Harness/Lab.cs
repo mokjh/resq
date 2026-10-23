@@ -11,6 +11,8 @@ namespace Resq.Sim.Headless
     ///   lab show  W1-M1 [wide|compact]                      — ASCII map with nodes/sockets
     ///   lab run   W1-M1 wide standard A [--every 300] [--maps 600,1200]
     ///   lab validate W1-M1 [--all]                            — no-input must fail; A and B must win (both layouts, 3 presets)
+    ///   lab challenge W1-M1-early-surge|W1-M1|all             — named challenges: two strategies must win on both layouts
+    ///                                                          (Standard rules); per-challenge strategies override A/B
     /// </summary>
     public static class Lab
     {
@@ -28,6 +30,7 @@ namespace Resq.Sim.Headless
                     case "show": return Show(mission, args.Length > 2 ? args[2] : "wide");
                     case "run": return RunOne(mission, args.Skip(2).ToArray());
                     case "validate": return Validate(mission.Split(','), args.Contains("--quick"));
+                    case "challenge": return Challenge(mission);
                 }
             }
             catch (ContentException ex) { Console.WriteLine("CONTENT ERROR: " + ex.Message); return 2; }
@@ -46,7 +49,12 @@ namespace Resq.Sim.Headless
             return Path.Combine(Root, "content", parts[0], parts[1]);
         }
 
-        public static MissionDef Load(string missionId, string layout)
+        static JsonNode _modes;
+        static JsonNode Modes => _modes ?? (_modes = JsonNode.Parse(File.ReadAllText(Path.Combine(Root, "specification/content/modes_and_challenges.json"))));
+
+        public static MissionDef Load(string missionId, string layout) => Load(missionId, layout, null);
+
+        public static MissionDef Load(string missionId, string layout, JsonNode challenge)
         {
             if (_rules == null)
             {
@@ -62,6 +70,7 @@ namespace Resq.Sim.Headless
                 contract = JsonNode.Parse(contract.ToCanonical());
                 foreach (var kv in JsonNode.Parse(File.ReadAllText(overridePath)).Properties()) contract.Set(kv.Key, kv.Value);
             }
+            Challenges.Apply(challenge, ref map, ref contract);
             return MapCompiler.Compile(map, contract, _rules, layout);
         }
 
@@ -165,7 +174,9 @@ namespace Resq.Sim.Headless
                 if (a[i] == "--probe") // "x,y;x,y" -> print water depth (mm) at those cells on --every lines
                     foreach (var t in a[i + 1].Split(';')) { var xy = t.Split(','); probes.Add((int.Parse(xy[0]), int.Parse(xy[1]))); }
             }
-            var d = Load(missionId, layout);
+            JsonNode challenge = null;
+            for (int i = 0; i < a.Length; i++) if (a[i] == "--challenge") challenge = Challenges.Find(Modes, a[i + 1]);
+            var d = Load(missionId, layout, challenge);
             var script = strat == "none" ? null : LoadStrategy(missionId, strat);
             if (strat != "none" && script == null) { Console.WriteLine("missing strategy " + strat); return 2; }
             var sink = new PrintSink();
@@ -209,6 +220,42 @@ namespace Resq.Sim.Headless
         }
 
         // ------------------------------------------------------------------ validate
+        // ------------------------------------------------------------------ challenges
+        /// <summary>
+        /// Every named challenge needs two winning reference strategies on both layouts under Standard rules
+        /// (spec 04 §6: 30 definitions × 2 layouts × 2 strategies = 120 configurations). A challenge uses its own
+        /// strategies (strategies/&lt;challenge-id&gt;_A.json, _B.json) when the base plans no longer win.
+        /// </summary>
+        static int Challenge(string which)
+        {
+            var all = Modes["challenges"].Elements().ToList();
+            var pick = which == "all" ? all : all.Where(c => c.Str("id") == which || c.Str("mission_id") == which).ToList();
+            if (pick.Count == 0) { Console.WriteLine("no challenge matches " + which); return 2; }
+            int runs = 0, failures = 0;
+            foreach (var c in pick)
+            {
+                string mission = c.Str("mission_id"), id = c.Str("id");
+                foreach (var layout in new[] { "wide", "compact" })
+                {
+                    MissionDef d;
+                    try { d = Load(mission, layout, c); }
+                    catch (Exception ex) { Console.WriteLine($"FAIL {id} {layout}: compile {ex.Message}"); failures += 2; runs += 2; continue; }
+                    foreach (var name in new[] { "A", "B" })
+                    {
+                        var own = LoadStrategy(mission, id + "_" + name);
+                        var script = own ?? LoadStrategy(mission, name);
+                        runs++;
+                        if (script == null) { Console.WriteLine($"FAIL {id} strategy {name} missing"); failures++; continue; }
+                        var r = StrategyRunner.Run(d, RuleProfile.Standard, script);
+                        Console.WriteLine($"{(r.Success ? "ok  " : "FAIL")} {id,-28} {layout,-7} {(own != null ? id + "_" + name : name),-30} -> stars={r.Stars} rescued={r.Rescued}/{d.TotalResidents} backup={r.Backup} S={r.EndS}");
+                        if (!r.Success) failures++;
+                    }
+                }
+            }
+            Console.WriteLine($"CHALLENGES {(failures == 0 ? "PASSED" : "FAILED")}: {runs - failures}/{runs} reference configurations win");
+            return failures == 0 ? 0 : 1;
+        }
+
         static int Validate(string[] missions, bool quick)
         {
             int failures = 0, runs = 0;

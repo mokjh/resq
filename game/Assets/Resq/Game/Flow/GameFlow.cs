@@ -149,13 +149,14 @@ namespace Resq.Game
             Driver.LoadRun(missionId, Boot.LayoutClass, ProfileFromSettings(), false);
         }
 
-        void StartMission(string missionId, bool guided)
+        void StartMission(string missionId, bool guided, RuleProfile? profile = null, string challenge = null)
         {
             SelectedMission = missionId;
             Boot.MissionId = missionId;
-            Boot.Profile = ProfileFromSettings();
+            // challenges are defined for Standard rules only (spec 04 §6)
+            Boot.Profile = challenge != null ? RuleProfile.Standard : profile ?? ProfileFromSettings();
             _flowLoad = true; _previewRun = false;
-            Driver.LoadRun(missionId, Boot.LayoutClass, Boot.Profile, guided);
+            Driver.LoadRun(missionId, Boot.LayoutClass, Boot.Profile, guided && challenge == null, challenge);
             SaveStore.Current.LastMission = missionId;
             SaveStore.Save();
             Enter(FlowState.Operation);
@@ -507,7 +508,59 @@ namespace Resq.Game
                 spec.Items.Add(MenuOption.Button(firstPlay ? "Skip the guide" : "Start", () => StartMission(id, false), !firstPlay));
             }
             else spec.Items.Add(MenuOption.Button("Start planning", () => StartMission(id, false), true, "the clock waits until you press Start"));
+            // challenges open after the base mission is won; they never gate the campaign
+            foreach (var ch in ContentLibrary.ChallengesFor(id))
+            {
+                var chId = ch.Str("id");
+                if (p == null || !p.Completed) { spec.Items.Add(MenuOption.Locked("Challenge: " + ChallengeName(ch), "win the mission first")); continue; }
+                var cp = SaveStore.Current.Get(chId);
+                spec.Items.Add(MenuOption.Button("Challenge: " + ChallengeName(ch), () => ShowChallenge(id, ch), false, cp != null && cp.Completed ? Stars(cp.BestStars) : "new"));
+            }
             spec.Footer.Add(MenuOption.Button("Back", () => ShowMissions(SelectedWorld)));
+            Show(FlowState.Briefing, spec);
+        }
+
+        static string ChallengeName(JsonNode ch)
+        {
+            switch (ch.Str("modifier"))
+            {
+                case "early_surge": return "Early Surge";
+                case "alternate_dock": return "Alternate Dock";
+                case "crosswind": return "Crosswind";
+                case "high_tide_start": return "High Tide Start";
+                case "careful_operation": return "Careful Operation";
+                case "careful_light_kit": return "Careful, Light Kit";
+                default: return BoardView.Pretty(ch.Str("modifier"));
+            }
+        }
+
+        static string ChallengeText(JsonNode ch)
+        {
+            var p = ch["parameters"];
+            switch (ch.Str("modifier"))
+            {
+                case "early_surge": return $"The first surge comes {-(p?.Long("shift_scenario_ticks") ?? 0) / 10} seconds earlier. Same kit, same goals.";
+                case "alternate_dock": return $"The {BoardView.Pretty(p?.Str("group_id") ?? "")} group boards at a second landing beside their dock: boats take longer to reach it.";
+                case "crosswind": return "The wind blows the other way, so fire spreads toward different ground.";
+                case "high_tide_start": return "The tide starts high: low causeways are under water from the first second.";
+                case "careful_operation": return "Lose no equipment. Everything you place must survive to the end.";
+                case "careful_light_kit": return "Lose no equipment, with one barrier fewer and a smaller budget.";
+                default: return "";
+            }
+        }
+
+        void ShowChallenge(string missionId, JsonNode ch)
+        {
+            string chId = ch.Str("id");
+            var cp = SaveStore.Current.Get(chId);
+            var spec = new MenuSpec
+            {
+                Id = "U08-challenge", Title = "Challenge: " + ChallengeName(ch), TitleIcon = Icon.Star,
+                Subtitle = $"{Title(missionId)}  ·  Standard rules  ·  scored separately",
+                Body = ChallengeText(ch) + (cp != null && cp.Completed ? $"\n\nBest: {Stars(cp.BestStars)}, score {cp.BestScore}." : ""),
+            };
+            spec.Items.Add(MenuOption.Button("Start planning", () => StartMission(missionId, false, RuleProfile.Standard, chId), true));
+            spec.Footer.Add(MenuOption.Button("Back", () => ShowBriefing(missionId)));
             Show(FlowState.Briefing, spec);
         }
 
@@ -528,12 +581,24 @@ namespace Resq.Game
             ShowPause();
         }
 
+        /// <summary>The run controls' Restart: pause, then confirm.</summary>
+        public void ConfirmRestart()
+        {
+            if (State != FlowState.Operation) return;
+            bool wasPaused = Driver.Paused;
+            Driver.SetPaused(true);
+            Boot.Interaction.Cancel();
+            Confirm("Restart this mission?", "The current attempt ends and the board resets.", "Restart",
+                () => StartMission(Driver.MissionId, Driver.Guided, Driver.Profile, Driver.ChallengeId),   // a restart keeps the run's rules
+                () => { Enter(FlowState.Operation); if (!wasPaused) Driver.SetPaused(false); });
+        }
+
         void ShowPause()
         {
             var spec = new MenuSpec { Id = "U15", Title = "Paused", TitleIcon = Icon.Ring, Columns = 2, Body = "Your rescue is paused. Nothing moves until you resume." };
             spec.Items.Add(MenuOption.Button("Resume", Resume, true));
             spec.Items.Add(MenuOption.Button("Restart", () => Confirm("Restart this mission?", "The current attempt ends and the board resets.", "Restart",
-                () => StartMission(Driver.MissionId, Driver.Guided), ShowPause)));
+                () => StartMission(Driver.MissionId, Driver.Guided, Driver.Profile, Driver.ChallengeId), ShowPause)));
             spec.Items.Add(MenuOption.Button("Settings", () => ShowSettings(FlowState.Paused)));
             spec.Items.Add(MenuOption.Button("How to play", () => ShowHelp(FlowState.Paused)));
             if (CanReplace) spec.Items.Add(MenuOption.Button("Move the board", () => Replace(Boot)));
@@ -582,25 +647,26 @@ namespace Resq.Game
         void ShowResults()
         {
             var S = Driver.Sim.S; var d = Driver.Def;
-            if (!_recorded) { _recorded = true; _improved = SaveStore.RecordRun(Driver.MissionId, S.C.Success, S.C.Stars, S.C.ScoreValue); }
+            if (!_recorded) { _recorded = true; _improved = SaveStore.RecordRun(Driver.MissionId, S.C.Success, S.C.Stars, S.C.ScoreValue, Driver.ChallengeId); }
             var sb = new StringBuilder();
             foreach (var (obj, label) in HudView.ObjectiveLines(d))
             {
                 bool ok = obj < 0 ? S.C.Evacuated >= d.MinimumRescues : Driver.Sim.ObjectiveFulfilled(obj);
                 sb.Append(ok ? "<color=#7BD389><b>Done</b></color>  " : "<color=#E5484D><b>Missed</b></color>  ").Append(label).Append('\n');
             }
-            var best = SaveStore.Current.Get(Driver.MissionId);
+            var best = SaveStore.Current.Get(Driver.ChallengeId ?? Driver.MissionId);
+            var chNode = ContentLibrary.Challenge(Driver.ChallengeId);
             var spec = new MenuSpec
             {
                 Id = "U18",
                 Title = S.C.Success ? $"Rescue complete  {Stars(S.C.Stars)}" : "Backup crews took over",
                 TitleIcon = S.C.Success ? Icon.Star : Icon.Warning,
-                Subtitle = $"{S.C.Evacuated} of {d.TotalResidents} rescued   ·   score {S.C.ScoreValue}" + (_improved ? "   ·   new best" : best != null && best.Completed ? $"   ·   best {Stars(best.BestStars)}" : ""),
+                Subtitle = (chNode != null ? "Challenge: " + ChallengeName(chNode) + "   ·   " : "") + $"{S.C.Evacuated} of {d.TotalResidents} rescued   ·   score {S.C.ScoreValue}" + (_improved ? "   ·   new best" : best != null && best.Completed ? $"   ·   best {Stars(best.BestStars)}" : ""),
                 Body = sb.ToString().TrimEnd(),
                 Columns = 3,
             };
             spec.Items.Add(MenuOption.Button("What happened", ShowDebrief, !S.C.Success));
-            spec.Items.Add(MenuOption.Button("Try again", () => StartMission(Driver.MissionId, false)));
+            spec.Items.Add(MenuOption.Button("Try again", () => StartMission(Driver.MissionId, false, Driver.Profile, Driver.ChallengeId)));
             string next = NextAfter(Driver.MissionId);
             if (S.C.Success) spec.Items.Add(MenuOption.Button("Aftercare", ShowAftercare, true));
             else if (next != null && SaveStore.Unlocked(next)) spec.Items.Add(MenuOption.Button("Next mission", () => ShowBriefing(next)));
@@ -629,7 +695,7 @@ namespace Resq.Game
             if (_timeline.Count == 0) sb.Append("A quiet operation: no warnings fired before the end.\n");
             sb.Append('\n').Append("<b>Lesson</b>  ").Append(Lesson(S));
             var spec = new MenuSpec { Id = "U19", Title = "What happened", TitleIcon = Icon.Ring, Body = sb.ToString(), Columns = 2 };
-            spec.Items.Add(MenuOption.Button("Try again", () => StartMission(Driver.MissionId, false), true));
+            spec.Items.Add(MenuOption.Button("Try again", () => StartMission(Driver.MissionId, false, Driver.Profile, Driver.ChallengeId), true));
             if (S.C.Success) spec.Items.Add(MenuOption.Button("Aftercare", ShowAftercare));
             spec.Footer.Add(MenuOption.Button("Back", ShowResults));
             Show(FlowState.Debrief, spec);
@@ -733,10 +799,17 @@ namespace Resq.Game
             MenuPanel.HighContrast = s.HighContrast;
             Boot.Interaction.DwellSeconds = s.DwellMs / 1000f;
             Boot.Interaction.SetHeadOnly(s.HeadOnly);
-            bool mirror = Comfort.LeftHanded != s.LeftHanded;
+            float scale = s.TextScale / 100f;
+            bool relayout = Comfort.LeftHanded != s.LeftHanded || !Mathf.Approximately(Comfort.UiScale, scale) || Comfort.HighContrast != s.HighContrast;
             Comfort.ReducedEffects = s.ReducedEffects;
             Comfort.LeftHanded = s.LeftHanded;
-            if (mirror && Driver.Def != null && Boot.Panel != null && Boot.Panel.gameObject.activeSelf) Boot.Panel.Rebuild();
+            Comfort.UiScale = scale;
+            Comfort.HighContrast = s.HighContrast;
+            if (relayout && Driver.Def != null)
+            {
+                if (Boot.Panel != null && Boot.Panel.gameObject.activeSelf) Boot.Panel.Rebuild();
+                if (Boot.Hud != null && Boot.Hud.gameObject.activeSelf) Boot.Hud.Rebuild();
+            }
         }
 
         // ------------------------------------------------------------------ U22 help

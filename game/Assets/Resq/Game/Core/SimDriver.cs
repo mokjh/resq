@@ -20,6 +20,8 @@ namespace Resq.Game
         public RuleProfile Profile = RuleProfile.Standard;
         public bool Guided;
         public bool AutoStart = true;
+        /// <summary>The named challenge this run plays (null for the base mission).</summary>
+        public string ChallengeId { get; private set; }
 
         public Simulator Sim { get; private set; }
         public MissionDef Def => Sim?.D;
@@ -42,10 +44,10 @@ namespace Resq.Game
             if (AutoStart) LoadRun(MissionId, LayoutClass, Profile, Guided);
         }
 
-        public void LoadRun(string missionId, string layout, RuleProfile profile, bool guided)
+        public void LoadRun(string missionId, string layout, RuleProfile profile, bool guided, string challenge = null)
         {
-            MissionId = missionId; LayoutClass = layout; Profile = profile; Guided = guided;
-            var def = ContentLibrary.Compile(missionId, layout);
+            MissionId = missionId; LayoutClass = layout; Profile = profile; Guided = guided; ChallengeId = challenge;
+            var def = ContentLibrary.Compile(missionId, layout, challenge);
             Sim = new Simulator(def, profile, this, guided);
             PrevVolume = (long[])Sim.S.Volume.Clone();
             _accumulator = 0;
@@ -58,7 +60,7 @@ namespace Resq.Game
         /// <summary>Replays a validated strategy through the normal command path (dev/autopilot/capture only).</summary>
         public void StartAutopilot(string strategy)
         {
-            _autopilot = ContentLibrary.Strategy(MissionId, strategy);
+            _autopilot = ContentLibrary.Strategy(MissionId, strategy, ChallengeId);
             _autopilotCursor = 0;
         }
 

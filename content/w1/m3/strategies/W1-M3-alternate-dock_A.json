@@ -1,0 +1,37 @@
+{
+ "id": "W1-M3-alternate-dock_A",
+ "description": "Alternate Dock version of plan A: the east workshop group boards at the alternate landing (east_workshop_pickup_alt); otherwise unchanged. Bridge the high road for western pedestrians; use both boats on eastern and overflow groups.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "bridge:01"
+  },
+  {
+   "t": 6,
+   "group": "west_village",
+   "to": "depot"
+  },
+  {
+   "t": 8,
+   "place": "skiff:01"
+  },
+  {
+   "t": 9,
+   "vehicle": "skiff:01",
+   "group": "east_workshop",
+   "pickup": "east_workshop_pickup_alt",
+   "to": "depot"
+  },
+  {
+   "t": 10,
+   "place": "skiff:02"
+  },
+  {
+   "t": 11,
+   "vehicle": "skiff:02",
+   "group": "east_workshop",
+   "pickup": "east_workshop_pickup_alt",
+   "to": "high_landing"
+  }
+ ]
+}

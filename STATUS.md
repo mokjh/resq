@@ -5,11 +5,12 @@
 ## Gates (latest results)
 - **Sim (automated, headless):** 68/68 (`python3 tools/simtest/simtest.py sim`).
 - **Mission matrix (automated, headless):** 25/25 missions × 18 configs = 450/450; strategies A and B win 3★ everywhere.
-- **PlayMode (automated, Editor):** 11/11 (`bash tools/unity/smoke.sh`):
+- **Challenges (automated, headless):** 30 challenges × 2 layouts × 2 plans = 120/120 win (`python3 tools/simtest/simtest.py lab challenge all`).
+- **PlayMode (automated, Editor):** 13/13 (`bash tools/unity/smoke.sh`):
   - each world's M1 won through real pointer presses, with the render budget checked;
   - the Command path won through head dwell;
   - table placement in 40 MRUK sample rooms;
-  - the game flow (4 tests).
+  - the game flow, Command step controls and challenges (7 tests).
 - **Render budget (automated, Editor):** all 25 missions within 150 draws / 300k tris (`docs/perf-budget-20261023.md`).
 - **Art validator:** 0 FAIL.
 
@@ -29,20 +30,20 @@
   - save recovery (backup offered, nothing erased).
   - Progress and settings persist through atomic saves with a backup.
   - Each world's M1 is always open; Open play unlocks all.
-- **Comfort settings:** text 100/125/150 % (menus), high contrast, reduced effects (no flicker or pulsing), left-hand mirroring of run controls, dwell time 0.5–1.5 s, hands-free mode.
+- **Challenges in game:** unlock after a base win, chosen on the briefing, Standard rules, scored separately.
+- **Command profile:** +1 s / +5 s step controls; Restart asks first.
+- **Comfort settings:** text 100/125/150 % (menus, HUD, tool tray, run controls), high contrast (menus and HUD), reduced effects (no flicker or pulsing), left-hand mirroring of run controls, dwell time 0.5–1.5 s, hands-free mode.
 - **Quest APK:** `build/resq-xr.apk` (23 Oct, before the game flow); manifest checked. SpatialSim can't run immersive apps (see DECISIONS).
 
 ## Not done yet (in plan order)
-1. **Settings polish:** text scale on the HUD and tray, high contrast on the HUD, captions (no speech yet).
-2. **Challenges:** 30 challenges in sim and validator; unlocks in the mission screen.
-3. **Audio:** music, ambience, SFX and the rescue chime.
-4. **Forecast and autopilot:** forecast on a worker thread (Quest budget); dev autopilot for P5; store packaging (icon, splash, `excludeFromRecents`).
-5. **Website, trailer and Devpost:** the trailer is cut from XR Simulator recordings.
-6. **MR polish and resident clips:**
+1. **Audio:** music, ambience, SFX and the rescue chime.
+2. **Forecast and autopilot:** forecast on a worker thread (Quest budget); dev autopilot for P5; store packaging (icon, splash, `excludeFromRecents`).
+3. **Website, trailer and Devpost:** the trailer is cut from XR Simulator recordings.
+4. **MR polish and resident clips:**
    - room-aware storm and hand shadows;
    - resident clips beyond walk;
    - aftercare valley-repair visuals.
-7. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
+5. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
 
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration; the "RESQ" app in the Meta dashboard, then `metavr auth login`.

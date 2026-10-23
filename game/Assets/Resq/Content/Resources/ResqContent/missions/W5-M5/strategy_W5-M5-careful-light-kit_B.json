@@ -1,0 +1,71 @@
+{
+ "id": "W5-M5-careful-light-kit_B",
+ "description": "Careful Light Kit version of plan B (no barrier in the kit): the generator stands on the basin platform instead of behind the barrier; otherwise B's shelter-then-ferry approach is unchanged: the orchard crosses before the lava, a skiff takes the research group from its dock, a second skiff ferries the waterfront, the high village waits in the quay shelter and leaves by skiff, and the harbour mouth is cooled in the last window.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "generator:02"
+  },
+  {
+   "t": 7,
+   "place": "shelter:01"
+  },
+  {
+   "t": 8,
+   "place": "skiff:01"
+  },
+  {
+   "t": 9,
+   "place": "skiff:03"
+  },
+  {
+   "t": 10,
+   "place": "cooler:02"
+  },
+  {
+   "t": 11,
+   "group": "orchard",
+   "to": "depot"
+  },
+  {
+   "t": 12,
+   "group": "station",
+   "to": "high_landing"
+  },
+  {
+   "t": 13,
+   "vehicle": "skiff:01",
+   "group": "research",
+   "pickup": "r_dock",
+   "to": "depot"
+  },
+  {
+   "t": 14,
+   "vehicle": "skiff:03",
+   "group": "waterfront",
+   "pickup": "ferry_dock",
+   "to": "high_landing"
+  },
+  {
+   "t": 15,
+   "group": "high_village",
+   "to": "quay_shelter",
+   "evacuate": false
+  },
+  {
+   "t": 4003,
+   "vehicle": "skiff:01",
+   "group": "high_village",
+   "pickup": "hv_quay",
+   "to": "depot"
+  },
+  {
+   "t": 5200,
+   "cool": "cooler:02"
+  },
+  {
+   "t": 10400,
+   "cool": "cooler:02"
+  }
+ ]
+}

@@ -1,0 +1,50 @@
+{
+ "id": "W1-M5-alternate-dock_B",
+ "description": "Alternate Dock version of plan B: the island group boards at the alternate landing (island_pickup_alt); otherwise unchanged. Prioritize island and orchard with the skiff, then redirect the late surge and open the land route.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "skiff:02"
+  },
+  {
+   "t": 6,
+   "vehicle": "skiff:02",
+   "group": "orchard",
+   "pickup": "orchard_pickup",
+   "to": "depot"
+  },
+  {
+   "t": 7,
+   "group": "workshop",
+   "to": "depot"
+  },
+  {
+   "t": 8,
+   "group": "upper_village",
+   "to": "depot"
+  },
+  {
+   "t": 700,
+   "vehicle": "skiff:02",
+   "group": "island",
+   "pickup": "island_pickup_alt",
+   "to": "depot"
+  },
+  {
+   "t": 2850,
+   "place": "barrier:02"
+  },
+  {
+   "t": 3000,
+   "place": "bridge:01"
+  },
+  {
+   "t": 3001,
+   "place": "generator:02"
+  },
+  {
+   "t": 3002,
+   "place": "pump:01"
+  }
+ ]
+}

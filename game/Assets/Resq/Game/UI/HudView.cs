@@ -81,6 +81,7 @@ namespace Resq.Game
             _root.SetParent(transform, false);
             _root.localPosition = new Vector3(0, 0.17f, ext.y + 0.05f);
             _root.localRotation = Quaternion.Euler(-8f, 0, 0); // tipped slightly toward the seated player
+            _root.localScale = Vector3.one * Comfort.UiScale;  // text-size setting: the whole HUD grows, so nothing clips
 
             BuildCard(ext);
             BuildChips(ext);

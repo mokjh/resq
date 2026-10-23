@@ -277,6 +277,23 @@
    ],
    "dock_min_depth": 100,
    "dock_max_depth": 700
+  },
+  {
+   "id": "low_dock_alt",
+   "at": [
+    20,
+    12
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    19,
+    12
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 700
   }
  ],
  "edges": [
@@ -470,6 +487,81 @@
    "slots": 2,
    "min_depth": 100,
    "max_depth": 2500
+  },
+  {
+   "id": "g_low_dock_alt",
+   "from": "low_dock_assembly",
+   "to": "low_dock_alt",
+   "ticks": 40,
+   "class": "ground"
+  },
+  {
+   "id": "w_low_to_landing_alt",
+   "from": "low_dock_alt",
+   "to": "high_landing",
+   "ticks": 300,
+   "class": "water",
+   "sample": [
+    [
+     19,
+     12
+    ],
+    [
+     19,
+     4
+    ],
+    [
+     19,
+     5
+    ],
+    [
+     19,
+     6
+    ],
+    [
+     19,
+     7
+    ],
+    [
+     19,
+     8
+    ],
+    [
+     19,
+     9
+    ],
+    [
+     19,
+     10
+    ],
+    [
+     19,
+     11
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "class": "water",
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500,
+   "id": "w_low_dock_alt_berth",
+   "from": "low_dock",
+   "to": "low_dock_alt",
+   "ticks": 20,
+   "sample": [
+    [
+     19,
+     11
+    ],
+    [
+     19,
+     12
+    ]
+   ]
   }
  ],
  "sockets": [
@@ -679,6 +771,11 @@
   "low_basin": {
    "sources": [
     "low_basin_in"
+   ]
+  },
+  "alternate_pickup": {
+   "nodes": [
+    "low_dock_alt"
    ]
   }
  },

@@ -10,5 +10,10 @@ namespace Resq.Game
         public static bool ReducedEffects;
         /// <summary>Mirror the run controls to the left side of the board.</summary>
         public static bool LeftHanded;
+        /// <summary>Text-size setting (1, 1.25, 1.5). The HUD, tool tray and run controls scale as a whole, so text
+        /// and touch targets grow together and layouts never clip.</summary>
+        public static float UiScale = 1f;
+        /// <summary>Near-opaque panels behind all text (for bright rooms and low vision).</summary>
+        public static bool HighContrast;
     }
 }

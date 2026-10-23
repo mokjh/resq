@@ -1,0 +1,48 @@
+{
+ "id": "W1-M5-alternate-dock_A",
+ "description": "Alternate Dock version of plan A: the island group boards at the alternate landing (island_pickup_alt); otherwise unchanged. Build the long bridge route, protect generator ground, and ferry the isolated island.",
+ "steps": [
+  {
+   "t": 5,
+   "place": "bridge:01"
+  },
+  {
+   "t": 6,
+   "group": "upper_village",
+   "to": "depot"
+  },
+  {
+   "t": 7,
+   "group": "workshop",
+   "to": "depot"
+  },
+  {
+   "t": 8,
+   "group": "orchard",
+   "to": "high_landing"
+  },
+  {
+   "t": 10,
+   "place": "barrier:03"
+  },
+  {
+   "t": 11,
+   "place": "generator:01"
+  },
+  {
+   "t": 12,
+   "place": "pump:01"
+  },
+  {
+   "t": 14,
+   "place": "skiff:01"
+  },
+  {
+   "t": 15,
+   "vehicle": "skiff:01",
+   "group": "island",
+   "pickup": "island_pickup_alt",
+   "to": "depot"
+  }
+ ]
+}

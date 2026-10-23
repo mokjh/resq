@@ -376,6 +376,23 @@
    ],
    "dock_min_depth": 100,
    "dock_max_depth": 2500
+  },
+  {
+   "id": "ferry_dock_alt",
+   "at": [
+    10,
+    4
+   ],
+   "flags": [
+    "dock"
+   ],
+   "capacity": 6,
+   "water_at": [
+    11,
+    4
+   ],
+   "dock_min_depth": 100,
+   "dock_max_depth": 800
   }
  ],
  "edges": [
@@ -775,6 +792,105 @@
    "slots": 2,
    "min_depth": 100,
    "max_depth": 2500
+  },
+  {
+   "id": "g_ferry_dock_alt",
+   "from": "ferry_landing_pickup",
+   "to": "ferry_dock_alt",
+   "ticks": 30,
+   "class": "ground"
+  },
+  {
+   "id": "w_orchard_ferry_alt",
+   "from": "orchard_dock",
+   "to": "ferry_dock_alt",
+   "ticks": 200,
+   "class": "water",
+   "sample": [
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     6
+    ],
+    [
+     11,
+     7
+    ],
+    [
+     11,
+     8
+    ],
+    [
+     11,
+     9
+    ],
+    [
+     11,
+     10
+    ],
+    [
+     11,
+     4
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "id": "w_ferry_depot_alt",
+   "from": "ferry_dock_alt",
+   "to": "depot",
+   "ticks": 160,
+   "class": "water",
+   "sample": [
+    [
+     11,
+     4
+    ],
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     4
+    ],
+    [
+     12,
+     4
+    ],
+    [
+     12,
+     3
+    ]
+   ],
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500
+  },
+  {
+   "class": "water",
+   "slots": 2,
+   "min_depth": 100,
+   "max_depth": 2500,
+   "id": "w_ferry_dock_alt_berth",
+   "from": "ferry_dock",
+   "to": "ferry_dock_alt",
+   "ticks": 20,
+   "sample": [
+    [
+     11,
+     5
+    ],
+    [
+     11,
+     4
+    ]
+   ]
   }
  ],
  "sockets": [
@@ -1006,6 +1122,11 @@
   "orchard_assembly": {
    "regions": [
     "orchard_assembly"
+   ]
+  },
+  "alternate_pickup": {
+   "nodes": [
+    "ferry_dock_alt"
    ]
   }
  }
