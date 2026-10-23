@@ -16,7 +16,7 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 | Competition entry | Meta VR Start Developer Competition 2026: Gaming track, New Experience division. Submit Tue 17 Nov; the deadline is Wed 18 Nov, 22:00 Cairo. |
 | Scope | The user chose to attempt all 25 missions in the entry. Per-world ship gate: a world is playable in the entry only if all five of its missions pass validation, a Simulator playthrough and a device smoke test. Otherwise it is shown honestly as "in development". Alder Valley's five missions are never cut. |
 | Process | Studio mode replaces the 229-task evidence/admission regime. Gates are real tests, deterministic replays, performance budgets, playtests and user reviews. Old records are archived, not deleted. |
-| Device testing | Last. Physical Quest 3/3S work happens only in phase P5 (12–15 Nov); everything before that runs in the Editor, Meta XR Simulator and SpatialSim. |
+| Device testing | Last. Physical Quest 3/3S work happens only in phase P5 (12–15 Nov); everything before that runs in the Editor and the Meta XR Simulator (SpatialSim 207.0.0 rejects immersive apps, see 23 Oct). |
 | Simulation | New lean "Sim v2": struct-of-arrays, integer, allocation-free, deterministic, covering every world's rules. The old engine is kept unchanged as a golden-value oracle in `reference/legacy-sim/`. |
 | Content | Mission factory: recipe plus contract feed a layout compiler, then a headless validator (no input must fail; strategies A and B must win on both layouts and all three presets). |
 | Art | Original scripted-Blender kits on one palette atlas. Paid generation capped at Meshy ≤ 300 and Higgsfield ≤ 60 credits, each spend logged with its license. |
@@ -136,3 +136,4 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
   - watches the disk and stops only the RESQ Editor's build child processes below 5 GB;
   - deletes the regenerable Android intermediates afterwards. A rebuild is slower but leaves the disk as it found it.
 - **Output path:** passed as an absolute path; Unity resolves relative output paths against the project folder (`game/`).
+- **SpatialSim is not a RESQ test target (23 Oct):** the emulator renders 2D panels only and rejects immersive (OpenXR) launches, so it can't exercise placement, anchors or the permission prompt. It is kept only as an install/manifest check. `tools/ssim/smoke.sh` now exits 3 ("inconclusive") when the launch is rejected or no `[RESQ XR]` lines appear, rather than reporting "0 fatal lines" as a pass. Those paths stay covered by the Meta XR Simulator, the 40-room automated test and P5 on device.

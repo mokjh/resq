@@ -12,6 +12,7 @@ PKG=com.playresq.resq
 ADB=${ADB:-$HOME/Library/Android/sdk/platform-tools/adb}
 FREE_GB=$(df -g / | awk 'NR==2{print $4}')
 NEED=15; metavr ssim status --format json | grep -q '"installed": *true' || NEED=24
+NEED=${MIN_FREE_GB:-$NEED}   # the user may override the floor (23 Oct: "don't stay stuck on disk storage limits")
 if [ "$FREE_GB" -lt "$NEED" ]; then echo "SSIM: refused, ${FREE_GB} GB free (need >= ${NEED} GB)"; exit 2; fi
 [ -f "$APK" ] || { echo "SSIM: no APK at $APK (run tools/unity/build_apk.sh)"; exit 2; }
 
@@ -27,9 +28,14 @@ for i in $(seq 1 60); do
 done
 [ -n "$SERIAL" ] || { echo "SSIM: emulator did not come up"; exit 2; }
 A="$ADB -s $SERIAL"
+# safety stop: if free disk falls below STOP_GB (default 2) the emulator is stopped so the Mac doesn't run out
+( while metavr ssim status --format json 2>/dev/null | grep -q '"running": *true'; do
+    [ "$(df -g / | awk 'NR==2{print $4}')" -lt "${STOP_GB:-2}" ] && { echo "SSIM: LOW DISK, stopping SpatialSim"; metavr ssim stop; break; }
+    sleep 10; done ) &
 $A wait-for-device
 $A install -r -g "$APK" > /dev/null || { echo "SSIM: install failed"; exit 1; }
 
+NOTRUN=0
 run() {   # $1 label; launches, waits, prints the app's placement lines
   $A logcat -c
   $A shell monkey -p $PKG -c com.oculus.intent.category.VR 1 > /dev/null 2>&1 || $A shell am start -n $PKG/com.unity3d.player.UnityPlayerGameActivity > /dev/null
@@ -37,6 +43,9 @@ run() {   # $1 label; launches, waits, prints the app's placement lines
   echo "--- $1"
   $A logcat -d -s Unity:V | grep -a "\[RESQ XR\]" | sed 's/^.*\[RESQ XR\]/[RESQ XR]/' | head -8
   $A logcat -d | grep -a -c "FATAL EXCEPTION\|AndroidRuntime: FATAL" | sed 's/^/fatal lines: /'
+  # SpatialSim 207.0.0 has no OpenXR runtime: it refuses immersive apps, so "no fatal lines" proves nothing then
+  if $A logcat -d | grep -aq "Rejecting immersive app launch"; then echo "NOT RUN: SpatialSim rejected the immersive launch"; NOTRUN=1; fi
+  $A logcat -d -s Unity:V | grep -aq "\[RESQ XR\]" || { echo "NO RESQ XR LINES: placement not exercised"; NOTRUN=1; }
   $A shell am force-stop $PKG
 }
 
@@ -51,3 +60,4 @@ $A shell pm clear $PKG > /dev/null
 $A shell pm revoke $PKG com.oculus.permission.USE_SCENE 2>/dev/null
 run "3 fresh, scene permission denied"
 echo "--- permissions now:"; $A shell dumpsys package $PKG | grep -a "com.oculus.permission" | head -6
+[ "$NOTRUN" = 0 ] || { echo "SSIM: inconclusive, the app did not run its XR path (evidence: emulator install + manifest only)"; exit 3; }

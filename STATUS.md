@@ -44,7 +44,7 @@
   - Permissions: hand tracking, anchors, scene, boundary visibility; no INTERNET.
   - Quest features: passthrough, `quest3|quest3s`, VR launch category, focus-aware; not debuggable.
 
-  Not yet run on SpatialSim or a device. During the build, free disk fell to ~2.7 GB: the Android cache grew ~8.6 GB, and the watchdog's process match missed. Both are fixed in `tools/unity/build_apk.sh` (19 GB guard, kills only the RESQ Editor's build children, clears intermediates afterwards).
+  **SpatialSim (emulator, 23 Oct): installs, but the app can't run there.** SpatialSim 207.0.0 renders 2D panels only and has no OpenXR runtime; its window manager logs "Rejecting immersive app launch" and shows "Immersive apps aren't supported yet". What it did confirm: the APK installs, the VR launch intent resolves to `UnityPlayerGameActivity`, and the four `com.oculus.permission` entries are declared and can be granted or revoked. Placement, anchors and the permission prompt still rest on the Meta XR Simulator and the 40-room test until P5 on device. Not yet run on a device. During the build, free disk fell to ~2.7 GB: the Android cache grew ~8.6 GB, and the watchdog's process match missed. Both are fixed in `tools/unity/build_apk.sh` (19 GB guard, kills only the RESQ Editor's build children, clears intermediates afterwards).
 - **XR wiring (simulator, macOS):** see `docs/xr-sim-verification-20261023.md`.
   - Table placement (MRUK; wide, compact or virtual table) is verified in 40 sample rooms (automated) and in the Meta XR Simulator.
   - The spatial anchor saves and restores.
@@ -78,5 +78,5 @@ Relay hand-off, cable sampling, closed-dock wait, finished skiffs mooring aside,
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration.
 - The "RESQ" app in the Meta VR Developer Dashboard, then `metavr auth login`.
-- **Disk (23 Oct, 22:10):** 11 GB free after two cleanup passes (caches, stale temp and build output, unused SDK/tool versions). SpatialSim v207.0.0 is installed (8.7 GB). Its run is blocked: it also needs the Android Emulator package (~1 GB) plus run space, so `tools/ssim/smoke.sh` needs ≥ 15 GB free. A rebuild needs ≥ 19 GB, and the plan needs ~40 GB by 11 Nov. The rest is project data, so it is your call: Codex worktrees 6.7 GB (all three have uncommitted changes), Egytric `.next-*` build copies ~5 GB (referenced by its docs), the older `Waz Vr/game/Library` 2.9 GB, an orphaned Chrome Canary profile 1.5 GB, inactive `node_modules`; a restart also releases swap.
+- **Disk (23 Oct, 22:25):** 7.6 GB free. SpatialSim (9.3 GB) and the Android Emulator package (1.2 GB) are installed but can't run RESQ; removing them would bring back ~10.5 GB (`metavr ssim` can reinstall them). A rebuild needs ≥ 19 GB, and the plan needs ~40 GB by 11 Nov. The rest is project data (your call): Codex worktrees 6.7 GB, Egytric `.next-*` copies ~5 GB, `Waz Vr/game/Library` 2.9 GB, an orphaned Chrome Canary profile 1.5 GB.
 - **Credits:** spent so far: Meshy 585 of the 600 cap; Higgsfield 33 of 150, with a balance of 8.9. Top up Higgsfield if you want more concepts.
