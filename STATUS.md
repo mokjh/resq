@@ -36,7 +36,7 @@
 - **Comfort settings:** text 100/125/150 % (menus, HUD, tool tray, run controls), high contrast (menus and HUD), reduced effects (no flicker or pulsing), left-hand mirroring of run controls, dwell time 0.5–1.5 s, hands-free mode.
 - **Audio (synthesised, original):** 24 effects, 5 ambiences, calm/problem/resolve stems per world; mixed by game state; follows the Settings volumes. Not yet human-reviewed.
 - **Forecast** on a worker thread; **dev autopilot** for P5; **app icon and system splash** applied.
-- **Quest APK:** `build/resq-xr.apk` (23 Oct, before the game flow); manifest checked. SpatialSim can't run immersive apps (see DECISIONS).
+- **Quest APK:** the 23 Oct build (before the game flow) is archived on the phone at `/sdcard/Download/RESQ-archive/` (SHA-256 checked) and removed from the Mac; the next `tools/unity/build_apk.sh` run makes a fresh one. SpatialSim can't run immersive apps (see DECISIONS).
 
 ## Not done yet (in plan order)
 1. **Your review of the audio:** listen to `game/Assets/Resq/Content/Resources/ResqAudio/` or play a mission in the Editor.
