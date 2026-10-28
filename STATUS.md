@@ -53,4 +53,5 @@
 - Meta VR Start membership and Devpost registration; the "RESQ" app in the Meta dashboard, then `metavr auth login`.
 - **Memory:** 8 GB RAM with heavy swap. The Editor crashed once (Meta ISDK telemetry plugin, 24 Oct 00:08) while other projects' Unity runs and apps were open.
 - **Disk (blocking Unity work):** 1.7 GB free at 23:10 on 28 Oct. macOS swap files reached ~9 GB on disk while Waz's Android build and PlayMode runs overlapped RESQ's Editor on 8 GB RAM. RESQ itself is 4.6 GB. The RESQ Editor needs ≥ 5 GB free to run safely, an APK rebuild ≥ 19 GB, and the plan ~40 GB by 11 Nov.
+- **Backup (no git remote):** full repo on the phone at `/sdcard/Download/RESQ-archive/` (29 Oct 00:00, commit e9c6471): git bundle + LFS objects tar + restore note. Restore was tested: 2,734/2,734 tracked files identical. Refresh it after big milestones.
 - **Credits:** Meshy 600/600 (cap reached); Higgsfield 33/150 (balance 8.9).
