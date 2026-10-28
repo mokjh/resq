@@ -3,6 +3,7 @@
 # Each shot loads a mission, plays its validated strategy A through the normal command path to a chosen tick,
 # frames the desktop camera, and captures the Game view. Evidence kind: Editor capture (labelled as such on the site).
 set -e
+trap 'echo "capture stopped at line $LINENO: $BASH_COMMAND"' ERR
 ROOT=/Users/dev/Desktop/Resq
 UC="python3 $ROOT/tools/unity/uc.py"
 MEDIA=$ROOT/web/app/media
@@ -35,7 +36,13 @@ stage() {
 
 $UC editor_stop > /dev/null 2>&1 || true
 ev 'UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Resq/Scenes/Operation_Desktop.unity"); return "ok";' > /dev/null
-$UC editor_play > /dev/null; sleep 15; focus
+# editor_play can report an error while the bridge reloads during play-mode entry: retry until playing is confirmed
+for i in 1 2 3 4 5 6; do
+  $UC editor_play > /dev/null 2>&1 || true; sleep 10
+  [ "$(ev 'return UnityEditor.EditorApplication.isPlaying.ToString();' 2>/dev/null)" = "True" ] && break
+done
+[ "$(ev 'return UnityEditor.EditorApplication.isPlaying.ToString();')" = "True" ] || { echo "could not enter play mode"; exit 1; }
+sleep 5; focus
 # release builds have no development picker: keep it out of public images (checked, not assumed)
 [ "$(ev 'Resq.Game.OperationPanel.DevControlsOverride = false; return Resq.Game.OperationPanel.DevControlsOverride.ToString();')" = "False" ] || { echo "could not hide dev controls"; exit 1; }
 
