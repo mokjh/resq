@@ -160,3 +160,14 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Storyboard:** five worlds, one shot each, each subject to its ship gate. Shots that need a device (real table, one hand, Command, anchor return) are cut if not verified in P5.
 - **Devpost draft:** `docs/submission/devpost-draft.md`; story 498/500 words. Unverified claims carry `[P5]`, `[G]` or `[you]` markers to settle before submission.
 - **RAM and disk etiquette (28 Oct):** while another project runs an Android IL2CPP build (swap near full, < 4 GB disk free), the RESQ Editor stays closed and non-Unity work continues.
+- **Resident life clips (28 Oct):** the user approved the last 15 Meshy credits (cap 600 reached) for five preset actions on the man's rig: Idle, Alert, Wave for Help, Cheer, Chair Sit.
+  - **Prep:** `resident_prep.py` bakes them into each resident's own FBX beside the walk, one NLA strip per clip. Bone rotations transfer by name across the three Meshy rigs. Object channels and Hips translation are dropped, so each figure keeps its own proportions and the simulation keeps owning position.
+  - **Controllers:** the importer names the takes; each controller gets a state per clip, with Walk the default.
+  - **Draw budget:** standing residents stay on the shared baked pose (instanced). Only one figure per node moves:
+    - where a group waits in danger, it waves for help;
+    - at a safe landing, it cheers.
+
+    Figures without the clip (seated riders, older kits) stay still. Checked in the Editor: two wavers at W1-M1's start, two cheering after the win, non-leaders unchanged. PlayMode 15/15, including each world's M1 render budget.
+  - Sit is baked but not used yet, since riders aboard vehicles are hidden.
+- **HUD hint:** a run paused after its first tick says "Paused — press Start to continue"; "Plan first" is only shown before the clock has moved.
+- **Website tap targets:** list links (support/privacy contents, the world list) are 48 px rows. All eight pages fit 375 px with no horizontal scroll.

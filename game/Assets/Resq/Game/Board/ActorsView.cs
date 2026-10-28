@@ -73,7 +73,7 @@ namespace Resq.Game
             _residentPrev = new Vector3[d.ResidentIds.Length];
             _anims = new Animator[d.ResidentIds.Length];
             _childHeads = new Transform[d.ResidentIds.Length];
-            _walking = new bool[d.ResidentIds.Length];
+            _mode = new byte[d.ResidentIds.Length];
             for (int r = 0; r < d.ResidentIds.Length; r++)
             {
                 if (d.ResidentStepFree[r] && _kit != null && _kit.SeatedRider != null && _kit.WheelchairChair != null)
@@ -167,6 +167,7 @@ namespace Resq.Game
             }
             // residents
             var slot = _slot; slot.Clear(); // node -> residents drawn there this frame
+            _leaders.Clear();                 // nodes whose first standing resident is animated (one per group)
             // a parked vehicle owns the node centre; people stand around it, not on it
             for (int v = 0; v < S.C.VehicleCount; v++)
                 if (S.VState[v] != (byte)VehicleState.Moving && (VehicleKind)S.VKind[v] != VehicleKind.Skiff && S.VNode[v] >= 0)
@@ -191,8 +192,17 @@ namespace Resq.Game
                     pos = NodePos(node, false) + RingOffset(k);
                 }
                 bool walking = st == ResidentState.Walking;
-                if (_anims[r] != null && _anims[r].enabled != walking) _anims[r].enabled = walking;   // standing = baked pose
-                AnimateResident(r, walking);
+                // one figure per group moves: it waves for help where the group waits, or cheers once safe; the
+                // rest hold the shared baked pose (instanced, so a crowd stays a handful of draws)
+                byte mode = walking ? ModeWalk : ModeStand;
+                if (!walking && _leaders.Add(S.RNode[r]))
+                {
+                    bool safe = st == ResidentState.Evacuated || (_def.NodeFlags[S.RNode[r]] & NodeFlags.Evacuation) != 0;
+                    mode = safe ? ModeCheer : ModeWave;
+                }
+                AnimateResident(r, ref mode);
+                bool animated = mode != ModeStand;
+                if (_anims[r] != null && _anims[r].enabled != animated) _anims[r].enabled = animated;   // standing = baked pose
                 if (st == ResidentState.Evacuated) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 4f + r)) * 0.002f; // gentle celebration
                 if (st == ResidentState.Walking) pos.y += Mathf.Abs(Mathf.Sin(Time.time * 14f + r)) * 0.0008f; // walking bob
                 // face the way they move (kit models), easing so groups don't snap
@@ -207,7 +217,7 @@ namespace Resq.Game
                     _residentPrev[r] = pos;
                 }
                 t.localPosition = pos;
-                QueueResident(r, walking);
+                QueueResident(r, animated);
             }
             SyncEquipment(sim);
             LateUpdateChildHeads();
@@ -402,11 +412,11 @@ namespace Resq.Game
         /// <summary>BakeMesh(useScale: false) leaves vertices at world size relative to the renderer: position and rotation only (verified 23 Oct).</summary>
         static Matrix4x4 PoseMatrix(Transform smr) => Matrix4x4.TRS(smr.position, smr.rotation, Vector3.one);
 
-        void QueueResident(int r, bool walking)
+        void QueueResident(int r, bool animated)
         {
             var p = _parts != null ? _parts[r] : null;
             if (p == null) return;
-            bool baked = !walking && p.Pose != null;
+            bool baked = !animated && p.Pose != null;
             if (p.Smr != null && p.Smr.enabled == baked) p.Smr.enabled = !baked;
             if (baked) p.Pose.M.Add(PoseMatrix(p.Smr.transform));
             foreach (var (rend, c) in p.Statics) c.M.Add(rend.transform.localToWorldMatrix);
@@ -449,7 +459,11 @@ namespace Resq.Game
 
         Animator[] _anims;
         Transform[] _childHeads;
-        bool[] _walking;
+        byte[] _mode;
+        readonly HashSet<int> _leaders = new HashSet<int>();
+        const byte ModeStand = 0, ModeWalk = 1, ModeWave = 2, ModeCheer = 3;
+        static readonly int[] ModeState = { Animator.StringToHash("Walk"), Animator.StringToHash("Walk"),
+                                            Animator.StringToHash("Wave"), Animator.StringToHash("Cheer") };
 
         /// <summary>
         /// Rigged residents: textured material, walk controller (paused on the feet-together frame when standing),
@@ -481,17 +495,18 @@ namespace Resq.Game
 
         }
 
-        void AnimateResident(int r, bool walking)
+        /// <summary>Plays the resident's clip for its mode; a figure without that clip (older kit, seated rider)
+        /// falls back to the standing pose, and mode reports what it actually shows.</summary>
+        void AnimateResident(int r, ref byte mode)
         {
             var an = _anims[r];
-            if (an == null) return;
-            if (walking != _walking[r])
-            {
-                _walking[r] = walking;
-                // each resident starts the cycle at its own phase so a walking group doesn't march in step
-                an.Play(0, 0, walking ? (r * 0.37f) % 1f : _kit.IdleTime);
-                an.speed = walking ? 1.1f : 0f;
-            }
+            if (an == null) { if (mode != ModeWalk) mode = ModeStand; return; }
+            if (mode >= ModeWave && !an.HasState(0, ModeState[mode])) mode = ModeStand;
+            if (mode == _mode[r]) return;
+            _mode[r] = mode;
+            // each resident starts at its own phase so a group doesn't move in step
+            an.Play(ModeState[mode], 0, mode == ModeStand ? _kit.IdleTime : (r * 0.37f) % 1f);
+            an.speed = mode == ModeStand ? 0f : mode == ModeWalk ? 1.1f : 1f;
         }
 
         void LateUpdateChildHeads()

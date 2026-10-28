@@ -30,8 +30,14 @@ namespace Resq.EditorTools
         {
             if (!IsResident(assetPath)) return;
             var mi = (ModelImporter)assetImporter;
+            // one take per clip (Walk plus the life clips Idle/Wait/Wave/Cheer/Sit); a lone take is the walk
             var clips = mi.defaultClipAnimations;
-            foreach (var c in clips) { c.loopTime = true; c.name = "Walk"; }
+            foreach (var c in clips)
+            {
+                c.loopTime = true;
+                string take = c.takeName.Substring(c.takeName.LastIndexOf('|') + 1);
+                c.name = clips.Length == 1 ? "Walk" : System.Array.Find(Resq.Game.ActorKit.ResidentClips, n => take.StartsWith(n)) ?? take;
+            }
             mi.clipAnimations = clips;
         }
 

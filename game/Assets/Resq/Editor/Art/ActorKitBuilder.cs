@@ -56,14 +56,15 @@ namespace Resq.EditorTools
             Debug.Log("[RESQ] actor kit built: " + KitPath);
         }
 
-        /// <summary>A rigged resident: model, a Resq/Hero material with its texture, and a one-state walk controller.</summary>
+        /// <summary>A rigged resident: model, a Resq/Hero material with its texture, and a controller with a state per clip.</summary>
         static GameObject Rigged(string id, out Material mat, out RuntimeAnimatorController anim)
         {
             mat = null; anim = null;
             string root = ResqArtImporter.ResidentRoot;
             var go = AssetDatabase.LoadAssetAtPath<GameObject>(root + id + ".fbx");
             var tex = AssetDatabase.LoadAssetAtPath<Texture2D>(root + id + "_base_color.png");
-            var clip = AssetDatabase.LoadAllAssetsAtPath(root + id + ".fbx").OfType<AnimationClip>().FirstOrDefault(c => !c.name.StartsWith("__preview"));
+            var clips = AssetDatabase.LoadAllAssetsAtPath(root + id + ".fbx").OfType<AnimationClip>().Where(c => !c.name.StartsWith("__preview")).ToArray();
+            var clip = clips.FirstOrDefault(c => c.name == "Walk") ?? clips.FirstOrDefault();
             if (go == null || tex == null || clip == null) { if (go != null) Debug.LogWarning("[RESQ] actor kit: incomplete rig " + id); return null; }
             string matPath = root + id + "_Resident.mat";
             mat = AssetDatabase.LoadAssetAtPath<Material>(matPath);
@@ -74,6 +75,18 @@ namespace Resq.EditorTools
             string ctlPath = root + id + "_Walk.controller";
             var ctl = AssetDatabase.LoadAssetAtPath<UnityEditor.Animations.AnimatorController>(ctlPath)
                       ?? UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPathWithClip(ctlPath, clip);
+            // one state per clip (Walk stays the default: standing figures hold its feet-together frame)
+            var sm = ctl.layers[0].stateMachine;
+            foreach (var c in clips)
+            {
+                string state = c == clip ? "Walk" : c.name;
+                var st = sm.states.Select(x => x.state).FirstOrDefault(x => x.name == state) ?? sm.AddState(state);
+                st.motion = c;
+                if (state == "Walk") sm.defaultState = st;
+            }
+            foreach (var old in sm.states.Select(x => x.state).Where(x => !clips.Any(c => (c == clip ? "Walk" : c.name) == x.name)).ToArray())
+                sm.RemoveState(old);   // states left from an earlier export (the first walk state was named "Scene")
+            EditorUtility.SetDirty(ctl);
             anim = ctl;
             return go;
         }

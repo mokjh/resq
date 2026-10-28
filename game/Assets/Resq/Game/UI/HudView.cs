@@ -394,7 +394,8 @@ namespace Resq.Game
                 case InteractMode.GroupRouting: _hintText.text = $"{act} where the group should go"; break;
                 case InteractMode.VehiclePickup: _hintText.text = $"{act} a group to pick up, or a destination"; break;
                 case InteractMode.VehicleDestination: _hintText.text = $"{act} a safe drop-off"; break;
-                default: _hintText.text = Driver.Paused ? "Plan first — press Start when ready" : $"{act} a tool, a group or a vehicle"; break;
+                default: _hintText.text = !Driver.Paused ? $"{act} a tool, a group or a vehicle"
+                    : Driver.Sim.S.C.O > 0 ? "Paused — press Start to continue" : "Plan first — press Start when ready"; break;
             }
         }
 

@@ -9,8 +9,11 @@ Per resident:
   * decimate the skinned mesh to the 1,200-triangle resident budget (weights survive the collapse);
   * keep the walk action, strip root travel so it cycles in place (the simulation moves the resident);
   * find the walk frame with the feet closest together: Unity holds it as the idle pose;
-  * write the base colour (1K PNG) and export FBX with the kit preset plus the baked walk animation into
-    game/Assets/Resq/Art/Residents/, and a sidecar art/residents/PREP_REPORT.json.
+  * add the life clips (Idle, Wait, Wave, Cheer, Sit) made on the man's rig, art/residents/resident_man/clips.fbx:
+    all three share Meshy's 24-bone skeleton, so the clips' bone rotations transfer by name; object channels and the
+    Hips translation are dropped (Meshy import scale, the man's proportions; the simulation owns position);
+  * write the base colour (1K PNG) and export FBX with the kit preset plus the baked clips (one take per NLA strip)
+    into game/Assets/Resq/Art/Residents/, and a sidecar art/residents/PREP_REPORT.json.
 """
 
 import json
@@ -123,6 +126,7 @@ def prep(rid):
 
     # bake exactly the walk cycle (the scene range otherwise defaults to 250 frames); the last frame repeats the first
     scene.frame_start, scene.frame_end = f0, f1 - 1
+    life = add_life_clips(arm, act, f0, f1 - 1)
     for o in scene.objects:
         o.select_set(o in (arm, mesh))
     bpy.context.view_layer.objects.active = arm
@@ -132,11 +136,59 @@ def prep(rid):
                              use_space_transform=True, bake_space_transform=False, object_types={"MESH", "ARMATURE"},
                              use_mesh_modifiers=False, mesh_smooth_type="OFF", use_triangles=True, add_leaf_bones=False,
                              primary_bone_axis="Y", secondary_bone_axis="X", armature_nodetype="NULL", bake_anim=True,
-                             bake_anim_use_all_actions=False, bake_anim_use_nla_strips=False, bake_anim_force_startend_keying=True,
+                             bake_anim_use_all_actions=False, bake_anim_use_nla_strips=bool(life), bake_anim_force_startend_keying=True,
                              bake_anim_simplify_factor=0.5, path_mode="STRIP", embed_textures=False)
     return {"height_mm": HEIGHT_MM[rid], "scale": round(s, 6), "tris_source": tris0, "tris": tris, "frames": [f0, f1],
             "idle_frame": best, "idle_normalized_time": round(idle_t, 4), "feet_gap_mm": round(best_d * 1000, 2),
-            "rest_facing_blender": facing, "hips_travel": travel, "object_channels_dropped": dropped, "texture": rid + "_base_color.png (1024)"}
+            "rest_facing_blender": facing, "hips_travel": travel, "object_channels_dropped": dropped, "texture": rid + "_base_color.png (1024)",
+            "life_clips": life}
+
+
+LIFE = os.path.join(SRC, "resident_man", "clips.fbx")
+CLIPS = {"Idle": "Idle", "Alert": "Wait", "Wave_for_Help": "Wave", "Cheer_with_Both_Hands_Up": "Cheer",
+         "Chair_Sit_Idle_M": "Sit"}
+
+
+def add_life_clips(arm, walk, w0, w1):
+    """Loads the life clips onto this resident's armature as NLA strips beside the walk (named Walk). Returns
+    {clip: [first, last frame]}, or {} when clips.fbx is absent (the export then carries the walk alone)."""
+    if not os.path.exists(LIFE) or walk is None:
+        return {}
+    before_obj, before_act = set(bpy.data.objects), set(bpy.data.actions)
+    bpy.ops.import_scene.fbx(filepath=LIFE)
+    for o in set(bpy.data.objects) - before_obj:
+        bpy.data.objects.remove(o, do_unlink=True)
+    names = {b.name for b in arm.pose.bones}
+    strips = [("Walk", walk, w0, w1)]
+    out = {}
+    for a in set(bpy.data.actions) - before_act:
+        key = next((k for k in CLIPS if a.name.split("|")[-1].lower().startswith(k.lower())), None)
+        if key is None:
+            bpy.data.actions.remove(a)
+            continue
+        for bag, fc in list(_bag_fcurves(a)):
+            bone = fc.data_path.split('"')[1] if fc.data_path.startswith("pose.bones") else None
+            if bone is None or bone not in names or fc.data_path == 'pose.bones["Hips"].location':
+                bag.fcurves.remove(fc)
+        a.name = CLIPS[key]
+        f = (int(a.frame_range[0]), int(a.frame_range[1]))
+        strips.append((a.name, a, f[0], f[1]))
+        out[a.name] = list(f)
+    missing = sorted(set(CLIPS.values()) - set(out))
+    if missing:
+        raise RuntimeError("clips.fbx lacks %s" % missing)
+    walk.name = "Walk"
+    ad = arm.animation_data or arm.animation_data_create()
+    ad.action = None
+    for name, a, s0, s1 in strips:
+        track = ad.nla_tracks.new()
+        track.name = name
+        strip = track.strips.new(name, s0, a)
+        if hasattr(strip, "action_slot") and getattr(a, "slots", None):
+            strip.action_slot = a.slots[0]
+        strip.action_frame_start, strip.action_frame_end = s0, s1
+        strip.frame_end = s1
+    return out
 
 
 def _bag_fcurves(act):
@@ -343,3 +395,4 @@ def seated(rid="resident_woman"):
 
 if __name__ == "__main__" and "--seated" in sys.argv:
     print("SEATED", json.dumps(seated()))
+

@@ -26,6 +26,8 @@ namespace Resq.Game
         public RuntimeAnimatorController SeatedAnim;
         [Tooltip("Walk-clip time held as the standing pose (feet together).")]
         public float IdleTime = 0f;
+        /// <summary>Clip (and controller state) names on each rigged resident: the walk plus the life clips.</summary>
+        public static readonly string[] ResidentClips = { "Walk", "Idle", "Wait", "Wave", "Cheer", "Sit" };
         [Tooltip("When no child model exists, children are the adult scaled down with a larger head.")]
         public float ChildScale = 0.72f, ChildHead = 1.28f;
         public GameObject Skiff, Bridge, Cottage;
