@@ -40,6 +40,9 @@ namespace Resq.Game
         public void Rebuild()
         {
             _def = Driver.Def;
+            // a new run starts with no toast: a warning from the previous mission must not carry over (found in the
+            // website captures, 24 Oct: "Lava advances" over Alder Valley)
+            _lastWarning = ""; _warningUntil = 0;
             if (_glass == null) _glass = new Material(Shader.Find("Resq/Glass"));
             foreach (Transform t in transform) Destroy(t.gameObject);
             _cards.Clear();

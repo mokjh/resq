@@ -18,13 +18,17 @@ namespace Resq.Game
     {
         public SimDriver Driver;
         public BoardInteraction Interaction;
-        public int HorizonTicks = Forecaster.DefaultHorizon;
+        /// <summary>60 s: over 30 s a barrier or bridge rarely changes the picture, because water redirects over
+        /// longer spans (measured 24 Oct: First Crossing 5 → 17 cells). The worker thread absorbs the cost.</summary>
+        public int HorizonTicks = Forecaster.MaxHorizon;
         public float HoverDelay = 0.2f;
         public const long SafeDepthMm = 100;
 
         public string Summary { get; private set; } = "";
         public double LastMs { get; private set; }
         public bool Showing { get; private set; }
+        /// <summary>Cells the last preview paints as kept dry or newly flooded (diagnostics, captures).</summary>
+        public int ChangedCells { get; private set; }
 
         MissionDef _def;
         Mesh _mesh;
@@ -57,7 +61,7 @@ namespace Resq.Game
             var verts = new Vector3[n * 4];
             _colors = new Color[n * 4];
             var tris = new int[n * 6];
-            float h = BoardSpace.CellSize(d) * 0.45f;
+            float h = BoardSpace.CellSize(d) * 0.5f;   // full-cell tiles: changed cells read as one connected patch
             for (int c = 0; c < n; c++)
             {
                 var p = BoardSpace.CellCenter(d, c);
@@ -155,13 +159,14 @@ namespace Resq.Game
         {
             var d = _def;
             int n = d.GridW * d.GridH;
+            ChangedCells = 0;
             for (int c = 0; c < n; c++)
             {
                 long b = _baseline.MaxDepth[c], p = _preview.MaxDepth[c];
                 bool landish = d.CellElevation[c] > 0 || d.CellTerrain[c] != 0;
                 Color col = new Color(0, 0, 0, 0);
-                if (landish && b > SafeDepthMm && p <= SafeDepthMm) col = new Color(Saved.r, Saved.g, Saved.b, 0.55f);
-                else if (landish && p > SafeDepthMm && b <= SafeDepthMm) col = new Color(Worse.r, Worse.g, Worse.b, 0.6f);
+                if (landish && b > SafeDepthMm && p <= SafeDepthMm) { col = new Color(Saved.r, Saved.g, Saved.b, 0.8f); ChangedCells++; }
+                else if (landish && p > SafeDepthMm && b <= SafeDepthMm) { col = new Color(Worse.r, Worse.g, Worse.b, 0.8f); ChangedCells++; }
                 else if (landish && p > SafeDepthMm) col = new Color(Ghost.r, Ghost.g, Ghost.b, Mathf.Clamp01(p / 1200f) * 0.35f);
                 int v = c * 4;
                 _colors[v] = col; _colors[v + 1] = col; _colors[v + 2] = col; _colors[v + 3] = col;

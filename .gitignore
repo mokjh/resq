@@ -57,6 +57,9 @@ node_modules/
 video/raw/
 video/cache/
 video/exports/*.mov
+video/exports/*.mp4
+video/exports/*.png
+video/exports/work/
 
 # --- Frozen pre-22-Oct-2026 process evidence: kept on disk, not tracked ---
 /evidence/
