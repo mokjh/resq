@@ -174,3 +174,4 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 
 ## 29 Oct 2026 — Website deploy
 - The user approved a Vercel preview deploy. `vercel deploy` (no `--prod`) on the newly created `resq` project still made a production deployment, because a project's first deploy is production. So the site is public at https://resq-woad.vercel.app, not only the login-protected team URLs. Content is the committed `web/app` ("In development … Not yet released"; images labelled as Editor captures). Reported to the user, who chooses whether to keep or remove the public alias. Later deploys use `vercel deploy` for previews and `--prod` only with the user's OK.
+- **29 Oct:** the user chose to keep https://resq-woad.vercel.app public. Updates there still need the user's OK each time (`vercel deploy --prod` in `web/app`).
