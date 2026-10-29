@@ -836,7 +836,7 @@ namespace Resq.Game
             var spec = new MenuSpec
             {
                 Id = "U23", Title = "Credits & privacy", TitleIcon = Icon.Check,
-                Body = "<b>Made by</b>  Frameless, for the Meta VR Start Developer Competition 2026.\n"
+                Body = "<b>Made by</b>  Amir Lotfy, for the Meta VR Start Developer Competition 2026.\n"
                      + "<b>Built with</b>  Unity 6, Meta XR SDK (Core, Interaction, MR Utility Kit), Blender.\n"
                      + "<b>Art</b>  scripted Blender kits; landmark buildings, vehicles and residents generated with Meshy from Higgsfield concept images, then cleaned and fitted by hand-written scripts.\n"
                      + "<b>Type</b>  Atkinson Hyperlegible (SIL Open Font License).\n"

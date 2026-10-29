@@ -172,7 +172,7 @@ def page(name, title, body, desc, cls=""):
     <p class="debrief-status">{e(STATUS)}</p>
     <p class="debrief-note">Images are the development build rendered in the Unity Editor (October 2026), labelled “{RENDER}”. Panels on this site are the game’s own interface rebuilt for the web. None of it is headset footage, and none of it is AI-generated.</p>
     <ul class="debrief-links">{"".join(f'<li><a class="btn ghost" href="{h}">{e(t)}</a></li>' for h, t in SHEET[1:])}</ul>
-    <p class="debrief-note">Made by Frameless.</p>
+    <p class="debrief-note">Made by Amir Lotfy.</p>
   </div>
 </footer>
 <nav class="tray" aria-label="Main">
@@ -363,7 +363,7 @@ def accessibility():
 
 
 def press():
-    facts = [("Title", "RESQ"), ("Developer", "Frameless"), ("Platform", "Meta Quest 3 and Quest 3S (mixed reality)"),
+    facts = [("Title", "RESQ"), ("Developer", "Amir Lotfy"), ("Platform", "Meta Quest 3 and Quest 3S (mixed reality)"),
              ("Genre", "Rescue strategy / puzzle"), ("Status", STATUS), ("Content", "5 worlds, 25 missions, 30 challenge variants"),
              ("Input", "Hand tracking (two hands or one), head-gaze dwell; no controllers needed"),
              ("Made with", "Unity 6, Meta XR SDK (Core, Interaction, MR Utility Kit), Blender")]
