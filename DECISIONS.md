@@ -224,3 +224,4 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
   - **Provenance:** the footer states that panels are the game's interface rebuilt for the web and images are Editor renders.
   - **Checks:** all 8 pages at 375 and 1440 px have no sideways scroll, no broken or stretched images, one h1 each, and no tap target under 44 px. Glass text contrast is ≥ 6:1 over the lightest table.
 
+- **30 Oct:** Briefing Room deployed to production with the user's OK. A follow-up fix makes the phone tray fully opaque: bright text bled through the 97 % background. Live stylesheet version matches the local build.

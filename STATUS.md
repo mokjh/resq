@@ -40,7 +40,7 @@
 
 ## Not done yet (in plan order)
 1. **Your review of the audio:** listen to `game/Assets/Resq/Content/Resources/ResqAudio/` or play a mission in the Editor.
-2. **Website:** redesigned again on 29 Oct as "Briefing Room": the site is RESQ's own interface (glass briefing cards, warning toasts at real threat timings, loadouts, a tool-tray navigation docked at the bottom, a Menu bottom sheet). Checked at 375 and 1440 px and committed locally. The public site keeps the old design until you approve a deploy.
+2. **Website:** "Briefing Room" is live at https://resq-woad.vercel.app (deployed 30 Oct with your OK). All pages return 200 and the media load. The phone view was checked live; the tray is solid on phones.
 3. **Trailer:** pipeline ready and self-tested (`tools/video/edit.py`); storyboard and EDL in `video/`. Needs XR Simulator recordings now and device clips in P5.
 4. **Devpost:** draft in `docs/submission/devpost-draft.md` (498/500 words) for your review; `[P5]`, `[G]` and `[you]` markers remain.
 5. **MR polish:**

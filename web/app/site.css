@@ -243,7 +243,7 @@ ul, ol { list-style: none; }
   .sheet[open]::before { content: ""; position: fixed; inset: 0; background: rgba(5, 12, 14, 0.55); z-index: -1; }
   /* a backdrop-filter makes the tray the containing block for fixed children: drop it on phones so the sheet and
      its scrim anchor to the screen; near-opaque surfaces instead */
-  .tray > ul { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(19, 26, 29, 0.97); }
+  .tray > ul { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--glass-solid); }
   .sheet-card { -webkit-backdrop-filter: none; backdrop-filter: none; background: var(--glass-solid); }
   .sheet-card { position: fixed; left: 8px; right: 8px; width: auto; bottom: calc(var(--tray-h) + 10px + env(safe-area-inset-bottom)); }
 }
