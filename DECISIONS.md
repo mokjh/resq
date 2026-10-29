@@ -198,4 +198,29 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Slabs:** Alder Valley blue, Emberwood ember, Frostline ice, Tidemark harbour yellow (teal fought its own water), Cinder Reach basalt. `tools/web/check_contrast.py` checks every text/background pair at ≥ 4.5:1 (lowest 5.27:1).
 - **Checks:** all 8 pages at 375 px have no horizontal scroll, no tap target under 44 px, no broken or distorted image, and one h1 each. The stylesheet URL carries a content hash so visitors never get stale styles.
 - **Provenance:** every image says "Editor render", and the footer states none of it is headset footage or AI-generated.
+- **Redesign, second pass: "Briefing Room" (29 Oct):**
+  - **Why:** the user judged Collectible Worlds still template-like. The objects were RESQ's own, but the scaffolding (kicker, giant heading, paragraph, stat strip, link-grid footer) could hold any product. Mobile also needed a full rework.
+  - **New research:**
+    - Refero: FRANKY'S (a game menu translated into a storefront) and Desktop.fm (the product's own interface as the page).
+    - Mobbin: MacroFactor's bottom tab bar and Discord's bottom sheet, for thumb-zone navigation.
+  - **Direction:** the site is built from RESQ's own UI system and in-game colours (`UiKit.cs`):
+    - glass panels: fill rgba(19, 26, 29, 0.84), 16 % white edge, #F3F5F2 text;
+    - hologram cyan for icons and selection, amber for warnings only, green for done, orange only for the Start/primary action.
+  - **Navigation:** the in-game tool tray, docked at the bottom (floating on desktop, full width with the safe-area inset on phones; "How it plays" shortens to "Play"). The Menu tool opens a glass bottom sheet: opaque, with a scrim, closing on Escape, a tap outside, or a choice.
+    - The tray drops its backdrop blur on phones, because a backdrop-filter makes it the containing block for fixed children: the scrim and sheet would otherwise anchor to the tray.
+  - **Each world is a mission screen on its colour table,** fed by real data from the mission contracts, equipment rules and world bible:
+    - the valley object;
+    - a briefing card with the world, its first mission and the decision it teaches;
+    - three warning toasts at the mission's real threat timings;
+    - a "Camera" picture-in-picture of residents;
+    - resident, step-free, supply and duration chips;
+    - the actual loadout with in-game tool names and supply costs;
+    - Plan A / Plan B from the reference strategies (worlds page);
+    - M1–M5 tiles.
+  - **Other surfaces:**
+    - Hero: the pitch is written as in-game objectives, with the game's real warning toast.
+    - Accessibility: a replica of the Settings card.
+    - Footer: a Debrief card.
+  - **Provenance:** the footer states that panels are the game's interface rebuilt for the web and images are Editor renders.
+  - **Checks:** all 8 pages at 375 and 1440 px have no sideways scroll, no broken or stretched images, one h1 each, and no tap target under 44 px. Glass text contrast is ≥ 6:1 over the lightest table.
 
