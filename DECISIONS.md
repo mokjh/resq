@@ -171,3 +171,6 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
   - Sit is baked but not used yet, since riders aboard vehicles are hidden.
 - **HUD hint:** a run paused after its first tick says "Paused — press Start to continue"; "Plan first" is only shown before the clock has moved.
 - **Website tap targets:** list links (support/privacy contents, the world list) are 48 px rows. All eight pages fit 375 px with no horizontal scroll.
+
+## 29 Oct 2026 — Website deploy
+- The user approved a Vercel preview deploy. `vercel deploy` (no `--prod`) on the newly created `resq` project still made a production deployment, because a project's first deploy is production. So the site is public at https://resq-woad.vercel.app, not only the login-protected team URLs. Content is the committed `web/app` ("In development … Not yet released"; images labelled as Editor captures). Reported to the user, who chooses whether to keep or remove the public alias. Later deploys use `vercel deploy` for previews and `--prod` only with the user's OK.

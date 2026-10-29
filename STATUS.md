@@ -40,7 +40,7 @@
 
 ## Not done yet (in plan order)
 1. **Your review of the audio:** listen to `game/Assets/Resq/Content/Resources/ResqAudio/` or play a mission in the Editor.
-2. **Website:** done locally (`web/app`): 8 pages; all 10 images are honest Editor captures from 29 Oct, each world with its own HUD; 48 px tap targets; no sideways scroll at 375 px. Next step is a Vercel deploy, which waits for your OK.
+2. **Website:** deployed 29 Oct to Vercel project `mellardoos-projects/resq`. The first deploy of a new project is production by Vercel's default, so it is public at https://resq-woad.vercel.app. Team URLs (resq-mellardoos-projects.vercel.app) need a Vercel login. 8 pages, 10 honest Editor captures, all checked live.
 3. **Trailer:** pipeline ready and self-tested (`tools/video/edit.py`); storyboard and EDL in `video/`. Needs XR Simulator recordings now and device clips in P5.
 4. **Devpost:** draft in `docs/submission/devpost-draft.md` (498/500 words) for your review; `[P5]`, `[G]` and `[you]` markers remain.
 5. **MR polish:**
