@@ -5,66 +5,123 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RESQ: small worlds, big saves</title>
 <meta name="description" content="RESQ is a mixed-reality rescue strategy game for Meta Quest 3 and 3S: a miniature valley on your real table, and every resident to bring home.">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="media/icon.png">
-<link rel="stylesheet" href="site.css">
+<link rel="preload" href="fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="site.css?v=2cfe89fa">
 </head>
-<body>
+<body class="">
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-head"><div class="wrap">
-  <a class="wordmark" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#F3EBDD"/><g fill="#F3EBDD"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg>RESQ</a>
-  <nav class="nav" aria-label="Main"><ul><li><a href="how-to-play.html">How to play</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li></ul></nav>
-  <details class="menu"><summary>Menu</summary><ul><li><a href="how-to-play.html">How to play</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li></ul></details>
-</div></header>
+<header class="bar">
+  <a class="mark" href="index.html" aria-label="RESQ home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></a>
+  <nav aria-label="Main"><ul class="links"><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li></ul></nav>
+  <a class="pill cta" href="worlds.html">Meet the worlds</a>
+  <details class="menu"><summary>Menu</summary><ul><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="worlds.html">Meet the worlds</a></li></ul></details>
+</header>
 <main id="main">
 
-<div class="hero-media"><img src="media/hero.jpg" alt="A miniature river valley on a wooden board: a bus waits by a flooded crossing while residents gather at a dock." width="1920" height="1080"></div>
-<div class="hero-rail"><div class="wrap">
-  <div class="lead">
-    <span class="status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</span>
-    <h1>Small worlds. Big saves.</h1>
-    <p>RESQ is a mixed-reality strategy game for Meta Quest 3 and 3S. A miniature valley appears on your real table; you read the flood, fire, snow, tide or lava that's coming, then use your hands to place equipment and route every resident to safety.</p>
-    <p class="note">Alder Valley, First Crossing. Development build, captured in the Unity Editor (October 2026). Not headset footage.</p>
+<section class="hero" aria-labelledby="h-hero">
+  <div class="hero-text">
+    <p class="status">In development · Meta Quest 3 and 3S</p>
+    <h1 id="h-hero">Small worlds.<br>Big saves.</h1>
+    <p class="lede">A mixed-reality rescue strategy game. A miniature valley appears on your real table; you read the danger that’s coming, then use your hands to bring every resident home.</p>
+    <p class="hero-actions"><a class="pill cta big" href="#alder-valley">Meet the five worlds</a><a class="text-link" href="how-to-play.html">How it plays</a></p>
   </div>
-  <div class="actions">
-    <a class="btn primary" href="worlds.html">See the five worlds</a>
-    <a class="btn secondary" href="how-to-play.html">How to play</a>
+  <div class="hero-obj"><img class="obj" src="media/obj_hero.webp" alt="Alder Valley as a miniature on a wooden board: river channels, cedar houses, a church and a bus by the crossing." width="1428" height="733" fetchpriority="high" decoding="async">
+    <p class="plate"><span>Alder Valley</span><span>First Crossing, one minute in</span><span>Editor render</span></p></div>
+</section>
+
+<section class="world light" id="alder-valley" style="--slab:#2357C4" aria-labelledby="h-alder-valley">
+  <div class="world-obj"><img class="obj" src="media/obj_w1.webp" alt="Alder Valley as a miniature on a wooden board: river channels, cedar houses, a church and a bus by the crossing." width="1431" height="870" loading="lazy" decoding="async">
+    <p class="plate"><span>01 / 05</span><span>Alder Valley</span><span>Editor render</span></p></div>
+  <div class="world-text">
+    <p class="kicker"><span class="num">01</span>Floods</p>
+    <h2 id="h-alder-valley">Alder Valley</h2>
+    <p class="identity">A stepped river valley with cedar houses, terraced fields, a stone viaduct, a bright rescue depot, and a mountain reservoir.</p><ol class="missions"><li><span class="mid">W1-M1</span><span class="mt">First Crossing</span></li><li><span class="mid">W1-M2</span><span class="mt">The Lower Road</span></li><li><span class="mid">W1-M3</span><span class="mt">Two Banks</span></li><li><span class="mid">W1-M4</span><span class="mt">Power Before Water</span></li><li><span class="mid">W1-M5</span><span class="mt">The Long Way Home</span></li></ol><p><a class="more" href="worlds.html#alder-valley">More about Alder Valley</a></p>
   </div>
-</div></div>
-
-<section class="block"><div class="wrap">
-  <p class="eyebrow">Read. Plan. Act. Rescue.</p>
-  <h2>Every rescue is a decision you can see coming.</h2>
-  <div class="story"><figure class=""><img src="media/hero.jpg" alt="A miniature river valley on a wooden board: a bus waits by a flooded crossing while residents gather at a dock." loading="lazy" width="1600" height="900"><figcaption>Alder Valley, First Crossing. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">1 · Read</span><h3>Warnings come before the danger</h3><p>Each mission shows what will happen and when: the reservoir rises at one minute, the wind turns, the tide comes in. Nothing is random, so a plan that works will work again.</p></div></div>
-  <div class="story flip"><figure class=""><img src="media/plan.jpg" alt="A tool hovering over the board shows a forecast: green cells stay dry, red cells would flood." loading="lazy" width="1600" height="900"><figcaption>Forecast preview while placing a barrier. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">2 · Plan</span><h3>Hold a tool over the board to see the future</h3><p>A forecast runs the real simulation ahead: green cells stay dry, red ones would flood. You choose where a barrier, bridge, pump or firebreak does the most good before you spend supplies.</p></div></div>
-  <div class="story"><figure class=""><img src="media/act.jpg" alt="A rescue boat crosses the river while residents wait at a dock." loading="lazy" width="1600" height="900"><figcaption>Routing a boat to a waiting group. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">3 · Act</span><h3>Your hands do the work</h3><p>Pinch a tool card and drop it on a glowing spot. Pick a group, then where they should go; pick a boat, a group, then the drop-off. You can't pick people up and carry them: residents, occupied vehicles and hazards are moved only by the plan you make.</p></div></div>
-  <div class="story flip"><figure class=""><img src="media/rescue.jpg" alt="A glass card above the board reads Rescue complete, with each goal marked Done." loading="lazy" width="1600" height="900"><figcaption>Results after a rescue. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">4 · Rescue</span><h3>See what happened, then try another plan</h3><p>Results show who reached safety and which goals you met. A short timeline explains the moment that mattered, and each mission has two quite different ways to win.</p></div></div>
-</div></section>
-
-<section class="block"><div class="wrap">
-  <p class="eyebrow">Five worlds. Twenty-five missions.</p>
-  <h2>Each valley has its own danger.</h2>
-  <ul><li><a href="worlds.html#alder-valley"><strong>Alder Valley</strong></a> — Floods.</li><li><a href="worlds.html#emberwood"><strong>Emberwood</strong></a> — Wildfire.</li><li><a href="worlds.html#frostline"><strong>Frostline</strong></a> — Snow, avalanches and failing supports.</li><li><a href="worlds.html#tidemark"><strong>Tidemark</strong></a> — Tides and storm power.</li><li><a href="worlds.html#cinder-reach"><strong>Cinder Reach</strong></a> — Lava and heat.</li></ul>
-  <p>All 25 missions are playable in the development build and pass automated replays of two winning strategies on both board sizes. Headset testing comes in November.</p>
-  <p><a class="btn secondary" href="worlds.html">Visit the worlds</a></p>
-</div></section>
-
-<section class="block"><div class="wrap">
-  <p class="eyebrow">Find your way to play</p>
-  <h2>Hands, one hand, or no hands at all.</h2>
-  <p>Every mission can be finished with either hand alone, or hands-free by looking at a control until it fills. Larger text, high contrast, reduced effects and a relaxed pace are in Settings, and Open play unlocks every mission.</p>
-  <p><a class="btn secondary" href="accessibility.html">Accessibility in RESQ</a></p>
-</div></section>
-
-<section class="block"><div class="wrap">
-  <p class="eyebrow">A closer look</p>
-  <h2>The worlds so far</h2>
-  <div class="gallery"><figure class=""><img src="media/w1.jpg" alt="Alder Valley diorama with a river, cedar houses and a rescue depot." loading="lazy" width="1600" height="900"><figcaption>Alder Valley. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><figure class=""><img src="media/w2.jpg" alt="Emberwood diorama: pine forest, a ranger station and a fire line." loading="lazy" width="1600" height="900"><figcaption>Emberwood. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><figure class=""><img src="media/w3.jpg" alt="Frostline diorama: snowy terraces, a snowcat and a cable station." loading="lazy" width="1600" height="900"><figcaption>Frostline. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><figure class=""><img src="media/w4.jpg" alt="Tidemark diorama: harbour houses, a causeway and a lighthouse." loading="lazy" width="1600" height="900"><figcaption>Tidemark. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><figure class=""><img src="media/w5.jpg" alt="Cinder Reach diorama: dark basalt slopes and a lava channel." loading="lazy" width="1600" height="900"><figcaption>Cinder Reach. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><figure class=""><img src="media/menu.jpg" alt="A glass card above the board lists missions for one world." loading="lazy" width="1600" height="900"><figcaption>Choosing a mission. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure></div>
-</div></section>
-
+  <figure class="world-detail"><img class="det" src="media/det_w1.webp" alt="A group gathers by the bus at the crossing." width="1000" height="1250" loading="lazy" decoding="async">
+    <figcaption><p class="plate"><span>Detail</span><span>A group gathers by the bus at the crossing.</span><span>Editor render</span></p></figcaption></figure>
+</section>
+<section class="world light flip" id="emberwood" style="--slab:#B8361B" aria-labelledby="h-emberwood">
+  <div class="world-obj"><img class="obj" src="media/obj_w2.webp" alt="Emberwood as a miniature: a meadow inside a pine forest, a lookout tower, cabins and a burning fire line." width="1427" height="898" loading="lazy" decoding="async">
+    <p class="plate"><span>02 / 05</span><span>Emberwood</span><span>Editor render</span></p></div>
+  <div class="world-text">
+    <p class="kicker"><span class="num">02</span>Wildfire</p>
+    <h2 id="h-emberwood">Emberwood</h2>
+    <p class="identity">An inhabited forest reserve with a lookout tower, sawmill, campsite, orchard, and hillside water tanks.</p><ol class="missions"><li><span class="mid">W2-M1</span><span class="mt">A Line in the Trees</span></li><li><span class="mid">W2-M2</span><span class="mt">Last Bus from Camp</span></li><li><span class="mid">W2-M3</span><span class="mt">Water Is a Route</span></li><li><span class="mid">W2-M4</span><span class="mt">When the Wind Turns</span></li><li><span class="mid">W2-M5</span><span class="mt">The Green Corridor</span></li></ol><p><a class="more" href="worlds.html#emberwood">More about Emberwood</a></p>
+  </div>
+  <figure class="world-detail"><img class="det" src="media/det_w2.webp" alt="Residents reach the landing, where the rescue crew waits." width="1000" height="1250" loading="lazy" decoding="async">
+    <figcaption><p class="plate"><span>Detail</span><span>Residents reach the landing, where the rescue crew waits.</span><span>Editor render</span></p></figcaption></figure>
+</section>
+<section class="world dark" id="frostline" style="--slab:#DCEAF2" aria-labelledby="h-frostline">
+  <div class="world-obj"><img class="obj" src="media/obj_w3.webp" alt="Frostline as a miniature: snowfields ringed by peaks, a cable station, cabins and a red snowcat." width="1432" height="915" loading="lazy" decoding="async">
+    <p class="plate"><span>03 / 05</span><span>Frostline</span><span>Editor render</span></p></div>
+  <div class="world-text">
+    <p class="kicker"><span class="num">03</span>Snow and avalanches</p>
+    <h2 id="h-frostline">Frostline</h2>
+    <p class="identity">A snow-covered alpine settlement with a funicular, weather observatory, cable station, avalanche fences, and steep terraces.</p><ol class="missions"><li><span class="mid">W3-M1</span><span class="mt">Hold the Station</span></li><li><span class="mid">W3-M2</span><span class="mt">Above the Snowline</span></li><li><span class="mid">W3-M3</span><span class="mt">The Quiet Slope</span></li><li><span class="mid">W3-M4</span><span class="mt">Cable and Current</span></li><li><span class="mid">W3-M5</span><span class="mt">Dawn at Frostline</span></li></ol><p><a class="more" href="worlds.html#frostline">More about Frostline</a></p>
+  </div>
+  <figure class="world-detail"><img class="det" src="media/det_w3.webp" alt="Arms up at the Frostline landing." width="1000" height="1250" loading="lazy" decoding="async">
+    <figcaption><p class="plate"><span>Detail</span><span>Arms up at the Frostline landing.</span><span>Editor render</span></p></figcaption></figure>
+</section>
+<section class="world dark flip" id="tidemark" style="--slab:#F2BE22" aria-labelledby="h-tidemark">
+  <div class="world-obj"><img class="obj" src="media/obj_w4.webp" alt="Tidemark as a miniature: a harbour basin, two islands of houses, a causeway and a lighthouse." width="1431" height="861" loading="lazy" decoding="async">
+    <p class="plate"><span>04 / 05</span><span>Tidemark</span><span>Editor render</span></p></div>
+  <div class="world-text">
+    <p class="kicker"><span class="num">04</span>Tides and storm power</p>
+    <h2 id="h-tidemark">Tidemark</h2>
+    <p class="identity">A fictional coastal archipelago with pale plaster houses, boatyards, a lighthouse, raised walkways, and a tidal market.</p><ol class="missions"><li><span class="mid">W4-M1</span><span class="mt">Between Two Tides</span></li><li><span class="mid">W4-M2</span><span class="mt">Keep the Light</span></li><li><span class="mid">W4-M3</span><span class="mt">The Floating Market</span></li><li><span class="mid">W4-M4</span><span class="mt">Storm Switch</span></li><li><span class="mid">W4-M5</span><span class="mt">Harbor of Everyone</span></li></ol><p><a class="more" href="worlds.html#tidemark">More about Tidemark</a></p>
+  </div>
+  <figure class="world-detail"><img class="det" src="media/det_w4.webp" alt="Safe at the harbour landing." width="1000" height="1250" loading="lazy" decoding="async">
+    <figcaption><p class="plate"><span>Detail</span><span>Safe at the harbour landing.</span><span>Editor render</span></p></figcaption></figure>
+</section>
+<section class="world light" id="cinder-reach" style="--slab:#1C1A19" aria-labelledby="h-cinder-reach">
+  <div class="world-obj"><img class="obj" src="media/obj_w5.webp" alt="Cinder Reach as a miniature: dark basalt terraces split by glowing lava channels." width="1428" height="894" loading="lazy" decoding="async">
+    <p class="plate"><span>05 / 05</span><span>Cinder Reach</span><span>Editor render</span></p></div>
+  <div class="world-text">
+    <p class="kicker"><span class="num">05</span>Lava and heat</p>
+    <h2 id="h-cinder-reach">Cinder Reach</h2>
+    <p class="identity">A volcanic island research town with basalt terraces, a geothermal station, orchards, a ferry terminal, and cooling channels.</p><ol class="missions"><li><span class="mid">W5-M1</span><span class="mt">A Path Through Heat</span></li><li><span class="mid">W5-M2</span><span class="mt">Borrowed Safety</span></li><li><span class="mid">W5-M3</span><span class="mt">The Cooling Works</span></li><li><span class="mid">W5-M4</span><span class="mt">Three Ways Out</span></li><li><span class="mid">W5-M5</span><span class="mt">Every Little Life</span></li></ol><p><a class="more" href="worlds.html#cinder-reach">More about Cinder Reach</a></p>
+  </div>
+  <figure class="world-detail"><img class="det" src="media/det_w5.webp" alt="A Cinder Reach group, one resident in a wheelchair." width="1000" height="1250" loading="lazy" decoding="async">
+    <figcaption><p class="plate"><span>Detail</span><span>A Cinder Reach group, one resident in a wheelchair.</span><span>Editor render</span></p></figcaption></figure>
+</section>
+<section class="plays" aria-labelledby="h-plays">
+  <div class="section-head"><p class="kicker">How a rescue goes</p><h2 id="h-plays">See it coming.<br>Then make the move.</h2></div>
+  <ol class="steps">
+    <li><figure class="ui-plate"><img class="" src="media/plan.jpg" alt="A tool hovering over the board shows a forecast: green cells stay dry, red cells would flood." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>01</span><span>Forecast while placing a barrier</span><span>Editor render</span></p></figcaption></figure><h3>Test an idea before you spend it</h3><p>Hold a tool over the board and the real simulation runs ahead: green cells stay dry, red ones would flood.</p></li>
+    <li><figure class="ui-plate"><img class="" src="media/act.jpg" alt="A rescue boat crosses the river while residents wait at a dock." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>02</span><span>Routing a boat to a waiting group</span><span>Editor render</span></p></figcaption></figure><h3>Your hands give the orders</h3><p>Pinch a tool and drop it on a glowing spot. Pick a group, then where they go. Nobody can be picked up and carried: only the plan moves people.</p></li>
+    <li><figure class="ui-plate"><img class="" src="media/rescue.jpg" alt="A glass card above the board reads Rescue complete, with each goal marked Done." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>03</span><span>Results after a rescue</span><span>Editor render</span></p></figcaption></figure><h3>Find out why it worked</h3><p>Results show who reached safety, and a short debrief names the moment that mattered.</p></li>
+    <li><figure class="ui-plate"><img class="" src="media/menu.jpg" alt="A glass card above the board lists the missions for one world." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>04</span><span>Choosing a mission</span><span>Editor render</span></p></figcaption></figure><h3>Then find another way</h3><p>Every mission has two quite different winning plans, and 30 challenges change the rules once you know them.</p></li>
+  </ol>
+</section>
+<section class="access" aria-labelledby="h-access">
+  <div class="section-head"><p class="kicker">Ways to play</p><h2 id="h-access">Two hands, one hand, or none at all.</h2></div>
+  <ul class="ways">
+    <li><strong>Either hand alone.</strong> Every mission finishes one-handed, left or right.</li>
+    <li><strong>Hands-free.</strong> Look at a control until it fills; step time forward one or five seconds at a time.</li>
+    <li><strong>Text to 150%.</strong> Menus, warnings, the tool tray and controls all grow.</li>
+    <li><strong>High contrast and calmer visuals.</strong> Solid panels behind text; no flicker or pulsing.</li>
+    <li><strong>Seated, at your own pace.</strong> Relaxed rules slow the hazards. Open play unlocks every mission.</li>
+  </ul>
+  <p><a class="more" href="accessibility.html">Accessibility in RESQ</a></p>
+</section>
+<section class="numbers" aria-label="RESQ in numbers">
+  <dl>
+    <div><dt>Worlds</dt><dd>5</dd></div>
+    <div><dt>Missions</dt><dd>25</dd></div>
+    <div><dt>Challenges</dt><dd>30</dd></div>
+    <div><dt>Winning plans per mission</dt><dd>2</dd></div>
+    <div><dt>Accounts, ads, trackers</dt><dd>0</dd></div>
+  </dl>
+  <p class="fine">In development for the Meta VR Start Developer Competition 2026. Not yet released. Every mission is validated by automated replays of both winning plans on both board sizes; headset testing comes in November.</p>
+</section>
 </main>
-<footer class="site-foot"><div class="wrap">
-  <div><strong>RESQ</strong><br><span class="note">In development for the Meta VR Start Developer Competition 2026. Not yet released.</span><br><span class="note">Made by Frameless.</span></div>
-  <nav aria-label="Footer"><ul><li><a href="support.html">Support</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="press.html">Press</a></li></ul></nav>
-</div></footer>
+<footer class="foot">
+  <div class="foot-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></div>
+  <p class="foot-status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p>
+  <nav aria-label="Footer"><ul><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul></nav>
+  <p class="foot-note">Every image on this site is the development build rendered in the Unity Editor (October 2026), labelled “Editor render”. None of it is headset footage, and none of it is AI-generated. Made by Frameless.</p>
+</footer>
 </body>
 </html>

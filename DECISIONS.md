@@ -175,3 +175,27 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 ## 29 Oct 2026 — Website deploy
 - The user approved a Vercel preview deploy. `vercel deploy` (no `--prod`) on the newly created `resq` project still made a production deployment, because a project's first deploy is production. So the site is public at https://resq-woad.vercel.app, not only the login-protected team URLs. Content is the committed `web/app` ("In development … Not yet released"; images labelled as Editor captures). Reported to the user, who chooses whether to keep or remove the public alias. Later deploys use `vercel deploy` for previews and `--prod` only with the user's OK.
 - **29 Oct:** the user chose to keep https://resq-woad.vercel.app public. Updates there still need the user's OK each time (`vercel deploy --prod` in `web/app`).
+
+## 29 Oct 2026 — Website redesign: "Collectible Worlds"
+- **Why:** the user judged the first site ugly throughout. The audit found real faults: 16:9 captures forced into tall boxes with `object-fit: fill` (stretched), an 8,961 px homepage, and every image carrying the HUD.
+- **Research:**
+  - Refero: 5 style searches, full systems for Playdate, traffic.productions and San Rita.
+  - Mobbin: 16 game/gallery sections, of which Rivian, Navigate and Nite Riot were useful.
+  - Three reference-locked directions were offered; the user chose Collectible Worlds.
+- **Reference lock:**
+  - Primary, Playdate: full-bleed flat colour slabs, one type family, square edges, the product as an object, one pill CTA.
+  - Borrowed only: Rivian's wide + detail pairing, Nite Riot's small plate labels.
+  - Roles: RESQ orange is CTA-only; the yellow pill is status-only; slab colours are section backgrounds only. Shadow appears only under cut-out objects.
+  - Rejected: the cream canvas, cards, stretched/HUD-laden captures.
+  - Atkinson Hyperlegible stays the single family (Playdate's one-family rule plus RESQ's accessibility promise).
+- **Signature move:** each world's valley breaks up through the top edge of its own slab into the one above.
+- **Media pipeline:**
+  - `Editor/Setup/ObjectShot.cs` frames the running game's valley like a product render and hides HUD, tray, menu and labels.
+  - It renders through a URP `SubmitRenderRequest` twice in one frame, on black and on white. `Camera.Render()` into an MSAA texture read back black.
+  - `tools/web/cutout.py` recovers exact alpha by difference matting, with background levels measured from the corners, so there's no keying fringe.
+  - `capture_objects.sh` makes 5 cut-outs, a hero angle and five 4:5 resident details.
+  - The real-UI shots (plan, act, rescue, menu) stay as uncropped 16:9 plates.
+- **Slabs:** Alder Valley blue, Emberwood ember, Frostline ice, Tidemark harbour yellow (teal fought its own water), Cinder Reach basalt. `tools/web/check_contrast.py` checks every text/background pair at ≥ 4.5:1 (lowest 5.27:1).
+- **Checks:** all 8 pages at 375 px have no horizontal scroll, no tap target under 44 px, no broken or distorted image, and one h1 each. The stylesheet URL carries a content hash so visitors never get stale styles.
+- **Provenance:** every image says "Editor render", and the footer states none of it is headset footage or AI-generated.
+

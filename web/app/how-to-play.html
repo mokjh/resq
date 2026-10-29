@@ -3,33 +3,32 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>How to play · RESQ</title>
+<title>How it plays · RESQ</title>
 <meta name="description" content="Placing the board, reading warnings, placing equipment and routing residents in RESQ.">
+<meta name="theme-color" content="#ffffff">
 <link rel="icon" href="media/icon.png">
-<link rel="stylesheet" href="site.css">
+<link rel="preload" href="fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="site.css?v=2cfe89fa">
 </head>
-<body>
+<body class="">
 <a class="skip" href="#main">Skip to content</a>
-<header class="site-head"><div class="wrap">
-  <a class="wordmark" href="index.html"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#F3EBDD"/><g fill="#F3EBDD"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg>RESQ</a>
-  <nav class="nav" aria-label="Main"><ul><li><a href="how-to-play.html" aria-current="page">How to play</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li></ul></nav>
-  <details class="menu"><summary>Menu</summary><ul><li><a href="how-to-play.html" aria-current="page">How to play</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li></ul></details>
-</div></header>
+<header class="bar">
+  <a class="mark" href="index.html" aria-label="RESQ home"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></a>
+  <nav aria-label="Main"><ul class="links"><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html" aria-current="page">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li></ul></nav>
+  <a class="pill cta" href="worlds.html">Meet the worlds</a>
+  <details class="menu"><summary>Menu</summary><ul><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html" aria-current="page">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="worlds.html">Meet the worlds</a></li></ul></details>
+</header>
 <main id="main">
 
-<div class="wrap" style="padding-top:64px">
-  <h1>How to play</h1>
-  <p>In development for the Meta VR Start Developer Competition 2026. Not yet released. This guide describes the development build.</p>
-  <div class="route-line" aria-hidden="true"></div>
-  <div class="story"><figure class=""><img src="media/hero.jpg" alt="A miniature river valley on a wooden board: a bus waits by a flooded crossing while residents gather at a dock." loading="lazy" width="1600" height="900"><figcaption>Alder Valley, First Crossing. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">Set up</span><h3>Put the valley on a table</h3><p>RESQ looks for a real table in your room and fits the board to it: a wide board on a big table, a compact one on a small table. No table nearby? Choose the virtual table. Then raise, lower or turn the board until the near edge is in easy reach. The valley stays where you left it next time.</p></div></div>
-  <div class="story flip"><figure class=""><img src="media/plan.jpg" alt="A tool hovering over the board shows a forecast: green cells stay dry, red cells would flood." loading="lazy" width="1600" height="900"><figcaption>Forecast preview while placing a barrier. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">Plan</span><h3>Read the warnings, test an idea</h3><p>The card behind the board lists who needs help and what's coming. Pinch a tool and hover it over a glowing spot: the forecast shows what that placement changes over the next minute. The clock doesn't start until you press Start.</p></div></div>
-  <div class="story"><figure class=""><img src="media/act.jpg" alt="A rescue boat crosses the river while residents wait at a dock." loading="lazy" width="1600" height="900"><figcaption>Routing a boat to a waiting group. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">Act</span><h3>Place, route, adjust</h3><p>Pinch or poke a tool card, then a spot on the board; or pinch, drag and let go. To move people, pick a group and then a destination. For a boat, bus, crawler or winch, pick the vehicle, the group, then the drop-off. Tap a placed pump, generator or sprinkler to switch it.</p></div></div>
-  <div class="story flip"><figure class=""><img src="media/menu.jpg" alt="A glass card above the board lists missions for one world." loading="lazy" width="1600" height="900"><figcaption>Choosing a mission. Development build, captured in the Unity Editor (October 2026). Not headset footage.</figcaption></figure><div><span class="step">Pause</span><h3>The Menu control is always there</h3><p>Pausing freezes everything. In hands-free play, look at a control and hold your gaze until it fills; you can also step time forward one or five seconds at a time instead of letting it run. If your hands leave view mid-rescue, the game pauses calmly and waits for you.</p></div></div>
-</div>
+<section class="page-head"><p class="status">In development · Meta Quest 3 and 3S</p><h1>How it plays</h1>
+  <p class="lede">RESQ looks for a real table in your room and fits the board to it: a wide board on a big table, a compact one on a small table. No table nearby? Choose the virtual table. Raise, lower or turn it until the near edge is in easy reach; it stays where you left it next time.</p></section>
+<section class="plays tight" aria-label="Steps"><ol class="steps"><li><figure class="ui-plate"><img class="" src="media/plan.jpg" alt="A tool hovering over the board shows a forecast: green cells stay dry, red cells would flood." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>01</span><span>Forecast while placing a barrier</span><span>Editor render</span></p></figcaption></figure><h3>Read the warnings, test an idea</h3><p>The card behind the board lists who needs help and what’s coming. Pinch a tool and hover it over a glowing spot: the forecast shows what that placement changes over the next minute. The clock doesn’t start until you press Start.</p></li><li><figure class="ui-plate"><img class="" src="media/act.jpg" alt="A rescue boat crosses the river while residents wait at a dock." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>02</span><span>Routing a boat to a waiting group</span><span>Editor render</span></p></figcaption></figure><h3>Place, route, adjust</h3><p>Pinch or poke a tool card, then a spot on the board; or pinch, drag and let go. To move people, pick a group and then a destination. For a boat, bus, crawler or winch, pick the vehicle, the group, then the drop-off. Tap a placed pump, generator or sprinkler to switch it.</p></li><li><figure class="ui-plate"><img class="" src="media/menu.jpg" alt="A glass card above the board lists the missions for one world." width="1920" height="1080" loading="lazy" decoding="async"><figcaption><p class="plate"><span>03</span><span>Choosing a mission</span><span>Editor render</span></p></figcaption></figure><h3>Pause any time</h3><p>The Menu control is always on the run controls, and pausing freezes everything. In hands-free play, look at a control until it fills; you can step time forward one or five seconds instead of letting it run. If your hands leave view mid-rescue, the game pauses and waits.</p></li></ol></section>
 </main>
-<footer class="site-foot"><div class="wrap">
-  <div><strong>RESQ</strong><br><span class="note">In development for the Meta VR Start Developer Competition 2026. Not yet released.</span><br><span class="note">Made by Frameless.</span></div>
-  <nav aria-label="Footer"><ul><li><a href="support.html">Support</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="privacy.html">Privacy</a></li><li><a href="press.html">Press</a></li></ul></nav>
-</div></footer>
+<footer class="foot">
+  <div class="foot-mark"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></div>
+  <p class="foot-status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p>
+  <nav aria-label="Footer"><ul><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul></nav>
+  <p class="foot-note">Every image on this site is the development build rendered in the Unity Editor (October 2026), labelled “Editor render”. None of it is headset footage, and none of it is AI-generated. Made by Frameless.</p>
+</footer>
 </body>
 </html>
