@@ -47,6 +47,12 @@ namespace Resq.XR
                 Active.Add(p);
                 boot.Interaction.AddSource(p);
             }
+            if (hands.Count > 0 && boot.Board != null)
+            {
+                var view = boot.Board.GetComponent<HandShadowView>();   // Unity null: no ?? on components
+                if (view == null) view = boot.Board.gameObject.AddComponent<HandShadowView>();
+                boot.gameObject.AddComponent<XrHandShadows>().Init(view, hands);
+            }
             if (hands.Count == 0)
                 foreach (var hand in Object.FindObjectsByType<OVRHand>(FindObjectsSortMode.None))
                     boot.Interaction.AddSource(new HandPointer(hand, hand.GetComponent<OVRSkeleton>(), hand.GetHand() == OVRPlugin.Hand.HandLeft));
@@ -93,6 +99,38 @@ namespace Resq.XR
         }
 
         public void Feedback(Pickable hover, float progress) { }
+
+        /// <summary>A joint of the tracked hand this frame (hand shadows).</summary>
+        public bool TryJoint(HandJointId id, out Pose pose)
+        {
+            pose = default;
+            var hand = Current();
+            return hand != null && hand.GetJointPose(id, out pose);
+        }
+    }
+
+    /// <summary>Feeds HandShadowView each frame: a palm shadow and a fingertip shadow per tracked hand.</summary>
+    public sealed class XrHandShadows : MonoBehaviour
+    {
+        HandShadowView _view;
+        List<IsdkHandPointer> _hands;
+        readonly Vector3[] _points = new Vector3[HandShadowView.Slots];
+        readonly float[] _radii = new float[HandShadowView.Slots];
+
+        public void Init(HandShadowView view, List<IsdkHandPointer> hands) { _view = view; _hands = hands; }
+
+        void LateUpdate()
+        {
+            if (_view == null || _hands == null) return;
+            int n = 0;
+            foreach (var h in _hands)
+            {
+                if (n + 2 > HandShadowView.Slots) break;
+                if (h.TryJoint(HandJointId.HandPalm, out var palm)) { _points[n] = palm.position; _radii[n] = 0.034f; n++; }
+                if (h.TryJoint(HandJointId.HandIndexTip, out var tip)) { _points[n] = tip.position; _radii[n] = 0.009f; n++; }
+            }
+            _view.Frame(n, _points, _radii);
+        }
     }
 
     /// <summary>Aim with the head, confirm with a pinch on either hand (no hand ray needed).</summary>

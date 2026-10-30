@@ -171,6 +171,11 @@ namespace Resq.Game
         void Enter(FlowState s)
         {
             State = s;
+            if (s != FlowState.Aftercare && Boot != null && Boot.Board != null)
+            {
+                var playing = Boot.Board.GetComponent<RecoveryView>();   // leaving aftercare restores the live valley at once
+                if (playing != null) playing.Stop();
+            }
             bool operation = s == FlowState.Operation;
             Boot.Interaction.MenuOnly = !operation;
             if (operation) { Menu.Hide(); Boot.Interaction.Cancel(); }
@@ -731,11 +736,22 @@ namespace Resq.Game
                 Columns = 2,
             };
             spec.Items.Add(MenuOption.Button("Save a postcard", SavePostcard));
+            var recovery = Recovery();
             string next = NextAfter(Driver.MissionId);
             if (next != null && SaveStore.Unlocked(next)) spec.Items.Add(MenuOption.Button("Next mission", () => ShowBriefing(next), true, Title(next)));
             else spec.Items.Add(MenuOption.Button("Missions", () => ShowMissions(SelectedWorld), true));
             spec.Footer.Add(MenuOption.Button("Hub", ShowHub));
             Show(FlowState.Aftercare, spec);
+            recovery?.Play();   // the valley recovers on the table while the card is up
+        }
+
+        /// <summary>The board's aftercare view, created on first use (null without a board, e.g. some tests).</summary>
+        RecoveryView Recovery()
+        {
+            if (Boot == null || Boot.Board == null) return null;
+            var r = Boot.Board.GetComponent<RecoveryView>();   // Unity null: no ?? on components
+            if (r == null) { r = Boot.Board.gameObject.AddComponent<RecoveryView>(); r.Board = Boot.Board; }
+            return r;
         }
 
         void SavePostcard()

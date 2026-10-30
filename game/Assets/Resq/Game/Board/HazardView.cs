@@ -30,6 +30,8 @@ namespace Resq.Game
             Cooling = TerrainBuilder.Hex(0x9B2D20), Clear = new Color(0, 0, 0, 0);
 
         public bool Active { get; private set; }
+        /// <summary>Aftercare (presentation only): 0 = live hazards, 1 = gone.</summary>
+        public float Fade;
 
         public void Build(MissionDef d)
         {
@@ -115,6 +117,7 @@ namespace Resq.Game
                 if (lavaSeg >= 0) col = LavaColor(sim, lavaSeg, c, t);
                 if (col.a <= 0 && runSeg >= 0) col = RunoutColor(sim, runSeg);
                 if (col.a <= 0 && _def.FireEnabled) col = FireColor(sim, c, t);
+                if (Fade > 0f) col.a *= 1f - Fade;
                 int v = q * 4;
                 _colors[v] = col; _colors[v + 1] = col; _colors[v + 2] = col; _colors[v + 3] = col;
             }
@@ -122,6 +125,7 @@ namespace Resq.Game
 
             foreach (var (s, label) in _supports)
             {
+                label.enabled = Fade < 0.5f;
                 if (S.SupCollapsed[s]) { label.text = "Collapsed"; label.color = Ember; continue; }
                 int eff = sim.EffectiveStability(s);
                 int braces = sim.IntactBraces(s);

@@ -195,7 +195,8 @@ namespace Resq.Game
                 // one figure per group moves: it waves for help where the group waits, or cheers once safe; the
                 // rest hold the shared baked pose (instanced, so a crowd stays a handful of draws)
                 byte mode = walking ? ModeWalk : ModeStand;
-                if (!walking && _leaders.Add(S.RNode[r]))
+                if (Celebrate && st == ResidentState.Evacuated) mode = ModeCheer;   // aftercare: everyone home cheers
+                else if (!walking && _leaders.Add(S.RNode[r]))
                 {
                     bool safe = st == ResidentState.Evacuated || (_def.NodeFlags[S.RNode[r]] & NodeFlags.Evacuation) != 0;
                     mode = safe ? ModeCheer : ModeWave;
@@ -460,6 +461,8 @@ namespace Resq.Game
         Animator[] _anims;
         Transform[] _childHeads;
         byte[] _mode;
+        /// <summary>Aftercare (presentation only): every evacuated resident cheers, not just one per landing.</summary>
+        public bool Celebrate;
         readonly HashSet<int> _leaders = new HashSet<int>();
         const byte ModeStand = 0, ModeWalk = 1, ModeWave = 2, ModeCheer = 3;
         static readonly int[] ModeState = { Animator.StringToHash("Walk"), Animator.StringToHash("Walk"),

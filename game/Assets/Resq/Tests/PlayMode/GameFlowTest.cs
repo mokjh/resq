@@ -147,8 +147,21 @@ namespace Resq.Tests
             StringAssert.Contains("Lesson", _flow.Menu.Current.Body);
             yield return Press("Aftercare");
             AssertScreen("U20");
+            // the valley recovers on the table: water recedes, hazards fade, everyone home cheers (presentation only)
+            var recovery = _boot.Board.GetComponent<RecoveryView>();
+            Assert.IsNotNull(recovery, "aftercare plays the recovery");
+            float r0 = Time.realtimeSinceStartup;
+            while (recovery.Progress < 1f && Time.realtimeSinceStartup - r0 < recovery.Seconds + 3f) yield return null;
+            Assert.AreEqual(1f, recovery.Progress, 1e-4f, "recovery completes");
+            Assert.AreEqual(1f, _boot.Board.Water.Recede, 1e-4f, "the flood recedes to the starting water");
+            Assert.AreEqual(1f, _boot.Board.Hazards.Fade, 1e-4f, "hazard overlays fade");
+            Assert.IsTrue(_boot.Board.Actors.Celebrate, "everyone home cheers");
+            Assert.IsTrue(driver.Sim.S.C.Success, "the simulation is untouched");
             yield return Press("Hub");
             AssertScreen("U06");
+            Assert.AreEqual(0f, recovery.Progress, "leaving aftercare restores the live view");
+            Assert.AreEqual(0f, _boot.Board.Water.Recede);
+            Assert.IsFalse(_boot.Board.Actors.Celebrate);
         }
 
         [UnityTest]

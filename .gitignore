@@ -64,3 +64,6 @@ video/exports/work/
 # --- Frozen pre-22-Oct-2026 process evidence: kept on disk, not tracked ---
 /evidence/
 /automation/locks/
+
+# Unity native crash dumps
+game/mono_crash.*

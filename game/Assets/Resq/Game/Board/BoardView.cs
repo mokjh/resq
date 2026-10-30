@@ -55,7 +55,11 @@ namespace Resq.Game
 
             var terrain = new GameObject("Terrain");
             terrain.transform.SetParent(_root, false);
-            terrain.AddComponent<MeshFilter>().sharedMesh = TerrainBuilder.Build(_def);
+            var terrainMesh = TerrainBuilder.Build(_def);
+            terrain.AddComponent<MeshFilter>().sharedMesh = terrainMesh;
+            // hand shadows land on the real terrain; the Ignore Raycast layer keeps it out of every pointer pick
+            terrain.layer = HandShadowView.TerrainLayer;
+            terrain.AddComponent<MeshCollider>().sharedMesh = terrainMesh;
             if (_groundMat == null) { var sh = Shader.Find("Resq/Terrain"); _groundMat = sh != null ? new Material(sh) : TerrainMaterial; }
             var terrainR = terrain.AddComponent<MeshRenderer>();
             terrainR.sharedMaterial = _groundMat;

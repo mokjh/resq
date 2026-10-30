@@ -12,6 +12,10 @@ namespace Resq.Game
     {
         public SimDriver Driver;
         public float ForecastBlend; // 0 = live; reserved for forecast contour overlay
+        /// <summary>Aftercare (presentation only): 0 = live water, 1 = the mission's starting water, so the flood
+        /// visibly recedes once everyone is home. The simulation is untouched.</summary>
+        public float Recede;
+        float[] _startVolume;
 
         Mesh _mesh;
         Vector3[] _verts;
@@ -51,6 +55,8 @@ namespace Resq.Game
             GetComponent<MeshFilter>().sharedMesh = _mesh;
             int n = d.GridW * d.GridH;
             _cellSurface = new float[n]; _cellDepth = new float[n]; _cellWet = new bool[n];
+            _startVolume = new float[n]; Recede = 0f;
+            for (int c = 0; c < n; c++) _startVolume[c] = d.WInitVol[c];   // the mission's own starting water, even on resume
         }
 
         void LateUpdate()
@@ -65,6 +71,7 @@ namespace Resq.Game
             for (int c = 0; c < n; c++)
             {
                 float vol = Mathf.Lerp(prev[c], cur[c], alpha);
+                if (Recede > 0f) vol = Mathf.Lerp(vol, _startVolume[c], Recede);
                 float depthMm = vol / d.WArea[c];
                 _cellWet[c] = depthMm > 2f;
                 _cellDepth[c] = depthMm;
