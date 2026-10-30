@@ -40,12 +40,15 @@
 
 ## Not done yet (in plan order)
 1. **Your review of the audio:** listen to `game/Assets/Resq/Content/Resources/ResqAudio/` or play a mission in the Editor.
-2. **Website:** "The Planning Table" is live at https://resq-woad.vercel.app (deployed 30 Oct with your OK). It has a playable First Crossing flood replaying the real simulation, and all 25 missions drawn from their map files. Checked live on phone and desktop.
+2. **Website:** "The Planning Table" is live at https://resq-woad.vercel.app (redeployed 30 Oct with your OK). Scrolling the hero plays the real First Crossing simulation, valleys assemble block by block, the footer has a shelf of valleys, and the grid background is gone. Checked live on phone and desktop.
 3. **Trailer:** pipeline ready and self-tested (`tools/video/edit.py`); storyboard and EDL in `video/`. Needs XR Simulator recordings now and device clips in P5.
 4. **Devpost:** draft in `docs/submission/devpost-draft.md` (498/500 words) for your review; `[P5]`, `[G]` and `[you]` markers remain.
 5. **MR polish:**
-   - room-aware storm and hand shadows;
-   - aftercare valley-repair visuals.
+   - room-aware storm (not started);
+   - hand shadows and aftercare recovery: written, uncommitted. PlayMode gate passed 16/16 on 30 Oct (automated, Editor). The Editor check then found two bugs, fixed in code but not yet re-run:
+     - shadows never drew, because Resq/Overlay ignores property blocks; each slot now has its own material;
+     - recovery receded to the first rendered frame, not the mission's starting water; it now uses `WInitVol`.
+     Recovery captured before and after in the Editor: the basins drain. Still needed: a shadow capture plus a gate re-run, then commit. Blocked by Waz batch Unity jobs filling swap (14.8/15.4 GB).
    Resident clips are done (28 Oct): one waver per waiting group, one cheer per safe landing.
 6. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
 
