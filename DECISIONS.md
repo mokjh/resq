@@ -242,3 +242,4 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Honesty:** the flood section names its source command and says nothing is animated by hand. The footer says the valleys come from the mission files, photos are Editor renders, nothing is headset footage or AI-generated, and the game is made by Amir Lotfy.
 - **Meta:** `metavr` is signed in as Amir Lotfy (30 Oct). Device-code login works where browser OAuth had failed.
 
+- **30 Oct:** The Planning Table deployed to production with the user's OK. Live check: every page and data file returns 200. Spot 3 at 2:20 keeps every place dry (phone); spot 1 at 4:00 floods the road junction from 3:56 (desktop).

@@ -40,7 +40,7 @@
 
 ## Not done yet (in plan order)
 1. **Your review of the audio:** listen to `game/Assets/Resq/Content/Resources/ResqAudio/` or play a mission in the Editor.
-2. **Website:** "Briefing Room" is live at https://resq-woad.vercel.app (deployed 30 Oct with your OK). All pages return 200 and the media load. The phone view was checked live; the tray is solid on phones.
+2. **Website:** "The Planning Table" is live at https://resq-woad.vercel.app (deployed 30 Oct with your OK). It has a playable First Crossing flood replaying the real simulation, and all 25 missions drawn from their map files. Checked live on phone and desktop.
 3. **Trailer:** pipeline ready and self-tested (`tools/video/edit.py`); storyboard and EDL in `video/`. Needs XR Simulator recordings now and device clips in P5.
 4. **Devpost:** draft in `docs/submission/devpost-draft.md` (498/500 words) for your review; `[P5]`, `[G]` and `[you]` markers remain.
 5. **MR polish:**
