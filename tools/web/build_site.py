@@ -152,6 +152,7 @@ def page(name, title, body, desc, cls=""):
 <link rel="icon" href="media/icon.png">
 <link rel="preload" href="fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="site.css?v={css_v}">
+<script>document.documentElement.classList.add("js")</script>
 </head>
 <body class="{cls}">
 <a class="skip" href="#main">Skip to content</a>
@@ -165,10 +166,13 @@ def page(name, title, body, desc, cls=""):
 {body}
 </main>
 <footer class="foot">
-  <div class="foot-mark">{RING}<span>RESQ</span></div>
-  <p class="foot-status">{e(STATUS)}</p>
-  <ul class="foot-links">{every}</ul>
-  <p class="foot-note">The valleys on this site are drawn from RESQ's own mission files, and the flood replays the game's deterministic simulation. Photographs are the development build rendered in the Unity Editor (October 2026), labelled “{RENDER}”. None of it is headset footage, and none of it is AI-generated. Made by Amir Lotfy.</p>
+  <div class="shelf" aria-hidden="true">{"".join(f'<canvas data-valley="{w}-M1" data-delay="{i * 140}" data-lift="2.6"></canvas>' for i, w in enumerate(WORLDS))}</div>
+  <p class="foot-word" aria-hidden="true">RESQ</p>
+  <div class="foot-grid">
+    <p class="foot-status">{e(STATUS)}</p>
+    <ul class="foot-links">{every}</ul>
+    <p class="foot-note">The valleys on this site are drawn from RESQ's own mission files, and the flood replays the game's deterministic simulation. Photographs are the development build rendered in the Unity Editor (October 2026), labelled “{RENDER}”. None of it is headset footage, and none of it is AI-generated. Made by Amir Lotfy.</p>
+  </div>
 </footer>
 <script src="js/valley.js?v={js_v}" defer></script>
 </body>
@@ -276,23 +280,37 @@ def index():
     minis = ""
     for i, w in enumerate(WORLDS):
         b = BRIEF["worlds"][w]
-        cells = "".join(f'<li><canvas data-valley="{w}-M{m}" role="img" aria-label="{e(BRIEF["missions"][f"{w}-M{m}"]["title"])}: map of the mission"></canvas>'
+        cells = "".join(f'<li><canvas data-valley="{w}-M{m}" data-delay="{(m - 1) * 120}" role="img" aria-label="{e(BRIEF["missions"][f"{w}-M{m}"]["title"])}: map of the mission"></canvas>'
                         f'<p class="mini-id">M{m}</p><p class="mini-title">{e(BRIEF["missions"][f"{w}-M{m}"]["title"])}</p></li>' for m in range(1, 6))
-        minis += (f'<section class="world-row" aria-labelledby="row-{SLUG[w]}"><header><p class="label">0{i + 1} · {e(HAZARD[w])}</p>'
+        minis += (f'<section class="world-row reveal" aria-labelledby="row-{SLUG[w]}"><header><p class="label">0{i + 1} · {e(HAZARD[w])}</p>'
                   f'<h3 id="row-{SLUG[w]}"><a href="worlds.html#{SLUG[w]}">{e(b["name"])}</a></h3></header><ol class="minis">{cells}</ol></section>')
     body = f"""
-<section class="intro" aria-labelledby="h-hero">
-  <p class="label">A mixed-reality rescue strategy game · Meta Quest 3 and 3S · in development</p>
-  <h1 id="h-hero">Small worlds.<br>Big saves.</h1>
-  <p class="lede">A miniature valley appears on your real table. Something is coming: a flood, a fire, a tide, a lava flow. You place the plan with your hands, then watch it play out.</p>
+<section class="story" data-story="data/flood_w1m1.json" data-places='{places}' aria-labelledby="h-hero">
+  <div class="stage">
+    <canvas role="img" aria-label="First Crossing, the first mission, drawn as a model from its map file: river, reservoir, roads, depot and high landing, with the simulated flood."></canvas>
+    <div class="beats">
+      <div class="beat" data-step><p class="label">A mixed-reality rescue strategy game for Meta Quest 3 and 3S</p>
+        <h1 id="h-hero">Small worlds.<br>Big saves.</h1>
+        <p class="lede">A miniature valley appears on your real table. Scroll, and you're playing its first minutes.</p></div>
+      <div class="beat" data-step><p class="label">1 · Read what's coming</p><h2>The reservoir is rising.</h2>
+        <p class="lede">Every danger is announced before it arrives. Nothing is random, so a plan that works will work again.</p></div>
+      <div class="beat" data-step><p class="label">2 · Place the plan</p><h2>One flood barrier. Three places it could go.</h2>
+        <p class="lede">Pinch it from the tray and drop it on a glowing spot. Here: spot 3.</p></div>
+      <div class="beat" data-step><p class="label">3 · Watch it play out</p><h2>Green stays dry because of you.</h2>
+        <p class="lede">Red would flood instead. In the game, the forecast shows you this before you commit.</p></div>
+    </div>
+    <div class="hud" aria-live="polite"><p class="hud-clock"><span class="label">First Crossing</span><output data-clock>0:00</output></p><ul class="status" data-status></ul></div>
+    <p class="scroll-cue" aria-hidden="true">Scroll to play</p>
+  </div>
 </section>
-<section class="flood" aria-labelledby="h-flood" data-flood="data/flood_w1m1.json" data-places='{places}' data-start="none">
+<section class="flood reveal" aria-labelledby="h-flood" data-flood="data/flood_w1m1.json" data-places='{places}' data-start="none">
   <div class="flood-head">
-    <h2 id="h-flood">Try it: one barrier, three places to put it.</h2>
-    <p>This is First Crossing, the first mission. The reservoir is rising. Choose where the flood barrier goes and watch four minutes of the real simulation.</p>
+    <p class="label">Your turn</p>
+    <h2 id="h-flood">Put the barrier somewhere else.</h2>
+    <p>Every frame here is the output of RESQ's deterministic simulation for that choice (recorded with <code>lab webflood W1-M1</code>), sampled every 4 seconds. Nothing is animated by hand.</p>
   </div>
   <div class="flood-stage">
-    <canvas role="img" aria-label="First Crossing drawn as a model: the river, reservoir, roads, depot and high landing, with the simulated flood water."></canvas>
+    <canvas role="img" aria-label="First Crossing with the simulated flood for the chosen barrier spot."></canvas>
     <div class="flood-ui">
       <div class="choices" role="group" aria-label="Where the barrier goes">
         <button type="button" data-scenario="none" aria-pressed="true">No barrier</button>
@@ -306,25 +324,24 @@ def index():
       <p class="key"><span class="kv"><span class="k kept"></span>Kept dry by your barrier</span><span class="kv"><span class="k newly"></span>Flooded because of it</span></p>
     </div>
   </div>
-  <p class="source">Every frame is the output of RESQ's deterministic simulation for that choice (recorded with <code>lab webflood W1-M1</code>), sampled every 4 seconds. Nothing is animated by hand. In the game, the forecast shows you this before you commit.</p>
 </section>
 <section class="campaign" aria-labelledby="h-camp">
-  <div class="section-intro"><p class="label">The whole campaign</p>
+  <div class="section-intro reveal"><p class="label">The whole campaign</p>
   <h2 id="h-camp">25 missions, drawn from the game's own map files.</h2>
   <p>Five valleys, five dangers. Each world's first mission is always open; Open play unlocks the rest.</p></div>
   {minis}
 </section>
 <section class="photos" aria-labelledby="h-photos">
-  <div class="section-intro"><p class="label">On your table</p><h2 id="h-photos">Small enough to lean over. Detailed enough to care about.</h2></div>
+  <div class="section-intro reveal"><p class="label">On your table</p><h2 id="h-photos">Small enough to lean over. Detailed enough to care about.</h2></div>
   <div class="photo-row">
-    <figure class="ph wide">{img("obj_hero.webp", OBJ_ALT["W1"], "", False)}<figcaption>Alder Valley as it sits on your table · {RENDER}</figcaption></figure>
-    <figure class="ph">{img("det_w2.webp", DETAIL["W2"])}<figcaption>{e(DETAIL["W2"])} · {RENDER}</figcaption></figure>
-    <figure class="ph">{img("det_w1.webp", DETAIL["W1"])}<figcaption>{e(DETAIL["W1"])} · {RENDER}</figcaption></figure>
+    <figure class="ph wide reveal">{img("obj_hero.webp", OBJ_ALT["W1"], "", False)}<figcaption>Alder Valley as it sits on your table · {RENDER}</figcaption></figure>
+    <figure class="ph reveal d1">{img("det_w2.webp", DETAIL["W2"])}<figcaption>{e(DETAIL["W2"])} · {RENDER}</figcaption></figure>
+    <figure class="ph reveal d2">{img("det_w1.webp", DETAIL["W1"])}<figcaption>{e(DETAIL["W1"])} · {RENDER}</figcaption></figure>
   </div>
 </section>
 <section class="hands" aria-labelledby="h-hands">
-  <div class="section-intro"><p class="label">Hands first</p><h2 id="h-hands">Two hands, one hand, or none at all.</h2></div>
-  <ul class="ways">
+  <div class="section-intro reveal"><p class="label">Hands first</p><h2 id="h-hands">Two hands, one hand, or none at all.</h2></div>
+  <ul class="ways reveal">
     <li><b>Pinch and place.</b> Tools come from a tray at the near edge of the board; drop them on glowing spots.</li>
     <li><b>Either hand alone.</b> Every mission can be finished one-handed, left or right.</li>
     <li><b>Hands-free.</b> Look at a control until it fills, and step time forward one or five seconds at a time.</li>
