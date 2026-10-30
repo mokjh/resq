@@ -97,7 +97,10 @@ namespace Resq.Game
             Boot = boot;
             var go = new GameObject("Menu");
             go.transform.SetParent(boot.BoardRoot, false);
-            go.transform.localPosition = new Vector3(0, 0.13f, -0.12f);   // above the near half of the board, clear of the back hills
+            // over the board's middle, 0.67 m from the seated head (virtual table) and standing just clear of the terrain:
+            // a tall card then reads at the natural resting gaze instead of rising above eye level, and sits beyond
+            // the 0.5 m near limit for UI (FovTest; was 0.43 m away with a briefing card's top 18° above eye level)
+            go.transform.localPosition = new Vector3(0, 0.08f, 0.12f);
             Menu = go.AddComponent<MenuPanel>();
             Driver.OnRunLoaded += OnRunLoaded;
             Driver.OnSimEvent += OnSimEvent;

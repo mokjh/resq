@@ -51,7 +51,10 @@
      - one material per shadow slot.
      **Gate re-run on the fixed code: PASS 16/16 (30 Oct, 23:30; automated, Editor PlayMode)**, including HandShadowTest and the aftercare recovery asserts. While RESQ's Editor runs, pause Waz/Waz Vr sessions; their verify scripts launch batch Unity jobs. `tools/unity/gate_when_free.sh` waits for a free machine.
    Resident clips are done (28 Oct): one waver per waiting group, one cheer per safe landing.
-6. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
+6. **FoV-aware UI (new 31 Oct):** an audit with Meta's device-readiness skill found no controller or legacy input and no head-locked UI; everything is world-locked to the board and faces the player. The new `FovTest` (PlayMode) measures live UI from the virtual-table head against Meta's 30° primary zone.
+   - It found the briefing card rising to 18° above eye level, 0.43 m from the head (inside Meta's 0.5 m near limit). The menu anchor now sits over the board's middle, 0.67 m away, and the card measures 29.1° from the resting gaze (−18° to +10°).
+   - With the move, the other 16 PlayMode tests pass. Still to measure: the HUD for all five worlds and the pause card. That run was cut off at 00:10, when RESQ's Editor was shut down by something outside RESQ while a Waz Vr batch job ran.
+7. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
 
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration; the "RESQ" app in the Meta dashboard, then `metavr auth login`.
