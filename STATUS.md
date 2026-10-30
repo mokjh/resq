@@ -45,11 +45,11 @@
 4. **Devpost:** draft in `docs/submission/devpost-draft.md` (498/500 words) for your review; `[P5]`, `[G]` and `[you]` markers remain.
 5. **MR polish:**
    - room-aware storm (not started);
-   - hand shadows and aftercare recovery: committed 30 Oct. PlayMode gate 16/16 on the first version (automated, Editor). Editor captures then led to three fixes:
+   - hand shadows and aftercare recovery: **done** 30 Oct (Editor captures + PlayMode gate). Device check in P5. Editor captures then led to three fixes:
      - shadows were far too faint: URP blends in linear space, so 0.65 opacity darkened grass by only ~27%. Shadows now use a soft opaque core and 0.9/0.15 near/far opacity, and read clearly in the capture;
      - recovery receded to the first rendered frame, not the mission's starting water; it now uses `WInitVol` (55 wet cells vs 139 at the end of a won First Crossing);
      - one material per shadow slot.
-     **Gate re-run on the fixed code is still pending (blocked 3 times on 30 Oct).** Waz and Waz Vr batch Unity tests keep starting on their own, and disk keeps falling below 10 GB (7.0 GB at 06:40; Waz is 21 GB, Waz Vr 6 GB, swap 5 GB). Alternative in place: `tools/unity/gate_when_free.sh` runs the gate by itself once there have been 3 minutes with no other Unity job and ≥ 10 GB free; it writes `tools/.cache/gate_when_free.txt`.
+     **Gate re-run on the fixed code: PASS 16/16 (30 Oct, 23:30; automated, Editor PlayMode)**, including HandShadowTest and the aftercare recovery asserts. While RESQ's Editor runs, pause Waz/Waz Vr sessions; their verify scripts launch batch Unity jobs. `tools/unity/gate_when_free.sh` waits for a free machine.
    Resident clips are done (28 Oct): one waver per waiting group, one cheer per safe landing.
 6. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
 
