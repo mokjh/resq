@@ -225,3 +225,20 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
   - **Checks:** all 8 pages at 375 and 1440 px have no sideways scroll, no broken or stretched images, one h1 each, and no tap target under 44 px. Glass text contrast is ≥ 6:1 over the lightest table.
 
 - **30 Oct:** Briefing Room deployed to production with the user's OK. A follow-up fix makes the phone tray fully opaque: bright text bled through the 97 % background. Live stylesheet version matches the local build.
+
+## 30 Oct 2026 — Website, third design: "The Planning Table"
+- **Why:** the user still judged Briefing Room template-like and asked to be surprised. A third pass on the panels wouldn't have answered that. The site's centrepiece is now the one thing only RESQ has: its deterministic simulation and real map data.
+- **Playable flood:** a new `lab webflood` command in the headless SimLab harness runs First Crossing with no barrier and with a barrier on each of its three barrier sockets.
+  - Barriers are placed at t=5 through the normal strategy-script command path.
+  - Every cell's water depth is recorded every 40 ticks for 4:00 (61 frames per scenario, 251 KB).
+  - `web/app/js/valley.js` draws the valley as an isometric model and replays those frames. Visitors pick a spot and scrub the clock; cells kept dry are tinted green and newly flooded ones red (the in-game forecast colours).
+  - Live status names when the Low Dock, the crossings, the junction and the depot flood.
+  - Real result: spot 3 keeps every named place dry through 2:20. Spots 1 and 2 move the flood onto the bridgeheads and junction, or the west crossing, at 4:00.
+- **Campaign table:** `tools/web/export_valleys.py` reads all 25 `map.json` files (legend elevation, terrain names grouped for colour, starting water). The site draws every mission as a small model (homepage rows; the worlds page has the mission decisions).
+- **Worlds page:** each world shows its first mission's real threat timings, residents, supply and loadout, and Plan A/B from the contracts.
+- **Look:** a cool drafting-table surface with a faint grid, RESQ ink, and Atkinson Hyperlegible. Orange is CTA only; green and red are forecast-only.
+  - Phones get a full-screen menu and swipeable rows of mission models.
+  - Every page passes at 375 and 1280 px: no horizontal scroll, no tap target under 44 px, no broken image.
+- **Honesty:** the flood section names its source command and says nothing is animated by hand. The footer says the valleys come from the mission files, photos are Editor renders, nothing is headset footage or AI-generated, and the game is made by Amir Lotfy.
+- **Meta:** `metavr` is signed in as Amir Lotfy (30 Oct). Device-code login works where browser OAuth had failed.
+

@@ -91,6 +91,7 @@ RING = ('<svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16
         '<circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/>'
         '<rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg>')
 
+NAV = [("worlds.html", "Worlds"), ("how-to-play.html", "How it plays"), ("accessibility.html", "Access"), ("press.html", "Press")]
 TRAY = [("worlds.html", "worlds", "Worlds", "Worlds", "5 valleys"), ("how-to-play.html", "plays", "How it plays", "Play", "4 steps"),
         ("accessibility.html", "access", "Access", "Access", "8 options"), ("press.html", "press", "Press", "Press", "Fact sheet")]
 SHEET = [("index.html", "Home"), ("worlds.html", "Worlds"), ("how-to-play.html", "How it plays"),
@@ -137,10 +138,9 @@ def tag(text):
 
 def page(name, title, body, desc, cls=""):
     css_v = hashlib.sha1((OUT / "site.css").read_bytes()).hexdigest()[:8]   # new URL whenever the styles change
-    tray = "".join(f'<li><a class="tool" href="{h}"{" aria-current=\"page\"" if h == name else ""}>{ico(i)}'
-                   f'<span class="tool-name"><span class="long">{e(t)}</span><span class="short" aria-hidden="true">{e(sh)}</span></span>'
-                   f'<span class="tool-sub">{e(s)}</span></a></li>' for h, i, t, sh, s in TRAY)
-    sheet = "".join(f'<li><a href="{h}"{" aria-current=\"page\"" if h == name else ""}>{e(t)}</a></li>' for h, t in SHEET)
+    js_v = hashlib.sha1((OUT / "js/valley.js").read_bytes()).hexdigest()[:8]
+    links = "".join(f'<li><a href="{h}"{" aria-current=\"page\"" if h == name else ""}>{e(t)}</a></li>' for h, t in NAV)
+    every = "".join(f'<li><a href="{h}"{" aria-current=\"page\"" if h == name else ""}>{e(t)}</a></li>' for h, t in SHEET)
     doc = f"""<!doctype html>
 <html lang="en">
 <head>
@@ -148,45 +148,29 @@ def page(name, title, body, desc, cls=""):
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{e(title)}</title>
 <meta name="description" content="{e(desc)}">
-<meta name="theme-color" content="#131A1D">
+<meta name="theme-color" content="#E8EDEE">
 <link rel="icon" href="media/icon.png">
 <link rel="preload" href="fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="site.css?v={css_v}">
 </head>
 <body class="{cls}">
 <a class="skip" href="#main">Skip to content</a>
-<header class="hud">
+<header class="top">
   <a class="mark" href="index.html" aria-label="RESQ home">{RING}<span>RESQ</span></a>
-  <ul class="chips" aria-label="Status">
-    <li class="chip warn">{ico("warn")}In development</li>
-    <li class="chip hide-s">{ico("worlds")}5 worlds · 25 missions</li>
-    <li class="chip hide-s">Meta Quest 3 · 3S</li>
-  </ul>
+  <nav aria-label="Main"><ul class="links">{links}</ul></nav>
+  <details class="menu"><summary aria-label="Menu"><span>Menu</span></summary>
+    <div class="menu-sheet"><ul>{every}</ul><p class="menu-note">{e(STATUS)}</p></div></details>
 </header>
 <main id="main">
 {body}
 </main>
-<footer class="debrief">
-  <div class="glass debrief-card">
-    <p class="card-kicker">{RING}<span>Debrief</span></p>
-    <p class="debrief-status">{e(STATUS)}</p>
-    <p class="debrief-note">Images are the development build rendered in the Unity Editor (October 2026), labelled “{RENDER}”. Panels on this site are the game’s own interface rebuilt for the web. None of it is headset footage, and none of it is AI-generated.</p>
-    <ul class="debrief-links">{"".join(f'<li><a class="btn ghost" href="{h}">{e(t)}</a></li>' for h, t in SHEET[1:])}</ul>
-    <p class="debrief-note">Made by Amir Lotfy.</p>
-  </div>
+<footer class="foot">
+  <div class="foot-mark">{RING}<span>RESQ</span></div>
+  <p class="foot-status">{e(STATUS)}</p>
+  <ul class="foot-links">{every}</ul>
+  <p class="foot-note">The valleys on this site are drawn from RESQ's own mission files, and the flood replays the game's deterministic simulation. Photographs are the development build rendered in the Unity Editor (October 2026), labelled “{RENDER}”. None of it is headset footage, and none of it is AI-generated. Made by Amir Lotfy.</p>
 </footer>
-<nav class="tray" aria-label="Main">
-  <ul>{tray}
-    <li class="sheet-slot"><details class="sheet"><summary class="tool">{ico("menu")}<span class="tool-name">Menu</span><span class="tool-sub">All pages</span></summary>
-      <div class="glass sheet-card"><p class="card-kicker">Menu</p><ul>{sheet}</ul></div></details></li>
-  </ul>
-</nav>
-<script>
-// the Menu sheet closes on Escape, on a tap outside it, and after choosing a page
-const s=document.querySelector('.sheet');
-document.addEventListener('keydown',e=>{{if(e.key==='Escape'&&s.open){{s.open=false;s.querySelector('summary').focus();}}}});
-document.addEventListener('click',e=>{{if(s.open&&!s.contains(e.target))s.open=false;}});
-</script>
+<script src="js/valley.js?v={js_v}" defer></script>
 </body>
 </html>
 """
@@ -288,39 +272,65 @@ SETTINGS = [
 
 
 def index():
-    screens = "".join(mission_screen(w, i) for i, w in enumerate(WORLDS))
+    places = '{"low_dock":"Low Dock","east_crossing":"East crossing","west_crossing":"West crossing","road_junction":"Road junction","depot":"Depot"}'
+    minis = ""
+    for i, w in enumerate(WORLDS):
+        b = BRIEF["worlds"][w]
+        cells = "".join(f'<li><canvas data-valley="{w}-M{m}" role="img" aria-label="{e(BRIEF["missions"][f"{w}-M{m}"]["title"])}: map of the mission"></canvas>'
+                        f'<p class="mini-id">M{m}</p><p class="mini-title">{e(BRIEF["missions"][f"{w}-M{m}"]["title"])}</p></li>' for m in range(1, 6))
+        minis += (f'<section class="world-row" aria-labelledby="row-{SLUG[w]}"><header><p class="label">0{i + 1} · {e(HAZARD[w])}</p>'
+                  f'<h3 id="row-{SLUG[w]}"><a href="worlds.html#{SLUG[w]}">{e(b["name"])}</a></h3></header><ol class="minis">{cells}</ol></section>')
     body = f"""
-<section class="table light hero" style="--slab:{SLAB['W1'][0]}" aria-labelledby="h-hero">
-  <div class="screen hero-screen">
-    <div class="glass brief hero-card">
-      <p class="card-kicker">{RING}<span>RESQ · Mixed reality · Meta Quest 3 and 3S</span></p>
-      <h1 id="h-hero">Small worlds. Big saves.</h1>
-      <p class="brief-text">A rescue strategy game played on your real table. A miniature valley is in trouble, and everyone in it needs a way home.</p>
-      {objectives([("Read the danger that’s coming", False), ("Place your plan with your hands", False), ("Bring every resident home", False), ("Bonus: find the second way to win", True)])}
-      <div class="run"><a class="btn start" href="#alder-valley">Meet the five worlds</a><a class="btn ghost" href="how-to-play.html">How it plays</a></div>
-    </div>
-    <div class="board">
-      {img("obj_hero.webp", OBJ_ALT["W1"], "obj", eager=True)}
-      <ol class="toasts"><li class="glass toast">{ico("warn")}<span>Water rising in 10s — check the forecast</span></li></ol>
-      <p class="render-tag">Alder Valley · First Crossing · {RENDER}</p>
+<section class="intro" aria-labelledby="h-hero">
+  <p class="label">A mixed-reality rescue strategy game · Meta Quest 3 and 3S · in development</p>
+  <h1 id="h-hero">Small worlds.<br>Big saves.</h1>
+  <p class="lede">A miniature valley appears on your real table. Something is coming: a flood, a fire, a tide, a lava flow. You place the plan with your hands, then watch it play out.</p>
+</section>
+<section class="flood" aria-labelledby="h-flood" data-flood="data/flood_w1m1.json" data-places='{places}' data-start="none">
+  <div class="flood-head">
+    <h2 id="h-flood">Try it: one barrier, three places to put it.</h2>
+    <p>This is First Crossing, the first mission. The reservoir is rising. Choose where the flood barrier goes and watch four minutes of the real simulation.</p>
+  </div>
+  <div class="flood-stage">
+    <canvas role="img" aria-label="First Crossing drawn as a model: the river, reservoir, roads, depot and high landing, with the simulated flood water."></canvas>
+    <div class="flood-ui">
+      <div class="choices" role="group" aria-label="Where the barrier goes">
+        <button type="button" data-scenario="none" aria-pressed="true">No barrier</button>
+        <button type="button" data-scenario="barrier:01" aria-pressed="false">Spot 1</button>
+        <button type="button" data-scenario="barrier:02" aria-pressed="false">Spot 2</button>
+        <button type="button" data-scenario="barrier:03" aria-pressed="false">Spot 3</button>
+      </div>
+      <div class="timeline"><button type="button" class="play" data-play>Play</button>
+        <label class="sr" for="scrub">Time</label><input id="scrub" type="range" min="0" value="0"><output data-clock>0:00</output></div>
+      <ul class="status" data-status aria-live="polite"></ul>
+      <p class="key"><span class="kv"><span class="k kept"></span>Kept dry by your barrier</span><span class="kv"><span class="k newly"></span>Flooded because of it</span></p>
     </div>
   </div>
+  <p class="source">Every frame is the output of RESQ's deterministic simulation for that choice (recorded with <code>lab webflood W1-M1</code>), sampled every 4 seconds. Nothing is animated by hand. In the game, the forecast shows you this before you commit.</p>
 </section>
-{screens}
-<section class="room" aria-labelledby="h-plays">
-  <div class="room-head glass"><p class="card-kicker">How a rescue goes</p><h2 id="h-plays">See it coming. Then make the move.</h2></div>
-  <ol class="plates">
-    <li>{plate("plan.jpg", 1)}<div class="plate-text"><h3>Test an idea before you spend it</h3><p>Hold a tool over the board and the real simulation runs ahead: green cells stay dry, red ones would flood.</p></div></li>
-    <li>{plate("act.jpg", 2)}<div class="plate-text"><h3>Your hands give the orders</h3><p>Pinch a tool and drop it on a glowing spot. Pick a group, then where they go. Nobody can be picked up and carried: only the plan moves people.</p></div></li>
-    <li>{plate("rescue.jpg", 3)}<div class="plate-text"><h3>Find out why it worked</h3><p>Results show who reached safety, and a short debrief names the moment that mattered.</p></div></li>
-    <li>{plate("menu.jpg", 4)}<div class="plate-text"><h3>Then find another way</h3><p>Every mission has two quite different winning plans, and 30 challenges change the rules once you know them.</p></div></li>
-  </ol>
+<section class="campaign" aria-labelledby="h-camp">
+  <div class="section-intro"><p class="label">The whole campaign</p>
+  <h2 id="h-camp">25 missions, drawn from the game's own map files.</h2>
+  <p>Five valleys, five dangers. Each world's first mission is always open; Open play unlocks the rest.</p></div>
+  {minis}
 </section>
-<section class="room dark-room" aria-labelledby="h-set">
-  <div class="room-head"><p class="card-kicker">Ways to play</p><h2 id="h-set">Nobody needs two steady hands.</h2>
-  <p class="room-text">These are the game’s real settings, remembered between sessions.</p>
-  <p class="run" style="margin-top:20px"><a class="btn ghost" href="accessibility.html">Everything about access</a></p></div>
-  {settings_card(SETTINGS)}
+<section class="photos" aria-labelledby="h-photos">
+  <div class="section-intro"><p class="label">On your table</p><h2 id="h-photos">Small enough to lean over. Detailed enough to care about.</h2></div>
+  <div class="photo-row">
+    <figure class="ph wide">{img("obj_hero.webp", OBJ_ALT["W1"], "", False)}<figcaption>Alder Valley as it sits on your table · {RENDER}</figcaption></figure>
+    <figure class="ph">{img("det_w2.webp", DETAIL["W2"])}<figcaption>{e(DETAIL["W2"])} · {RENDER}</figcaption></figure>
+    <figure class="ph">{img("det_w1.webp", DETAIL["W1"])}<figcaption>{e(DETAIL["W1"])} · {RENDER}</figcaption></figure>
+  </div>
+</section>
+<section class="hands" aria-labelledby="h-hands">
+  <div class="section-intro"><p class="label">Hands first</p><h2 id="h-hands">Two hands, one hand, or none at all.</h2></div>
+  <ul class="ways">
+    <li><b>Pinch and place.</b> Tools come from a tray at the near edge of the board; drop them on glowing spots.</li>
+    <li><b>Either hand alone.</b> Every mission can be finished one-handed, left or right.</li>
+    <li><b>Hands-free.</b> Look at a control until it fills, and step time forward one or five seconds at a time.</li>
+    <li><b>Seated, two-foot reach.</b> Text to 150%, high contrast, calmer visuals and a relaxed pace are in Settings.</li>
+  </ul>
+  <p><a class="btn" href="how-to-play.html">How it plays</a> <a class="btn ghost" href="accessibility.html">Accessibility</a></p>
 </section>"""
     page("index.html", "RESQ: small worlds, big saves", body,
          "RESQ is a mixed-reality rescue strategy game for Meta Quest 3 and 3S: a miniature valley on your real table, and every resident to bring home.")
@@ -331,10 +341,37 @@ def room_head(title, text, kicker):
 
 
 def worlds():
-    jump = "".join(f'<li><a class="btn ghost" href="#{SLUG[w]}">0{i + 1} {e(BRIEF["worlds"][w]["name"])}</a></li>' for i, w in enumerate(WORLDS))
-    body = (room_head("Five worlds", "Each valley teaches one kind of danger; later missions combine them. Every number and timing below comes from the game’s mission files.", "Mission select")
-            .replace("</div></section>", f'<ul class="jump">{jump}</ul></div></section>')
-            + "".join(mission_screen(w, i, full=True) for i, w in enumerate(WORLDS)))
+    jump = "".join(f'<li><a href="#{SLUG[w]}">0{i + 1} {e(BRIEF["worlds"][w]["name"])}</a></li>' for i, w in enumerate(WORLDS))
+    chapters = ""
+    for i, w in enumerate(WORLDS):
+        b = BRIEF["worlds"][w]; c = CONTRACTS[f"{w}-M1"]; mb = BRIEF["missions"][f"{w}-M1"]
+        lo = ", ".join(f"{TOOL[k]} ×{n}" for k, n in c["default_loadout"].items())
+        threats = "".join(f'<li><span class="t">{clock(t["at"])}</span>{e(t["text"])}</li>' for t in mb["threats"])
+        minis = "".join(f'<li><canvas data-valley="{w}-M{m}" role="img" aria-label="Map of {e(BRIEF["missions"][f"{w}-M{m}"]["title"])}"></canvas>'
+                        f'<p class="mini-id">M{m}</p><p class="mini-title">{e(BRIEF["missions"][f"{w}-M{m}"]["title"])}</p>'
+                        f'<p class="mini-sub">{e(BRIEF["missions"][f"{w}-M{m}"]["decision"])}</p></li>' for m in range(1, 6))
+        chapters += f"""
+<section class="chapter" id="{SLUG[w]}" aria-labelledby="h-{SLUG[w]}" style="--accent:{SLAB[w][0]}">
+  <div class="chapter-head">
+    <p class="label">0{i + 1} / 05 · {e(HAZARD[w])}</p>
+    <h2 id="h-{SLUG[w]}">{e(b["name"])}</h2>
+    <p class="lede">{e(b["identity"])}</p>
+  </div>
+  <figure class="ph chapter-photo">{img(f"obj_{w.lower()}.webp", OBJ_ALT[w])}<figcaption>{e(b["name"])} · {RENDER}</figcaption></figure>
+  <div class="chapter-facts">
+    <div><h3 class="label">First mission · {e(mb["title"])} · {clock(c["duration_scenario_ticks"] // 10)}</h3>
+      <ol class="threats">{threats}</ol>
+      <p class="fact"><b>{c["total_residents"]} residents</b>, {sum(g["mobility_counts"].get("step_free", 0) for g in c["groups"])} step-free · <b>{c["supply_budget"]} supply</b> · {e(lo)}</p></div>
+    <div><h3 class="label">Two ways to win</h3><p class="plan"><b>A</b> {e(c["reference_strategy_briefs"]["A"])}</p><p class="plan"><b>B</b> {e(c["reference_strategy_briefs"]["B"])}</p></div>
+    <div><h3 class="label">What you learn</h3><p>{e(b["thesis"])}</p><h3 class="label">Afterwards</h3><p>{e(b["aftercare"])}</p></div>
+  </div>
+  <ol class="minis big">{minis}</ol>
+</section>"""
+    body = f"""
+<section class="intro small"><p class="label">Mission select</p><h1>Five worlds</h1>
+  <p class="lede">Each valley teaches one kind of danger, and later missions combine them. Every map, number and timing below comes from the game's mission files.</p>
+  <ul class="jump">{jump}</ul></section>
+{chapters}"""
     page("worlds.html", "Worlds · RESQ", body, "The five valleys of RESQ and their 25 missions.")
 
 
@@ -404,18 +441,11 @@ def privacy():
 
 
 def not_found():
-    body = f"""
-<section class="table light hero" style="--slab:{SLAB['W1'][0]}">
-  <div class="screen hero-screen">
-    <div class="glass brief hero-card">
-      <p class="card-kicker">{ico("warn")}<span>Route blocked</span></p>
-      <h1>This page floated off the table.</h1>
-      {objectives([("Go back to the valley", False)])}
-      <div class="run"><a class="btn start" href="index.html">Back to RESQ</a></div>
-    </div>
-    <div class="board">{img("obj_w1.webp", "", "obj")}</div>
-  </div>
-</section>"""
+    body = """
+<section class="intro small lost"><p class="label">404</p><h1>This page is under water.</h1>
+  <p class="lede">It may have moved, or it never made it out of the valley.</p>
+  <p><a class="btn" href="index.html">Back to RESQ</a></p>
+  <canvas class="lost-map" data-valley="W1-M1" role="img" aria-label="Map of First Crossing"></canvas></section>"""
     page("404.html", "Not found · RESQ", body, "Page not found.")
 
 

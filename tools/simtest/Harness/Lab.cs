@@ -13,6 +13,8 @@ namespace Resq.Sim.Headless
     ///   lab validate W1-M1 [--all]                            — no-input must fail; A and B must win (both layouts, 3 presets)
     ///   lab challenge W1-M1-early-surge|W1-M1|all             — named challenges: two strategies must win on both layouts
     ///                                                          (Standard rules); per-challenge strategies override A/B
+    ///   lab webflood W1-M1 OUT.json [--ticks 2400] [--every 40] — website data: the real water, cell by cell over time,
+    ///                                                          with no barrier and with a barrier on each barrier socket
     /// </summary>
     public static class Lab
     {
@@ -31,6 +33,7 @@ namespace Resq.Sim.Headless
                     case "run": return RunOne(mission, args.Skip(2).ToArray());
                     case "validate": return Validate(mission.Split(','), args.Contains("--quick"));
                     case "challenge": return Challenge(mission);
+                    case "webflood": return WebFlood(mission, args.Skip(2).ToArray());
                 }
             }
             catch (ContentException ex) { Console.WriteLine("CONTENT ERROR: " + ex.Message); return 2; }
@@ -156,6 +159,65 @@ namespace Resq.Sim.Headless
                 }
                 Lines.Add($"  O={e.O,5} S={e.S,5}  {what}");
             }
+        }
+
+        /// <summary>
+        /// Website data (tools/web): runs the mission with no barrier and with one barrier on each barrier socket (placed
+        /// at t=5 through the normal strategy-script command path), sampling every cell's water depth every N ticks.
+        /// Depth is stored as one byte per cell per frame (mm / 10, capped at 255), base64-encoded. Nothing is staged
+        /// or smoothed: the page replays exactly what the deterministic simulation produced.
+        /// </summary>
+        static int WebFlood(string missionId, string[] a)
+        {
+            string outPath = a.Length > 0 ? a[0] : "flood.json";
+            int ticks = 2400, every = 40;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] == "--ticks") ticks = int.Parse(a[i + 1]);
+                if (a[i] == "--every") every = int.Parse(a[i + 1]);
+            }
+            var d = Load(missionId, "wide");
+            int n = d.GridW * d.GridH;
+            var scenarios = new List<string> { "none" };
+            for (int s = 0; s < d.SocketIds.Length; s++) if (d.SocketKind[s] == ToolKind.Barrier) scenarios.Add(d.SocketIds[s]);
+            var sb = new StringBuilder();
+            sb.Append("{\"mission\":\"").Append(missionId).Append("\",\"title\":\"").Append(d.Title).Append("\",\"w\":").Append(d.GridW)
+              .Append(",\"h\":").Append(d.GridH).Append(",\"every\":").Append(every).Append(",\"ticksPerSecond\":10");
+            sb.Append(",\"elevation\":[").Append(string.Join(",", d.CellElevation)).Append(']');
+            sb.Append(",\"terrain\":[").Append(string.Join(",", d.CellTerrain)).Append(']');
+            sb.Append(",\"building\":[").Append(string.Join(",", d.CellBuilding.Select(b => b ? 1 : 0))).Append(']');
+            sb.Append(",\"nodes\":[").Append(string.Join(",", Enumerable.Range(0, d.NodeIds.Length).Where(i => d.NodeCell[i] >= 0).Select(i =>
+                $"{{\"id\":\"{d.NodeIds[i]}\",\"cell\":{d.NodeCell[i]},\"evac\":{((d.NodeFlags[i] & NodeFlags.Evacuation) != 0 ? 1 : 0)}}}"))).Append(']');
+            sb.Append(",\"sockets\":[").Append(string.Join(",", Enumerable.Range(0, d.SocketIds.Length).Where(s => d.SocketKind[s] == ToolKind.Barrier).Select(s =>
+                $"{{\"id\":\"{d.SocketIds[s]}\",\"cell\":{d.SocketCell[s]}}}"))).Append(']');
+            sb.Append(",\"scenarios\":{");
+            for (int k = 0; k < scenarios.Count; k++)
+            {
+                string sc = scenarios[k];
+                var script = sc == "none" ? null : StrategyScript.Parse(JsonNode.Parse("{\"id\":\"web\",\"steps\":[{\"t\":5,\"place\":\"" + sc + "\"}]}"));
+                var sink = new PrintSink();
+                var sim = new Simulator(d, RuleProfile.Standard, sink, false);
+                sink.Sim = sim;
+                var log = new List<string>();
+                int cursor = 0;
+                var frames = new List<byte>();
+                for (long t = 0; t <= ticks && !sim.IsOver; t++)
+                {
+                    if (t % every == 0)
+                        for (int c = 0; c < n; c++) frames.Add((byte)Math.Min(255, sim.Depth(c) / 10));
+                    script?.SubmitDue(sim, ref cursor, log);
+                    sim.Step();
+                }
+                if (log.Any(l => l.Contains("REJECT"))) Console.WriteLine($"  {sc}: " + string.Join(" | ", log.Where(l => l.Contains("REJECT"))));
+                sb.Append(k > 0 ? "," : "").Append('"').Append(sc).Append("\":{\"frames\":").Append(frames.Count / n)
+                  .Append(",\"depth\":\"").Append(Convert.ToBase64String(frames.ToArray())).Append("\"}");
+                Console.WriteLine($"webflood {missionId} {sc}: {frames.Count / n} frames");
+            }
+            sb.Append("}}");
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(outPath)));
+            File.WriteAllText(outPath, sb.ToString());
+            Console.WriteLine($"wrote {outPath} ({new FileInfo(outPath).Length / 1024} KB)");
+            return 0;
         }
 
         static int RunOne(string missionId, string[] a)

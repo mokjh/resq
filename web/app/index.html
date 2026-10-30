@@ -5,181 +5,79 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RESQ: small worlds, big saves</title>
 <meta name="description" content="RESQ is a mixed-reality rescue strategy game for Meta Quest 3 and 3S: a miniature valley on your real table, and every resident to bring home.">
-<meta name="theme-color" content="#131A1D">
+<meta name="theme-color" content="#E8EDEE">
 <link rel="icon" href="media/icon.png">
 <link rel="preload" href="fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="site.css?v=ccf46685">
+<link rel="stylesheet" href="site.css?v=2d9875c2">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
-<header class="hud">
+<header class="top">
   <a class="mark" href="index.html" aria-label="RESQ home"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></a>
-  <ul class="chips" aria-label="Status">
-    <li class="chip warn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg>In development</li>
-    <li class="chip hide-s"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>5 worlds · 25 missions</li>
-    <li class="chip hide-s">Meta Quest 3 · 3S</li>
-  </ul>
+  <nav aria-label="Main"><ul class="links"><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Access</a></li><li><a href="press.html">Press</a></li></ul></nav>
+  <details class="menu"><summary aria-label="Menu"><span>Menu</span></summary>
+    <div class="menu-sheet"><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul><p class="menu-note">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p></div></details>
 </header>
 <main id="main">
 
-<section class="table light hero" style="--slab:#2357C4" aria-labelledby="h-hero">
-  <div class="screen hero-screen">
-    <div class="glass brief hero-card">
-      <p class="card-kicker"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ · Mixed reality · Meta Quest 3 and 3S</span></p>
-      <h1 id="h-hero">Small worlds. Big saves.</h1>
-      <p class="brief-text">A rescue strategy game played on your real table. A miniature valley is in trouble, and everyone in it needs a way home.</p>
-      <ul class="objectives"><li class="obj-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg><span>Read the danger that’s coming</span></li><li class="obj-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg><span>Place your plan with your hands</span></li><li class="obj-row"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/></svg><span>Bring every resident home</span></li><li class="obj-row bonus"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.8L12 3.5z"/></svg><span>Bonus: find the second way to win</span></li></ul>
-      <div class="run"><a class="btn start" href="#alder-valley">Meet the five worlds</a><a class="btn ghost" href="how-to-play.html">How it plays</a></div>
-    </div>
-    <div class="board">
-      <img class="obj" src="media/obj_hero.webp" alt="Alder Valley as a miniature on a wooden board: river channels, cedar houses, a church and a bus by the crossing." width="1428" height="733" fetchpriority="high" decoding="async">
-      <ol class="toasts"><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span>Water rising in 10s — check the forecast</span></li></ol>
-      <p class="render-tag">Alder Valley · First Crossing · Editor render</p>
+<section class="intro" aria-labelledby="h-hero">
+  <p class="label">A mixed-reality rescue strategy game · Meta Quest 3 and 3S · in development</p>
+  <h1 id="h-hero">Small worlds.<br>Big saves.</h1>
+  <p class="lede">A miniature valley appears on your real table. Something is coming: a flood, a fire, a tide, a lava flow. You place the plan with your hands, then watch it play out.</p>
+</section>
+<section class="flood" aria-labelledby="h-flood" data-flood="data/flood_w1m1.json" data-places='{"low_dock":"Low Dock","east_crossing":"East crossing","west_crossing":"West crossing","road_junction":"Road junction","depot":"Depot"}' data-start="none">
+  <div class="flood-head">
+    <h2 id="h-flood">Try it: one barrier, three places to put it.</h2>
+    <p>This is First Crossing, the first mission. The reservoir is rising. Choose where the flood barrier goes and watch four minutes of the real simulation.</p>
+  </div>
+  <div class="flood-stage">
+    <canvas role="img" aria-label="First Crossing drawn as a model: the river, reservoir, roads, depot and high landing, with the simulated flood water."></canvas>
+    <div class="flood-ui">
+      <div class="choices" role="group" aria-label="Where the barrier goes">
+        <button type="button" data-scenario="none" aria-pressed="true">No barrier</button>
+        <button type="button" data-scenario="barrier:01" aria-pressed="false">Spot 1</button>
+        <button type="button" data-scenario="barrier:02" aria-pressed="false">Spot 2</button>
+        <button type="button" data-scenario="barrier:03" aria-pressed="false">Spot 3</button>
+      </div>
+      <div class="timeline"><button type="button" class="play" data-play>Play</button>
+        <label class="sr" for="scrub">Time</label><input id="scrub" type="range" min="0" value="0"><output data-clock>0:00</output></div>
+      <ul class="status" data-status aria-live="polite"></ul>
+      <p class="key"><span class="kv"><span class="k kept"></span>Kept dry by your barrier</span><span class="kv"><span class="k newly"></span>Flooded because of it</span></p>
     </div>
   </div>
+  <p class="source">Every frame is the output of RESQ's deterministic simulation for that choice (recorded with <code>lab webflood W1-M1</code>), sampled every 4 seconds. Nothing is animated by hand. In the game, the forecast shows you this before you commit.</p>
 </section>
-
-<section class="table light" id="alder-valley" style="--slab:#2357C4" aria-labelledby="h-alder-valley">
-  <div class="screen">
-    <div class="glass brief">
-      <p class="card-kicker"><span class="tag-num">01/05</span><span>Floods</span></p>
-      <h2 id="h-alder-valley">Alder Valley</h2>
-      <p class="brief-text">A stepped river valley with cedar houses, terraced fields, a stone viaduct, a bright rescue depot, and a mountain reservoir.</p>
-      <div class="first"><p class="first-label">First mission</p><p class="first-title">First Crossing</p><p class="first-text">Learn bridge placement, flood forecasts, and a first boat route.</p></div>
-      
-    </div>
-    <div class="board">
-      <img class="obj" src="media/obj_w1.webp" alt="Alder Valley as a miniature on a wooden board: river channels, cedar houses, a church and a bus by the crossing." width="1431" height="870" loading="lazy" decoding="async">
-      <ol class="toasts" aria-label="What happens in the first mission"><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">1:00</span><span>Reservoir inflow increases</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">2:20</span><span>Low-dock water rises toward closure threshold</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">4:00</span><span>Final moderate surge tests the placed barrier</span></li></ol>
-      <figure class="pip glass"><img class="det" src="media/det_w1.webp" alt="A group gathers by the bus at the crossing." width="1000" height="1250" loading="lazy" decoding="async"><figcaption><span class="tag">Camera</span><span>A group gathers by the bus at the crossing.</span></figcaption></figure>
-      <p class="render-tag">Alder Valley · First Crossing · Editor render</p>
-    </div>
-    <ul class="chips on-table"><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21 19v1"/></svg>8 residents</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="5" r="2"/><path d="M9 8v6h6l2 5M9 11h5"/><circle cx="10" cy="17" r="4"/></svg>2 step-free</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></svg>12 supply</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>6:00</li></ul>
-    <ul class="loadout" aria-label="Tools in the first mission"><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20M4 16c2-6 14-6 16 0M8 12.5V16m8-3.5V16"/></svg><span class="tool-name">Emergency Bridge</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17h18M5 17V9h14v8M5 13h14"/></svg><span class="tool-name">Flood Barrier</span><span class="tool-sub">×2 · 2 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h18l-3 5H6l-3-5zM8 13V7l6 3-6 0"/></svg><span class="tool-name">Rescue Boat</span><span class="tool-sub">×1 · 4 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 9-6 9-6-9 6-9z"/></svg><span class="tool-name">Beacon</span><span class="tool-sub">×1 · 1 supply</span></li></ul>
-    
-    <ol class="tiles" aria-label="Missions"><li class="glass tile"><span class="tile-id">M1</span><span class="tile-title">First Crossing</span></li><li class="glass tile"><span class="tile-id">M2</span><span class="tile-title">The Lower Road</span></li><li class="glass tile"><span class="tile-id">M3</span><span class="tile-title">Two Banks</span></li><li class="glass tile"><span class="tile-id">M4</span><span class="tile-title">Power Before Water</span></li><li class="glass tile"><span class="tile-id">M5</span><span class="tile-title">The Long Way Home</span></li></ol>
+<section class="campaign" aria-labelledby="h-camp">
+  <div class="section-intro"><p class="label">The whole campaign</p>
+  <h2 id="h-camp">25 missions, drawn from the game's own map files.</h2>
+  <p>Five valleys, five dangers. Each world's first mission is always open; Open play unlocks the rest.</p></div>
+  <section class="world-row" aria-labelledby="row-alder-valley"><header><p class="label">01 · Floods</p><h3 id="row-alder-valley"><a href="worlds.html#alder-valley">Alder Valley</a></h3></header><ol class="minis"><li><canvas data-valley="W1-M1" role="img" aria-label="First Crossing: map of the mission"></canvas><p class="mini-id">M1</p><p class="mini-title">First Crossing</p></li><li><canvas data-valley="W1-M2" role="img" aria-label="The Lower Road: map of the mission"></canvas><p class="mini-id">M2</p><p class="mini-title">The Lower Road</p></li><li><canvas data-valley="W1-M3" role="img" aria-label="Two Banks: map of the mission"></canvas><p class="mini-id">M3</p><p class="mini-title">Two Banks</p></li><li><canvas data-valley="W1-M4" role="img" aria-label="Power Before Water: map of the mission"></canvas><p class="mini-id">M4</p><p class="mini-title">Power Before Water</p></li><li><canvas data-valley="W1-M5" role="img" aria-label="The Long Way Home: map of the mission"></canvas><p class="mini-id">M5</p><p class="mini-title">The Long Way Home</p></li></ol></section><section class="world-row" aria-labelledby="row-emberwood"><header><p class="label">02 · Wildfire</p><h3 id="row-emberwood"><a href="worlds.html#emberwood">Emberwood</a></h3></header><ol class="minis"><li><canvas data-valley="W2-M1" role="img" aria-label="A Line in the Trees: map of the mission"></canvas><p class="mini-id">M1</p><p class="mini-title">A Line in the Trees</p></li><li><canvas data-valley="W2-M2" role="img" aria-label="Last Bus from Camp: map of the mission"></canvas><p class="mini-id">M2</p><p class="mini-title">Last Bus from Camp</p></li><li><canvas data-valley="W2-M3" role="img" aria-label="Water Is a Route: map of the mission"></canvas><p class="mini-id">M3</p><p class="mini-title">Water Is a Route</p></li><li><canvas data-valley="W2-M4" role="img" aria-label="When the Wind Turns: map of the mission"></canvas><p class="mini-id">M4</p><p class="mini-title">When the Wind Turns</p></li><li><canvas data-valley="W2-M5" role="img" aria-label="The Green Corridor: map of the mission"></canvas><p class="mini-id">M5</p><p class="mini-title">The Green Corridor</p></li></ol></section><section class="world-row" aria-labelledby="row-frostline"><header><p class="label">03 · Snow and avalanches</p><h3 id="row-frostline"><a href="worlds.html#frostline">Frostline</a></h3></header><ol class="minis"><li><canvas data-valley="W3-M1" role="img" aria-label="Hold the Station: map of the mission"></canvas><p class="mini-id">M1</p><p class="mini-title">Hold the Station</p></li><li><canvas data-valley="W3-M2" role="img" aria-label="Above the Snowline: map of the mission"></canvas><p class="mini-id">M2</p><p class="mini-title">Above the Snowline</p></li><li><canvas data-valley="W3-M3" role="img" aria-label="The Quiet Slope: map of the mission"></canvas><p class="mini-id">M3</p><p class="mini-title">The Quiet Slope</p></li><li><canvas data-valley="W3-M4" role="img" aria-label="Cable and Current: map of the mission"></canvas><p class="mini-id">M4</p><p class="mini-title">Cable and Current</p></li><li><canvas data-valley="W3-M5" role="img" aria-label="Dawn at Frostline: map of the mission"></canvas><p class="mini-id">M5</p><p class="mini-title">Dawn at Frostline</p></li></ol></section><section class="world-row" aria-labelledby="row-tidemark"><header><p class="label">04 · Tides and storm power</p><h3 id="row-tidemark"><a href="worlds.html#tidemark">Tidemark</a></h3></header><ol class="minis"><li><canvas data-valley="W4-M1" role="img" aria-label="Between Two Tides: map of the mission"></canvas><p class="mini-id">M1</p><p class="mini-title">Between Two Tides</p></li><li><canvas data-valley="W4-M2" role="img" aria-label="Keep the Light: map of the mission"></canvas><p class="mini-id">M2</p><p class="mini-title">Keep the Light</p></li><li><canvas data-valley="W4-M3" role="img" aria-label="The Floating Market: map of the mission"></canvas><p class="mini-id">M3</p><p class="mini-title">The Floating Market</p></li><li><canvas data-valley="W4-M4" role="img" aria-label="Storm Switch: map of the mission"></canvas><p class="mini-id">M4</p><p class="mini-title">Storm Switch</p></li><li><canvas data-valley="W4-M5" role="img" aria-label="Harbor of Everyone: map of the mission"></canvas><p class="mini-id">M5</p><p class="mini-title">Harbor of Everyone</p></li></ol></section><section class="world-row" aria-labelledby="row-cinder-reach"><header><p class="label">05 · Lava and heat</p><h3 id="row-cinder-reach"><a href="worlds.html#cinder-reach">Cinder Reach</a></h3></header><ol class="minis"><li><canvas data-valley="W5-M1" role="img" aria-label="A Path Through Heat: map of the mission"></canvas><p class="mini-id">M1</p><p class="mini-title">A Path Through Heat</p></li><li><canvas data-valley="W5-M2" role="img" aria-label="Borrowed Safety: map of the mission"></canvas><p class="mini-id">M2</p><p class="mini-title">Borrowed Safety</p></li><li><canvas data-valley="W5-M3" role="img" aria-label="The Cooling Works: map of the mission"></canvas><p class="mini-id">M3</p><p class="mini-title">The Cooling Works</p></li><li><canvas data-valley="W5-M4" role="img" aria-label="Three Ways Out: map of the mission"></canvas><p class="mini-id">M4</p><p class="mini-title">Three Ways Out</p></li><li><canvas data-valley="W5-M5" role="img" aria-label="Every Little Life: map of the mission"></canvas><p class="mini-id">M5</p><p class="mini-title">Every Little Life</p></li></ol></section>
+</section>
+<section class="photos" aria-labelledby="h-photos">
+  <div class="section-intro"><p class="label">On your table</p><h2 id="h-photos">Small enough to lean over. Detailed enough to care about.</h2></div>
+  <div class="photo-row">
+    <figure class="ph wide"><img class="" src="media/obj_hero.webp" alt="Alder Valley as a miniature on a wooden board: river channels, cedar houses, a church and a bus by the crossing." width="1428" height="733" loading="lazy" decoding="async"><figcaption>Alder Valley as it sits on your table · Editor render</figcaption></figure>
+    <figure class="ph"><img class="" src="media/det_w2.webp" alt="Residents reach the landing, where the rescue crew waits." width="1000" height="1250" loading="lazy" decoding="async"><figcaption>Residents reach the landing, where the rescue crew waits. · Editor render</figcaption></figure>
+    <figure class="ph"><img class="" src="media/det_w1.webp" alt="A group gathers by the bus at the crossing." width="1000" height="1250" loading="lazy" decoding="async"><figcaption>A group gathers by the bus at the crossing. · Editor render</figcaption></figure>
   </div>
 </section>
-<section class="table light" id="emberwood" style="--slab:#B8361B" aria-labelledby="h-emberwood">
-  <div class="screen">
-    <div class="glass brief">
-      <p class="card-kicker"><span class="tag-num">02/05</span><span>Wildfire</span></p>
-      <h2 id="h-emberwood">Emberwood</h2>
-      <p class="brief-text">An inhabited forest reserve with a lookout tower, sawmill, campsite, orchard, and hillside water tanks.</p>
-      <div class="first"><p class="first-label">First mission</p><p class="first-title">A Line in the Trees</p><p class="first-text">Learn fuel removal and moisture.</p></div>
-      
-    </div>
-    <div class="board">
-      <img class="obj" src="media/obj_w2.webp" alt="Emberwood as a miniature: a meadow inside a pine forest, a lookout tower, cabins and a burning fire line." width="1427" height="898" loading="lazy" decoding="async">
-      <ol class="toasts" aria-label="What happens in the first mission"><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">0:50</span><span>A marked dry-cell cluster ignites</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">2:40</span><span>Steady wind advances heat toward the short path</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">4:20</span><span>The first cooled strip becomes safe to cross</span></li></ol>
-      <figure class="pip glass"><img class="det" src="media/det_w2.webp" alt="Residents reach the landing, where the rescue crew waits." width="1000" height="1250" loading="lazy" decoding="async"><figcaption><span class="tag">Camera</span><span>Residents reach the landing, where the rescue crew waits.</span></figcaption></figure>
-      <p class="render-tag">Emberwood · A Line in the Trees · Editor render</p>
-    </div>
-    <ul class="chips on-table"><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21 19v1"/></svg>10 residents</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="5" r="2"/><path d="M9 8v6h6l2 5M9 11h5"/><circle cx="10" cy="17" r="4"/></svg>2 step-free</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></svg>13 supply</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>6:00</li></ul>
-    <ul class="loadout" aria-label="Tools in the first mission"><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h3m3 0h3m3 0h3m3 0h0M4 7l2-3 2 3M16 20l2-3 2 3"/></svg><span class="tool-name">Firebreak</span><span class="tool-sub">×2 · 2 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21v-7M8 14h8M7 9c0 1.5 1 2 1 2M12 7c0 1.5 1 2 1 2M17 9c0 1.5 1 2 1 2"/></svg><span class="tool-name">Sprinkler</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 13h6l-1 8 8-10h-6l1-8z"/></svg><span class="tool-name">Generator</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 9-6 9-6-9 6-9z"/></svg><span class="tool-name">Beacon</span><span class="tool-sub">×3 · 1 supply</span></li></ul>
-    
-    <ol class="tiles" aria-label="Missions"><li class="glass tile"><span class="tile-id">M1</span><span class="tile-title">A Line in the Trees</span></li><li class="glass tile"><span class="tile-id">M2</span><span class="tile-title">Last Bus from Camp</span></li><li class="glass tile"><span class="tile-id">M3</span><span class="tile-title">Water Is a Route</span></li><li class="glass tile"><span class="tile-id">M4</span><span class="tile-title">When the Wind Turns</span></li><li class="glass tile"><span class="tile-id">M5</span><span class="tile-title">The Green Corridor</span></li></ol>
-  </div>
-</section>
-<section class="table dark" id="frostline" style="--slab:#DCEAF2" aria-labelledby="h-frostline">
-  <div class="screen">
-    <div class="glass brief">
-      <p class="card-kicker"><span class="tag-num">03/05</span><span>Snow and avalanches</span></p>
-      <h2 id="h-frostline">Frostline</h2>
-      <p class="brief-text">A snow-covered alpine settlement with a funicular, weather observatory, cable station, avalanche fences, and steep terraces.</p>
-      <div class="first"><p class="first-label">First mission</p><p class="first-title">Hold the Station</p><p class="first-text">Introduce structure-specific support and vertical transfers.</p></div>
-      
-    </div>
-    <div class="board">
-      <img class="obj" src="media/obj_w3.webp" alt="Frostline as a miniature: snowfields ringed by peaks, a cable station, cabins and a red snowcat." width="1432" height="915" loading="lazy" decoding="async">
-      <ol class="toasts" aria-label="What happens in the first mission"><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">1:00</span><span>A support begins losing stability</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">2:40</span><span>Meltwater increases load</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">4:20</span><span>A minor tremor tests bracing</span></li></ol>
-      <figure class="pip glass"><img class="det" src="media/det_w3.webp" alt="Arms up at the Frostline landing." width="1000" height="1250" loading="lazy" decoding="async"><figcaption><span class="tag">Camera</span><span>Arms up at the Frostline landing.</span></figcaption></figure>
-      <p class="render-tag">Frostline · Hold the Station · Editor render</p>
-    </div>
-    <ul class="chips on-table"><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21 19v1"/></svg>10 residents</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="5" r="2"/><path d="M9 8v6h6l2 5M9 11h5"/><circle cx="10" cy="17" r="4"/></svg>2 step-free</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></svg>14 supply</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>6:00</li></ul>
-    <ul class="loadout" aria-label="Tools in the first mission"><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20L19 4M5 4l14 16M3 20h18"/></svg><span class="tool-name">Brace</span><span class="tool-sub">×3 · 2 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 4h20M8 4v9M16 4v5"/><rect x="5" y="13" width="6" height="5"/><rect x="13" y="9" width="6" height="5"/></svg><span class="tool-name">Cable Winch</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 3L5 13h6l-1 8 8-10h-6l1-8z"/></svg><span class="tool-name">Generator</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 9-6 9-6-9 6-9z"/></svg><span class="tool-name">Beacon</span><span class="tool-sub">×2 · 1 supply</span></li></ul>
-    
-    <ol class="tiles" aria-label="Missions"><li class="glass tile"><span class="tile-id">M1</span><span class="tile-title">Hold the Station</span></li><li class="glass tile"><span class="tile-id">M2</span><span class="tile-title">Above the Snowline</span></li><li class="glass tile"><span class="tile-id">M3</span><span class="tile-title">The Quiet Slope</span></li><li class="glass tile"><span class="tile-id">M4</span><span class="tile-title">Cable and Current</span></li><li class="glass tile"><span class="tile-id">M5</span><span class="tile-title">Dawn at Frostline</span></li></ol>
-  </div>
-</section>
-<section class="table dark" id="tidemark" style="--slab:#F2BE22" aria-labelledby="h-tidemark">
-  <div class="screen">
-    <div class="glass brief">
-      <p class="card-kicker"><span class="tag-num">04/05</span><span>Tides and storm power</span></p>
-      <h2 id="h-tidemark">Tidemark</h2>
-      <p class="brief-text">A fictional coastal archipelago with pale plaster houses, boatyards, a lighthouse, raised walkways, and a tidal market.</p>
-      <div class="first"><p class="first-label">First mission</p><p class="first-title">Between Two Tides</p><p class="first-text">Learn readable tide windows.</p></div>
-      
-    </div>
-    <div class="board">
-      <img class="obj" src="media/obj_w4.webp" alt="Tidemark as a miniature: a harbour basin, two islands of houses, a causeway and a lighthouse." width="1431" height="861" loading="lazy" decoding="async">
-      <ol class="toasts" aria-label="What happens in the first mission"><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">1:00</span><span>Tide begins rising</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">3:00</span><span>Causeway closes</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">5:00</span><span>High landing becomes optimal for unloading</span></li></ol>
-      <figure class="pip glass"><img class="det" src="media/det_w4.webp" alt="Safe at the harbour landing." width="1000" height="1250" loading="lazy" decoding="async"><figcaption><span class="tag">Camera</span><span>Safe at the harbour landing.</span></figcaption></figure>
-      <p class="render-tag">Tidemark · Between Two Tides · Editor render</p>
-    </div>
-    <ul class="chips on-table"><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21 19v1"/></svg>12 residents</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="5" r="2"/><path d="M9 8v6h6l2 5M9 11h5"/><circle cx="10" cy="17" r="4"/></svg>2 step-free</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></svg>15 supply</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>7:00</li></ul>
-    <ul class="loadout" aria-label="Tools in the first mission"><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 13h18l-3 5H6l-3-5zM8 13V7l6 3-6 0"/></svg><span class="tool-name">Rescue Boat</span><span class="tool-sub">×2 · 4 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20M4 16c2-6 14-6 16 0M8 12.5V16m8-3.5V16"/></svg><span class="tool-name">Emergency Bridge</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 9-6 9-6-9 6-9z"/></svg><span class="tool-name">Beacon</span><span class="tool-sub">×2 · 1 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-6 4 12 3-6h4"/></svg><span class="tool-name">Power Relay</span><span class="tool-sub">×1 · 2 supply</span></li></ul>
-    
-    <ol class="tiles" aria-label="Missions"><li class="glass tile"><span class="tile-id">M1</span><span class="tile-title">Between Two Tides</span></li><li class="glass tile"><span class="tile-id">M2</span><span class="tile-title">Keep the Light</span></li><li class="glass tile"><span class="tile-id">M3</span><span class="tile-title">The Floating Market</span></li><li class="glass tile"><span class="tile-id">M4</span><span class="tile-title">Storm Switch</span></li><li class="glass tile"><span class="tile-id">M5</span><span class="tile-title">Harbor of Everyone</span></li></ol>
-  </div>
-</section>
-<section class="table light" id="cinder-reach" style="--slab:#1C1A19" aria-labelledby="h-cinder-reach">
-  <div class="screen">
-    <div class="glass brief">
-      <p class="card-kicker"><span class="tag-num">05/05</span><span>Lava and heat</span></p>
-      <h2 id="h-cinder-reach">Cinder Reach</h2>
-      <p class="brief-text">A volcanic island research town with basalt terraces, a geothermal station, orchards, a ferry terminal, and cooling channels.</p>
-      <div class="first"><p class="first-label">First mission</p><p class="first-title">A Path Through Heat</p><p class="first-text">Introduce temporary cooled crossings.</p></div>
-      
-    </div>
-    <div class="board">
-      <img class="obj" src="media/obj_w5.webp" alt="Cinder Reach as a miniature: dark basalt terraces split by glowing lava channels." width="1428" height="894" loading="lazy" decoding="async">
-      <ol class="toasts" aria-label="What happens in the first mission"><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">1:10</span><span>Lava advances into a marked channel</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">3:30</span><span>First cooling opportunity appears</span></li><li class="glass toast"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg><span class="t-time">5:30</span><span>Cooled segment begins reheating</span></li></ol>
-      <figure class="pip glass"><img class="det" src="media/det_w5.webp" alt="A Cinder Reach group, one resident in a wheelchair." width="1000" height="1250" loading="lazy" decoding="async"><figcaption><span class="tag">Camera</span><span>A Cinder Reach group, one resident in a wheelchair.</span></figcaption></figure>
-      <p class="render-tag">Cinder Reach · A Path Through Heat · Editor render</p>
-    </div>
-    <ul class="chips on-table"><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M3 20v-1a6 6 0 0 1 12 0v1"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21 19v1"/></svg>12 residents</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="5" r="2"/><path d="M9 8v6h6l2 5M9 11h5"/><circle cx="10" cy="17" r="4"/></svg>2 step-free</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></svg>16 supply</li><li class="chip"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></svg>7:00</li></ul>
-    <ul class="loadout" aria-label="Tools in the first mission"><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg><span class="tool-name">Lava Cooler</span><span class="tool-sub">×2 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 16h20M4 16c2-6 14-6 16 0M8 12.5V16m8-3.5V16"/></svg><span class="tool-name">Emergency Bridge</span><span class="tool-sub">×1 · 3 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l6 9-6 9-6-9 6-9z"/></svg><span class="tool-name">Beacon</span><span class="tool-sub">×3 · 1 supply</span></li><li class="glass tool-card"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9H3v-9zM9 20v-5h6v5"/></svg><span class="tool-name">Heat Shelter</span><span class="tool-sub">×1 · 4 supply</span></li></ul>
-    
-    <ol class="tiles" aria-label="Missions"><li class="glass tile"><span class="tile-id">M1</span><span class="tile-title">A Path Through Heat</span></li><li class="glass tile"><span class="tile-id">M2</span><span class="tile-title">Borrowed Safety</span></li><li class="glass tile"><span class="tile-id">M3</span><span class="tile-title">The Cooling Works</span></li><li class="glass tile"><span class="tile-id">M4</span><span class="tile-title">Three Ways Out</span></li><li class="glass tile"><span class="tile-id">M5</span><span class="tile-title">Every Little Life</span></li></ol>
-  </div>
-</section>
-<section class="room" aria-labelledby="h-plays">
-  <div class="room-head glass"><p class="card-kicker">How a rescue goes</p><h2 id="h-plays">See it coming. Then make the move.</h2></div>
-  <ol class="plates">
-    <li><figure class="plate"><img class="" src="media/plan.jpg" alt="A tool hovering over the board shows a forecast: green cells stay dry, red cells would flood." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">01</span><span>Forecast while placing a barrier</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Test an idea before you spend it</h3><p>Hold a tool over the board and the real simulation runs ahead: green cells stay dry, red ones would flood.</p></div></li>
-    <li><figure class="plate"><img class="" src="media/act.jpg" alt="A rescue boat crosses the river while residents wait at a dock." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">02</span><span>Routing a boat to a waiting group</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Your hands give the orders</h3><p>Pinch a tool and drop it on a glowing spot. Pick a group, then where they go. Nobody can be picked up and carried: only the plan moves people.</p></div></li>
-    <li><figure class="plate"><img class="" src="media/rescue.jpg" alt="A glass card above the board reads Rescue complete, with each goal marked Done." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">03</span><span>Results after a rescue</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Find out why it worked</h3><p>Results show who reached safety, and a short debrief names the moment that mattered.</p></div></li>
-    <li><figure class="plate"><img class="" src="media/menu.jpg" alt="A glass card above the board lists the missions for one world." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">04</span><span>Choosing a mission</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Then find another way</h3><p>Every mission has two quite different winning plans, and 30 challenges change the rules once you know them.</p></div></li>
-  </ol>
-</section>
-<section class="room dark-room" aria-labelledby="h-set">
-  <div class="room-head"><p class="card-kicker">Ways to play</p><h2 id="h-set">Nobody needs two steady hands.</h2>
-  <p class="room-text">These are the game’s real settings, remembered between sessions.</p>
-  <p class="run" style="margin-top:20px"><a class="btn ghost" href="accessibility.html">Everything about access</a></p></div>
-  <div class="glass settings"><p class="card-kicker">Settings</p><ul><li class="set-row"><span class="set-name">Controls</span><span class="set-vals"><span class="seg on">Two hands</span><span class="seg">One hand</span><span class="seg">Hands-free</span></span><span class="set-note">Every mission finishes with either hand alone, or with no hands: look at a control until it fills.</span></li><li class="set-row"><span class="set-name">Text size</span><span class="set-vals"><span class="seg on">100%</span><span class="seg">125%</span><span class="seg">150%</span></span><span class="set-note">Menus, warnings, the tool tray and the run controls all grow.</span></li><li class="set-row"><span class="set-name">Pace</span><span class="set-vals"><span class="seg on">Standard</span><span class="seg">Relaxed</span><span class="seg">Command</span></span><span class="set-note">Relaxed slows the hazards. Command steps time forward 1 or 5 seconds at a time.</span></li><li class="set-row"><span class="set-name">Contrast</span><span class="set-vals"><span class="seg on">Glass</span><span class="seg">High contrast</span></span><span class="set-note">High contrast puts solid panels behind all text.</span></li><li class="set-row"><span class="set-name">Effects</span><span class="set-vals"><span class="seg on">Full</span><span class="seg">Reduced</span></span><span class="set-note">Reduced stops flicker and pulsing without hiding any hazard.</span></li><li class="set-row"><span class="set-name">Missions</span><span class="set-vals"><span class="seg on">In order</span><span class="seg">Open play</span></span><span class="set-note">Open play unlocks everything. Each world’s first mission is always open.</span></li></ul></div>
+<section class="hands" aria-labelledby="h-hands">
+  <div class="section-intro"><p class="label">Hands first</p><h2 id="h-hands">Two hands, one hand, or none at all.</h2></div>
+  <ul class="ways">
+    <li><b>Pinch and place.</b> Tools come from a tray at the near edge of the board; drop them on glowing spots.</li>
+    <li><b>Either hand alone.</b> Every mission can be finished one-handed, left or right.</li>
+    <li><b>Hands-free.</b> Look at a control until it fills, and step time forward one or five seconds at a time.</li>
+    <li><b>Seated, two-foot reach.</b> Text to 150%, high contrast, calmer visuals and a relaxed pace are in Settings.</li>
+  </ul>
+  <p><a class="btn" href="how-to-play.html">How it plays</a> <a class="btn ghost" href="accessibility.html">Accessibility</a></p>
 </section>
 </main>
-<footer class="debrief">
-  <div class="glass debrief-card">
-    <p class="card-kicker"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>Debrief</span></p>
-    <p class="debrief-status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p>
-    <p class="debrief-note">Images are the development build rendered in the Unity Editor (October 2026), labelled “Editor render”. Panels on this site are the game’s own interface rebuilt for the web. None of it is headset footage, and none of it is AI-generated.</p>
-    <ul class="debrief-links"><li><a class="btn ghost" href="worlds.html">Worlds</a></li><li><a class="btn ghost" href="how-to-play.html">How it plays</a></li><li><a class="btn ghost" href="accessibility.html">Accessibility</a></li><li><a class="btn ghost" href="press.html">Press</a></li><li><a class="btn ghost" href="support.html">Support</a></li><li><a class="btn ghost" href="privacy.html">Privacy</a></li></ul>
-    <p class="debrief-note">Made by Amir Lotfy.</p>
-  </div>
+<footer class="foot">
+  <div class="foot-mark"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></div>
+  <p class="foot-status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p>
+  <ul class="foot-links"><li><a href="index.html" aria-current="page">Home</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+  <p class="foot-note">The valleys on this site are drawn from RESQ's own mission files, and the flood replays the game's deterministic simulation. Photographs are the development build rendered in the Unity Editor (October 2026), labelled “Editor render”. None of it is headset footage, and none of it is AI-generated. Made by Amir Lotfy.</p>
 </footer>
-<nav class="tray" aria-label="Main">
-  <ul><li><a class="tool" href="worlds.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="tool-name"><span class="long">Worlds</span><span class="short" aria-hidden="true">Worlds</span></span><span class="tool-sub">5 valleys</span></a></li><li><a class="tool" href="how-to-play.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1.5a1.5 1.5 0 0 1 3 0V12m0-.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-.5a6 6 0 0 1-4.9-2.6L4 16.5a1.5 1.5 0 0 1 2.4-1.8L8 16"/></svg><span class="tool-name"><span class="long">How it plays</span><span class="short" aria-hidden="true">Play</span></span><span class="tool-sub">4 steps</span></a></li><li><a class="tool" href="accessibility.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M5 8.5l7 1.5 7-1.5M12 10v4.5m0 0l-3.5 6.5M12 14.5l3.5 6.5"/></svg><span class="tool-name"><span class="long">Access</span><span class="short" aria-hidden="true">Access</span></span><span class="tool-sub">8 options</span></a></li><li><a class="tool" href="press.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="1.5"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8.5 7l1.5-3h4l1.5 3"/></svg><span class="tool-name"><span class="long">Press</span><span class="short" aria-hidden="true">Press</span></span><span class="tool-sub">Fact sheet</span></a></li>
-    <li class="sheet-slot"><details class="sheet"><summary class="tool"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="tool-name">Menu</span><span class="tool-sub">All pages</span></summary>
-      <div class="glass sheet-card"><p class="card-kicker">Menu</p><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></details></li>
-  </ul>
-</nav>
-<script>
-// the Menu sheet closes on Escape, on a tap outside it, and after choosing a page
-const s=document.querySelector('.sheet');
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&s.open){s.open=false;s.querySelector('summary').focus();}});
-document.addEventListener('click',e=>{if(s.open&&!s.contains(e.target))s.open=false;});
-</script>
+<script src="js/valley.js?v=43f37124" defer></script>
 </body>
 </html>

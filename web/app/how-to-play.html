@@ -5,44 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>How it plays · RESQ</title>
 <meta name="description" content="Placing the board, reading warnings, placing equipment and routing residents in RESQ.">
-<meta name="theme-color" content="#131A1D">
+<meta name="theme-color" content="#E8EDEE">
 <link rel="icon" href="media/icon.png">
 <link rel="preload" href="fonts/AtkinsonHyperlegible-Bold.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="stylesheet" href="site.css?v=ccf46685">
+<link rel="stylesheet" href="site.css?v=2d9875c2">
 </head>
 <body class="">
 <a class="skip" href="#main">Skip to content</a>
-<header class="hud">
+<header class="top">
   <a class="mark" href="index.html" aria-label="RESQ home"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></a>
-  <ul class="chips" aria-label="Status">
-    <li class="chip warn"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19L12 3.5z"/><path d="M12 10v4.5"/><circle cx="12" cy="17.3" r=".6"/></svg>In development</li>
-    <li class="chip hide-s"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>5 worlds · 25 missions</li>
-    <li class="chip hide-s">Meta Quest 3 · 3S</li>
-  </ul>
+  <nav aria-label="Main"><ul class="links"><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html" aria-current="page">How it plays</a></li><li><a href="accessibility.html">Access</a></li><li><a href="press.html">Press</a></li></ul></nav>
+  <details class="menu"><summary aria-label="Menu"><span>Menu</span></summary>
+    <div class="menu-sheet"><ul><li><a href="index.html">Home</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html" aria-current="page">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul><p class="menu-note">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p></div></details>
 </header>
 <main id="main">
 <section class="room page-top"><div class="room-head glass"><p class="card-kicker">Briefing</p><h1>How it plays</h1><p class="room-text">RESQ finds a real table in your room and fits the board to it: wide on a big table, compact on a small one, or a virtual table if there’s none. It stays where you left it next time.</p></div></section><section class="room"><ol class="plates"><li><figure class="plate"><img class="" src="media/plan.jpg" alt="A tool hovering over the board shows a forecast: green cells stay dry, red cells would flood." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">01</span><span>Forecast while placing a barrier</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Read the warnings, test an idea</h3><p>The card behind the board lists who needs help and what’s coming. Pinch a tool and hover it over a glowing spot: the forecast shows what that placement changes over the next minute. The clock doesn’t start until you press Start.</p></div></li><li><figure class="plate"><img class="" src="media/act.jpg" alt="A rescue boat crosses the river while residents wait at a dock." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">02</span><span>Routing a boat to a waiting group</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Place, route, adjust</h3><p>Pinch or poke a tool card, then a spot on the board; or pinch, drag and let go. To move people, pick a group and then a destination. For a boat, bus, crawler or winch, pick the vehicle, the group, then the drop-off. Tap a placed pump, generator or sprinkler to switch it.</p></div></li><li><figure class="plate"><img class="" src="media/rescue.jpg" alt="A glass card above the board reads Rescue complete, with each goal marked Done." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">03</span><span>Results after a rescue</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>See what happened</h3><p>Results show who reached safety and which goals you met. The debrief names the moment that mattered, and you can try the other plan.</p></div></li><li><figure class="plate"><img class="" src="media/menu.jpg" alt="A glass card above the board lists the missions for one world." width="1920" height="1080" loading="lazy" decoding="async"><figcaption class="glass"><span class="tag">04</span><span>Choosing a mission</span><span class="r">Editor render</span></figcaption></figure><div class="plate-text"><h3>Pause any time</h3><p>The Menu control is always on the run controls, and pausing freezes everything. In hands-free play, look at a control until it fills. If your hands leave view mid-rescue, the game pauses and waits.</p></div></li></ol></section>
 </main>
-<footer class="debrief">
-  <div class="glass debrief-card">
-    <p class="card-kicker"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>Debrief</span></p>
-    <p class="debrief-status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p>
-    <p class="debrief-note">Images are the development build rendered in the Unity Editor (October 2026), labelled “Editor render”. Panels on this site are the game’s own interface rebuilt for the web. None of it is headset footage, and none of it is AI-generated.</p>
-    <ul class="debrief-links"><li><a class="btn ghost" href="worlds.html">Worlds</a></li><li><a class="btn ghost" href="how-to-play.html">How it plays</a></li><li><a class="btn ghost" href="accessibility.html">Accessibility</a></li><li><a class="btn ghost" href="press.html">Press</a></li><li><a class="btn ghost" href="support.html">Support</a></li><li><a class="btn ghost" href="privacy.html">Privacy</a></li></ul>
-    <p class="debrief-note">Made by Amir Lotfy.</p>
-  </div>
+<footer class="foot">
+  <div class="foot-mark"><svg class="ring" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="13" fill="#FF6B35"/><circle cx="16" cy="16" r="7" fill="#fff"/><g fill="#fff"><rect x="14" y="2" width="4" height="7"/><rect x="14" y="23" width="4" height="7"/><rect x="2" y="14" width="7" height="4"/><rect x="23" y="14" width="7" height="4"/></g></svg><span>RESQ</span></div>
+  <p class="foot-status">In development for the Meta VR Start Developer Competition 2026. Not yet released.</p>
+  <ul class="foot-links"><li><a href="index.html">Home</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html" aria-current="page">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul>
+  <p class="foot-note">The valleys on this site are drawn from RESQ's own mission files, and the flood replays the game's deterministic simulation. Photographs are the development build rendered in the Unity Editor (October 2026), labelled “Editor render”. None of it is headset footage, and none of it is AI-generated. Made by Amir Lotfy.</p>
 </footer>
-<nav class="tray" aria-label="Main">
-  <ul><li><a class="tool" href="worlds.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span class="tool-name"><span class="long">Worlds</span><span class="short" aria-hidden="true">Worlds</span></span><span class="tool-sub">5 valleys</span></a></li><li><a class="tool" href="how-to-play.html" aria-current="page"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12m0-1.5a1.5 1.5 0 0 1 3 0V12m0-.5a1.5 1.5 0 0 1 3 0v4.5a6 6 0 0 1-6 6h-.5a6 6 0 0 1-4.9-2.6L4 16.5a1.5 1.5 0 0 1 2.4-1.8L8 16"/></svg><span class="tool-name"><span class="long">How it plays</span><span class="short" aria-hidden="true">Play</span></span><span class="tool-sub">4 steps</span></a></li><li><a class="tool" href="accessibility.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M5 8.5l7 1.5 7-1.5M12 10v4.5m0 0l-3.5 6.5M12 14.5l3.5 6.5"/></svg><span class="tool-name"><span class="long">Access</span><span class="short" aria-hidden="true">Access</span></span><span class="tool-sub">8 options</span></a></li><li><a class="tool" href="press.html"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="1.5"/><circle cx="12" cy="13.5" r="3.5"/><path d="M8.5 7l1.5-3h4l1.5 3"/></svg><span class="tool-name"><span class="long">Press</span><span class="short" aria-hidden="true">Press</span></span><span class="tool-sub">Fact sheet</span></a></li>
-    <li class="sheet-slot"><details class="sheet"><summary class="tool"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span class="tool-name">Menu</span><span class="tool-sub">All pages</span></summary>
-      <div class="glass sheet-card"><p class="card-kicker">Menu</p><ul><li><a href="index.html">Home</a></li><li><a href="worlds.html">Worlds</a></li><li><a href="how-to-play.html" aria-current="page">How it plays</a></li><li><a href="accessibility.html">Accessibility</a></li><li><a href="press.html">Press</a></li><li><a href="support.html">Support</a></li><li><a href="privacy.html">Privacy</a></li></ul></div></details></li>
-  </ul>
-</nav>
-<script>
-// the Menu sheet closes on Escape, on a tap outside it, and after choosing a page
-const s=document.querySelector('.sheet');
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&s.open){s.open=false;s.querySelector('summary').focus();}});
-document.addEventListener('click',e=>{if(s.open&&!s.contains(e.target))s.open=false;});
-</script>
+<script src="js/valley.js?v=43f37124" defer></script>
 </body>
 </html>
