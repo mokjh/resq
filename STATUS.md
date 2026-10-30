@@ -49,7 +49,7 @@
      - shadows were far too faint: URP blends in linear space, so 0.65 opacity darkened grass by only ~27%. Shadows now use a soft opaque core and 0.9/0.15 near/far opacity, and read clearly in the capture;
      - recovery receded to the first rendered frame, not the mission's starting water; it now uses `WInitVol` (55 wet cells vs 139 at the end of a won First Crossing);
      - one material per shadow slot.
-     **Gate re-run on the fixed code is still pending.** The disk watchdog stopped the Editor mid-run at 6.2 GB free, and Waz batch tests were running again.
+     **Gate re-run on the fixed code is still pending (blocked 3 times on 30 Oct).** Waz and Waz Vr batch Unity tests keep starting on their own, and disk keeps falling below 10 GB (7.0 GB at 06:40; Waz is 21 GB, Waz Vr 6 GB, swap 5 GB). Alternative in place: `tools/unity/gate_when_free.sh` runs the gate by itself once there have been 3 minutes with no other Unity job and ≥ 10 GB free; it writes `tools/.cache/gate_when_free.txt`.
    Resident clips are done (28 Oct): one waver per waiting group, one cheer per safe landing.
 6. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
 
