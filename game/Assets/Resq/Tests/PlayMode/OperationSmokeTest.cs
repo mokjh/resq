@@ -111,6 +111,9 @@ namespace Resq.Tests
             yield return null;
             yield return null;
             Assert.AreEqual(0, _driver.Sim.S.C.O, "restarted run starts at operation step 0");
+            // a restart rebuilds the tool tray: every card must show its stock and cost again, not just its name
+            foreach (var card in Object.FindObjectsByType<Transform>(FindObjectsSortMode.None).Where(t => t.name.StartsWith("Card_") && t.gameObject.activeInHierarchy))
+                StringAssert.Contains("supply", card.GetComponentInChildren<TMPro.TextMeshPro>().text, $"{card.name} after restart");
             S = _driver.Sim.S;
 
             var script = ContentLibrary.Strategy(mission, "A");

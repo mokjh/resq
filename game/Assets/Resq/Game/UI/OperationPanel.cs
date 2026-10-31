@@ -46,6 +46,7 @@ namespace Resq.Game
             if (_glass == null) _glass = new Material(Shader.Find("Resq/Glass"));
             foreach (Transform t in transform) Destroy(t.gameObject);
             _cards.Clear();
+            _cardState.Clear();   // new cards start with bare names: a state remembered from the last run must not skip their stock line (found 31 Oct)
             var ext = BoardSpace.Extent(_def) * 0.5f;
             BuildTray(ext);
             BuildControls(ext);

@@ -79,7 +79,7 @@ namespace Resq.Game
             var ext = BoardSpace.Extent(_def) * 0.5f;
             _root = new GameObject("HudRoot").transform;
             _root.SetParent(transform, false);
-            _root.localPosition = new Vector3(0, 0.17f, ext.y + 0.05f);
+            _root.localPosition = new Vector3(0, 0.135f, ext.y + 0.05f);   // within 30° of the seated gaze on the board centre (FovTest)
             _root.localRotation = Quaternion.Euler(-8f, 0, 0); // tipped slightly toward the seated player
             _root.localScale = Vector3.one * Comfort.UiScale;  // text-size setting: the whole HUD grows, so nothing clips
 
@@ -99,17 +99,22 @@ namespace Resq.Game
         }
 
         // ------------------------------------------------------------------ objectives card
+        // the HUD spans ±HalfSpan, not the board's full width, so its corners stay within 30° of the seated gaze (FovTest)
+        const float HalfSpan = 0.31f;
+
         void BuildCard(Vector2 ext)
         {
             var lines = ObjectiveLines(_def);
-            float w = 0.34f, rowH = 0.024f, head = 0.062f;
+            float w = 0.31f, rowH = 0.024f, head = 0.062f;   // ends at the centre line, clear of the run controls
             float h = head + rowH * lines.Count + 0.014f;
-            float left = -ext.x - 0.02f + w * 0.5f;
+            float left = -HalfSpan + w * 0.5f;
             _card = UiKit.Panel(_root, "ObjectivesCard", new Vector3(left, -h * 0.5f + 0.06f, 0), w, h, _glass);
             float top = h * 0.5f;
             UiKit.IconObj(_card, WorldIcon(_def.WorldId), new Vector3(-w / 2 + 0.024f, top - 0.026f, 0), 0.026f, UiKit.Accent, _glass);
-            UiKit.Text(_card, $"{WorldName(_def.WorldId)} - {_def.Title}", new Vector3(-w / 2 + 0.046f + 0.11f, top - 0.018f, 0), 0.14f, UiKit.Ink, true, 0.23f, 0.02f);
-            UiKit.Text(_card, Taglines.TryGetValue(_def.WorldId ?? "", out var tag) ? tag : "", new Vector3(-w / 2 + 0.046f + 0.11f, top - 0.038f, 0), 0.10f, UiKit.Accent, false, 0.23f, 0.016f);
+            var title = UiKit.Text(_card, $"{WorldName(_def.WorldId)} - {_def.Title}", new Vector3(-w / 2 + 0.046f + 0.10f, top - 0.018f, 0), 0.14f, UiKit.Ink, true, 0.21f, 0.02f);
+            // long "World - Title" lines shrink to fit rather than cut off, never below the tagline's size
+            title.enableAutoSizing = true; title.fontSizeMin = 0.10f; title.fontSizeMax = 0.14f;
+            UiKit.Text(_card, Taglines.TryGetValue(_def.WorldId ?? "", out var tag) ? tag : "", new Vector3(-w / 2 + 0.046f + 0.10f, top - 0.038f, 0), 0.10f, UiKit.Accent, false, 0.21f, 0.016f);
             _progress = UiKit.Text(_card, "", new Vector3(w / 2 - 0.03f, top - 0.022f, 0), 0.16f, UiKit.Ink, true, 0.05f, 0.02f, TextAlignmentOptions.Center);
             UiKit.Text(_card, "Objectives", new Vector3(w / 2 - 0.03f, top - 0.04f, 0), 0.085f, UiKit.InkSoft, false, 0.05f, 0.014f, TextAlignmentOptions.Center);
             // divider
@@ -122,7 +127,7 @@ namespace Resq.Game
             {
                 float y = top - head - rowH * (i + 0.5f);
                 var icon = UiKit.IconObj(_card, Icon.Ring, new Vector3(-w / 2 + 0.024f, y, 0), 0.016f, UiKit.InkSoft, _glass);
-                var text = UiKit.Text(_card, lines[i].label, new Vector3(-w / 2 + 0.04f + 0.135f, y, 0), 0.11f, UiKit.Ink, false, 0.27f, 0.02f);
+                var text = UiKit.Text(_card, lines[i].label, new Vector3(-w / 2 + 0.04f + 0.125f, y, 0), 0.11f, UiKit.Ink, false, 0.25f, 0.02f);
                 _rows.Add((lines[i].objective, lines[i].label, text, icon.GetComponent<MeshFilter>()));
             }
         }
@@ -183,8 +188,8 @@ namespace Resq.Game
             if (_def.FireEnabled && HasWind()) kinds.Add(("wind", Icon.Wind, "Wind"));
             if (_def.SupportIds.Length > 0) kinds.Add(("stability", Icon.Mountain, "Stability"));
             if (_def.CoolantIds.Length > 0) kinds.Add(("coolant", Icon.Drop, "Coolant"));
-            float w = 0.098f, h = 0.05f, gap = 0.008f;
-            float right = ext.x + 0.02f;
+            float w = 0.09f, h = 0.05f, gap = 0.006f;
+            float right = HalfSpan;
             for (int i = 0; i < kinds.Count; i++)
             {
                 int fromRight = kinds.Count - 1 - i;

@@ -6,7 +6,7 @@
 - **Sim (automated, headless):** 68/68 (`python3 tools/simtest/simtest.py sim`).
 - **Mission matrix (automated, headless):** 25/25 missions × 18 configs = 450/450; strategies A and B win 3★ everywhere.
 - **Challenges (automated, headless):** 30 challenges × 2 layouts × 2 plans = 120/120 win (`python3 tools/simtest/simtest.py lab challenge all`).
-- **PlayMode (automated, Editor):** 15/15 (`bash tools/unity/smoke.sh`):
+- **PlayMode (automated, Editor):** 17/17 on 31 Oct (`bash tools/unity/smoke.sh`, or `tools/unity/gate_when_free.sh` to wait for a free machine), now including hand shadows and FoV:
   - each world's M1 won through real pointer presses, with the render budget checked;
   - the Command path won through head dwell;
   - table placement in 40 MRUK sample rooms;
@@ -51,9 +51,11 @@
      - one material per shadow slot.
      **Gate re-run on the fixed code: PASS 16/16 (30 Oct, 23:30; automated, Editor PlayMode)**, including HandShadowTest and the aftercare recovery asserts. While RESQ's Editor runs, pause Waz/Waz Vr sessions; their verify scripts launch batch Unity jobs. `tools/unity/gate_when_free.sh` waits for a free machine.
    Resident clips are done (28 Oct): one waver per waiting group, one cheer per safe landing.
-6. **FoV-aware UI (new 31 Oct):** an audit with Meta's device-readiness skill found no controller or legacy input and no head-locked UI; everything is world-locked to the board and faces the player. The new `FovTest` (PlayMode) measures live UI from the virtual-table head against Meta's 30° primary zone.
-   - It found the briefing card rising to 18° above eye level, 0.43 m from the head (inside Meta's 0.5 m near limit). The menu anchor now sits over the board's middle, 0.67 m away, and the card measures 29.1° from the resting gaze (−18° to +10°).
-   - With the move, the other 16 PlayMode tests pass. Still to measure: the HUD for all five worlds and the pause card. That run was cut off at 00:10, when RESQ's Editor was shut down by something outside RESQ while a Waz Vr batch job ran.
+6. **FoV-aware UI: done 31 Oct.** An audit with Meta's device-readiness skill found no controller or legacy input and no head-locked UI; everything is world-locked to the board and faces the player.
+   - `FovTest` (PlayMode, in the gate) measures the live UI from the virtual-table head against Meta's 30° primary zone. Results: HUD 29.0° on all five worlds (was 31.9°), briefing card 29.1° (was 49.8° and 0.43 m away), pause card 20.8°. Reported only (reach zone): run controls 26.4°, tool tray 33.3°.
+   - Changes: the menu card sits over the board's middle, 0.67 m away. The HUD spans ±0.31 m, 3.5 cm lower. Long HUD titles shrink to fit (no truncation on any of the 25 missions, checked in the Editor).
+   - Found on the way: after a restart, tool cards lost their stock and cost line (stale state). Fixed, and the smoke test now checks it; it failed 6/17 without the fix.
+   - Gate 17/17 (31 Oct 04:10, automated, Editor).
 7. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
 
 ## Waiting on the user
