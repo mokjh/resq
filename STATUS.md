@@ -61,6 +61,7 @@
    - **Limits:** `metavr xrsim record` is not supported by this runtime, so trailer footage depends on P5 device clips (OBS on the Simulator window is the fallback). 36 fps in the Simulator with the Editor on this Mac says nothing about the headset; measure in P5.
 
 ## Waiting on the user
+- **Which game is the entry (blocks channel work):** the rules allow one Entry per person and per organization, and Waz World is aimed at the same competition. See DECISIONS, 5 Nov.
 - Meta VR Start membership and Devpost registration; the "RESQ" app in the Meta dashboard, then `metavr auth login`.
 - **Memory:** 8 GB RAM with heavy swap. The Editor crashed once (Meta ISDK telemetry plugin, 24 Oct 00:08) while other projects' Unity runs and apps were open.
 - **Disk (blocking Unity work):** 1.7 GB free at 23:10 on 28 Oct. macOS swap files reached ~9 GB on disk while Waz's Android build and PlayMode runs overlapped RESQ's Editor on 8 GB RAM. RESQ itself is 4.6 GB. The RESQ Editor needs ≥ 5 GB free to run safely, an APK rebuild ≥ 19 GB, and the plan ~40 GB by 11 Nov.
