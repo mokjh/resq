@@ -17,7 +17,8 @@
   </application>
   <uses-feature android:name="android.hardware.vr.headtracking" android:version="1" android:required="true" />
   <horizonos:uses-horizonos-sdk horizonos:minSdkVersion="60" horizonos:targetSdkVersion="207" />
-  <uses-feature android:name="oculus.software.handtracking" android:required="false" />
+  <!-- required: there is no controller path, so the system must ask for hand tracking if it is off -->
+  <uses-feature android:name="oculus.software.handtracking" android:required="true" />
   <!-- RESQ is fully offline: strip INTERNET merged in by libraries. -->
   <uses-permission android:name="android.permission.INTERNET" tools:node="remove" />
   <uses-permission android:name="com.oculus.permission.HAND_TRACKING" />

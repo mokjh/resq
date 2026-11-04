@@ -38,14 +38,15 @@ WATCH_PID=$!
 trap 'kill $WATCH_PID 2>/dev/null' EXIT
 
 python3 "$UC" editor_stop > /dev/null 2>&1 || true
-python3 "$UC" build --target Android --outputPath "$OUT" --confirm true > /dev/null
-s=""
+# the bridge cannot answer while the Editor's main thread builds, so the result comes from the Editor log
+LOG="$ROOT/tools/.cache/editor.log"; FROM=$(($(wc -l < "$LOG") + 1)); s=""
+python3 "$UC" build --target Android --outputPath "$OUT" --confirm true > /dev/null 2>&1 || true
 for i in $(seq 1 360); do
+  s=$(tail -n "+$FROM" "$LOG" | grep -m1 "Build Finished, Result:" || true)
+  [ -n "$s" ] && break
   sleep 10
-  s=$(python3 "$UC" build_status 2>/dev/null)
-  echo "$s" | grep -q "Succeeded\|Failed\|Cancelled\|\"completed\"" && break
 done
-echo "BUILD: $(echo "$s" | head -c 200)"
+echo "BUILD: ${s:-no result in the Editor log after 60 minutes}"
 echo "BUILD: lowest free disk during the build: $(awk '{print $2}' "$WATCHLOG" | sort -n | head -1) GB"
 ls -la "$OUT" 2>/dev/null || { echo "BUILD: no APK at $OUT"; exit 1; }
 rm -rf "$ROOT/game/build/RESQ_BurstDebugInformation_DoNotShip" "$(dirname "$OUT")"/*_BurstDebugInformation_DoNotShip 2>/dev/null
