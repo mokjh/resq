@@ -85,6 +85,8 @@ namespace Resq.Game
             if (FindFirstObjectByType<OVRCameraRig>() != null)
                 for (float t = 0; t < 3f && !XRSettings.isDeviceActive; t += Time.unscaledDeltaTime) yield return null;
             SetupPointers();
+            var finder = new GameObject("BoardFinder").AddComponent<BoardFinderView>();   // the table MRUK picks can be beside or behind the player
+            finder.Target = Driver.transform;
             bool placement = (XrActive || XrPlacementWithoutDevice) && XrPlacement != null;
             if (placement) StartCoroutine(XrPlacement(this));
             else if (XrActive) StartCoroutine(PlaceInFrontOfHead());

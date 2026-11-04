@@ -1,4 +1,4 @@
-# RESQ status — 28 Oct 2026
+# RESQ status — 5 Nov 2026
 
 **Phase:** P1–P3 software build on the Mac; physical Quest tests stay last (P5, 12–15 Nov). Plan: `BUILD_PLAN.md`. History of earlier milestones: `git log` and `DECISIONS.md`.
 
@@ -6,7 +6,7 @@
 - **Sim (automated, headless):** 68/68 (`python3 tools/simtest/simtest.py sim`).
 - **Mission matrix (automated, headless):** 25/25 missions × 18 configs = 450/450; strategies A and B win 3★ everywhere.
 - **Challenges (automated, headless):** 30 challenges × 2 layouts × 2 plans = 120/120 win (`python3 tools/simtest/simtest.py lab challenge all`).
-- **PlayMode (automated, Editor):** 17/17 on 31 Oct (`bash tools/unity/smoke.sh`, or `tools/unity/gate_when_free.sh` to wait for a free machine), now including hand shadows and FoV:
+- **PlayMode (automated, Editor):** 18/18 on 5 Nov (`bash tools/unity/smoke.sh`, or `tools/unity/gate_when_free.sh` to wait for a free machine), now including hand shadows and FoV:
   - each world's M1 won through real pointer presses, with the render budget checked;
   - the Command path won through head dwell;
   - table placement in 40 MRUK sample rooms;
@@ -56,7 +56,9 @@
    - Changes: the menu card sits over the board's middle, 0.67 m away. The HUD spans ±0.31 m, 3.5 cm lower. Long HUD titles shrink to fit (no truncation on any of the 25 missions, checked in the Editor).
    - Found on the way: after a restart, tool cards lost their stock and cost line (stale state). Fixed, and the smoke test now checks it; it failed 6/17 without the fix.
    - Gate 17/17 (31 Oct 04:10, automated, Editor).
-7. **XR flow check in the simulator:** move board, virtual table, anchor saved on Done, hand-loss pause. The code is written but not yet run in the simulator.
+7. **XR flow check: done 5 Nov (Meta XR Simulator, Quest 3 profile).** Passed: boot, welcome, virtual table, move-board controls, anchor saved on Done, anchor restored on relaunch to the exact moved pose, table found in an MRUK sample room (0.63×0.60 m -> compact), Virtual table reset, hand-loss pause (both hands off -> U16 -> Resume), hand-shadow feeder on real joints. Menu presses used each button's own action, and pinch itself is still untested, since Meta's hand-gesture MCP tools were unavailable. Pinch and real rooms remain for P5.
+   - **Found and fixed:** a chosen table behind the player left them with only their hands in view and no clue. `BoardFinderView` now shows "Your valley is behind you / this way" with an arrow (lazy-follow, no input). Seen in the Simulator at its first size; the final 1.6× scale is covered by `BoardFinderTest`.
+   - **Limits:** `metavr xrsim record` is not supported by this runtime, so trailer footage depends on P5 device clips (OBS on the Simulator window is the fallback). 36 fps in the Simulator with the Editor on this Mac says nothing about the headset; measure in P5.
 
 ## Waiting on the user
 - Meta VR Start membership and Devpost registration; the "RESQ" app in the Meta dashboard, then `metavr auth login`.

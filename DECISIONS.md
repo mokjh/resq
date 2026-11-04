@@ -243,3 +243,8 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Meta:** `metavr` is signed in as Amir Lotfy (30 Oct). Device-code login works where browser OAuth had failed.
 
 - **30 Oct:** The Planning Table deployed to production with the user's OK. Live check: every page and data file returns 200. Spot 3 at 2:20 keeps every place dry (phone); spot 1 at 4:00 floods the road junction from 3:56 (desktop).
+
+## 5 Nov 2026: XR Simulator run
+- **Board finder:** MRUK's nearest fitting table can be behind the player, and the first card stands on the board, so nothing shows. We keep nearest-table placement and add a lazy-follow hint with an arrow, rather than restricting tables to the player's front, because a real table behind you is still the better surface once you turn around.
+- **Trailer footage:** `metavr xrsim record` fails on this runtime ("does not support native MP4 recording"). The trailer plan moves to device clips in P5 (Quest Camera), with OBS on the Simulator window as the fallback. Editor captures stay labelled "Editor render" and do not count as competition footage.
+
