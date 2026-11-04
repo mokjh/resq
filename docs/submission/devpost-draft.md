@@ -1,6 +1,6 @@
 # Devpost entry: draft for the user's review
 
-Status: a draft written 28 Oct 2026 from what is verified in the Editor and Meta XR Simulator.
+Status: a draft written 28 Oct 2026, updated 4 Nov, from what is verified in the Editor and Meta XR Simulator.
 
 - **Markers:** `[P5]` marks a claim that holds only once the device phase (12–15 Nov) confirms it; if it doesn't, the claim is cut. `[you]` marks what only the user can provide.
 - **Counts:** `python3 tools/web/count_words.py docs/submission/devpost-draft.md` checks the tagline and story limits.
@@ -20,29 +20,29 @@ Status: a draft written 28 Oct 2026 from what is verified in the Editor and Meta
 <!-- story:start -->
 **Inspiration**
 
-We wanted a mixed reality game you play sitting down, with real agency in your hands. Not a passive diorama, and not a workout. A rescue at miniature scale felt right: you can see the whole problem at once, and one careful move visibly changes what happens to the people inside it.
+We wanted a seated mixed reality game with real agency in your hands: not a passive diorama, not a workout. A miniature rescue fit: you see the whole problem at once, and one careful move visibly changes what happens to the people inside it.
 
 **What it does**
 
-RESQ places a small valley on your real table. A flood, a forest fire, an avalanche slope, a rising tide or a lava flow is coming, and residents need a way out. You pick tools from a tray with your hands, such as a barrier, bridge, pump, skiff, firebreak, brace or coolant, and place them on legal spots. Before you commit, a forecast runs the real simulation ahead and shows which cells stay dry and which newly flood. Then start the clock and watch your plan play out.
+RESQ places a small valley on your real table. A flood, a forest fire, an avalanche slope, a rising tide or a lava flow is coming, and residents need a way out. You pinch tools from a tray, such as a barrier, bridge, pump, skiff, firebreak, brace or coolant, and place them on legal spots. Before you commit, a forecast runs the real simulation ahead and shows which cells stay dry and which newly flood. Then start the clock and watch.
 
-There are five worlds and 25 missions. Each has two very different winning plans, three rule presets (Standard, Relaxed and Command) and 30 named challenges. After every run, a debrief explains the cause and effect behind what happened, and the valley you saved slowly rebuilds between sessions `[G: repair visuals not built yet]`.
+There are five worlds and 25 missions, each with two very different winning plans, three rule presets (Standard, Relaxed and Command) and 30 named challenges. A debrief explains the cause and effect behind every run, and in aftercare you watch the valley recover: the water drains, the hazards fade and everyone home cheers.
 
 **Hands first, and more than one way to play**
 
-Everything works with hands: poke and pinch for the tray, ray and pinch for distant spots `[P5: pinch]`. One-hand play mirrors the controls for either hand. Command mode turns it into a turn-based puzzle: a head-gaze dwell selects, and +1 s / +5 s step controls advance time, so the whole game also works without fine finger movement. Text scales to 150 %, and there are high-contrast and reduced-effects modes plus an Open play option that unlocks every mission.
+Everything works with hands: poke and pinch for the tray, ray and pinch for distant spots `[P5: pinch]`. One-hand play mirrors the controls for either hand. Command mode turns it into a turn-based puzzle: a head-gaze dwell selects, and +1 s / +5 s step controls advance time, so the whole game also works without fine finger movement. Text scales to 150 %, with high-contrast and reduced-effects modes and an Open play option that unlocks every mission.
 
 **Your room matters**
 
-RESQ uses the Mixed Reality Utility Kit to find a table that fits. A long table gets the wide layout and a small one gets the compact layout, which changes the mission (the primary dock swaps). With no table, it builds a virtual one. Your valley is saved as a spatial anchor, so it is still on your table next time. `[P5]`
+RESQ uses the Mixed Reality Utility Kit to find a table that fits. A long table gets the wide layout and a small one the compact layout, which changes the mission. With no table, it builds a virtual one. Your valley is saved as a spatial anchor, so it is still there next time, and your real hands cast soft shadows on it, so you can judge height before you touch. `[P5]`
 
 **How we built it**
 
-Unity 6 with URP, the Meta XR Core and Interaction SDKs (v207) and MRUK. The rules run in a deterministic, integer-only simulation separate from rendering, so physics or frame rate never decide an outcome. A mission factory compiles each map from a recipe and contract. A headless validator then proves that doing nothing fails and that both reference plans win on both layouts in every preset: 450 of 450 runs pass, plus 120 of 120 challenge runs. The art is original, made with scripted Blender kits on one palette. The music and sound are synthesised from code.
+Unity 6 with URP, the Meta XR Core and Interaction SDKs (v207) and MRUK. The rules run in a deterministic, integer-only simulation, so physics or frame rate never decide an outcome. A mission factory compiles each map from a recipe and contract. A headless validator proves that doing nothing fails and that both reference plans win on both layouts in every preset: 450 of 450 runs pass, plus 120 of 120 challenge runs. Tests also keep must-see UI within 30° of a seated player's gaze. The art is original, from scripted Blender kits on one palette; the music and sound are synthesised from code.
 
 **Challenges**
 
-Making the forecast honest and fast: it runs the actual simulation ahead on a worker thread instead of drawing a guess. Fitting five rule sets into one engine without letting presentation leak into outcomes. And building it all on an 8 GB laptop.
+An honest, fast forecast: it runs the real simulation ahead on a worker thread instead of drawing a guess. Five rule sets in one engine, with presentation never touching outcomes. And building it all on an 8 GB laptop.
 
 **What's next**
 
