@@ -60,7 +60,7 @@ Question for the hackathon manager, once Mohamed's real role is filled in:
 > Hi, please confirm this setup before we submit. RESQ: Mohamed Tarek is the Team Representative and submits it from his own account; his role is [his real role]. I, Amir Lotfy, am a non-Representative member and built most of the game. We'll list both of us with our roles on the form. The app sits in a Meta developer team Mohamed created, where I'm also an administrator. Separately, I'm submitting a different project, Waz World, as a solo entrant. Does this fit the Entry Limit and Permitted Participation Scenario (ii)?
 
 ## Also needs the owner
-1. **Empty the Trash.** It holds 21 GB, and under 3 GB is free (5 Nov, 07:15). The matrix needs 10 GB and the signed build 21 GB.
+1. **Free disk.** About 2 GB is free (5 Nov); the matrix needs 10 GB and the signed build 21 GB. Swap took about 12 GB: closing apps or restarting returns it. The Trash is already empty.
 2. **Back up** `~/keys/resq.keystore` off this Mac. Losing it means no updates under the same signature.
 3. **Support email** and the developer name to show on the store page.
 4. **Headset, 12 to 15 Nov:** see below.

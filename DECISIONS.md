@@ -267,4 +267,4 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 ## 5 Nov 2026: input matrix attempt, disk
 - The first matrix attempt started no tests. All three matrix tests are `[Explicit]`, and `run_tests` drops those unless `include_explicit` is set. The Editor log shows no run after the 05:02 gate. The 2-hour wait ended with "no result", and that is not a pass. `matrix.sh` now passes the flag and fails within 5 minutes if no run starts.
 - Re-run headless on the same code: sim 68/68, missions 450/450, challenges 120/120.
-- Free disk fell to 0.2 to 3 GB, below the 10 GB floor, so no Unity work runs until there is room. Emptying the Trash is the owner's call.
+- Free disk fell to 0.2 to 3 GB, below the 10 GB floor, so no Unity work runs until there is room. The owner emptied the Trash, which freed almost nothing. Its 21 GB figure was a `du` overstatement, probably APFS clones. Swap on the VM volume (11.8 GB) is the larger swing. The user then stopped all RESQ work.
