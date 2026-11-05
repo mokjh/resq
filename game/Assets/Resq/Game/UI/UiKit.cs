@@ -36,6 +36,35 @@ namespace Resq.Game
             return asset;
         }
 
+        // ------------------------------------------------------------------ UI that a tall tree must never cover
+        static readonly Dictionary<TMP_FontAsset, Material> _overlayText = new Dictionary<TMP_FontAsset, Material>();
+
+        /// <summary>Glass without a depth test, for the far-side HUD: the board's tallest trees reach its lower rows.</summary>
+        public static Material OverlayGlass()
+        {
+            var m = new Material(Shader.Find("Resq/Glass")) { name = "GlassOverlay" };
+            m.SetFloat("_ZTest", (float)UnityEngine.Rendering.CompareFunction.Always);
+            return m;
+        }
+
+        /// <summary>The same for every text under root (shared per font, so it adds no material per text).</summary>
+        public static void DrawOverBoard(Transform root)
+        {
+            var sh = Shader.Find("TextMeshPro/Mobile/Distance Field Overlay");
+            if (sh == null) return;
+            foreach (var t in root.GetComponentsInChildren<TextMeshPro>(true))
+            {
+                if (t.font == null) continue;
+                if (!_overlayText.TryGetValue(t.font, out var m) || m == null)
+                {
+                    m = new Material(sh) { name = t.font.name + " Overlay" };
+                    m.CopyPropertiesFromMaterial(t.font.material);
+                    _overlayText[t.font] = m;
+                }
+                t.fontSharedMaterial = m;
+            }
+        }
+
         // ------------------------------------------------------------------ panels
         /// <summary>Rounded rectangle centred on the origin; UV.y runs 0→1 bottom to top (for the glass sheen).</summary>
         public static Mesh RoundedRect(float w, float h, float r, Color fill, int cornerSegs = 6)

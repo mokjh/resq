@@ -5,6 +5,7 @@ Shader "Resq/Glass"
 {
     Properties
     {
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("Depth test", Float) = 4
         _Sheen ("Top Sheen (linear)", Range(0,0.2)) = 0.02
     }
     SubShader
@@ -16,6 +17,7 @@ Shader "Resq/Glass"
             Tags { "LightMode"="UniversalForward" }
             Blend SrcAlpha OneMinusSrcAlpha, One OneMinusSrcAlpha
             ZWrite Off
+            ZTest [_ZTest]
             Cull Off
             HLSLPROGRAM
             #pragma vertex vert

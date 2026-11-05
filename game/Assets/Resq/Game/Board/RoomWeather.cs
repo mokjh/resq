@@ -39,14 +39,14 @@ namespace Resq.Game
                     return new Preset { Kind = Fall.Snow, Rate = 22, Speed = 0.2f, Size = 0.0045f, Wind = 0.05f, Color = new Color(1f, 1f, 1f, 0.85f),
                                         RoomTint = new Color(0.82f, 0.91f, 1f), RoomExposure = 0.68f, RoomSaturation = 0.45f };
                 case "W4":  // Tidemark: a slanting squall at dusk
-                    return new Preset { Kind = Fall.Rain, Rate = 70, Speed = 2f, Size = 0.0012f, Stretch = 0.018f, Wind = 0.35f, Color = new Color(0.8f, 0.88f, 1f, 0.3f),
+                    return new Preset { Kind = Fall.Rain, Rate = 120, Speed = 2f, Size = 0.0015f, Stretch = 0.018f, Wind = 0.35f, Color = new Color(0.82f, 0.9f, 1f, 0.45f),
                                         StrikeMin = 16f, StrikeMax = 34f, Cloud = true,
                                         RoomTint = new Color(1f, 0.8f, 0.76f), RoomExposure = 0.58f, RoomSaturation = 0.7f };
                 case "W5":  // Cinder Reach: embers and a red room
                     return new Preset { Kind = Fall.Embers, Rate = 22, Speed = 0.42f, Size = 0.003f, Wind = 0.08f, Color = new Color(1f, 0.36f, 0.1f, 0.95f),
                                         RoomTint = new Color(1f, 0.58f, 0.44f), RoomExposure = 0.46f, RoomSaturation = 0.6f };
                 default:    // Alder Valley: the storm behind the flood
-                    return new Preset { Kind = Fall.Rain, Rate = 110, Speed = 2.3f, Size = 0.0012f, Stretch = 0.02f, Wind = 0.08f, Color = new Color(0.78f, 0.87f, 1f, 0.32f),
+                    return new Preset { Kind = Fall.Rain, Rate = 200, Speed = 2.3f, Size = 0.0015f, Stretch = 0.02f, Wind = 0.08f, Color = new Color(0.8f, 0.89f, 1f, 0.45f),
                                         StrikeMin = 11f, StrikeMax = 26f, Cloud = true,
                                         RoomTint = new Color(0.78f, 0.86f, 1f), RoomExposure = 0.46f, RoomSaturation = 0.55f };
             }

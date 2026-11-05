@@ -40,7 +40,7 @@ namespace Resq.Tests
         Pointer _pointer;
 
         [SetUp] public void SetUp() { _dir = Path.Combine(Path.GetTempPath(), "resq_fov_" + System.Guid.NewGuid().ToString("N")); Directory.CreateDirectory(_dir); SaveStore.Folder = _dir; }
-        [TearDown] public void TearDown() { Comfort.UiScale = 1f; SaveStore.Folder = null; try { Directory.Delete(_dir, true); } catch (IOException) { } }
+        [TearDown] public void TearDown() { Comfort.UiScale = 1f; OperationPanel.DevControlsOverride = null; SaveStore.Folder = null; try { Directory.Delete(_dir, true); } catch (IOException) { } }
 
         [UnityTest]
         public IEnumerator MustSeeUiStaysInsideTheCentralThirtyDegrees()
@@ -97,6 +97,25 @@ namespace Resq.Tests
             }
             Comfort.UiScale = 1f;
             _boot.Panel.Rebuild(); _boot.Hud.Rebuild();
+            yield return null;
+
+            // the toast and caption, when they appear, must not cover the run controls or each other (shipping layout)
+            OperationPanel.DevControlsOverride = false;
+            _boot.Panel.Rebuild();
+            yield return null;
+            yield return null;
+            SeatPlayer();
+            var hudRoot = Find("HudRoot");
+            var toast = hudRoot.Find("Toast"); var caption = hudRoot.Find("Caption");
+            toast.gameObject.SetActive(true); caption.gameObject.SetActive(true);
+            Physics.SyncTransforms();
+            var toastRect = ViewRect(toast); var captionRect = ViewRect(caption); var controlsRect = ViewRect(Find("Controls"));
+            toast.gameObject.SetActive(false); caption.gameObject.SetActive(false);
+            OperationPanel.DevControlsOverride = null;
+            _boot.Panel.Rebuild();
+            Assert.IsFalse(toastRect.Overlaps(controlsRect), $"the toast {toastRect} covers the run controls {controlsRect}");
+            Assert.IsFalse(captionRect.Overlaps(controlsRect), $"the caption {captionRect} covers the run controls {controlsRect}");
+            Assert.IsFalse(captionRect.Overlaps(toastRect), $"the caption {captionRect} covers the toast {toastRect}");
             yield return null;
 
             _flow.Pause();

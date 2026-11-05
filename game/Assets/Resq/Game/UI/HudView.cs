@@ -20,7 +20,7 @@ namespace Resq.Game
         public bool HandsActive;
 
         MissionDef _def;
-        Material _glass;
+        Material _glass, _overlayGlass;
         Transform _root, _card, _tooltip, _hintBar, _toast, _caption;
         TextMeshPro _progress, _tipTitle, _tipSub, _hintText, _toastText, _captionText;
         string _captionLine = "";
@@ -95,7 +95,9 @@ namespace Resq.Game
             BuildToast();
             BuildCaption();
             // draw-call budget: the card, chips and toast (one root) and the world sign each draw their glass as one mesh
-            GlassBatcher.Attach(_root, _glass);
+            if (_overlayGlass == null) _overlayGlass = UiKit.OverlayGlass();
+            GlassBatcher.Attach(_root, _overlayGlass);
+            UiKit.DrawOverBoard(_root);   // a tall tree on the far row covered the last objective (capture, 5 Nov)
             if (_sign != null) GlassBatcher.Attach(_sign, _glass);   // direct reference: the old sign is still pending Destroy
             // group bubbles move every frame: their glass still draws as one mesh, rebuilt per frame without allocations
             _bubbleRoot = new GameObject("Bubbles").transform;
@@ -199,7 +201,7 @@ namespace Resq.Game
             {
                 int fromRight = kinds.Count - 1 - i;
                 var chip = UiKit.Panel(_root, "Chip_" + kinds[i].kind, new Vector3(right - w * 0.5f - fromRight * (w + gap), 0.035f, 0), w, h, _glass);
-                UiKit.IconObj(chip, kinds[i].icon, new Vector3(-w / 2 + 0.02f, 0, 0), 0.024f, UiKit.Accent, _glass);
+                UiKit.IconObj(chip, kinds[i].icon, new Vector3(-w / 2 + 0.014f, 0, 0), 0.02f, UiKit.Accent, _glass);   // clear of the text
                 // one text object per chip (label line + value line): one draw instead of two
                 var value = UiKit.Text(chip, "", new Vector3(0.012f, 0f, 0), 0.13f, UiKit.Ink, false, 0.06f, 0.044f);
                 value.lineSpacing = 24f;
@@ -239,7 +241,7 @@ namespace Resq.Game
 
         void BuildToast()
         {
-            _toast = UiKit.Panel(_root, "Toast", new Vector3(0.08f, -0.02f, 0), 0.24f, 0.03f, _glass, 0.015f, new Color(0.22f, 0.15f, 0.05f, 0.85f));
+            _toast = UiKit.Panel(_root, "Toast", new Vector3(0.08f, -0.036f, 0), 0.24f, 0.03f, _glass, 0.015f, new Color(0.22f, 0.15f, 0.05f, 0.85f));
             UiKit.IconObj(_toast, Icon.Warning, new Vector3(-0.105f, 0, 0), 0.016f, UiKit.Warn, _glass);
             _toastText = UiKit.Text(_toast, "", new Vector3(0.01f, 0, 0), 0.1f, UiKit.Ink, false, 0.21f, 0.02f);
             _toast.gameObject.SetActive(false);
@@ -247,7 +249,7 @@ namespace Resq.Game
 
         void BuildCaption()
         {
-            _caption = UiKit.Panel(_root, "Caption", new Vector3(0.08f, -0.052f, 0), 0.24f, 0.024f, _glass, 0.012f);
+            _caption = UiKit.Panel(_root, "Caption", new Vector3(0.08f, -0.066f, 0), 0.24f, 0.024f, _glass, 0.012f);
             _captionText = UiKit.Text(_caption, "", Vector3.zero, 0.09f, UiKit.Ink, false, 0.225f, 0.018f, TextAlignmentOptions.Center);
             _caption.gameObject.SetActive(false);
         }

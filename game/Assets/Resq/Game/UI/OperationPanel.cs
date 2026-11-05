@@ -34,7 +34,7 @@ namespace Resq.Game
         string _lastWarning = "";
         float _warningUntil;
         MissionDef _def;
-        Material _glass;
+        Material _glass, _overlayGlass;
 
         void OnEnable() { if (Driver != null) { Driver.OnRunLoaded += Rebuild; Driver.OnSimEvent += OnSimEvent; } }
         void OnDisable() { if (Driver != null) { Driver.OnRunLoaded -= Rebuild; Driver.OnSimEvent -= OnSimEvent; } }
@@ -54,7 +54,12 @@ namespace Resq.Game
             BuildControls(ext);
             // draw-call budget: tool cards and run controls draw their glass as one mesh per root
             if (_tray != null) GlassBatcher.Attach(_tray, _glass);   // direct reference: the old tray is still pending Destroy
-            if (_controls != null) GlassBatcher.Attach(_controls, _glass);
+            if (_controls != null)
+            {
+                if (_overlayGlass == null) _overlayGlass = UiKit.OverlayGlass();
+                GlassBatcher.Attach(_controls, _overlayGlass);
+                UiKit.DrawOverBoard(_controls);
+            }
 
             _banner = UiKit.Text(transform, "", new Vector3(0, 0.1f, 0), 0.5f, UiKit.Ink, true, 0.5f, 0.08f, TextAlignmentOptions.Center);
             _banner.outlineWidth = 0.2f; _banner.outlineColor = TerrainBuilder.Hex(0x132B2A);
