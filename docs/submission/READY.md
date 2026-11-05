@@ -20,28 +20,58 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 | Trailer rough cut | `video/exports/resq-trailer-captioned.mp4` | simulator footage, autopilot-driven, 72 s, QC pass; choppy (2 to 6 captured fps) and not final |
 | Website | https://resq-woad.vercel.app | live |
 
-## Needs the owner
-1. **Entry route.** The rules allow one Entry per person and per organization. RESQ can only go alongside Waz World if a real, eligible person is RESQ's Team Representative and submits it. Confirm the setup with the hackathon manager first (draft below).
-2. **Team Representative's account:** Meta VR Start member, Developer Access, age 18+, joined on Devpost.
-3. **A separate Meta team for RESQ:** the owner's second developer account is under the same personal login (Amir Lotfy), but the dashboard and CLI only show Frameless Plays (5 Nov). Name it, or create a new team. A team under the owner's login doesn't change the one-Entry limit: the Team Representative still has to be someone else.
-4. **Free disk to 21 GB** for the signed build (14 GB now).
-5. **In the dashboard, as legal statements:** Developer Distribution Agreement and age self-certification. These unlock the Competition channel.
-6. **Back up** `~/keys/resq.keystore` off this Mac. Losing it means no updates under the same signature.
-7. **Support email** and the developer name to show on the store page.
-8. **Headset, 12 to 15 Nov:** see below.
-9. **Your review** of the audio and the final trailer, then the YouTube upload.
-10. **Final Devpost submit and attestations**, by the Team Representative.
+## Entry route: the owner decides
+Checked 5 Nov against the Official Rules, the FAQ and the live Devpost form (read on the `Resq` draft, nothing saved).
 
-Question for the hackathon manager:
-> Hi, I'm submitting one Entry as the representative of my team. A second, separate project is being built by a team where [friend's name] is the Team Representative and I'm a non-Representative member who does much of the development. Is this allowed under the Entry Limit, and may that team publish under a separate Meta developer organization that I own?
+RESQ can only go in beside Waz World as a **declared team**. That is Permitted Participation Scenario (ii) in Rules §2, and the FAQ says yes to working on one project with a team and another alone. If Mohamed Tarek won't really be part of RESQ's team, enter one game only.
+
+| | Waz World | RESQ |
+|---|---|---|
+| Submitter Type on the form | Individual | Team of Individuals |
+| Submitted by | Amir Lotfy, from Amir's own Devpost account | Mohamed Tarek, from his own Devpost account, as Team Representative |
+| Amir's part | Solo entrant | Non-Representative member, listed with name, email and role |
+
+**What connects Devpost to Meta:** only the form. It asks for the email tied to the developer organization or Start membership, each teammate's name, email and role, and the Competition channel URL. The APK carries no App ID or account (checked in the manifest and settings), so the same build can go to whichever team holds the app.
+
+**What voids it:**
+- Mohamed enters as an Individual, or Amir is left off the team. Rules §3 disqualifies an Entry made by someone else on an Entrant's behalf, unless that person is a Team or Organization Representative, and §4 needs the Project to be original to the Entrant.
+- Anyone other than Mohamed uses his Devpost account. Devpost's terms, which are part of the rules, forbid using another user's account.
+- Amir's `Resq` Devpost draft gets submitted. It would be Amir's Entry, and Waz World a second one. Delete it or leave it unsubmitted.
+- False information anywhere. §14 allows disqualification and damages, and the Sponsor judges fairness at its sole discretion. A disqualification could reach Waz World too (§3).
+
+**Mohamed, himself:**
+1. Meta account with Developer Access (verified with 2FA or a payment method). 18 or over, eligible country.
+2. Join Meta VR Start at https://developers.meta.com/horizon/programs/start/apply/. It is mandatory for whoever submits (§2(d)); Horizon Start is the same program. The competition page estimates 5 minutes. Proof is the "Start Member" tag on the Developer Forum; the FAQ says to open a support case if it is missing after 24 hours.
+3. Create a new Meta team for RESQ (the name shows on the store) and invite Amir's Meta account as Administrator.
+4. As its owner: the NDA, the Developer Distribution Agreement and age self-certification, which unlock "Create channel". Identity verification if Meta asks (government ID and selfie, about two minutes).
+5. Join the hackathon on Devpost, create a new project and send Amir the team invite link.
+6. At the end: paste from `devpost-draft.md`, tick the attestations, press Submit. Stay reachable until the winners are announced (about 11 Dec): a Representative who can't be reached can be disqualified (§6).
+
+**Amir:**
+1. Accept both invites and read the rules: the form attests that every team member has.
+2. Put in writing with Mohamed who owns RESQ, how a prize is split and who pays tax. A prize is paid only to the Representative, who allocates it and carries the tax, with no help from Meta (§7). Winner documents can be asked of every team member (§6). The Project stays the property of the people who developed it (§9).
+3. Send the manager question below, through "Message manager" on the Devpost project list.
+4. Keep Waz World as Amir's one Entry.
+
+**Alternative:** Amir creates the team and invites Mohamed as Administrator. §2(c) accepts administrative control and Amir keeps the app after the contest, but both entries' teams then sit under one login, so get that confirmed by the manager first. The dashboard and CLI only show Frameless Plays today. Don't put RESQ there: it holds Waz World.
+
+Question for the hackathon manager, once Mohamed's real role is filled in:
+> Hi, please confirm this setup before we submit. RESQ: Mohamed Tarek is the Team Representative and submits it from his own account; his role is [his real role]. I, Amir Lotfy, am a non-Representative member and built most of the game. We'll list both of us with our roles on the form. The app sits in a Meta developer team Mohamed created, where I'm also an administrator. Separately, I'm submitting a different project, Waz World, as a solo entrant. Does this fit the Entry Limit and Permitted Participation Scenario (ii)?
+
+## Also needs the owner
+1. **Free disk to 21 GB** for the signed build (16 GB now).
+2. **Back up** `~/keys/resq.keystore` off this Mac. Losing it means no updates under the same signature.
+3. **Support email** and the developer name to show on the store page.
+4. **Headset, 12 to 15 Nov:** see below.
+5. **Your review** of the audio and the final trailer, then the YouTube upload.
 
 ## Then, in order (Claude, with your go-ahead for uploads)
-1. Create the app "RESQ" and put its App ID in the build settings.
+1. Create the app "RESQ" in RESQ's team. The build doesn't change: the App ID only goes in the upload command.
 2. Signed build, `check_apk.sh` PASS.
-3. After the dashboard statements: create the private **Competition** channel with a URL invite.
+3. After the team's legal statements: create the private **Competition** channel with a URL invite.
 4. Upload with `metavr store dist upload --app-id ID --channel Competition --apk build/resq-release.apk --publish`, after confirming with you at that moment.
 5. Fill the store page, but **never press "Submit for Review"**.
-6. Put the invite link in the Devpost testing instructions and on the site.
+6. Put the invite link in the Devpost form and on the site.
 
 ## Only a headset can answer
 - Real pinch feel, ray comfort, one-hand play, head dwell

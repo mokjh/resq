@@ -4,16 +4,27 @@ Status: a draft written 28 Oct 2026, updated 4 Nov, from what is verified in the
 
 - **Markers:** `[P5]` marks a claim that holds only once the device phase (12–15 Nov) confirms it; if it doesn't, the claim is cut. `[you]` marks what only the user can provide.
 - **Counts:** `python3 tools/web/count_words.py docs/submission/devpost-draft.md` checks the tagline and story limits.
-- **Submission:** the user submits the form and makes the attestations.
+- **Submission:** whoever submits makes the attestations. On the declared-team route (`READY.md`), that is Mohamed Tarek as Team Representative, from his own account.
 
 ## Form fields
 
+As the live form shows them, 5 Nov. `[rep]` marks what only the Representative can provide.
+
 - **Project name:** RESQ
-- **Track / division:** Gaming, New Experience
+- **Track / division:** Gaming, New
 - **Tagline (≤ 140 characters):** A hands-first rescue strategy game on your real table: read the flood, fire or lava, place one tool, and bring every resident home.
 - **Target launch date:** `[you]` Suggestion: Spring 2027.
 - **Video:** `[you]` the public YouTube link, after the user approves the cut.
-- **Build:** the APK in the "Competition" release channel plus its invite URL `[you]`.
+- **Build path:** Unity
+- **Competition channel URL:** the invite URL `[you]`.
+- **Submitter Type:** Team of Individuals
+- **Country of residence:** `[rep]`
+- **Email tied to the developer organization or Start membership:** `[rep]`
+- **Teammates (names, emails, roles):** Mohamed Tarek, Team Representative, `[rep: his real role]`. Amir Lotfy, `[you: email]`, design and development. List only what each person really did.
+- **Team name:** `[you]` Shown as the creator if the entry wins.
+- **Meta capabilities used:** hand tracking, passthrough, scene understanding (MRUK), spatial anchors, head-gaze dwell. Don't list the ISDK gaze interactor or eye tracking: product code has neither (checked 5 Nov).
+- **Hand interactions:** from "Hands first" in the story below, with `[P5: pinch]` settled.
+- **Attestations, by the Representative:** Start member; every teammate is of age, from an eligible jurisdiction and not a sponsor or government employee; every teammate has read and agrees to the Official Rules and Devpost's terms.
 
 ## Story (≤ 500 words)
 
