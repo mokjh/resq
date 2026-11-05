@@ -68,3 +68,4 @@ video/exports/work/
 # Unity native crash dumps
 game/mono_crash.*
 game/Assets/InitTestScene*
+video/exports/
