@@ -3,11 +3,14 @@
 on macOS, so each shot grabs composited left-eye frames through the XR Operator, stamps them with wall time and encodes a
 constant-rate MP4 in video/raw/ with its sidecar. The mission's validated strategy A plays through the normal command path,
 which the sidecar records honestly as input "autopilot". Real game, real simulation; no AI video (competition rule).
+This Mac films only 2 to 6 frames a second, so the game runs slowed (PACE of real time) during capture and the frames are
+placed at their game time, which gives smooth motion at the game's true speed. The sidecar records the pace.
     python3 tools/xr/shoot.py [shot_id ...]"""
 import json, os, shutil, subprocess, sys, tempfile, time
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from hands_test import ev, call, save_images, BOOT, log, ROOT
 FPS = 30
+PACE = 0.12   # game speed while filming
 SEATED = [-0.2164, 0.0, 0.0, 0.9763]   # 25° down, at the board
 # id, mission, operation tick to fast-forward to (hazards in play, the plan under way), seconds to film
 SHOTS = [("x_w1m1_flood", "W1-M1", 1500, 16), ("x_w1m3_skiff", "W1-M3", 1200, 16), ("x_w2m1_fire", "W2-M1", 900, 14),
@@ -17,17 +20,17 @@ def commit(): return subprocess.run(["git", "-C", ROOT, "rev-parse", "--short", 
 
 def prepare(mission, tick):
     return ev(BOOT + f'b.Flow.Menu.Hide(); b.Interaction.MenuOnly = false; b.Driver.LoadRun("{mission}", "wide", Resq.Sim.RuleProfile.Standard, false); b.Driver.StartAutopilot("A"); '
-              f'while (b.Driver.Sim.S.C.O < {tick} && !b.Driver.Sim.IsOver) b.Driver.Advance(1); b.Driver.SetPaused(false); return "tick " + b.Driver.Sim.S.C.O + " over " + b.Driver.Sim.IsOver;')
+              f'while (b.Driver.Sim.S.C.O < {tick} && !b.Driver.Sim.IsOver) b.Driver.Advance(1); b.Driver.SetPaused(false); UnityEngine.Time.timeScale = {PACE}f; b.Driver.CapturePace = {PACE}f; return "tick " + b.Driver.Sim.S.C.O + " over " + b.Driver.Sim.IsOver;')
 
 def film(out, seconds):
     tmp = tempfile.mkdtemp(prefix="resq_frames_"); stamps = []; t0 = time.time()
-    while time.time() - t0 < seconds:
+    while time.time() - t0 < seconds / PACE:
         p = os.path.join(tmp, f"f{len(stamps):05d}.png")
         if save_images(call("openxr_capture_composited_image", {"eye": "left", "reason": "footage"}), p): stamps.append((p, time.time()))
     if len(stamps) < 2: raise RuntimeError("no frames")
     with open(os.path.join(tmp, "list.txt"), "w") as f:
         for (p, t), (_, tn) in zip(stamps, stamps[1:] + [(None, stamps[-1][1] + 1.0 / FPS)]):
-            f.write(f"file '{p}'\nduration {max(tn - t, 1.0 / FPS):.4f}\n")
+            f.write(f"file '{p}'\nduration {max((tn - t) * PACE, 1.0 / FPS):.4f}\n")
         f.write(f"file '{stamps[-1][0]}'\n")
     # 16:9 from the eye's square-ish frame, centred a little below the middle where the board sits
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-f", "concat", "-safe", "0", "-i", os.path.join(tmp, "list.txt"),
@@ -46,8 +49,9 @@ def main():
         out = os.path.join(raw, sid + ".mp4")
         n, rate = film(out, seconds)
         with open(os.path.join(raw, sid + ".json"), "w") as f:
-            json.dump({"kind": "xrsim", "input": "autopilot", "mission": mission, "build": commit(), "captured": time.strftime("%Y-%m-%d"), "note": "composited left eye through the XR Operator; strategy A"}, f, indent=1)
+            json.dump({"kind": "xrsim", "input": "autopilot", "capture_pace": PACE, "mission": mission, "build": commit(), "captured": time.strftime("%Y-%m-%d"), "note": "composited left eye through the XR Operator; strategy A"}, f, indent=1)
         log(f"{sid}: {n} frames, {rate:.1f} fps captured -> {out}")
+    ev(BOOT + 'UnityEngine.Time.timeScale = 1f; b.Driver.CapturePace = 1f; return "normal speed";')
 
 if __name__ == "__main__":
     main()

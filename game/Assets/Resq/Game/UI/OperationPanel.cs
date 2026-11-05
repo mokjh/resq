@@ -17,6 +17,8 @@ namespace Resq.Game
         public BoardInteraction Interaction;
         public Material CardMaterial;
 
+        /// <summary>The guided-play coach is on screen (it sits where the hint bar does).</summary>
+        public bool CoachVisible => _coachPanel != null && _coachPanel.gameObject.activeSelf;
         /// <summary>Transient line for the HUD toast: warnings, rejections, forecast summary.</summary>
         public string Toast { get; private set; } = "";
 

@@ -32,6 +32,9 @@ namespace Resq.Game
 
         const float MusicBase = 0.55f, AmbBase = 0.35f;
 
+        /// <summary>A sound that carries meaning played: its caption line (the HUD shows it when Captions is on).</summary>
+        public static event System.Action<string> Cue;
+
         // read-only views for tests and diagnostics
         public AudioClip MusicClip => _calm != null ? _calm.clip : null;
         public AudioClip AmbienceClip => _amb != null ? _amb.clip : null;
@@ -76,6 +79,7 @@ namespace Resq.Game
             if (Driver != null) { Driver.OnRunLoaded += OnRunLoaded; Driver.OnSimEvent += OnSimEvent; }
             BoardInteraction.Pressed += OnPressed;
             BoardInteraction.Rejected += OnRejected;
+            RoomWeather.Thunder += OnThunder;
         }
 
         void OnDisable()
@@ -83,6 +87,13 @@ namespace Resq.Game
             if (Driver != null) { Driver.OnRunLoaded -= OnRunLoaded; Driver.OnSimEvent -= OnSimEvent; }
             BoardInteraction.Pressed -= OnPressed;
             BoardInteraction.Rejected -= OnRejected;
+            RoomWeather.Thunder -= OnThunder;
+        }
+
+        void OnThunder()
+        {
+            _ui.PlayOneShot(Clip("thunder"), Effects * 0.5f);
+            Cue?.Invoke("Thunder");
         }
 
         AudioClip Clip(string name)
@@ -186,7 +197,11 @@ namespace Resq.Game
             _ui.PlayOneShot(Clip("ui_press"), Effects * 0.5f);
         }
 
-        void OnRejected() => _ui.PlayOneShot(Clip("blocked"), Warnings * 0.6f);
+        void OnRejected()
+        {
+            _ui.PlayOneShot(Clip("blocked"), Warnings * 0.6f);
+            Cue?.Invoke("Blocked");
+        }
 
         // ------------------------------------------------------------------ sim events
         void OnSimEvent(SimEvent e)
@@ -206,10 +221,12 @@ namespace Resq.Game
                 }
                 case SimEventKind.CommandResolved when e.Code != Reject.OK:
                     _ui.PlayOneShot(Clip("blocked"), Warnings * 0.55f);
+                    Cue?.Invoke("Blocked");
                     break;
                 case SimEventKind.Warning:
                     _warnUntil = Time.unscaledTime + 8f;
                     _ui.PlayOneShot(Clip("warning"), Warnings * 0.75f);
+                    Cue?.Invoke("Warning alarm");
                     break;
                 case SimEventKind.TransferStarted:
                     if (Time.unscaledTime - _lastBoard > 0.35f) { Play("boarding", NodePos(e.B), 0.5f); _lastBoard = Time.unscaledTime; }
@@ -220,20 +237,20 @@ namespace Resq.Game
                 case SimEventKind.ResidentEvacuated:
                 {
                     int g = e.Subject >= 0 && e.Subject < d.ResidentGroup.Length ? d.ResidentGroup[e.Subject] : -1;
-                    if (g >= 0 && !_groupsSafe.Contains(g) && GroupDone(g)) { _groupsSafe.Add(g); _ui.PlayOneShot(Clip("rescue_chime"), Effects * 0.7f); }
+                    if (g >= 0 && !_groupsSafe.Contains(g) && GroupDone(g)) { _groupsSafe.Add(g); _ui.PlayOneShot(Clip("rescue_chime"), Effects * 0.7f); Cue?.Invoke("Rescue chime: a group is safe"); }
                     else if (Time.unscaledTime - _lastResidentTick > 0.15f) { Play("resident_safe", NodePos(e.A), 0.35f); _lastResidentTick = Time.unscaledTime; }
                     break;
                 }
                 case SimEventKind.ResidentBackup:
                     _warnUntil = Time.unscaledTime + 8f;
-                    if (Time.unscaledTime - _lastResidentTick > 1f) { _ui.PlayOneShot(Clip("outcome_backup"), Warnings * 0.35f); _lastResidentTick = Time.unscaledTime; }
+                    if (Time.unscaledTime - _lastResidentTick > 1f) { _ui.PlayOneShot(Clip("outcome_backup"), Warnings * 0.35f); _lastResidentTick = Time.unscaledTime; Cue?.Invoke("Residents need backup"); }
                     break;
-                case SimEventKind.PowerChanged: Play("power_on", Board, 0.45f); break;
-                case SimEventKind.GeneratorShutdown: Play("power_off", Board, 0.5f); break;
-                case SimEventKind.SegmentCooling: Play("cooling", Board, 0.55f); break;
-                case SimEventKind.SupportWarning: Play("creak", Board, 0.45f); break;
-                case SimEventKind.SupportCollapsed: case SimEventKind.RunoutStarted: Play("collapse", Board, 0.5f); break;
-                case SimEventKind.EquipmentBroken: Play("collapse", SocketPos(e.A), 0.35f, 1.3f); break;
+                case SimEventKind.PowerChanged: Play("power_on", Board, 0.45f); Cue?.Invoke("Power on"); break;
+                case SimEventKind.GeneratorShutdown: Play("power_off", Board, 0.5f); Cue?.Invoke("Generator off"); break;
+                case SimEventKind.SegmentCooling: Play("cooling", Board, 0.55f); Cue?.Invoke("Lava cooling"); break;
+                case SimEventKind.SupportWarning: Play("creak", Board, 0.45f); Cue?.Invoke("Support creaking"); break;
+                case SimEventKind.SupportCollapsed: case SimEventKind.RunoutStarted: Play("collapse", Board, 0.5f); Cue?.Invoke("Collapse"); break;
+                case SimEventKind.EquipmentBroken: Play("collapse", SocketPos(e.A), 0.35f, 1.3f); Cue?.Invoke("Equipment broke"); break;
                 case SimEventKind.OperationEnded:
                     _problemLevel = 0;
                     if (st.C.Success)

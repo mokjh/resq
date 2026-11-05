@@ -824,6 +824,7 @@ namespace Resq.Game
             Comfort.LeftHanded = s.LeftHanded;
             Comfort.UiScale = scale;
             Comfort.HighContrast = s.HighContrast;
+            Comfort.Captions = s.Captions;
             if (relayout && Driver.Def != null)
             {
                 if (Boot.Panel != null && Boot.Panel.gameObject.activeSelf) Boot.Panel.Rebuild();

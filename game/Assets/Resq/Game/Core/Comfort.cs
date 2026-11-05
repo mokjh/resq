@@ -15,5 +15,7 @@ namespace Resq.Game
         public static float UiScale = 1f;
         /// <summary>Near-opaque panels behind all text (for bright rooms and low vision).</summary>
         public static bool HighContrast;
+        /// <summary>Show a short line for meaningful sounds (warnings, rescues, collapses), for players who can't hear them.</summary>
+        public static bool Captions = true;
     }
 }

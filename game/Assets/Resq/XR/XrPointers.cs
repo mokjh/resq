@@ -53,6 +53,16 @@ namespace Resq.XR
                 if (view == null) view = boot.Board.gameObject.AddComponent<HandShadowView>();
                 boot.gameObject.AddComponent<XrHandShadows>().Init(view, hands);
             }
+            if (hands.Count > 0 && RealHandsView.Wanted) boot.gameObject.AddComponent<RealHandsView>().Init(hands, rig.centerEyeAnchor);
+            boot.gameObject.AddComponent<RoomMoodXr>();
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                // the board is seen near the centre of the view, so the periphery can shade cheaper; dynamic: only as far as the GPU needs
+                OVRManager.foveatedRenderingLevel = OVRManager.FoveatedRenderingLevel.High;
+                OVRManager.useDynamicFoveatedRendering = true;
+                OVRManager.suggestedCpuPerfLevel = OVRManager.ProcessorPerformanceLevel.SustainedHigh;
+                OVRManager.suggestedGpuPerfLevel = OVRManager.ProcessorPerformanceLevel.SustainedHigh;
+            }
             if (hands.Count == 0)
                 foreach (var hand in Object.FindObjectsByType<OVRHand>(FindObjectsSortMode.None))
                     boot.Interaction.AddSource(new HandPointer(hand, hand.GetComponent<OVRSkeleton>(), hand.GetHand() == OVRPlugin.Hand.HandLeft));

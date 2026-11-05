@@ -25,6 +25,7 @@ namespace Resq.Game
         public HudView Hud { get; private set; }
         public GameFlow Flow { get; private set; }
         public AudioDirector Audio { get; private set; }
+        public RoomWeather Weather => Driver.GetComponentInChildren<RoomWeather>();
         bool FlowActive => Flow != null && !GameFlow.Disabled;
 
         void Awake()
@@ -61,6 +62,12 @@ namespace Resq.Game
             Audio = audioGo.AddComponent<AudioDirector>();
             Audio.Driver = Driver; Audio.Interaction = Interaction;
             audioGo.SetActive(true);   // enable after wiring so OnEnable subscribes to the driver
+            var weatherGo = new GameObject("RoomWeather");
+            weatherGo.transform.SetParent(boardGo.transform, false);
+            weatherGo.SetActive(false);
+            var weather = weatherGo.AddComponent<RoomWeather>();
+            weather.Driver = Driver; weather.Interaction = Interaction;
+            weatherGo.SetActive(true);
         }
 
         /// <summary>

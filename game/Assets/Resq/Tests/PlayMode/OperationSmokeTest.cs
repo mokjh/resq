@@ -29,6 +29,14 @@ namespace Resq.Tests
         const int BudgetDraws = 150, BudgetTris = 300_000, PerfTick = 300;
 
         public static IEnumerable<string> WorldFirstMissions => new[] { "W1-M1", "W2-M1", "W3-M1", "W4-M1", "W5-M1" };
+        public static IEnumerable<string> AllMissions
+        {
+            get
+            {
+                for (int w = 1; w <= 5; w++)
+                    for (int m = 1; m <= 5; m++) yield return $"W{w}-M{m}";
+            }
+        }
 
         enum Path { Desktop, HeadDwell }
 
@@ -53,7 +61,13 @@ namespace Resq.Tests
         // the game flow records finished runs: keep them out of the player's real save
         string _saveDir;
         [SetUp] public void TempSave() { _saveDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "resq_smoke_" + System.Guid.NewGuid().ToString("N")); SaveStore.Folder = _saveDir; }
-        [TearDown] public void RestoreSave() { SaveStore.Folder = null; try { System.IO.Directory.Delete(_saveDir, true); } catch (System.IO.IOException) { } }
+        [TearDown]
+        public void RestoreSave()
+        {
+            Comfort.LeftHanded = false; Comfort.UiScale = 1f;
+            SaveStore.Folder = null;
+            try { System.IO.Directory.Delete(_saveDir, true); } catch (System.IO.IOException) { }
+        }
 
         [UnityTest]
         public IEnumerator WinsWorldFirstMission([ValueSource(nameof(WorldFirstMissions))] string mission)
@@ -67,8 +81,34 @@ namespace Resq.Tests
             yield return Play("W1-M1", RuleProfile.Command, Path.HeadDwell, checkPerf: false);
         }
 
+        // ------------------------------------------------------------------ the full input matrix (tools/unity/matrix.sh)
+        // AGENTS.md: hands-only, one-hand and head-gaze Command paths must each complete every mission. Explicit, so the
+        // everyday gate stays short. One pointer only in every case: what one hand can do, two can.
+
+        /// <summary>A hand ray: wide board, strategy A.</summary>
+        [UnityTest, Explicit, Category("Matrix"), Timeout(900000)]
+        public IEnumerator MatrixHandRay([ValueSource(nameof(AllMissions))] string mission)
+        {
+            yield return Play(mission, RuleProfile.Standard, Path.Desktop, false);
+        }
+
+        /// <summary>One hand, left-handed mirrored controls and the largest text: compact board, strategy B.</summary>
+        [UnityTest, Explicit, Category("Matrix"), Timeout(900000)]
+        public IEnumerator MatrixOneHandMirroredLargeText([ValueSource(nameof(AllMissions))] string mission)
+        {
+            Comfort.LeftHanded = true; Comfort.UiScale = 1.5f;
+            yield return Play(mission, RuleProfile.Standard, Path.Desktop, false, "compact", "B");
+        }
+
+        /// <summary>Head gaze only, under Command rules, with the real dwell time: wide board, strategy A.</summary>
+        [UnityTest, Explicit, Category("Matrix"), Timeout(900000)]
+        public IEnumerator MatrixHeadDwell([ValueSource(nameof(AllMissions))] string mission)
+        {
+            yield return Play(mission, RuleProfile.Command, Path.HeadDwell, false);
+        }
+
         // ------------------------------------------------------------------ one run
-        IEnumerator Play(string mission, RuleProfile profile, Path path, bool checkPerf)
+        IEnumerator Play(string mission, RuleProfile profile, Path path, bool checkPerf, string layout = "wide", string strategy = "A")
         {
             yield return LoadOperationScene();
             _boot = Object.FindFirstObjectByType<GameBootstrap>();
@@ -80,7 +120,7 @@ namespace Resq.Tests
             _path = path;
 
             // a clean, non-guided run on the wide layout
-            _driver.LoadRun(mission, "wide", profile, false);
+            _driver.LoadRun(mission, layout, profile, false);
             yield return null;
             yield return null;
             Assert.IsTrue(_driver.Paused, "a new run starts paused for planning");
@@ -107,7 +147,7 @@ namespace Resq.Tests
             Assert.IsTrue(_driver.Paused, "the same control pauses again; " + _lastPress);
             // the run ticked in real time between those presses (a dwell takes 0.8 s); restart so every strategy step
             // lands on its validated tick
-            _driver.LoadRun(mission, "wide", profile, false);
+            _driver.LoadRun(mission, layout, profile, false);
             yield return null;
             yield return null;
             Assert.AreEqual(0, _driver.Sim.S.C.O, "restarted run starts at operation step 0");
@@ -116,8 +156,8 @@ namespace Resq.Tests
                 StringAssert.Contains("supply", card.GetComponentInChildren<TMPro.TextMeshPro>().text, $"{card.name} after restart");
             S = _driver.Sim.S;
 
-            var script = ContentLibrary.Strategy(mission, "A");
-            Assert.IsNotNull(script, $"{mission} has no strategy A");
+            var script = ContentLibrary.Strategy(mission, strategy);
+            Assert.IsNotNull(script, $"{mission} has no strategy {strategy}");
             bool measured = !checkPerf;
             for (int i = 0; i < script.Steps.Count;)
             {
@@ -140,8 +180,8 @@ namespace Resq.Tests
 
             for (int guard = 0; guard < 400 && !_driver.Sim.IsOver; guard++) _driver.Advance(50);
             Assert.IsTrue(_driver.Sim.IsOver, $"{mission}: the run should reach its outcome");
-            Assert.IsTrue(S.C.Success, $"{mission} ({profile}) strategy A should win (evacuated {S.C.Evacuated}/{d.TotalResidents}, losses {S.C.Losses})");
-            Assert.AreEqual(3, S.C.Stars, $"{mission} strategy A is a validated 3-star plan on wide/{profile}");
+            Assert.IsTrue(S.C.Success, $"{mission} ({profile}) strategy {strategy} should win (evacuated {S.C.Evacuated}/{d.TotalResidents}, losses {S.C.Losses})");
+            Assert.AreEqual(3, S.C.Stars, $"{mission} strategy {strategy} is a validated 3-star plan on {layout}/{profile}");
             if (_head != null) Object.Destroy(_head.gameObject);
             yield return null;
         }

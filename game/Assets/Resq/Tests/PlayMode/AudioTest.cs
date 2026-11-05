@@ -56,5 +56,39 @@ namespace Resq.Tests
             yield return null;
             Assert.AreEqual(0f, audio.MusicVolume, 1e-4f, "Music volume 0 silences the music");
         }
+
+        /// <summary>A meaningful sound shows a caption while the setting is on, and none while it's off.</summary>
+        [UnityTest]
+        public IEnumerator CaptionsFollowTheSetting()
+        {
+#if UNITY_EDITOR
+            var op = UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode("Assets/Resq/Scenes/Operation_Desktop.unity", new LoadSceneParameters(LoadSceneMode.Single));
+            while (!op.isDone) yield return null;
+#else
+            Assert.Ignore("Editor only"); yield break;
+#endif
+            for (int i = 0; i < 4; i++) yield return null;
+            var boot = Object.FindFirstObjectByType<GameBootstrap>();
+            var driver = boot.Driver;
+            boot.Interaction.MenuOnly = false;
+            bool saved = Comfort.Captions;
+            try
+            {
+                Comfort.Captions = true;
+                driver.LoadRun("W1-M1", "wide", Resq.Sim.RuleProfile.Standard, false);
+                yield return null;
+                boot.Interaction.MenuOnly = false;
+                Assert.IsNull(boot.Hud.Caption, "no caption before anything sounds");
+                for (int i = 0; i < 520 && boot.Hud.Caption == null; i++) { driver.Advance(1); if (i % 50 == 0) yield return null; }
+                yield return null;
+                yield return null;
+                StringAssert.Contains("Warning", boot.Hud.Caption ?? "", "W1-M1's first warning sound is captioned");
+
+                Comfort.Captions = false;
+                yield return null;
+                Assert.IsNull(boot.Hud.Caption, "Captions off hides it");
+            }
+            finally { Comfort.Captions = saved; }
+        }
     }
 }

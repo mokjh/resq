@@ -239,6 +239,10 @@ def sfx():
     for i, n in enumerate(["A4", "F4", "D4"]): place(lose, mallet(note(n), 1.2, 0.2) * 0.8, i * 0.28)
     write("outcome_backup", fade(lowpass_fast(lose, 2500)), 0.6)
     write("star", fade(bell(note("B6"), 0.6, 2.0, 0.6, 4) * 0.7), 0.45)
+    # thunder, a beat after a lightning flash: a far low roll, no crack (added last: earlier sounds keep their random draws)
+    dur = 3.6; tt = t(dur)
+    roll = lowpass_fast(noise(dur), 160) * (0.55 + 0.45 * np.sin(2 * np.pi * 1.7 * tt + 1.0) * np.sin(2 * np.pi * 0.6 * tt))
+    write("thunder", fade(roll * np.minimum(tt / 0.25, 1.0) * np.exp(-tt * 1.15), 0.05, 0.3), 0.6)
 
 
 # ---------------------------------------------------------------- ambiences (seamless loops)

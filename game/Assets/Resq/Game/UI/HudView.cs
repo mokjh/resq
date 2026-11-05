@@ -21,8 +21,12 @@ namespace Resq.Game
 
         MissionDef _def;
         Material _glass;
-        Transform _root, _card, _tooltip, _hintBar, _toast;
-        TextMeshPro _progress, _tipTitle, _tipSub, _hintText, _toastText;
+        Transform _root, _card, _tooltip, _hintBar, _toast, _caption;
+        TextMeshPro _progress, _tipTitle, _tipSub, _hintText, _toastText, _captionText;
+        string _captionLine = "";
+        float _captionUntil;
+        /// <summary>The caption on screen now, or null (tests and diagnostics).</summary>
+        public string Caption => _caption != null && _caption.gameObject.activeSelf ? _captionText.text : null;
         readonly List<(int objective, string label, TextMeshPro text, MeshFilter icon)> _rows = new List<(int, string, TextMeshPro, MeshFilter)>();
         readonly List<(string kind, TextMeshPro value, string label)> _chips = new List<(string, TextMeshPro, string)>();
         readonly List<Transform> _bubbles = new List<Transform>();
@@ -67,8 +71,8 @@ namespace Resq.Game
         public static Icon ToolIcon(ToolKind t) => t == ToolKind.Barrier ? Icon.Barrier : t == ToolKind.Bridge ? Icon.Bridge : t == ToolKind.Skiff ? Icon.Boat
             : t == ToolKind.Cooler || t == ToolKind.Sprinkler || t == ToolKind.Pump ? Icon.Drop : t == ToolKind.Firebreak ? Icon.Tree : Icon.Box;
 
-        void OnEnable() { if (Driver != null) Driver.OnRunLoaded += Rebuild; }
-        void OnDisable() { if (Driver != null) Driver.OnRunLoaded -= Rebuild; }
+        void OnEnable() { if (Driver != null) Driver.OnRunLoaded += Rebuild; AudioDirector.Cue += OnCue; }
+        void OnDisable() { if (Driver != null) Driver.OnRunLoaded -= Rebuild; AudioDirector.Cue -= OnCue; }
 
         public void Rebuild()
         {
@@ -89,6 +93,7 @@ namespace Resq.Game
             BuildTooltip();
             BuildSign(ext);
             BuildToast();
+            BuildCaption();
             // draw-call budget: the card, chips and toast (one root) and the world sign each draw their glass as one mesh
             GlassBatcher.Attach(_root, _glass);
             if (_sign != null) GlassBatcher.Attach(_sign, _glass);   // direct reference: the old sign is still pending Destroy
@@ -213,8 +218,11 @@ namespace Resq.Game
         // ------------------------------------------------------------------ hint bar, tooltip, toast, sign
         void BuildHintBar(Vector2 ext)
         {
-            _hintBar = UiKit.Panel(transform, "HintBar", new Vector3(0, 0.03f, -ext.y - 0.115f), 0.30f, 0.032f, _glass, 0.016f);
-            _hintBar.localRotation = Quaternion.Euler(30f, 0, 0);
+            // above the tool cards and inside the seated gaze; below them it covered their lower edge (FovTest checks both)
+            float s = Comfort.UiScale;
+            _hintBar = UiKit.Panel(transform, "HintBar", new Vector3(0, 0.012f + 0.06f * s, -ext.y - 0.055f), 0.30f, 0.032f, _glass, 0.016f);
+            _hintBar.localRotation = Quaternion.Euler(40f, 0, 0);
+            _hintBar.localScale = Vector3.one * s;
             UiKit.IconObj(_hintBar, Icon.Pinch, new Vector3(-0.13f, 0, 0), 0.02f, UiKit.Accent, _glass);
             _hintText = UiKit.Text(_hintBar, "", new Vector3(0.012f, 0, 0), 0.115f, UiKit.Ink, false, 0.26f, 0.022f, TextAlignmentOptions.Center);
         }
@@ -235,6 +243,27 @@ namespace Resq.Game
             UiKit.IconObj(_toast, Icon.Warning, new Vector3(-0.105f, 0, 0), 0.016f, UiKit.Warn, _glass);
             _toastText = UiKit.Text(_toast, "", new Vector3(0.01f, 0, 0), 0.1f, UiKit.Ink, false, 0.21f, 0.02f);
             _toast.gameObject.SetActive(false);
+        }
+
+        void BuildCaption()
+        {
+            _caption = UiKit.Panel(_root, "Caption", new Vector3(0.08f, -0.052f, 0), 0.24f, 0.024f, _glass, 0.012f);
+            _captionText = UiKit.Text(_caption, "", Vector3.zero, 0.09f, UiKit.Ink, false, 0.225f, 0.018f, TextAlignmentOptions.Center);
+            _caption.gameObject.SetActive(false);
+        }
+
+        void OnCue(string line)
+        {
+            _captionLine = line;
+            _captionUntil = Time.unscaledTime + 2.5f;
+        }
+
+        void UpdateCaption()
+        {
+            if (_caption == null) return;
+            bool show = Comfort.Captions && Time.unscaledTime < _captionUntil && !(Interaction != null && Interaction.MenuOnly);
+            if (_caption.gameObject.activeSelf != show) _caption.gameObject.SetActive(show);
+            if (show && _captionText.text != _captionLine) _captionText.text = _captionLine;
         }
 
         Transform _sign, _bubbleRoot;
@@ -270,6 +299,7 @@ namespace Resq.Game
             UpdateTooltip(sim);
             UpdateHint();
             UpdateToast();
+            UpdateCaption();
             UpdateBubbles(sim);
         }
 
@@ -392,6 +422,8 @@ namespace Resq.Game
 
         void UpdateHint()
         {
+            bool showBar = Panel == null || !Panel.CoachVisible;
+            if (_hintBar.gameObject.activeSelf != showBar) _hintBar.gameObject.SetActive(showBar);
             string act = HandsActive ? "Pinch" : "Click";
             switch (Interaction != null ? Interaction.Mode : InteractMode.Idle)
             {

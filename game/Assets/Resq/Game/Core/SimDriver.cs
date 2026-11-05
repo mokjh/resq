@@ -38,6 +38,9 @@ namespace Resq.Game
         int _autopilotCursor;
         float _accumulator;
         readonly List<SimEvent> _events = new List<SimEvent>(64);
+        /// <summary>Footage only (tools/xr/shoot.py): slows the run together with Time.timeScale, because this Mac can't
+        /// film the Simulator at speed. It changes when steps happen, never what they do. 1 everywhere else.</summary>
+        public float CapturePace = 1f;
 
         void Start()
         {
@@ -78,7 +81,7 @@ namespace Resq.Game
         {
             if (Sim == null) return;
             if (Paused || Sim.IsOver) { Alpha = 1f; return; }
-            _accumulator += Time.unscaledDeltaTime;
+            _accumulator += Time.unscaledDeltaTime * CapturePace;
             int steps = 0;
             while (_accumulator >= StepSeconds && steps < MaxStepsPerFrame)
             {

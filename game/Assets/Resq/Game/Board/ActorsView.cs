@@ -168,6 +168,7 @@ namespace Resq.Game
             // residents
             var slot = _slot; slot.Clear(); // node -> residents drawn there this frame
             _leaders.Clear();                 // nodes whose first standing resident is animated (one per group)
+            var viewer = Camera.main != null ? Camera.main.transform : null;
             // a parked vehicle owns the node centre; people stand around it, not on it
             for (int v = 0; v < S.C.VehicleCount; v++)
                 if (S.VState[v] != (byte)VehicleState.Moving && (VehicleKind)S.VKind[v] != VehicleKind.Skiff && S.VNode[v] >= 0)
@@ -214,6 +215,16 @@ namespace Resq.Game
                     {
                         var target = Quaternion.LookRotation(delta.normalized, Vector3.up) * Quaternion.Euler(0, _kit.ResidentYaw, 0);
                         t.localRotation = Quaternion.Slerp(t.localRotation, target, 0.2f);
+                    }
+                    else if (viewer != null)
+                    {
+                        // standing still, they turn to look up at the player, each at its own pace (BUILD_PLAN P4.2)
+                        var toViewer = transform.InverseTransformPoint(viewer.position) - pos; toViewer.y = 0;
+                        if (toViewer.sqrMagnitude > 1e-4f)
+                        {
+                            var target = Quaternion.LookRotation(toViewer.normalized, Vector3.up) * Quaternion.Euler(0, _kit.ResidentYaw, 0);
+                            t.localRotation = Quaternion.RotateTowards(t.localRotation, target, (35f + (r % 5) * 14f) * Time.deltaTime);
+                        }
                     }
                     _residentPrev[r] = pos;
                 }

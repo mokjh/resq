@@ -40,7 +40,7 @@ namespace Resq.Tests
         Pointer _pointer;
 
         [SetUp] public void SetUp() { _dir = Path.Combine(Path.GetTempPath(), "resq_fov_" + System.Guid.NewGuid().ToString("N")); Directory.CreateDirectory(_dir); SaveStore.Folder = _dir; }
-        [TearDown] public void TearDown() { SaveStore.Folder = null; try { Directory.Delete(_dir, true); } catch (IOException) { } }
+        [TearDown] public void TearDown() { Comfort.UiScale = 1f; SaveStore.Folder = null; try { Directory.Delete(_dir, true); } catch (IOException) { } }
 
         [UnityTest]
         public IEnumerator MustSeeUiStaysInsideTheCentralThirtyDegrees()
@@ -76,7 +76,28 @@ namespace Resq.Tests
                 Check($"{mission} HUD", Find("HudRoot"), true, Gaze.BoardCentre);
                 Check($"{mission} run controls", Find("Controls"), false, Gaze.BoardCentre);
                 Check($"{mission} tool tray", Find("ToolTray"), false, Gaze.BoardCentre);
+                Check($"{mission} hint bar", Find("HintBar"), true, Gaze.BoardCentre);
             }
+
+            // the hint bar must not cover the tool cards, at any text size (it did until 5 Nov, in a Simulator capture)
+            foreach (float scale in new[] { 1f, 1.25f, 1.5f })
+            {
+                Comfort.UiScale = scale;
+                _boot.Panel.Rebuild(); _boot.Hud.Rebuild();
+                yield return null;
+                yield return null;
+                SeatPlayer();
+                Physics.SyncTransforms();
+                var hint = ViewRect(Find("HintBar"));
+                foreach (var card in Object.FindObjectsByType<Transform>(FindObjectsSortMode.None).Where(t => t.name.StartsWith("Card_") && t.gameObject.activeInHierarchy))
+                {
+                    var r = ViewRect(card);
+                    Assert.IsFalse(hint.Overlaps(r), $"at text {scale * 100:F0}% the hint bar {hint} covers {card.name} {r}");
+                }
+            }
+            Comfort.UiScale = 1f;
+            _boot.Panel.Rebuild(); _boot.Hud.Rebuild();
+            yield return null;
 
             _flow.Pause();
             Assert.AreEqual("U15", _flow.Menu.Current?.Id, "pause");
@@ -108,6 +129,25 @@ namespace Resq.Tests
             var t = Object.FindObjectsByType<Transform>(FindObjectsSortMode.None).FirstOrDefault(x => x.name == name && x.gameObject.activeInHierarchy);
             Assert.IsNotNull(t, $"{name} not found");
             return t;
+        }
+
+        /// <summary>The screen rectangle of every visible mesh under root, from the seated head.</summary>
+        static Rect ViewRect(Transform root)
+        {
+            var cam = Camera.main;
+            float x0 = 2f, x1 = -2f, y0 = 2f, y1 = -2f;
+            foreach (var mf in root.GetComponentsInChildren<MeshFilter>())
+            {
+                if (mf.sharedMesh == null || !mf.gameObject.activeInHierarchy) continue;
+                var b = mf.sharedMesh.bounds;
+                for (int k = 0; k < 8; k++)
+                {
+                    var local = b.center + Vector3.Scale(b.extents, new Vector3((k & 1) == 0 ? -1 : 1, (k & 2) == 0 ? -1 : 1, (k & 4) == 0 ? -1 : 1));
+                    var v = cam.WorldToViewportPoint(mf.transform.TransformPoint(local));
+                    x0 = Mathf.Min(x0, v.x); x1 = Mathf.Max(x1, v.x); y0 = Mathf.Min(y0, v.y); y1 = Mathf.Max(y1, v.y);
+                }
+            }
+            return Rect.MinMaxRect(x0, y0, x1, y1);
         }
 
         /// <summary>Largest angle (degrees) between the gaze and any corner of any visible mesh under root.</summary>
