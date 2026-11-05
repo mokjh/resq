@@ -23,7 +23,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 ## Needs the owner
 1. **Entry route.** The rules allow one Entry per person and per organization. RESQ can only go alongside Waz World if a real, eligible person is RESQ's Team Representative and submits it. Confirm the setup with the hackathon manager first (draft below).
 2. **Team Representative's account:** Meta VR Start member, Developer Access, age 18+, joined on Devpost.
-3. **Second Meta developer account:** sign in to it in Claude's browser pane, so the app can be created there. Only Frameless Plays is reachable now.
+3. **A separate Meta team for RESQ:** the owner's second developer account is under the same personal login (Amir Lotfy), but the dashboard and CLI only show Frameless Plays (5 Nov). Name it, or create a new team. A team under the owner's login doesn't change the one-Entry limit: the Team Representative still has to be someone else.
 4. **Free disk to 21 GB** for the signed build (14 GB now).
 5. **In the dashboard, as legal statements:** Developer Distribution Agreement and age self-certification. These unlock the Competition channel.
 6. **Back up** `~/keys/resq.keystore` off this Mac. Losing it means no updates under the same signature.
