@@ -31,4 +31,4 @@ Resume by reading `AGENTS.md`, `BUILD_PLAN.md` and `STATUS.md`. Older handoffs a
 - **Render budget, all missions:** `bash tools/unity/perf.sh wide|compact` (play mode running).
 
 ## Current step
-Game flow, challenges and comfort settings are in; next are audio, the forecast worker thread, autopilot and store packaging. See `STATUS.md`.
+Get everything ready without submitting: `docs/submission/READY.md`. Simulator sessions with scripted hands: `tools/xr/sim_editor.sh`, then `tools/xr/hands_test.py` or `tools/xr/shoot.py`. Run gates in a plain Editor: the Simulator's stereo rendering trips the triangle budget. Signed build: `tools/unity/release_apk.sh` (21 GB free, Editor closed). Never upload or submit without the user's confirmation at that moment.

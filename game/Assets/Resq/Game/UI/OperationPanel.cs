@@ -71,6 +71,9 @@ namespace Resq.Game
             Interaction.ToolAllowed = ToolAllowedNow;
         }
 
+        /// <summary>The tool's name on its card: "Emergency Bridge" shrank to unreadable text at this width (Simulator, 5 Nov).</summary>
+        static string CardLabel(ToolKind t) => t == ToolKind.Bridge ? "Bridge" : HudView.ToolLabel(t);
+
         // ------------------------------------------------------------------ tool tray
         void BuildTray(Vector2 ext)
         {
@@ -93,7 +96,7 @@ namespace Resq.Game
                 UiKit.Panel(root, "Face", Vector3.zero, w, h, _glass, 0.01f);
                 var icon = UiKit.IconObj(root, HudView.ToolIcon(tools[i]), new Vector3(0, 0.011f, 0), 0.02f, UiKit.Accent, _glass);
                 // name and stock share one text object (one draw); its text changes only when stock or usability does
-                var name = UiKit.Text(root, HudView.ToolLabel(tools[i]), new Vector3(0, -0.0115f, 0), 0.1f, UiKit.Ink, false, w - 0.006f, 0.027f, TextAlignmentOptions.Center);
+                var name = UiKit.Text(root, CardLabel(tools[i]), new Vector3(0, -0.0115f, 0), 0.1f, UiKit.Ink, false, w - 0.006f, 0.027f, TextAlignmentOptions.Center);
                 name.enableAutoSizing = true; name.fontSizeMax = 0.1f; name.fontSizeMin = 0.05f;
                 name.lineSpacing = -10f;
                 var stock = name;
@@ -275,7 +278,7 @@ namespace Resq.Game
                 if (_cardState[ci] != (left, cost, usable))
                 {
                     _cardState[ci] = (left, cost, usable);
-                    name.text = $"<b>{HudView.ToolLabel(tool)}</b>\n<size=78%><color=#{(usable ? "CCDBDB" : "FFFFFF4D")}>×{left}  ·  {cost} supply</color></size>";
+                    name.text = $"<b>{CardLabel(tool)}</b>\n<size=78%><color=#{(usable ? "CCDBDB" : "FFFFFF4D")}>×{left}  ·  {cost} supply</color></size>";
                 }
                 bool armed = Interaction != null && Interaction.Mode == InteractMode.ToolArmed && Interaction.ArmedTool == tool;
                 bool hovered = Interaction != null && Interaction.Hover != null && Interaction.Hover.transform == root;

@@ -1,21 +1,83 @@
 {
-  "name": "resq-trailer",
-  "allowed_kinds": ["quest", "xrsim"],
-  "export": {"width": 1920, "height": 1080, "fps": 30, "lufs": -16, "true_peak": -1.0, "max_seconds": 178},
-  "music": {"file": "game/Assets/Resq/Content/Resources/ResqAudio/music_w1_resolve.wav", "level": 0.3},
-  "segments": [
-    {"id": "s01", "source": "q_w1m1_barrier", "in": 0, "out": 8, "caption": "One small move.", "fade_in": 0.4},
-    {"id": "s02", "card": "title", "duration": 6, "text": ["RESQ", "Small worlds. Big saves."]},
-    {"id": "s03", "source": "x_w1m1_forecast", "in": 0, "out": 20, "caption": "Read the water. Place the plan. Watch it work."},
-    {"id": "s04", "source": "x_w1m3_skiff", "in": 0, "out": 14, "caption": "Every trip counts."},
-    {"id": "s05", "source": "x_w2m1_fire", "in": 0, "out": 12, "caption": "Fire follows the wind."},
-    {"id": "s06", "source": "x_w3m1_snow", "in": 0, "out": 12, "caption": "Snow remembers every load."},
-    {"id": "s07", "source": "x_w4m1_tide", "in": 0, "out": 12, "caption": "The tide keeps its own clock."},
-    {"id": "s08", "source": "x_w5m1_lava", "in": 0, "out": 12, "caption": "Cool the flow. Open the way."},
-    {"id": "s09", "source": "q_room_tables", "in": 0, "out": 18, "caption": "It finds your table. No table? It brings one."},
-    {"id": "s10", "source": "q_onehand_command", "in": 0, "out": 14, "caption": "Two hands, one hand, or a steady look."},
-    {"id": "s11", "source": "x_debrief", "in": 0, "out": 16, "caption": "See why it worked. Then find a better way."},
-    {"id": "s12", "source": "q_anchor_return", "in": 0, "out": 8, "caption": "Your valley waits where you left it.", "fade_out": 0.6},
-    {"id": "s13", "card": "end", "duration": 8, "text": ["RESQ", "Small worlds. Big saves.", "Meta Quest 3 and 3S"]}
-  ]
+ "name": "resq-trailer",
+ "allowed_kinds": [
+  "quest",
+  "xrsim"
+ ],
+ "export": {
+  "width": 1920,
+  "height": 1080,
+  "fps": 30,
+  "lufs": -16,
+  "true_peak": -1.0,
+  "max_seconds": 178
+ },
+ "music": {
+  "file": "game/Assets/Resq/Content/Resources/ResqAudio/music_w1_resolve.wav",
+  "level": 0.3
+ },
+ "segments": [
+  {
+   "id": "s01",
+   "card": "title",
+   "duration": 4,
+   "text": [
+    "RESQ",
+    "Small worlds. Big saves."
+   ]
+  },
+  {
+   "id": "s02",
+   "source": "x_w1m1_flood",
+   "in": 2,
+   "out": 14,
+   "caption": "Read the water. Place the plan.",
+   "fade_in": 0.4
+  },
+  {
+   "id": "s03",
+   "source": "x_w1m3_skiff",
+   "in": 3,
+   "out": 14,
+   "caption": "Every trip counts."
+  },
+  {
+   "id": "s04",
+   "source": "x_w2m1_fire",
+   "in": 2,
+   "out": 12,
+   "caption": "Fire follows the wind."
+  },
+  {
+   "id": "s05",
+   "source": "x_w3m1_snow",
+   "in": 2,
+   "out": 12,
+   "caption": "Snow remembers every load."
+  },
+  {
+   "id": "s06",
+   "source": "x_w4m1_tide",
+   "in": 2,
+   "out": 12,
+   "caption": "The tide keeps its own clock."
+  },
+  {
+   "id": "s07",
+   "source": "x_w5m1_lava",
+   "in": 2,
+   "out": 12,
+   "caption": "Cool the flow. Open the way."
+  },
+  {
+   "id": "s08",
+   "card": "end",
+   "duration": 5,
+   "text": [
+    "RESQ",
+    "Small worlds. Big saves.",
+    "Meta Quest 3 and 3S"
+   ]
+  }
+ ]
 }

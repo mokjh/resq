@@ -41,7 +41,7 @@
 ## Not done yet (in plan order)
 1. **Your review of the audio:** listen to `game/Assets/Resq/Content/Resources/ResqAudio/` or play a mission in the Editor.
 2. **Website:** "The Planning Table" is live at https://resq-woad.vercel.app (redeployed 30 Oct with your OK). Scrolling the hero plays the real First Crossing simulation, valleys assemble block by block, the footer has a shelf of valleys, and the grid background is gone. Checked live on phone and desktop.
-3. **Trailer:** pipeline ready and self-tested (`tools/video/edit.py`); storyboard and EDL in `video/`. Needs XR Simulator recordings now and device clips in P5.
+3. **Trailer:** Simulator-only rough cut in `video/exports/` (72 s, QC pass, choppy, not final). Full board kept in `video/edl-final-board.json`; device clips in P5.
 4. **Devpost:** draft in `docs/submission/devpost-draft.md` (498/500 words) for your review; `[P5]`, `[G]` and `[you]` markers remain.
 5. **MR polish:**
    - room-aware storm (not started);
@@ -56,12 +56,14 @@
    - Changes: the menu card sits over the board's middle, 0.67 m away. The HUD spans ±0.31 m, 3.5 cm lower. Long HUD titles shrink to fit (no truncation on any of the 25 missions, checked in the Editor).
    - Found on the way: after a restart, tool cards lost their stock and cost line (stale state). Fixed, and the smoke test now checks it; it failed 6/17 without the fix.
    - Gate 17/17 (31 Oct 04:10, automated, Editor).
-7. **XR flow check: done 5 Nov (Meta XR Simulator, Quest 3 profile).** Passed: boot, welcome, virtual table, move-board controls, anchor saved on Done, anchor restored on relaunch to the exact moved pose, table found in an MRUK sample room (0.63×0.60 m -> compact), Virtual table reset, hand-loss pause (both hands off -> U16 -> Resume), hand-shadow feeder on real joints. Menu presses used each button's own action, and pinch itself is still untested, since Meta's hand-gesture MCP tools were unavailable. Pinch and real rooms remain for P5.
+7. **XR flow check: done 5 Nov (Meta XR Simulator, Quest 3 profile).** Passed: boot, welcome, virtual table, move-board controls, anchor saved on Done, anchor restored on relaunch to the exact moved pose, table found in an MRUK sample room (0.63×0.60 m -> compact), Virtual table reset, hand-loss pause (both hands off -> U16 -> Resume), hand-shadow feeder on real joints. Then, with the XR Operator layer (`tools/xr/`, no sudo), `hands_test.py` passed a hands-only journey with real Interaction SDK pinches: Hub, Briefing, run, tool card, socket, Start. Real pinch feel and real rooms remain for P5.
    - **Found and fixed:** a chosen table behind the player left them with only their hands in view and no clue. `BoardFinderView` now shows "Your valley is behind you / this way" with an arrow (lazy-follow, no input). Seen in the Simulator at its first size; the final 1.6× scale is covered by `BoardFinderTest`.
-   - **Limits:** `metavr xrsim record` is not supported by this runtime, so trailer footage depends on P5 device clips (OBS on the Simulator window is the fallback). 36 fps in the Simulator with the Editor on this Mac says nothing about the headset; measure in P5.
+   - Also fixed: tables beyond 1.6 m are out of reach, so the board uses the virtual table (the Simulator's nearest fitting table was 5 m away); "Emergency Bridge" is "Bridge" on its card.
+   - **Limits:** `metavr xrsim record` is not supported on macOS. `tools/xr/shoot.py` films composited frames instead (2 to 6 fps captured, so choppy); device clips replace them in P5. 36 fps in the Simulator with the Editor on this Mac says nothing about the headset; measure in P5.
 
 ## Waiting on the user
-- **Which game is the entry (blocks channel work):** the rules allow one Entry per person and per organization, and Waz World is aimed at the same competition. See DECISIONS, 5 Nov.
+- **Submission checklist: `docs/submission/READY.md`** (what's ready, what needs the owner, the order). Nothing is submitted or uploaded; the user said not to for now.
+- **Entry route (blocks channel work):** one Entry per person and per organization; Waz World is aimed at the same competition. The user plans for a real friend to represent RESQ; confirm with the hackathon manager. See DECISIONS, 5 Nov.
 - Meta VR Start membership and Devpost registration; the "RESQ" app in the Meta dashboard, then `metavr auth login`.
 - **Memory:** 8 GB RAM with heavy swap. The Editor crashed once (Meta ISDK telemetry plugin, 24 Oct 00:08) while other projects' Unity runs and apps were open.
 - **Disk (blocking Unity work):** 1.7 GB free at 23:10 on 28 Oct. macOS swap files reached ~9 GB on disk while Waz's Android build and PlayMode runs overlapped RESQ's Editor on 8 GB RAM. RESQ itself is 4.6 GB. The RESQ Editor needs ≥ 5 GB free to run safely, an APK rebuild ≥ 19 GB, and the plan ~40 GB by 11 Nov.
