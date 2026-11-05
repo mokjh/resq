@@ -9,7 +9,7 @@ OUT="$ROOT/tools/.cache/gate_when_free.txt"
 QUIET=${QUIET:-180}; MIN_FREE_MB=${MIN_FREE_MB:-10000}; STOP_MB=${STOP_MB:-6500}; MAX_WAIT=${MAX_WAIT:-10800}
 UNITY=/Applications/Unity/Unity-6000.3.24f1/Unity.app/Contents/MacOS/Unity
 free_mb() { df -m / | tail -1 | awk '{print $4}'; }
-others() { pgrep -f "Unity.app/Contents/MacOS/Unity" | while read -r p; do ps -o command= -p "$p" | grep -v "Desktop/Resq/game" | grep -v "AssetImportWorker" ; done | grep -c . ; }
+others() { pgrep -x Unity | while read -r p; do ps -o command= -p "$p" | grep -v "Desktop/Resq/game"; done | grep -c . ; }   # by process name: -f would also match shells whose command text mentions Unity
 echo "waiting since $(date +%H:%M:%S) (quiet ${QUIET}s, disk >= ${MIN_FREE_MB} MB)" > "$OUT"
 quiet=0; waited=0
 while [ "$waited" -lt "$MAX_WAIT" ]; do

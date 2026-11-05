@@ -11,7 +11,7 @@ OUT=${1:-$ROOT/build/resq-release.apk}
 QUIET=${QUIET:-120}; MAX_WAIT=${MAX_WAIT:-21600}; MIN_FREE_GB=${MIN_FREE_GB:-21}; WATCH_MIN_GB=${WATCH_MIN_GB:-5}
 UNITY=/Applications/Unity/Unity-6000.3.24f1/Unity.app/Contents/MacOS/Unity
 LOG="$ROOT/tools/.cache/release_build.log"
-others() { pgrep -f "Unity.app/Contents/MacOS/Unity -" | while read -r p; do ps -o command= -p "$p"; done | grep -c . ; }
+others() { pgrep -x Unity | wc -l | tr -d " "; }   # by process name: -f would also match shells whose command text mentions Unity
 
 if pgrep -f "projectPath $ROOT/game" > /dev/null; then echo "BUILD: close RESQ's Editor first (batch mode needs the project)"; exit 2; fi
 if [ "${NO_KEY:-0}" != "1" ]; then
