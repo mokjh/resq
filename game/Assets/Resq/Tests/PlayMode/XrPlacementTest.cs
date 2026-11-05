@@ -47,18 +47,31 @@ namespace Resq.Tests
                     var room = mruk.GetCurrentRoom();
                     if (room == null) continue;
                     rooms++;
+                    // the player sits at a table that fits, when the room has one
                     var centre = RoomCentre(room);
+                    var table = FirstFittingTable(room);
+                    if (table != null)
+                    {
+                        var top = table.transform.TransformPoint(new Vector3(table.PlaneRect.Value.center.x, table.PlaneRect.Value.center.y, 0f));
+                        centre = new Vector3(top.x, centre.y, top.z - 0.9f);
+                    }
                     head.SetPositionAndRotation(centre + Vector3.up * 1.2f, Quaternion.identity);
                     bool ok = TablePlacement.TryChooseTable(head, out var pose, out var layout, out var detail);
                     if (ok)
                     {
                         placed++; if (layout == "wide") wide++; else compact++;
                         AssertOnTable(room, pose, layout == "wide" ? Wide : Compact, head.position, prefab.name, detail);
+                        var away = pose.position - head.position; away.y = 0;
+                        Assert.LessOrEqual(away.magnitude, TablePlacement.MaxTableDistance, $"{prefab.name}: chosen table out of reach ({detail})");
+                        // walk far from every table: no table is in reach, so placement must fall back to the virtual table
+                        head.position += Vector3.right * 100f;
+                        Assert.IsFalse(TablePlacement.TryChooseTable(head, out _, out _, out var farDetail), $"{prefab.name}: chose a table 100 m away");
+                        StringAssert.Contains("out of reach", farDetail, prefab.name);
                     }
                     else
                     {
                         none++;
-                        Assert.IsFalse(AnyTableFits(room), $"{prefab.name}: placement found no table, but a table could hold the compact board ({detail})");
+                        Assert.IsNull(table, $"{prefab.name}: placement found no table, but a table could hold the compact board ({detail})");
                     }
                     report.Add($"{prefab.name}: {(ok ? layout : "virtual")} ({detail})");
                 }
@@ -111,7 +124,7 @@ namespace Resq.Tests
             Assert.Greater(squareness, 0.999f, $"{roomName}: board edges should run square to the table's edges");
         }
 
-        static bool AnyTableFits(MRUKRoom room)
+        static MRUKAnchor FirstFittingTable(MRUKRoom room)
         {
             foreach (var a in room.Anchors)
             {
@@ -121,9 +134,9 @@ namespace Resq.Tests
                 float w = r.width * a.transform.lossyScale.x, h = r.height * a.transform.lossyScale.y;
                 float lo = Mathf.Min(w, h), hi = Mathf.Max(w, h);
                 // either orientation, compact footprint plus margin
-                if (hi >= Compact.x + 0.02f && lo >= Compact.y + 0.02f) return true;
+                if (hi >= Compact.x + 0.02f && lo >= Compact.y + 0.02f) return a;
             }
-            return false;
+            return null;
         }
 
         static Vector3 Flat(Vector3 v) { v.y = 0; return v.normalized; }

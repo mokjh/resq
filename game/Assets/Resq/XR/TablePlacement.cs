@@ -28,6 +28,9 @@ namespace Resq.XR
         static readonly Vector2 WideFootprint = new Vector2(0.64f + 0.032f, 0.48f + 0.032f);
         static readonly Vector2 CompactFootprint = new Vector2(0.64f * 5f / 6f + 0.032f, 0.48f * 5f / 6f + 0.032f);
         const float Margin = 0.02f, SceneTimeout = 8f, AnchorTimeout = 6f;
+        /// <summary>A table further than this (head to its centre, flat) is out of a seated player's reach: use the virtual
+        /// table in front of them instead (in the Simulator, the nearest table that fitted was 5 m away, 5 Nov).</summary>
+        public const float MaxTableDistance = 1.6f;
 
         public enum Outcome { None, RestoredAnchor, Table, VirtualTable }
         /// <summary>What the last placement did (for the HUD, tests and logs).</summary>
@@ -164,7 +167,7 @@ namespace Resq.XR
             var room = mruk != null ? mruk.GetCurrentRoom() : null;
             if (room == null) { detail = "no MRUK room"; return false; }
             Vector3 headPos = head != null ? head.position : Vector3.zero;
-            float best = float.MaxValue; int tables = 0;
+            float best = float.MaxValue; int tables = 0, tooFar = 0;
             foreach (var a in room.Anchors)
             {
                 if (a == null || !a.HasAnyLabel(MRUKAnchor.SceneLabels.TABLE) || !a.PlaneRect.HasValue) continue;
@@ -173,6 +176,7 @@ namespace Resq.XR
                 if (Vector3.Dot(t.forward, Vector3.up) < 0.9f) continue;   // not a flat top
                 var rect = a.PlaneRect.Value;
                 var centre = t.TransformPoint(new Vector3(rect.center.x, rect.center.y, 0f));
+                if (Flat(centre - headPos).magnitude > MaxTableDistance) { tooFar++; continue; }
                 Vector3 axisA = FlatDir(t.right), axisB = FlatDir(t.up);
                 float lenA = rect.width * t.lossyScale.x, lenB = rect.height * t.lossyScale.y;
                 // the player stands at the edge nearest them: board forward points from that edge across the table
@@ -203,7 +207,7 @@ namespace Resq.XR
                 pose = new Pose(centre + Vector3.up * BoardSpace.BaseDepth, Quaternion.LookRotation(fwd, Vector3.up));
                 detail = $"table {a.name} {across:F2}x{deep:F2} m -> {fit}";
             }
-            if (layout == null) detail = tables == 0 ? "room has no table" : $"{tables} table(s), none fits the board";
+            if (layout == null) detail = tables == 0 ? "room has no table" : tooFar == tables ? $"{tables} table(s), all out of reach" : $"{tables} table(s), none in reach fits the board";
             return layout != null;
         }
 
