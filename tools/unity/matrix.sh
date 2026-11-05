@@ -18,7 +18,11 @@ python3 "$UC" console_status 2>/dev/null | grep -q '"compilationFailed": true' &
 python3 "$UC" editor_focus > /dev/null 2>&1
 RES="$ROOT/tools/.cache/test_results.json"
 rm -f "$RES"
-python3 "$UC" run_tests --mode playmode --filter Matrix --filter_type category --async_tests true --timeout 7200 > /dev/null 2>&1
+# include_explicit: all three matrix tests are [Explicit], and without it the filter silently matches nothing and no run starts.
+python3 "$UC" run_tests --mode playmode --filter Matrix --filter_type category --include_explicit true --async_tests true --timeout 7200 > /dev/null 2>&1
+# TestResultWriter writes "running" when the run starts, so a run that never starts fails here rather than after the long wait.
+for i in $(seq 1 60); do [ -f "$RES" ] && break; sleep 5; done
+[ -f "$RES" ] || { echo "MATRIX: no run started within 5 minutes (Editor closed, or the filter matched no tests)"; exit 2; }
 for i in $(seq 1 1440); do
   grep -q '"status": "completed"' "$RES" 2>/dev/null && break
   sleep 5

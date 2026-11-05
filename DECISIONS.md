@@ -263,3 +263,8 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - **Start membership:** mandatory for whoever submits (§2(d)). The FAQ's wording is looser, so we follow the rules.
 - **Meta side:** the form is the only link: org or Start email, teammates, channel URL. The APK has no App ID or account in it, so READY's "put the App ID in the build settings" step is removed. Recommended: Mohamed creates RESQ's Meta team and invites Amir as Administrator.
 - **Gaze:** product code has no ISDK `GazeInteractor`, so the form lists head-gaze dwell only.
+
+## 5 Nov 2026: input matrix attempt, disk
+- The first matrix attempt started no tests. All three matrix tests are `[Explicit]`, and `run_tests` drops those unless `include_explicit` is set. The Editor log shows no run after the 05:02 gate. The 2-hour wait ended with "no result", and that is not a pass. `matrix.sh` now passes the flag and fails within 5 minutes if no run starts.
+- Re-run headless on the same code: sim 68/68, missions 450/450, challenges 120/120.
+- Free disk fell to 0.2 to 3 GB, below the 10 GB floor, so no Unity work runs until there is room. Emptying the Trash is the owner's call.

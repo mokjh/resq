@@ -7,14 +7,15 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 ## Ready
 | Item | Where | Evidence |
 |---|---|---|
-| 25 missions, both plans, both layouts, 3 presets | `python3 tools/simtest/simtest.py sim` and `lab validate` | automated: 450/450, 120/120 challenge runs (last run before 5 Nov) |
-| PlayMode gate | `tools/unity/gate_when_free.sh` | automated: 18/18, 5 Nov |
+| 25 missions, both plans, both layouts, 3 presets | `python3 tools/simtest/simtest.py sim` and `lab validate` | automated: sim 68/68, 450/450, 120/120 challenge runs, all 5 Nov |
+| PlayMode gate | `tools/unity/gate_when_free.sh` | automated: 20/20, 5 Nov |
+| All 25 missions through hand, one-hand and head-gaze input | `GATE=matrix.sh tools/unity/gate_when_free.sh` | **not yet run:** the first attempt on 5 Nov started no tests (script fixed), and the disk is now too full |
 | Hands-only journey with real pinches: Hub to placed barrier to running mission | `tools/xr/hands_test.py` | simulator: PASS, 5 Nov |
 | XR flow: placement, virtual table, move board, anchor save and restore, hand-loss pause, off-view hint | STATUS item 7 | simulator: 5 Nov |
 | Release key | `~/keys/resq.keystore`, password in the login Keychain (`resq-keystore`) | **Back it up off this Mac** |
 | Release build and store-rule check | `tools/unity/release_apk.sh`, `tools/unity/check_apk.sh` | written; **signed build not yet made** (needs 21 GB free) |
-| Debug APK | `build/resq-xr.apk` | static manifest checks only; predates the 32-bit fix and later commits; never run on a headset |
-| Devpost text | `docs/submission/devpost-draft.md` | 500/500 words; `[P5]` and `[you]` markers remain |
+| Debug APK | `build/resq-xr.apk` | static manifest checks only; predates the 32-bit fix and this week's commits, including real hands and room weather; never run on a headset |
+| Devpost text | `docs/submission/devpost-draft.md` | 498/500 words; `[P5]` and `[you]` markers remain |
 | Store page copy | `docs/submission/store-listing.md` | within field limits |
 | Store art | `docs/submission/store/` | game renders; screenshots are Editor renders until device captures replace them |
 | Trailer rough cut | `video/exports/resq-trailer-captioned.mp4` | simulator footage, autopilot-driven, 72 s, QC pass; choppy (2 to 6 captured fps) and not final |
@@ -59,7 +60,7 @@ Question for the hackathon manager, once Mohamed's real role is filled in:
 > Hi, please confirm this setup before we submit. RESQ: Mohamed Tarek is the Team Representative and submits it from his own account; his role is [his real role]. I, Amir Lotfy, am a non-Representative member and built most of the game. We'll list both of us with our roles on the form. The app sits in a Meta developer team Mohamed created, where I'm also an administrator. Separately, I'm submitting a different project, Waz World, as a solo entrant. Does this fit the Entry Limit and Permitted Participation Scenario (ii)?
 
 ## Also needs the owner
-1. **Free disk to 21 GB** for the signed build (16 GB now).
+1. **Empty the Trash.** It holds 21 GB, and under 3 GB is free (5 Nov, 07:15). The matrix needs 10 GB and the signed build 21 GB.
 2. **Back up** `~/keys/resq.keystore` off this Mac. Losing it means no updates under the same signature.
 3. **Support email** and the developer name to show on the store page.
 4. **Headset, 12 to 15 Nov:** see below.
@@ -75,6 +76,9 @@ Question for the hackathon manager, once Mohamed's real role is filled in:
 
 ## Only a headset can answer
 - Real pinch feel, ray comfort, one-hand play, head dwell
+- **Real hands over the board:** the cut-through to passthrough, the forearm estimate and any halo at the edge. If it looks wrong, `RealHandsView.Wanted` returns to the SDK's hands in one line
+- **Room weather on real passthrough:** how the graded room, lightning, rain and the cloud under the ceiling look; reading the real ceiling from MRUK
+- Dynamic foveation and CPU/GPU levels: text stays sharp and the frame rate holds
 - Frame rate on Quest 3 and 3S (at least 60, target 72), thermal, memory
 - MRUK in real rooms, anchor relocalization across sessions
 - **HUD readability:** body text is about 0.7° at the HUD's distance, under Meta's 1° guidance. It looks fine in captures but needs judging in the headset; Settings offers 125 and 150%

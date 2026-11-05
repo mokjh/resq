@@ -35,7 +35,7 @@ We wanted a seated mixed reality game with real agency in your hands: not a pass
 
 **What it does**
 
-RESQ places a small valley on your real table. A flood, a forest fire, an avalanche slope, a rising tide or a lava flow is coming, and residents need a way out. You pinch tools from a tray, such as a barrier, bridge, pump, skiff, firebreak, brace or coolant, and place them on legal spots. Before you commit, a forecast runs the real simulation ahead and shows which cells stay dry and which newly flood. Then start the clock and watch.
+RESQ places a small valley on your real table. A flood, a forest fire, an avalanche slope, a rising tide or a lava flow is coming, and residents need a way out. You pinch tools from a tray, such as a barrier, bridge, pump, skiff, firebreak, brace or coolant, and place them on legal spots. Before you commit, a forecast runs the real simulation ahead and shows which cells stay dry and which newly flood.
 
 There are five worlds and 25 missions, each with two very different winning plans, three rule presets (Standard, Relaxed and Command) and 30 named challenges. A debrief explains the cause and effect behind every run, and in aftercare you watch the valley recover: the water drains, the hazards fade and everyone home cheers.
 
@@ -45,7 +45,7 @@ Everything works with hands: poke and pinch for the tray, ray and pinch for dist
 
 **Your room matters**
 
-RESQ uses the Mixed Reality Utility Kit to find a table that fits. A long table gets the wide layout and a small one the compact layout, which changes the mission. With no table, it builds a virtual one. Your valley is saved as a spatial anchor, so it is still there next time, and your real hands cast soft shadows on it, so you can judge height before you touch. `[P5]`
+RESQ uses the Mixed Reality Utility Kit to find a table that fits. A long table gets the wide layout and a small one the compact layout, which changes the mission. With no table, it builds a virtual one. Rain falls from your real ceiling and the room dims with the storm. Your valley is saved as a spatial anchor, so it is still there next time, and your real hands cast soft shadows on it, so you can judge height before you touch. `[P5]`
 
 **How we built it**
 
@@ -53,7 +53,7 @@ Unity 6 with URP, the Meta XR Core and Interaction SDKs (v207) and MRUK. The rul
 
 **Challenges**
 
-An honest, fast forecast: it runs the real simulation ahead on a worker thread instead of drawing a guess. Five rule sets in one engine, with presentation never touching outcomes. And building it all on an 8 GB laptop.
+An honest, fast forecast: it runs the real simulation ahead on a worker thread instead of drawing a guess. Five rule sets in one engine, with presentation never touching outcomes.
 
 **What's next**
 

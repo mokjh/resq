@@ -22,7 +22,7 @@ Pinch a tool from the tray and place it on a legal spot: a barrier, bridge, pump
 
 Five worlds and 25 missions: floods in Alder Valley, wildfire in Emberwood, avalanche slopes in Frostline, rising tides in Tidemark and lava in Cinder Reach. Every mission has two very different winning plans. Nothing is random, so a plan that works will work again. A debrief explains why things happened, and in aftercare you watch the valley recover.
 
-Made for mixed reality. RESQ finds a table that fits and changes the mission to suit its size. With no table, it builds a virtual one. Your valley stays where you left it, and your real hands cast shadows on the miniature.
+Made for mixed reality. RESQ finds a table that fits and changes the mission to suit its size. With no table, it builds a virtual one. Rain falls from your real ceiling, the room takes on the weather, and it clears when everyone is safe. Your valley stays where you left it, and your real hands cast shadows on the miniature.
 
 Play your way. Seated, with no locomotion. Use both hands or one, on either side. Command rules turn each mission into a turn-based puzzle that works with head gaze alone. Text scales to 150%, with high-contrast and reduced-effects modes and an Open play option that unlocks every mission.
 
