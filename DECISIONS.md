@@ -268,3 +268,9 @@ Newest first. Decisions before 22 Oct 2026 are archived verbatim in `docs/archiv
 - The first matrix attempt started no tests. All three matrix tests are `[Explicit]`, and `run_tests` drops those unless `include_explicit` is set. The Editor log shows no run after the 05:02 gate. The 2-hour wait ended with "no result", and that is not a pass. `matrix.sh` now passes the flag and fails within 5 minutes if no run starts.
 - Re-run headless on the same code: sim 68/68, missions 450/450, challenges 120/120.
 - Free disk fell to 0.2 to 3 GB, below the 10 GB floor, so no Unity work runs until there is room. The owner emptied the Trash, which freed almost nothing. Its 21 GB figure was a `du` overstatement, probably APFS clones. Swap on the VM volume (11.8 GB) is the larger swing. The user then stopped all RESQ work.
+
+## 15 Nov 2026: age group, legal clicks, entry
+- **Age group:** RESQ is self-certified **Teens and adults (13+)**. The owner, interviewed in chat, said it was designed for 13 and older. Mixed ages would need Meta's Get Age Category API, and RESQ has none. Meta lets the certification change later.
+- **DDA:** left for the entrant. The agreement makes ticking "I agree" his personal representation that he agrees to be bound, so the agent does not tick it. The Devpost eligibility boxes and Submit are his as well.
+- **Entry:** a Team of Individuals in the entrant's accounts (team ZeOnes, app RESQ 1493749823815011, Devpost submission 1284442). Amir is a listed teammate.
+- **Art credit:** the Devpost story credits Meshy and Higgsfield, which made the landmarks, vehicles and residents. It no longer calls all the art scripted Blender.

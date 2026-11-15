@@ -20,7 +20,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 | Team | **ZeOnes** (existing; the name shows in the store) |
 | App | **RESQ**, App ID 1493749823815011, Meta Horizon Store, not released. Never press "Start submission" |
 | Developer Distribution Agreement | **Not signed: the entrant signs it** (Release channels → "View and sign") |
-| Age group self-certification | **Not done: the entrant does it** (Release channels → "Start") |
+| Age group self-certification | **Done 15 Nov:** Teens and adults (13+), from the owner's interview answers (designed for 13 and older; RESQ is offline, with no accounts, chat, ads or data collection). Can be changed any time |
 | "Competition" channel | To create after the DDA: private, "URL Auto Join"; copy the invite URL |
 | Upload | `metavr auth login` (device code; the entrant approves it in his signed-in browser), then `metavr store dist upload --app-id 1493749823815011 --channel Competition --apk build/resq-release.apk --notes "…" --publish`, confirmed with the user at that moment |
 
@@ -37,7 +37,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 | Item | Evidence |
 |---|---|
 | Headless: sim 68/68, missions 450/450, challenges 120/120 | automated, 5 Nov |
-| Judge-proofing: no permission dialog at launch, virtual table first, room data only on "Use my table", recentre moves the virtual table back, Open play on | written and compiled 15 Nov (`JudgeProofTest`); **tests not yet run** |
+| Judge-proofing: no permission dialog at launch, virtual table first, room data only on "Use my table", recentre moves the virtual table back, Open play on | automated: `JudgeProofTest` 3/3 (batch-mode PlayMode, 15 Nov) |
 | PlayMode gate (now 23 tests) and the 25-mission input matrix | **not run since the changes:** the disk guard stopped the Editor |
 | Release key | `~/keys/resq.keystore`, password in the login Keychain. **Back it up off this Mac** |
 | Signed 0.2.0 build, then `check_apk.sh` from the competition skill | **not made:** needs about 11 GB free at peak plus the Editor closed |
@@ -49,7 +49,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 - **Website:** https://resq-woad.vercel.app. Its press page lists only Blender under "Made with"; add Meshy and Higgsfield on the next deploy, with the user's OK.
 
 ## Blockers for the owner
-1. **The entrant:** sign the DDA and do the age-group step on RESQ's Release channels page.
+1. **The entrant:** sign the DDA on RESQ's Release channels page ("View and sign" → "I agree" → Submit). The age group is done.
 2. **Disk:** 6 GB free with the Editor closed; swap grows by GBs while Unity runs on this 8 GB Mac. Free at least 10 GB more for tests and capture, and 15 GB for the signed build.
 3. **YouTube:** which channel uploads the trailer.
 4. **Voice-over and music:** generate them from the script and prompt, or tell me to use the game's own music with captions only.
