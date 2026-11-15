@@ -41,6 +41,9 @@ namespace Resq.Game
         /// <summary>Footage only (tools/xr/shoot.py): slows the run together with Time.timeScale, because this Mac can't
         /// film the Simulator at speed. It changes when steps happen, never what they do. 1 everywhere else.</summary>
         public float CapturePace = 1f;
+        /// <summary>Footage only (Editor capture): when above zero, each rendered frame advances the simulation by exactly this
+        /// many seconds, however slowly the Mac renders, so a frame-stepped clip plays back at true game speed.</summary>
+        public static float FixedFrameStep;
 
         void Start()
         {
@@ -81,7 +84,7 @@ namespace Resq.Game
         {
             if (Sim == null) return;
             if (Paused || Sim.IsOver) { Alpha = 1f; return; }
-            _accumulator += Time.unscaledDeltaTime * CapturePace;
+            _accumulator += FixedFrameStep > 0f ? FixedFrameStep : Time.unscaledDeltaTime * CapturePace;
             int steps = 0;
             while (_accumulator >= StepSeconds && steps < MaxStepsPerFrame)
             {

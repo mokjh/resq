@@ -18,7 +18,9 @@ namespace Resq.Game
         public bool Captions = true;
         public int Music = 70, Effects = 80, Warnings = 90, Speech = 80;   // 0–100
         public string Pacing = "standard";     // standard | relaxed (Command comes from HeadOnly)
-        public bool OpenPlay;                  // unlock every released mission (also an accessibility feature)
+        // unlock every released mission (also an accessibility feature). On by default: a judge or first-time player
+        // gets minutes, not hours, so every world is open from the first launch; the campaign order is one tap away
+        public bool OpenPlay = true;
     }
 
     [Serializable]

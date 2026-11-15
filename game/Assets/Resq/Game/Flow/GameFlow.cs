@@ -69,6 +69,8 @@ namespace Resq.Game
         public static Action<GameBootstrap> Replace;
         /// <summary>Set by the XR assembly: switch to the virtual table.</summary>
         public static Action<GameBootstrap> UseVirtualTable;
+        /// <summary>Set by the XR assembly: the player chose their real table; asks for room data first (never at launch).</summary>
+        public static Action<GameBootstrap> UseRoomTable;
         /// <summary>Set by the XR assembly: the player confirmed the board's pose (save it as the spatial anchor).</summary>
         public static Action<GameBootstrap> PlacementConfirmed;
 
@@ -76,6 +78,8 @@ namespace Resq.Game
         // placement controls exist only on the headset (on the desktop the board has a fixed place)
         bool CanReplace => Boot.XrActive && Replace != null;
         bool CanVirtual => Boot.XrActive && UseVirtualTable != null;
+        bool CanRoom => Boot.XrActive && UseRoomTable != null;
+        bool OnVirtualTable => Boot.BoardRoot.Find("VirtualTable") != null;
         bool _flowLoad;            // the next OnRunLoaded comes from the flow (preview or start), not from outside
         bool _previewRun;          // the loaded run is a menu backdrop, not a run in play
         bool _recorded;
@@ -380,7 +384,8 @@ namespace Resq.Game
             spec.Items.Add(MenuOption.Button("Lower", () => b.position -= Vector3.up * 0.03f));
             spec.Items.Add(MenuOption.Button("Farther", () => b.position += Flat(b.forward) * 0.04f));
             spec.Items.Add(MenuOption.Button("Turn right", () => b.Rotate(0, 15f, 0, Space.World)));
-            if (CanVirtual) spec.Footer.Add(MenuOption.Button("Virtual table", () => UseVirtualTable(Boot)));
+            if (CanRoom && OnVirtualTable) spec.Footer.Add(MenuOption.Button("Use my table", () => UseRoomTable(Boot)));
+            else if (CanVirtual) spec.Footer.Add(MenuOption.Button("Virtual table", () => UseVirtualTable(Boot)));
             spec.Footer.Add(MenuOption.Button("Done", () => { PlacementConfirmed?.Invoke(Boot); ShowHub(); }, true));
             Show(FlowState.Placement, spec);
         }

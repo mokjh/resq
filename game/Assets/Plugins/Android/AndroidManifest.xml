@@ -9,7 +9,8 @@
       </intent-filter>
       <meta-data android:name="com.oculus.vr.focusaware" android:value="true" />
     </activity>
-    <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="false" />
+    <!-- no permission dialog at launch: room data is asked for only when the player picks "Use my table" -->
+    <meta-data android:name="unityplayer.SkipPermissionsDialog" android:value="true" />
     <meta-data android:name="com.oculus.ossplash.background" android:value="black" />
     <meta-data android:name="com.oculus.telemetry.project_guid" android:value="0bd8f8ca-442b-4706-b38a-ae0f3a8493d9" />
     <meta-data android:name="com.oculus.supportedDevices" android:value="quest3|quest3s" tools:replace="android:value" />

@@ -5,14 +5,21 @@ using System.Threading.Tasks;
 using Meta.XR.MRUtilityKit;
 using Resq.Game;
 using UnityEngine;
+#if UNITY_ANDROID && !UNITY_EDITOR
+using UnityEngine.Android;
+#endif
 
 namespace Resq.XR
 {
     /// <summary>
     /// Puts the diorama on the player's real table (BUILD_PLAN decision 7):
     ///   1. a saved spatial anchor from an earlier session: the valley comes back exactly where it was;
-    ///   2. otherwise the nearest MRUK table that fits: the wide layout if the board fits, else compact;
+    ///   2. otherwise, once the player has shared room data, the nearest MRUK table that fits: the wide layout if the
+    ///      board fits, else compact;
     ///   3. otherwise a virtual table at seated height in front of the player.
+    /// Nothing asks for a permission at launch (judges and first-time players start playing at once): room data is
+    /// requested only when the player picks "Use my table" (<see cref="UseRoom"/>). A recentre moves a board on the
+    /// virtual table back in front of the player; a board on a real table stays on the table.
     /// The board's long side faces the player. A fresh placement is saved as a spatial anchor, and the board is
     /// parented to it so it stays world-locked. Presentation and setup only: the simulation never reads any of this.
     /// </summary>
@@ -24,6 +31,8 @@ namespace Resq.XR
         /// device provides no room (the macOS XR Simulator has no room data). Never used in a build.
         /// </summary>
         public const string DevRoomEnv = "RESQ_DEV_ROOM";
+        /// <summary>Horizon OS runtime permission for scene (room) data.</summary>
+        public const string ScenePermission = "com.oculus.permission.USE_SCENE";
         // board footprint including the 16 mm frame on each side (BoardSpace: wide cell 20 mm, 32 x 24 cells)
         static readonly Vector2 WideFootprint = new Vector2(0.64f + 0.032f, 0.48f + 0.032f);
         static readonly Vector2 CompactFootprint = new Vector2(0.64f * 5f / 6f + 0.032f, 0.48f * 5f / 6f + 0.032f);
@@ -44,6 +53,7 @@ namespace Resq.XR
             GameBootstrap.XrPointers = XrPointers.Setup;
             GameFlow.Replace = Replace;
             GameFlow.UseVirtualTable = UseVirtual;
+            GameFlow.UseRoomTable = UseRoom;
             GameFlow.PlacementConfirmed = Confirm;
             GameFlow.HandsTracked = XrPointers.AnyHandTracked;
         }
@@ -56,6 +66,7 @@ namespace Resq.XR
             var head = WaitHead();
             while (head.MoveNext()) yield return head.Current;
             var headT = Camera.main != null ? Camera.main.transform : null;
+            HookRecentre(boot);
 
             // 1. restore the anchored valley from an earlier session
             string saved = PlayerPrefs.GetString(AnchorKey, "");
@@ -80,10 +91,16 @@ namespace Resq.XR
                 Debug.Log($"[RESQ XR] saved anchor {uuid} not restored; placing afresh");
             }
 
-            // 2. the nearest real table that fits
-            var scene = WaitScene();
-            while (scene.MoveNext()) yield return scene.Current;
-            if (TryChooseTable(headT, out var pose, out var layoutChoice, out var detail))
+            // 2. the nearest real table that fits, only once the player has shared room data
+            string detail = "room data not shared: virtual table";
+            Pose pose = default; string layoutChoice = null;
+            bool roomAllowed = RoomDataAllowed();
+            if (roomAllowed)
+            {
+                var scene = LoadRoom();
+                while (scene.MoveNext()) yield return scene.Current;
+            }
+            if (roomAllowed && TryChooseTable(headT, out pose, out layoutChoice, out detail))
             {
                 SetBoard(boot, pose);
                 boot.BeginRun(layoutChoice, layoutChoice == "wide" ? "On your table" : "On your table (compact board)");
@@ -96,7 +113,7 @@ namespace Resq.XR
                 var p = InFrontOfHead(headT);
                 SetBoard(boot, p);
                 VirtualTable.Build(boot, p, WideFootprint);
-                boot.BeginRun("wide", "On a virtual table (no table that fits was found)");
+                boot.BeginRun("wide", roomAllowed ? "On a virtual table (no table that fits was found)" : "On a virtual table. \"Use my table\" puts it on your real one");
                 yield return null;
                 Report(Outcome.VirtualTable, detail.Length > 0 ? detail : "no table found: virtual table");
             }
@@ -111,6 +128,65 @@ namespace Resq.XR
             Detach(boot);
             ForgetAnchor();
             boot.StartCoroutine(Run(boot));
+        }
+
+        /// <summary>The player chose their real table: ask for room data if needed, then place afresh. Denied: the virtual table stays.</summary>
+        static void UseRoom(GameBootstrap boot)
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            if (!Permission.HasUserAuthorizedPermission(ScenePermission)) { boot.StartCoroutine(AskRoom(boot)); return; }
+#endif
+            Replace(boot);
+        }
+
+#if UNITY_ANDROID && !UNITY_EDITOR
+        static IEnumerator AskRoom(GameBootstrap boot)
+        {
+            int answer = 0;   // set from the permission callbacks, read here on the main thread
+            var cb = new PermissionCallbacks();
+            cb.PermissionGranted += _ => answer = 1;
+            cb.PermissionDenied += _ => answer = 2;
+            Permission.RequestUserPermission(ScenePermission, cb);
+            while (answer == 0) yield return null;
+            if (answer == 1) Replace(boot);
+            else boot.BeginRun(boot.LayoutClass, "Room data not shared: staying on the virtual table");
+        }
+#endif
+
+        // ------------------------------------------------------------------ recentre
+        static bool _recentreHooked;
+        static GameBootstrap _recentreBoot;
+
+        static void HookRecentre(GameBootstrap boot)
+        {
+            _recentreBoot = boot;
+            if (_recentreHooked || OVRManager.display == null) return;
+            OVRManager.display.RecenteredPose += OnRecentred;
+            _recentreHooked = true;
+        }
+
+        static void OnRecentred()
+        {
+            var boot = _recentreBoot;
+            if (boot == null || Camera.main == null) return;
+            var root = boot.BoardRoot;
+            if (root.Find("VirtualTable") == null) return;   // a real table stays where it is
+            bool anchored = root.parent != null && root.parent.GetComponent<OVRSpatialAnchor>() != null;
+            if (anchored) Detach(boot, keepTable: true);
+            if (RecentreBoard(root, Camera.main.transform) && anchored) SaveAnchorAsync(boot, boot.LayoutClass, "virtual");
+            Debug.Log("[RESQ XR] recentred: virtual table moved in front of the player");
+        }
+
+        /// <summary>
+        /// After a recentre: a board on the virtual table moves back in front of the seated player (the run continues;
+        /// nothing is rebuilt). A board on a real table is left alone. Returns whether it moved.
+        /// </summary>
+        public static bool RecentreBoard(Transform boardRoot, Transform head)
+        {
+            if (boardRoot == null || boardRoot.Find("VirtualTable") == null) return false;
+            var p = InFrontOfHead(head);
+            boardRoot.SetPositionAndRotation(p.position, p.rotation);
+            return true;
         }
 
         /// <summary>Switch to the virtual table in front of the player.</summary>
@@ -250,15 +326,27 @@ namespace Resq.XR
             yield return null;
         }
 
-        static IEnumerator WaitScene()
+        /// <summary>Room data may be read: the scene permission is granted on the headset; in the Editor, a dev room is set.</summary>
+        public static bool RoomDataAllowed()
+        {
+#if UNITY_ANDROID && !UNITY_EDITOR
+            return Permission.HasUserAuthorizedPermission(ScenePermission);
+#else
+            return !string.IsNullOrEmpty(Environment.GetEnvironmentVariable(DevRoomEnv));
+#endif
+        }
+
+        /// <summary>Loads the room (MRUK no longer loads it at startup, so nothing reads room data before the player agrees).</summary>
+        static IEnumerator LoadRoom()
         {
             var mruk = MRUK.Instance;
             if (mruk == null) yield break;
-            bool loaded = mruk.IsInitialized;
-            if (!loaded) mruk.RegisterSceneLoadedCallback(() => loaded = true);
+#if !UNITY_EDITOR
+            var load = mruk.LoadSceneFromDevice();
             float t0 = Time.realtimeSinceStartup;
-            while (!loaded && Time.realtimeSinceStartup - t0 < SceneTimeout) yield return null;
-            if (!loaded) Debug.Log("[RESQ XR] MRUK scene did not load in time (permission denied or no Space Setup)");
+            while (!load.IsCompleted && Time.realtimeSinceStartup - t0 < SceneTimeout) yield return null;
+            if (!load.IsCompleted || mruk.GetCurrentRoom() == null) Debug.Log("[RESQ XR] MRUK room did not load (no Space Setup, or timed out)");
+#endif
 #if UNITY_EDITOR
             string devRoom = Environment.GetEnvironmentVariable(DevRoomEnv);
             if (mruk.GetCurrentRoom() == null && !string.IsNullOrEmpty(devRoom))

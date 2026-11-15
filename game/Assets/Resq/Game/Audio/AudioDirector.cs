@@ -34,6 +34,17 @@ namespace Resq.Game
 
         /// <summary>A sound that carries meaning played: its caption line (the HUD shows it when Captions is on).</summary>
         public static event System.Action<string> Cue;
+        /// <summary>Every sound effect started: clip name and volume (0–1, after the mix). Editor capture logs these to
+        /// rebuild a clip's sound when Unity's audio renderer returns no samples.</summary>
+        public static event System.Action<string, float> Played;
+
+        void OneShot(AudioSource s, string clip, float volume)
+        {
+            var c = Clip(clip);
+            if (c == null) return;
+            s.PlayOneShot(c, volume);
+            Played?.Invoke(clip, volume);
+        }
 
         // read-only views for tests and diagnostics
         public AudioClip MusicClip => _calm != null ? _calm.clip : null;
@@ -92,7 +103,7 @@ namespace Resq.Game
 
         void OnThunder()
         {
-            _ui.PlayOneShot(Clip("thunder"), Effects * 0.5f);
+            OneShot(_ui, "thunder", Effects * 0.5f);
             Cue?.Invoke("Thunder");
         }
 
@@ -184,7 +195,7 @@ namespace Resq.Game
             var h = Interaction.Hover;
             if (h != _hoverPrev && h != null && (h.Kind == PickKind.Button || h.Kind == PickKind.Tool) && Time.unscaledTime - _lastHover > 0.08f)
             {
-                _ui.PlayOneShot(Clip("ui_hover"), Effects * 0.25f);
+                OneShot(_ui, "ui_hover", Effects * 0.25f);
                 _lastHover = Time.unscaledTime;
             }
             _hoverPrev = h;
@@ -194,12 +205,12 @@ namespace Resq.Game
         void OnPressed(Pickable p)
         {
             if (p == null) return;
-            _ui.PlayOneShot(Clip("ui_press"), Effects * 0.5f);
+            OneShot(_ui, "ui_press", Effects * 0.5f);
         }
 
         void OnRejected()
         {
-            _ui.PlayOneShot(Clip("blocked"), Warnings * 0.6f);
+            OneShot(_ui, "blocked", Warnings * 0.6f);
             Cue?.Invoke("Blocked");
         }
 
@@ -220,12 +231,12 @@ namespace Resq.Game
                     break;
                 }
                 case SimEventKind.CommandResolved when e.Code != Reject.OK:
-                    _ui.PlayOneShot(Clip("blocked"), Warnings * 0.55f);
+                    OneShot(_ui, "blocked", Warnings * 0.55f);
                     Cue?.Invoke("Blocked");
                     break;
                 case SimEventKind.Warning:
                     _warnUntil = Time.unscaledTime + 8f;
-                    _ui.PlayOneShot(Clip("warning"), Warnings * 0.75f);
+                    OneShot(_ui, "warning", Warnings * 0.75f);
                     Cue?.Invoke("Warning alarm");
                     break;
                 case SimEventKind.TransferStarted:
@@ -237,13 +248,13 @@ namespace Resq.Game
                 case SimEventKind.ResidentEvacuated:
                 {
                     int g = e.Subject >= 0 && e.Subject < d.ResidentGroup.Length ? d.ResidentGroup[e.Subject] : -1;
-                    if (g >= 0 && !_groupsSafe.Contains(g) && GroupDone(g)) { _groupsSafe.Add(g); _ui.PlayOneShot(Clip("rescue_chime"), Effects * 0.7f); Cue?.Invoke("Rescue chime: a group is safe"); }
+                    if (g >= 0 && !_groupsSafe.Contains(g) && GroupDone(g)) { _groupsSafe.Add(g); OneShot(_ui, "rescue_chime", Effects * 0.7f); Cue?.Invoke("Rescue chime: a group is safe"); }
                     else if (Time.unscaledTime - _lastResidentTick > 0.15f) { Play("resident_safe", NodePos(e.A), 0.35f); _lastResidentTick = Time.unscaledTime; }
                     break;
                 }
                 case SimEventKind.ResidentBackup:
                     _warnUntil = Time.unscaledTime + 8f;
-                    if (Time.unscaledTime - _lastResidentTick > 1f) { _ui.PlayOneShot(Clip("outcome_backup"), Warnings * 0.35f); _lastResidentTick = Time.unscaledTime; Cue?.Invoke("Residents need backup"); }
+                    if (Time.unscaledTime - _lastResidentTick > 1f) { OneShot(_ui, "outcome_backup", Warnings * 0.35f); _lastResidentTick = Time.unscaledTime; Cue?.Invoke("Residents need backup"); }
                     break;
                 case SimEventKind.PowerChanged: Play("power_on", Board, 0.45f); Cue?.Invoke("Power on"); break;
                 case SimEventKind.GeneratorShutdown: Play("power_off", Board, 0.5f); Cue?.Invoke("Generator off"); break;
@@ -255,11 +266,11 @@ namespace Resq.Game
                     _problemLevel = 0;
                     if (st.C.Success)
                     {
-                        _sting.PlayOneShot(Clip("outcome_success"), Effects * 0.7f);
+                        OneShot(_sting, "outcome_success", Effects * 0.7f);
                         var res = Clip($"music_{_world}_resolve");
                         if (res != null) _sting.PlayOneShot(res, Music * MusicBase);
                     }
-                    else _sting.PlayOneShot(Clip("outcome_backup"), Warnings * 0.6f);
+                    else OneShot(_sting, "outcome_backup", Warnings * 0.6f);
                     break;
             }
         }
@@ -298,6 +309,7 @@ namespace Resq.Game
             src.pitch = pitch;
             src.clip = c;
             src.volume = volume * Effects;
+            Played?.Invoke(clip, volume * Effects);
             src.Play();
         }
     }

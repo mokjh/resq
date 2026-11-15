@@ -22,7 +22,8 @@ echo "machine free at $(date +%H:%M:%S), free=$(free_mb) MB" >> "$OUT"
 if ! pgrep -f "projectPath $ROOT/game" > /dev/null; then
   nohup "$UNITY" -projectPath "$ROOT/game" -logFile "$ROOT/tools/.cache/editor.log" > /dev/null 2>&1 &
   sleep 30
-  for i in $(seq 1 100); do python3 "$UC" editor_status 2>/dev/null | grep -q '"status": "ready"' && break; sleep 5; done
+  # READY_WAIT: a first open after the Library was cleared reimports everything (tens of minutes on this Mac)
+  for i in $(seq 1 $(( ${READY_WAIT:-500} / 5 ))); do python3 "$UC" editor_status 2>/dev/null | grep -q '"status": "ready"' && break; sleep 5; done
 fi
 ( while pgrep -f "projectPath $ROOT/game" > /dev/null; do
     f=$(free_mb); if [ "$f" -lt "$STOP_MB" ]; then pkill -f "tools/unity/$GATE"; pkill -f "projectPath $ROOT/game"; echo "disk guard stopped the Editor at $f MB" >> "$OUT"; break; fi
