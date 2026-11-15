@@ -1,88 +1,56 @@
 # RESQ submission: what's ready and what's left
 
-Updated 5 Nov 2026. Nothing has been submitted or uploaded. Deadline: Wed 18 Nov, 12:00 PT (22:00 Cairo).
+Updated 15 Nov 2026. Nothing has been submitted. Deadline: Wed 18 Nov, 12:00 PT (22:00 Cairo); aim for Tue 17 Nov.
 
 Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), device (headset), human.
 
-## Ready
-| Item | Where | Evidence |
-|---|---|---|
-| 25 missions, both plans, both layouts, 3 presets | `python3 tools/simtest/simtest.py sim` and `lab validate` | automated: sim 68/68, 450/450, 120/120 challenge runs, all 5 Nov |
-| PlayMode gate | `tools/unity/gate_when_free.sh` | automated: 20/20, 5 Nov |
-| All 25 missions through hand, one-hand and head-gaze input | `GATE=matrix.sh tools/unity/gate_when_free.sh` | **not yet run:** the first attempt on 5 Nov started no tests (script fixed), and the disk is now too full |
-| Hands-only journey with real pinches: Hub to placed barrier to running mission | `tools/xr/hands_test.py` | simulator: PASS, 5 Nov |
-| XR flow: placement, virtual table, move board, anchor save and restore, hand-loss pause, off-view hint | STATUS item 7 | simulator: 5 Nov |
-| Release key | `~/keys/resq.keystore`, password in the login Keychain (`resq-keystore`) | **Back it up off this Mac** |
-| Release build and store-rule check | `tools/unity/release_apk.sh`, `tools/unity/check_apk.sh` | written; **signed build not yet made** (needs 21 GB free) |
-| Debug APK | `build/resq-xr.apk` | static manifest checks only; predates the 32-bit fix and this week's commits, including real hands and room weather; never run on a headset |
-| Devpost text | `docs/submission/devpost-draft.md` | 498/500 words; `[P5]` and `[you]` markers remain |
-| Store page copy | `docs/submission/store-listing.md` | within field limits |
-| Store art | `docs/submission/store/` | game renders; screenshots are Editor renders until device captures replace them |
-| Trailer rough cut | `video/exports/resq-trailer-captioned.mp4` | simulator footage, autopilot-driven, 72 s, QC pass; choppy (2 to 6 captured fps) and not final |
-| Website | https://resq-woad.vercel.app | live |
+## Entry
+- **Team of Individuals.** The Representative is the entrant who owns:
+  - the Meta account shown as "Mo Tarek", username osamo (an active Meta VR Start member);
+  - the Devpost account "osamo" (creator name Osama Mohamed).
 
-## Entry route: the owner decides
-Checked 5 Nov against the Official Rules, the FAQ and the live Devpost form (read on the `Resq` draft, nothing saved).
+  The user confirmed on 15 Nov that these are one person.
+- **Amir Lotfy** is a listed non-Representative teammate. Waz World is Amir's solo Entry, submitted 15 Nov. Amir must not submit RESQ or represent it.
+- **Don't use** Amir's own `Resq` Devpost draft (project 1260669). Never submit it.
+- **Privacy:** keep the entrant's email and account ids out of the repo and commits.
 
-RESQ can only go in beside Waz World as a **declared team**. That is Permitted Participation Scenario (ii) in Rules §2, and the FAQ says yes to working on one project with a team and another alone. If Mohamed Tarek won't really be part of RESQ's team, enter one game only.
+## Meta (entrant's account, built-in browser)
+| Item | State |
+|---|---|
+| Team | **ZeOnes** (existing; the name shows in the store) |
+| App | **RESQ**, App ID 1493749823815011, Meta Horizon Store, not released. Never press "Start submission" |
+| Developer Distribution Agreement | **Not signed: the entrant signs it** (Release channels → "View and sign") |
+| Age group self-certification | **Not done: the entrant does it** (Release channels → "Start") |
+| "Competition" channel | To create after the DDA: private, "URL Auto Join"; copy the invite URL |
+| Upload | `metavr auth login` (device code; the entrant approves it in his signed-in browser), then `metavr store dist upload --app-id 1493749823815011 --channel Competition --apk build/resq-release.apk --notes "…" --publish`, confirmed with the user at that moment |
 
-| | Waz World | RESQ |
-|---|---|---|
-| Submitter Type on the form | Individual | Team of Individuals |
-| Submitted by | Amir Lotfy, from Amir's own Devpost account | Mohamed Tarek, from his own Devpost account, as Team Representative |
-| Amir's part | Solo entrant | Non-Representative member, listed with name, email and role |
+## Devpost draft "RESQ" (submission 1284442, entrant's account)
+| Step | State |
+|---|---|
+| Overview | Name RESQ, tagline (131 chars), thumbnail (1500×1000, an in-game render with the title set by script) |
+| Details | Story from `devpost-draft.md` (491 words), 16 "Built with" tags, website link, 9 gallery images (in-game renders, captioned). **Video URL missing** |
+| Additional info | Team of Individuals, Gaming, New, Unity, team name ZeOnes, capabilities, hand interactions. **Missing:** channel URL; the entrant's email, country, his role and Amir's email in the teammates line; target launch date (optional) |
+| Team | Amir joins from his own Devpost account through the project's secret invite link (Manage team) |
+| Finalization | The entrant ticks the four eligibility boxes and the terms, and clicks Submit |
 
-**What connects Devpost to Meta:** only the form. It asks for the email tied to the developer organization or Start membership, each teammate's name, email and role, and the Competition channel URL. The APK carries no App ID or account (checked in the manifest and settings), so the same build can go to whichever team holds the app.
+## Build and tests
+| Item | Evidence |
+|---|---|
+| Headless: sim 68/68, missions 450/450, challenges 120/120 | automated, 5 Nov |
+| Judge-proofing: no permission dialog at launch, virtual table first, room data only on "Use my table", recentre moves the virtual table back, Open play on | written and compiled 15 Nov (`JudgeProofTest`); **tests not yet run** |
+| PlayMode gate (now 23 tests) and the 25-mission input matrix | **not run since the changes:** the disk guard stopped the Editor |
+| Release key | `~/keys/resq.keystore`, password in the login Keychain. **Back it up off this Mac** |
+| Signed 0.2.0 build, then `check_apk.sh` from the competition skill | **not made:** needs about 11 GB free at peak plus the Editor closed |
 
-**What voids it:**
-- Mohamed enters as an Individual, or Amir is left off the team. Rules §3 disqualifies an Entry made by someone else on an Entrant's behalf, unless that person is a Team or Organization Representative, and §4 needs the Project to be original to the Entrant.
-- Anyone other than Mohamed uses his Devpost account. Devpost's terms, which are part of the rules, forbid using another user's account.
-- Amir's `Resq` Devpost draft gets submitted. It would be Amir's Entry, and Waz World a second one. Delete it or leave it unsubmitted.
-- False information anywhere. §14 allows disqualification and damages, and the Sponsor judges fairness at its sole discretion. A disqualification could reach Waz World too (§3).
+## Trailer and media
+- **Voice-over and music:** script and prompt in `video/voiceover-and-music.md`. If the AI voice or music is used: YouTube altered content Yes, and Google AI Studio goes in Devpost's "Built with".
+- **Capture:** frame-stepped Simulator capture (`ResqCapture`, exact left-eye view over a Simulator room still) is written but not yet run.
+- **Rough cut:** `video/exports/` holds the choppy 5 Nov version. Not for submission.
+- **Website:** https://resq-woad.vercel.app. Its press page lists only Blender under "Made with"; add Meshy and Higgsfield on the next deploy, with the user's OK.
 
-**Mohamed, himself:**
-1. Meta account with Developer Access (verified with 2FA or a payment method). 18 or over, eligible country.
-2. Join Meta VR Start at https://developers.meta.com/horizon/programs/start/apply/. It is mandatory for whoever submits (§2(d)); Horizon Start is the same program. The competition page estimates 5 minutes. Proof is the "Start Member" tag on the Developer Forum; the FAQ says to open a support case if it is missing after 24 hours.
-3. Create a new Meta team for RESQ (the name shows on the store) and invite Amir's Meta account as Administrator.
-4. As its owner: the NDA, the Developer Distribution Agreement and age self-certification, which unlock "Create channel". Identity verification if Meta asks (government ID and selfie, about two minutes).
-5. Join the hackathon on Devpost, create a new project and send Amir the team invite link.
-6. At the end: paste from `devpost-draft.md`, tick the attestations, press Submit. Stay reachable until the winners are announced (about 11 Dec): a Representative who can't be reached can be disqualified (§6).
-
-**Amir:**
-1. Accept both invites and read the rules: the form attests that every team member has.
-2. Put in writing with Mohamed who owns RESQ, how a prize is split and who pays tax. A prize is paid only to the Representative, who allocates it and carries the tax, with no help from Meta (§7). Winner documents can be asked of every team member (§6). The Project stays the property of the people who developed it (§9).
-3. Send the manager question below, through "Message manager" on the Devpost project list.
-4. Keep Waz World as Amir's one Entry.
-
-**Alternative:** Amir creates the team and invites Mohamed as Administrator. §2(c) accepts administrative control and Amir keeps the app after the contest, but both entries' teams then sit under one login, so get that confirmed by the manager first. The dashboard and CLI only show Frameless Plays today. Don't put RESQ there: it holds Waz World.
-
-Question for the hackathon manager, once Mohamed's real role is filled in:
-> Hi, please confirm this setup before we submit. RESQ: Mohamed Tarek is the Team Representative and submits it from his own account; his role is [his real role]. I, Amir Lotfy, am a non-Representative member and built most of the game. We'll list both of us with our roles on the form. The app sits in a Meta developer team Mohamed created, where I'm also an administrator. Separately, I'm submitting a different project, Waz World, as a solo entrant. Does this fit the Entry Limit and Permitted Participation Scenario (ii)?
-
-## Also needs the owner
-1. **Free disk.** About 2 GB is free (5 Nov); the matrix needs 10 GB and the signed build 21 GB. Swap took about 12 GB: closing apps or restarting returns it. The Trash is already empty.
-2. **Back up** `~/keys/resq.keystore` off this Mac. Losing it means no updates under the same signature.
-3. **Support email** and the developer name to show on the store page.
-4. **Headset, 12 to 15 Nov:** see below.
-5. **Your review** of the audio and the final trailer, then the YouTube upload.
-
-## Then, in order (Claude, with your go-ahead for uploads)
-1. Create the app "RESQ" in RESQ's team. The build doesn't change: the App ID only goes in the upload command.
-2. Signed build, `check_apk.sh` PASS.
-3. After the team's legal statements: create the private **Competition** channel with a URL invite.
-4. Upload with `metavr store dist upload --app-id ID --channel Competition --apk build/resq-release.apk --publish`, after confirming with you at that moment.
-5. Fill the store page, but **never press "Submit for Review"**.
-6. Put the invite link in the Devpost form and on the site.
-
-## Only a headset can answer
-- Real pinch feel, ray comfort, one-hand play, head dwell
-- **Real hands over the board:** the cut-through to passthrough, the forearm estimate and any halo at the edge. If it looks wrong, `RealHandsView.Wanted` returns to the SDK's hands in one line
-- **Room weather on real passthrough:** how the graded room, lightning, rain and the cloud under the ceiling look; reading the real ceiling from MRUK
-- Dynamic foveation and CPU/GPU levels: text stays sharp and the frame rate holds
-- Frame rate on Quest 3 and 3S (at least 60, target 72), thermal, memory
-- MRUK in real rooms, anchor relocalization across sessions
-- **HUD readability:** body text is about 0.7° at the HUD's distance, under Meta's 1° guidance. It looks fine in captures but needs judging in the headset; Settings offers 125 and 150%
-- Launching with controllers in hand, now that hands are required
-- Device footage for the trailer and store screenshots
-- Invite install from a second Meta account
-- First-time playtesters
+## Blockers for the owner
+1. **The entrant:** sign the DDA and do the age-group step on RESQ's Release channels page.
+2. **Disk:** 6 GB free with the Editor closed; swap grows by GBs while Unity runs on this 8 GB Mac. Free at least 10 GB more for tests and capture, and 15 GB for the signed build.
+3. **YouTube:** which channel uploads the trailer.
+4. **Voice-over and music:** generate them from the script and prompt, or tell me to use the game's own music with captions only.
+5. **Back up** the release key.

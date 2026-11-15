@@ -1,6 +1,11 @@
-# RESQ status — 5 Nov 2026
+# RESQ status — 15 Nov 2026
 
-**Phase:** P1–P3 software build on the Mac; physical Quest tests stay last (P5, 12–15 Nov). Plan: `BUILD_PLAN.md`. History of earlier milestones: `git log` and `DECISIONS.md`.
+**Phase:** submission prep (no headset). Checklist: `docs/submission/READY.md`. On 15 Nov:
+- **Meta:** the RESQ app was created in the entrant's ZeOnes team.
+- **Devpost:** the draft is filled except the video and channel URL.
+- **Judge-proofing:** written and compiled; tests not yet run.
+
+Physical Quest tests were planned for P5 (12–15 Nov). Plan: `BUILD_PLAN.md`. History of earlier milestones: `git log` and `DECISIONS.md`.
 
 ## Gates (latest results)
 - **Sim (automated, headless):** 68/68 (`python3 tools/simtest/simtest.py sim`), re-run 5 Nov.
@@ -64,8 +69,8 @@
 
 ## Waiting on the user
 - **Submission checklist: `docs/submission/READY.md`** (what's ready, what needs the owner, the order). Nothing is submitted or uploaded; the user said not to for now.
-- **Entry route (blocks channel work):** RESQ can only go in beside Waz World as a declared team: Mohamed Tarek submits as Team Representative from his own accounts and his own Start membership, and Amir is a listed non-Representative member. Otherwise, one game only. The user set this aside on 5 Nov; don't raise it until they do. Steps in `READY.md`.
-- RESQ's Meta team and the "RESQ" app, once the route is decided. `metavr` is signed in as Amir.
+- **Entry:** a Team of Individuals, with the entrant (Meta "Mo Tarek"/osamo, Devpost "Osama Mohamed"; one person, confirmed 15 Nov) as Representative and Amir listed. Waz World is Amir's solo Entry, submitted 15 Nov.
+- **The entrant:** signs the DDA and does the age-group step before the Competition channel can be created.
 - **Memory:** 8 GB RAM with heavy swap. The Editor crashed once (Meta ISDK telemetry plugin, 24 Oct 00:08) while other projects' Unity runs and apps were open.
 - **Disk (blocking all Unity work):** 0.2 to 3 GB free on 5 Nov, 07:00 to 07:15. Swap is the swing factor: the VM volume held 11.8 GB under memory pressure. Emptying the Trash (shown as 21 GB) freed almost nothing, probably because its Chrome folders were clones sharing blocks. RESQ is 4.6 GB. Unity work needs ≥ 10 GB free, the signed build ≥ 21 GB, the plan ~40 GB by 11 Nov. RESQ's Editor exited at 07:04 with no crash report (cause unknown). **All RESQ work is stopped at the user's request (5 Nov); nothing is queued.** `game/Library` was moved to the Trash at the user's request, so the next Editor open reimports every asset and needs the network for packages.
 - **Backup (no git remote):** full repo on the phone at `/sdcard/Download/RESQ-archive/` (29 Oct 00:00, commit e9c6471): git bundle + LFS objects tar + restore note. Restore was tested: 2,734/2,734 tracked files identical. Refresh it after big milestones.
