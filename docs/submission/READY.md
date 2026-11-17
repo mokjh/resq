@@ -65,3 +65,6 @@ Pushed 17 Nov to the public repo github.com/mokjh/resq, from a cleaned copy:
 - `art/` (Meshy and Blender source files, about 340 MB) left out, since the game builds from `game/`.
 
 This local repo is unchanged and has no remote.
+
+## Trailer
+Public at https://youtu.be/A6yIfnsyohs (1:17, uploaded by the owner on 17 Nov). It's in the Devpost video field and linked from the website's home and press pages. Devpost shows Draft 4/5: only the entrant's four eligibility boxes, the terms and Submit remain.
