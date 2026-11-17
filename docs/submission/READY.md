@@ -32,7 +32,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 |---|---|
 | Overview | Name RESQ, tagline (131 chars), thumbnail (1500×1000, an in-game render with the title set by script) |
 | Details | Story from `devpost-draft.md` (491 words), 16 "Built with" tags, website link, 9 gallery images (in-game renders, captioned). **Video URL missing** |
-| Additional info | Team of Individuals, Gaming, New, Unity, team name ZeOnes, capabilities, hand interactions. **Channel URL saved.** **Missing:** the entrant's email, country, his role and Amir's email in the teammates line; target launch date (optional) |
+| Additional info | Team of Individuals, Gaming, New, Unity, team name ZeOnes, capabilities, hand interactions. **17 Nov:** channel URL, Start membership email, country (Egypt), teammates with roles and emails, and the Google AI Studio tag are saved. **Was missing:** the entrant's email, country, his role and Amir's email in the teammates line; target launch date (optional) |
 | Team | Amir joins from his own Devpost account through the project's secret invite link (Manage team) |
 | Finalization | The entrant ticks the four eligibility boxes and the terms, and clicks Submit |
 
@@ -49,7 +49,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 - **Voice-over and music:** script and prompt in `video/voiceover-and-music.md`. If the AI voice or music is used: YouTube altered content Yes, and Google AI Studio goes in Devpost's "Built with".
 - **Capture:** frame-stepped Simulator capture (`ResqCapture`, exact left-eye view over a Simulator room still) is written but not yet run.
 - **Rough cut:** `video/exports/` holds the choppy 5 Nov version. Not for submission.
-- **Website:** https://resq-woad.vercel.app. Its press page lists only Blender under "Made with"; add Meshy and Higgsfield on the next deploy, with the user's OK.
+- **Website:** https://resq-game.vercel.app. Its press page lists only Blender under "Made with"; add Meshy and Higgsfield on the next deploy, with the user's OK.
 
 ## Blockers for the owner
 1. **The entrant:** approve the `metavr` device-code sign-in at upload time. The DDA, the age group and the channel are done.
@@ -57,3 +57,11 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 3. **YouTube:** which channel uploads the trailer.
 4. **Voice-over and music:** generate them from the script and prompt, or tell me to use the game's own music with captions only.
 5. **Back up** the release key.
+
+## Repo
+Pushed 17 Nov to the public repo github.com/mokjh/resq, from a cleaned copy:
+- author rewritten to `Amir Lotfy <178108135+AmirmLotfy@users.noreply.github.com>`;
+- the old email and home paths removed from all history;
+- `art/` (Meshy and Blender source files, about 340 MB) left out, since the game builds from `game/`.
+
+This local repo is unchanged and has no remote.

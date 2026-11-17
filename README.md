@@ -9,7 +9,7 @@ A small valley sits on a table in front of you. A flood, a forest fire, an avala
 - **Room:** starts on a virtual table with no permission prompt. "Use my table" finds a real table with the Mixed Reality Utility Kit. Spatial anchors bring your valley back next session.
 - **Simulation:** deterministic and integer-only, so physics and frame rate never decide an outcome.
 
-Entered in the Meta VR Start Developer Competition 2026, Gaming track, New Experience. Website: https://resq-woad.vercel.app
+Entered in the Meta VR Start Developer Competition 2026, Gaming track, New Experience. Website: https://resq-game.vercel.app
 
 ## Team
 - **Osama Mohamed:** Team Representative. Submission, Meta developer account and the Competition release channel.

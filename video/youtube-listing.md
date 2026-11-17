@@ -16,7 +16,7 @@ Five worlds, 25 missions, two winning plans for each, three rule presets and 30 
 
 Made for the Meta VR Start Developer Competition 2026 (Gaming track).
 
-Website: https://resq-woad.vercel.app
+Website: https://resq-game.vercel.app
 
 Chapters
 0:00 Intro
