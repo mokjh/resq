@@ -24,6 +24,9 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 | "Competition" channel | **Created 15 Nov:** private, URL Auto Join (automatic approval), user limit 200. The invite URL appears only after the first build upload ("Please upload a build to enable url"); then it goes into Devpost |
 | Upload | `metavr auth login` (device code; the entrant approves it in his signed-in browser), then `metavr store dist upload --app-id 1493749823815011 --channel Competition --apk build/resq-release.apk --notes "…" --publish`, confirmed with the user at that moment |
 
+
+**17 Nov:** build 0.2.0 (26111709) uploaded and published to Competition as Build ID 1498012956722031 by the entrant's `metavr` sign-in ("Mo Tarek"). Meta's malware and security tests were running at upload. `metavr` is now signed in as the entrant, not Amir.
+
 ## Devpost draft "RESQ" (submission 1284442, entrant's account)
 | Step | State |
 |---|---|
