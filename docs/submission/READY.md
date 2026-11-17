@@ -40,7 +40,7 @@ Evidence labels: automated (Editor or headless), simulator (Meta XR Simulator), 
 | Judge-proofing: no permission dialog at launch, virtual table first, room data only on "Use my table", recentre moves the virtual table back, Open play on | automated: `JudgeProofTest` 3/3 (batch-mode PlayMode, 15 Nov) |
 | PlayMode gate (now 23 tests) and the 25-mission input matrix | **not run since the changes:** the disk guard stopped the Editor |
 | Release key | `~/keys/resq.keystore`, password in the login Keychain. **Back it up off this Mac** |
-| Signed 0.2.0 build, then `check_apk.sh` from the competition skill | **not made:** needs about 11 GB free at peak plus the Editor closed |
+| Signed build `build/resq-release.apk` | **Built 17 Nov:** 0.2.0, versionCode 26111709, 106 MB, release-signed (CN=Amir Lotfy, O=RESQ); the skill's `check_apk.sh` prints APK CHECK PASS. Unity aborted while quitting, after the APK was written |
 
 ## Trailer and media
 - **Voice-over and music:** script and prompt in `video/voiceover-and-music.md`. If the AI voice or music is used: YouTube altered content Yes, and Google AI Studio goes in Devpost's "Built with".
