@@ -51,9 +51,9 @@ rescue, strategy, puzzle, mixed reality, hand tracking
 ## Details
 | Field | Value |
 |---|---|
-| Website | https://resq-woad.vercel.app |
-| Privacy policy | https://resq-woad.vercel.app/privacy.html |
-| Support | https://resq-woad.vercel.app/support.html |
+| Website | https://resq-game.vercel.app |
+| Privacy policy | https://resq-game.vercel.app/privacy.html |
+| Support | https://resq-game.vercel.app/support.html |
 | Support email | `[you]` |
 | Developer / publisher name | `[you]` Credit on the site is Amir Lotfy; the representative decides how the team is named here |
 
