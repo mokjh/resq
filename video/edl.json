@@ -13,79 +13,123 @@
   "max_seconds": 178
  },
  "music": {
-  "file": "game/Assets/Resq/Content/Resources/ResqAudio/music_w1_resolve.wav",
+  "file": "video/audio/music.mp3",
   "level": 0.3
  },
  "segments": [
   {
-   "id": "s01",
+   "id": "open",
    "source": "c_w1m1_flood",
-   "in": 0.5,
-   "out": 6.5,
-   "caption": "Every flood starts small. This one starts on your table.",
-   "fade_in": 0.5
+   "in": 0.3,
+   "out": 6.9,
+   "caption": "Meta XR Simulator \u00b7 4x speed",
+   "fade_in": 0.6
   },
   {
-   "id": "s02",
+   "id": "title",
    "card": "title",
-   "duration": 3,
+   "duration": 2.5,
    "text": [
     "RESQ",
     "Small worlds. Big saves."
    ]
   },
   {
-   "id": "s03",
+   "id": "place",
+   "source": "c_place",
+   "in": 6.0,
+   "out": 21.4,
+   "caption": "Meta XR Simulator"
+  },
+  {
+   "id": "rescue",
    "source": "c_w1m1_flood",
-   "in": 6.5,
-   "out": 13.5,
-   "caption": "Read the water. Place one tool. Bring every resident home."
+   "in": 8.0,
+   "out": 10.5,
+   "caption": "Meta XR Simulator \u00b7 4x speed"
   },
   {
-   "id": "s04",
+   "id": "w1",
    "source": "c_w1m3_skiff",
-   "in": 1,
-   "out": 10,
-   "caption": "Alder Valley: the water always finds the low road."
+   "in": 1.0,
+   "out": 4.9,
+   "caption": "Meta XR Simulator \u00b7 4x speed"
   },
   {
-   "id": "s05",
+   "id": "w2",
    "source": "c_w2m1_fire",
-   "in": 1,
-   "out": 10,
-   "caption": "Emberwood: fire follows the wind."
+   "in": 1.0,
+   "out": 4.4,
+   "caption": "Meta XR Simulator \u00b7 4x speed"
   },
   {
-   "id": "s06",
+   "id": "w3",
    "source": "c_w3m1_snow",
-   "in": 1,
-   "out": 10,
-   "caption": "Frostline: the snow remembers every load."
+   "in": 1.0,
+   "out": 4.6,
+   "caption": "Meta XR Simulator \u00b7 4x speed"
   },
   {
-   "id": "s07",
+   "id": "w4",
    "source": "c_w4m1_tide",
-   "in": 1,
-   "out": 10,
-   "caption": "Tidemark: the tide keeps its own clock."
+   "in": 1.0,
+   "out": 4.4,
+   "caption": "Meta XR Simulator \u00b7 4x speed"
   },
   {
-   "id": "s08",
+   "id": "w5",
    "source": "c_w5m1_lava",
-   "in": 1,
-   "out": 10,
-   "caption": "Cinder Reach: cool the lava to open a way through."
+   "in": 1.0,
+   "out": 5.1,
+   "caption": "Meta XR Simulator \u00b7 4x speed"
   },
   {
-   "id": "s09",
+   "id": "missions",
+   "source": "c_missions",
+   "in": 1.5,
+   "out": 7.3,
+   "crop": "1280:720:320:0"
+  },
+  {
+   "id": "debrief",
+   "source": "c_results",
+   "in": 1.5,
+   "out": 6.3,
+   "crop": "1280:720:320:0"
+  },
+  {
+   "id": "aftercare",
+   "source": "c_aftercare",
+   "in": 1.0,
+   "out": 4.2,
+   "crop": "1280:720:320:0"
+  },
+  {
+   "id": "settings",
+   "source": "c_settings",
+   "in": 0.0,
+   "out": 5.0,
+   "crop": "1280:720:320:0"
+  },
+  {
+   "id": "table",
+   "source": "c_table",
+   "in": 0.0,
+   "out": 4.8,
+   "crop": "1280:720:320:0"
+  },
+  {
+   "id": "end",
    "card": "end",
-   "duration": 5,
+   "duration": 8,
    "text": [
     "RESQ",
     "Small worlds. Big saves.",
     "Meta Quest 3 and 3S",
-    "Gameplay captured in Meta XR Simulator, shown at 4x speed"
-   ]
+    "Gameplay captured in Meta XR Simulator. World shots at 4x speed.",
+    "Voice and music made with Google AI Studio"
+   ],
+   "fade_out": 1.5
   }
  ]
 }

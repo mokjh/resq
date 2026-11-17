@@ -170,7 +170,8 @@ def build(edl_path=VIDEO / "edl.json", src_dir=VIDEO / "raw", out_dir=VIDEO / "e
             inputs = ["-ss", str(seg["in"]), "-t", str(dur), "-i", str(src)]
             if not c["audio"]:
                 inputs += ["-f", "lavfi", "-t", str(dur), "-i", "anullsrc=r=48000:cl=stereo"]
-            vf = norm
+            # optional "crop": "w:h:x:y" of the source frame, scaled back up (a closer look at a menu card)
+            vf = (f"crop={seg['crop']}," if seg.get("crop") else "") + norm
         fi, fo = seg.get("fade_in", 0), seg.get("fade_out", 0)
         if fi:
             vf += f",fade=t=in:st=0:d={fi}"
